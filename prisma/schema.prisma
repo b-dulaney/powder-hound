@@ -3,13 +3,49 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model Mountain {
+  id            Int          @id @default(autoincrement())
+  name          String       @unique
+  height        Int
+  lat           Float
+  lon           Float
+  country       String
+  stateProvince String
+  region        String
+  pass          String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Conditions    Conditions[]
+
+  @@index([name], name: "name")
+}
+
+model Conditions {
+  id             Int      @id @default(autoincrement())
+  mountain       Mountain @relation(fields: [mountainName], references: [name])
+  mountainName   String
+  updatedAt      DateTime @updatedAt
+  currentTemp    Int
+  dailyHigh      Int
+  dailyLow       Int
+  windSpeed      Int
+  windDirection  String
+  snowForecast24 Int
+  snowForecast48 Int
+  weatherSummary String
+  snowfall       Int
+  snowfall24     Int
+  snowfall48     Int
+  snowfall72     Int
+  snowfall96     Int
+  snowfall120    Int
+  snowfall144    Int
+  snowfall168    Int
+
+  @@index([id])
 }
