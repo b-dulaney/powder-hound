@@ -140,23 +140,20 @@ export interface Database {
       snow_accumulation: {
         Row: {
           created_at: string
-          date: string | null
-          id: number
-          mountain_id: number | null
+          date: string
+          mountain_id: number
           precip_total: number | null
         }
         Insert: {
           created_at?: string
-          date?: string | null
-          id?: number
-          mountain_id?: number | null
+          date: string
+          mountain_id: number
           precip_total?: number | null
         }
         Update: {
           created_at?: string
-          date?: string | null
-          id?: number
-          mountain_id?: number | null
+          date?: string
+          mountain_id?: number
           precip_total?: number | null
         }
         Relationships: [
@@ -174,7 +171,6 @@ export interface Database {
           daily_high: number | null
           daily_low: number | null
           date: string
-          id: number | null
           mountain_id: number
           snow: number | null
           updated_at: string | null
@@ -187,7 +183,6 @@ export interface Database {
           daily_high?: number | null
           daily_low?: number | null
           date: string
-          id?: number | null
           mountain_id: number
           snow?: number | null
           updated_at?: string | null
@@ -200,7 +195,6 @@ export interface Database {
           daily_high?: number | null
           daily_low?: number | null
           date?: string
-          id?: number | null
           mountain_id?: number
           snow?: number | null
           updated_at?: string | null
