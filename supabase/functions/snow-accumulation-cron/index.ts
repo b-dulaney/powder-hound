@@ -37,7 +37,7 @@ async function fetchSnowAccumulation(mountains: MountainRow[]): Promise<SnowAccu
       accumulationData.push({
         mountain_id: mountain.mountain_id,
         date: yesterday,
-        precip_total: totalSnowAccumulation ?? 0,
+        precip_total: totalSnowAccumulation ? (totalSnowAccumulation / 25.4) : 0, // convert mm to inches
         created_at: new Date().toISOString()
       })
     }
