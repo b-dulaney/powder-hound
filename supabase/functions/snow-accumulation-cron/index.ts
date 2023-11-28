@@ -1,9 +1,17 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import type { Database } from "../database-generated.types";
-import type { Mountain, SnowAccumulation } from "../database.types";
+import { DailyAggregateSchema } from '../_shared/zod-types.ts';
+import type { Database } from "../database-generated.types.ts";
+import type { DbResult, SnowAccumulation } from "../database.types.ts";
 
 const ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY')!
 const OPEN_WEATHER_API_KEY = Deno.env.get('OPEN_WEATHER_API_KEY')!
+const API_URL = 'https://api.openweathermap.org/data/3.0/onecall/day_summary'
+
+interface MountainRow {
+  mountain_id: number
+  lat: number
+  lon: number
+}
 
 const supabase = createClient<Database>(
   Deno.env.get('SUPABASE_URL') ?? '',
@@ -13,23 +21,24 @@ const supabase = createClient<Database>(
 /**
  * Fetches snow accumulation data for a list of mountains.
  *
- * @param {Mountain[]} rows - An array of Mountain objects, each containing the latitude and longitude of a mountain.
+ * @param {Mountain[]} mountains - An array of Mountain objects, each containing the latitude and longitude of a mountain.
  * @returns {Promise<SnowAccumulation[]>} A promise that resolves to an array of SnowAccumulation objects. Each object contains the mountain_id, date, and total snow accumulation.
  * @throws Will throw an error if the fetch request fails.
  */
-async function fetchSnowAccumulation(rows: Mountain[]): Promise<SnowAccumulation[]> {
+async function fetchSnowAccumulation(mountains: MountainRow[]): Promise<SnowAccumulation[]> {
   const accumulationData: SnowAccumulation[] = [];
   const yesterday = getYesterday();
 
-  for(const row of rows) {
+  for(const mountain of mountains) {
     try {
-     const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall/day_summary?lat=${row.lat}&lon=${row.lon}&date=${yesterday}&appid=${OPEN_WEATHER_API_KEY}&units=imperial`)
-     const data = await response.json();
+     const response = await fetch(`${API_URL}?lat=${mountain.lat}&lon=${mountain.lon}&date=${yesterday}&appid=${OPEN_WEATHER_API_KEY}&units=imperial`)
+     const data = DailyAggregateSchema.parse(await response.json());
      const totalSnowAccumulation = data?.precipitation?.total
       accumulationData.push({
-        mountain_id: row.mountain_id,
+        mountain_id: mountain.mountain_id,
         date: yesterday,
         precip_total: totalSnowAccumulation ?? 0,
+        created_at: new Date().toISOString()
       })
     }
     catch(err) {
@@ -41,13 +50,12 @@ async function fetchSnowAccumulation(rows: Mountain[]): Promise<SnowAccumulation
 }
 
 /**
- * Updates snow accumulation data for a list of mountains.
+ * Updates the snow accumulation table in supabase.
  *
- * @param {SnowAccumulation[]} accumulationData - An array of SnowAccumulation objects, each containing the mountain_id, date, and total snow accumulation.
- * @param {any} supabase - A Supabase client object.
- * @returns {Promise<{data: SnowAccumulation[], error: any}>} A promise that resolves to an object containing the data and error properties.
+ * @param {SnowAccumulation[]} accumulationData - An array of SnowAccumulation objects.
+ * @returns {Promise<DbResult<SnowAccumulation>>} A promise that resolves to an object containing the updated data and any errors.
  */
-async function updateSnowAccumulation(accumulationData: SnowAccumulation[]) {
+async function updateSnowAccumulation(accumulationData: SnowAccumulation[]): Promise<DbResult<SnowAccumulation>> {
   const { data, error } = await supabase
     .from('snow_accumulation')
     .insert(accumulationData)
@@ -56,7 +64,7 @@ async function updateSnowAccumulation(accumulationData: SnowAccumulation[]) {
   if (error) {
     console.error(`Error updating snow accumulation`, error);
   } else {
-    console.log(`Snow accumulation updated`);
+    console.log(`Snow accumulation updated for ${data?.length} mountains`);
   }
 
   return {data, error};
@@ -76,7 +84,9 @@ function getYesterday() {
   return `${year}-${month}-${day}`;
 }
 
-
+/**
+ * Deno edge function request handler
+ */
 Deno.serve(async (req: Request) => {
     const authHeader = req.headers.get('Authorization')!
     if (authHeader !== `Bearer ${ANON_KEY}`) {
@@ -86,7 +96,7 @@ Deno.serve(async (req: Request) => {
       )
     }
   
-    const rows: Mountain[] = await req.json()
+    const rows: MountainRow[] = await req.json()
     const snowAccumulationData = await fetchSnowAccumulation(rows)
     const { data, error } = await  updateSnowAccumulation(snowAccumulationData)
 

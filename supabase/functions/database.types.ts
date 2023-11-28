@@ -1,13 +1,18 @@
-import { PostgrestError } from '@supabase/supabase-js'
-import { Database } from './database-generated.types'
+import type { PostgrestError } from 'https://esm.sh/@supabase/supabase-js@2';
+import { Database } from './database-generated.types.ts';
 
 
 export type Tables<T extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][T]['Row']
 
-export type DbResult<T> = T extends PromiseLike<infer U> ? U : never
-export type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never
-export type DbResultErr = PostgrestError
+export type Mountain = Tables<'mountains'>
+export type SnowAccumulation = Tables<'snow_accumulation'>
+export type DailyForecast = Tables<'daily_forecasts'>
+export type WeeklyForecast =Tables<'weekly_forecasts'>
 
-export type Mountain = Partial<Tables<'mountains'>>
-export type SnowAccumulation = Partial<Tables<'snow_accumulation'>>
+type TableTypes = Mountain | SnowAccumulation | DailyForecast | WeeklyForecast;
+
+export type DbResult<T extends TableTypes> = {
+  data: T[] | null;
+  error: PostgrestError | null;
+};
