@@ -9,8 +9,9 @@ export type Mountain = Tables<'mountains'>
 export type SnowAccumulation = Tables<'snow_accumulation'>
 export type DailyForecast = Tables<'daily_forecasts'>
 export type WeeklyForecast =Tables<'weekly_forecasts'>
+export type CaicData = Tables<'caic_data'>
 
-type TableTypes = Mountain | SnowAccumulation | DailyForecast | WeeklyForecast;
+type TableTypes = Mountain | SnowAccumulation | DailyForecast | WeeklyForecast | CaicData;
 
 export type DbResult<T extends TableTypes> = {
   data: T[] | null;
