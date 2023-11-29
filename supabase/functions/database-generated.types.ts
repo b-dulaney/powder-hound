@@ -9,6 +9,68 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      caic_data: {
+        Row: {
+          cei: number | null
+          cnpcp_in: number | null
+          created_at: string
+          datetime: string
+          dew_point: number | null
+          mountain_id: number
+          ncpcp_in: number | null
+          relative_humidity: number | null
+          snowfall_in: number | null
+          temp: number | null
+          visbility_miles: number | null
+          weather_desc: string | null
+          wetbulb_temp: number | null
+          wind_deg_speed: string | null
+          wind_gust: number | null
+        }
+        Insert: {
+          cei?: number | null
+          cnpcp_in?: number | null
+          created_at?: string
+          datetime: string
+          dew_point?: number | null
+          mountain_id: number
+          ncpcp_in?: number | null
+          relative_humidity?: number | null
+          snowfall_in?: number | null
+          temp?: number | null
+          visbility_miles?: number | null
+          weather_desc?: string | null
+          wetbulb_temp?: number | null
+          wind_deg_speed?: string | null
+          wind_gust?: number | null
+        }
+        Update: {
+          cei?: number | null
+          cnpcp_in?: number | null
+          created_at?: string
+          datetime?: string
+          dew_point?: number | null
+          mountain_id?: number
+          ncpcp_in?: number | null
+          relative_humidity?: number | null
+          snowfall_in?: number | null
+          temp?: number | null
+          visbility_miles?: number | null
+          weather_desc?: string | null
+          wetbulb_temp?: number | null
+          wind_deg_speed?: string | null
+          wind_gust?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "caic_data_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: false
+            referencedRelation: "mountains"
+            referencedColumns: ["mountain_id"]
+          }
+        ]
+      }
       daily_forecasts: {
         Row: {
           current_temp: number | null
@@ -67,31 +129,31 @@ export interface Database {
       }
       mountains: {
         Row: {
-          country: string | null
+          caic_code: string | null
           display_name: string
           lat: number
           lon: number
+          model_elevation: number | null
           mountain_id: number
           region: string | null
-          state_province: string | null
         }
         Insert: {
-          country?: string | null
+          caic_code?: string | null
           display_name: string
           lat: number
           lon: number
+          model_elevation?: number | null
           mountain_id?: number
           region?: string | null
-          state_province?: string | null
         }
         Update: {
-          country?: string | null
+          caic_code?: string | null
           display_name?: string
           lat?: number
           lon?: number
+          model_elevation?: number | null
           mountain_id?: number
           region?: string | null
-          state_province?: string | null
         }
         Relationships: []
       }
