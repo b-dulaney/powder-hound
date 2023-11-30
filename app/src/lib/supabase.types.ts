@@ -1,5 +1,5 @@
-import type { PostgrestError } from 'https://esm.sh/@supabase/supabase-js@2';
-import { Database } from './database-generated.types.ts';
+import type { PostgrestError } from '@supabase/supabase-js';
+import type { Database } from './supabase-generated.types.ts';
 
 
 export type Tables<T extends keyof Database['public']['Tables']> =
