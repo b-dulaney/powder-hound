@@ -12,8 +12,12 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@skeletonlabs/skeleton": "^2.5.1",
+		"@skeletonlabs/tw-plugin": "^0.2.4",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.27.4",
+		"@tailwindcss/forms": "^0.5.7",
+		"@types/node": "^20.10.1",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"autoprefixer": "^10.4.16",
@@ -32,6 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/ssr": "^0.0.10",
 		"@supabase/supabase-js": "^2.39.0"
 	}
 }
