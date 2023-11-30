@@ -6,16 +6,15 @@
     },
     {"name": "sveltekit", "path": "./app"},
     {
-      "name": "supabase-functions",
-      "path": "./supabase/functions"
+      "name": "supabase",
+      "path": "./supabase"
     }
   ],
   "settings": {
     "files.exclude": {
       "node_modules/": true,
       "app/": true,
-      "supabase/functions/": true
+      "supabase/": true
     },
-    "deno.importMap": "./supabase/functions/import_map.json"
   }
 }
