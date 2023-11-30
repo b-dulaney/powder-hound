@@ -16,5 +16,6 @@
       "app/": true,
       "supabase/functions/": true
     },
+    "deno.importMap": "./supabase/functions/import_map.json"
   }
 }
