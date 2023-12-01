@@ -47,7 +47,6 @@
            </p>
           </div>
           <div class="card">
-            <header class="card-header"><img src={WRF} alt="CAIC forecast graph" class="w-96 h-48"/></header>
             <section class="p-4">
               <h3 class="h3">CAIC Point Forecasts</h3>
               <p>CAIC Point Forecasts are broken down into 1 hour data points for nearly every resort and mountain pass in the state. 
@@ -55,6 +54,7 @@
                 <a class="anchor" rel="no-referrer" target="_blank" href="https://avalanche.state.co.us/weather/forecast-models/about">about</a>
                 page.</p>
             </section>
+            <footer class="card-footer mt-2 flex justify-center"><img src={WRF} alt="CAIC forecast graph" class="rounded-lg max-h-56"/></footer>
           </div>
     </div>
   </div>
