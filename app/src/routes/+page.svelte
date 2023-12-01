@@ -12,7 +12,7 @@
 <header class="py-8 xl:pt-16 bg-surface-100-800-token hero-gradient" id="hero">
   <div class="grid grid-cols-1 gap-4 md:gap-10 items-center">
     <div class="flex flex-col items-center text-center space-y-4 px-4">
-      <img src={Logo} alt="Powder Hound Logo" class="w-28 h-28" />
+      <img src={Logo} alt="Powder Hound Logo" class="w-28 h-28 lg:w-40 lg:h-40" />
       <h1 class="h1 text-5xl">You'll never miss another powder day.</h1>
       <p class="text-xl">View the latest conditions, get accurate predictions, and receive customized snowfall alerts - all 100% free.</p>
       <div class="flex gap-4">
