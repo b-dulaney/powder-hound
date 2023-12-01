@@ -1,14 +1,11 @@
-<!--
-// v0 by Vercel.
-// https://v0.dev/t/RMJj8VEFsHd
--->
-
 <script lang="ts">
-    import type { PageData } from './$types';
-  export let data: PageData 
+  // import type { PageData } from './$types';
+  // export let data: PageData 
+  import UnderConstruction from "../../components/under-construction.svelte";
 </script>
 
-<section class="w-full h-full p-6">
+<UnderConstruction />
+<!-- <section class="w-full h-full p-6">
 
   <div class="grid grid-cols-5 gap-4 text-center p-8">
       <h2 class="text-xl font-semibold">Resort Name</h2>
@@ -39,4 +36,4 @@
           >View More Resorts</button
       >
   </div>
-</section>
+</section> -->

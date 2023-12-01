@@ -9,9 +9,9 @@
   import WRF from "../public/WRFExample.png"
 </script>
 
-<header class="py-8 bg-surface-100-800-token hero-gradient" id="hero">
-  <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-10 items-center">
-    <div class="flex flex-col items-center xl:items-start text-center xl:text-left space-y-4 px-4">
+<header class="py-8 xl:pt-16 bg-surface-100-800-token hero-gradient" id="hero">
+  <div class="grid grid-cols-1 gap-4 md:gap-10 items-center">
+    <div class="flex flex-col items-center text-center space-y-4 px-4">
       <img src={Logo} alt="Powder Hound Logo" class="w-28 h-28" />
       <h1 class="h1 text-5xl">You'll never miss another powder day.</h1>
       <p class="text-xl">View the latest conditions, get accurate predictions, and receive customized snowfall alerts - all 100% free.</p>
@@ -29,8 +29,8 @@
 </header>
 
 <section id="forecasts" class="bg-surface-100-800-token built-for-gradient">
-  <div class="mx-auto w-full max-w-7xl py-16 px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-10 items-start">
+  <div class="mx-auto w-full max-w-6xl py-16 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
       <div class="space-y-4">
         <h2 class="h2">Built for Colorado</h2>
         <p>Powder Hound sources weather data directly from the 
@@ -41,8 +41,12 @@
            GFS</a>
            and <a class="anchor" target="_blank" rel="no-referrer"
            href="https://rapidrefresh.noaa.gov/hrrr/">
-           HRRR</a> forecasts to provide the most accurate snowfall predictions for Colorado's ski resorts and backcountry.</p>  
-           <div class="card">
+           HRRR</a> forecasts to provide the most accurate snowfall predictions for Colorado's premier ski destinations.</p>
+           <hr class="opacity-20">
+           <p>Weather forecasts are available up to 72 hours in advance and are updated hourly. Accumulated snowfall is updated constantly, so you'll always have the full picture when deciding where to ride.
+           </p>
+          </div>
+          <div class="card">
             <header class="card-header"><img src={WRF} alt="CAIC forecast graph" class="w-96 h-48"/></header>
             <section class="p-4">
               <h3 class="h3">CAIC Point Forecasts</h3>
@@ -52,41 +56,41 @@
                 page.</p>
             </section>
           </div>
-          </div>
     </div>
   </div>
 </section>
 
 <section id="alerts" class="bg-surface-100-800-token alerts-gradient">
-  <div class="mx-auto w-full max-w-7xl py-8 px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-10 items-start">
+  <div class="mx-auto w-full max-w-6xl py-8 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
+      <div class="grid grid-cols-[auto_1fr] gap-2 py-2">
+        <Avatar src={Logo} width="w-12" />
+        <div class="card p-4 variant-filled-tertiary rounded-tl-none space-y-2">
+          <header class="flex justify-between items-center">
+            <p class="font-bold">Powder Hound</p>
+            <small class="opacity-50">5:00 am</small>
+          </header>
+          <p>It's coming down! Copper Mountain has received 12" of snow since midnight.</p>
+        </div>
+      </div>
       <div class="space-y-4">
         <h2 class="h2">Tailored Alerts</h2>      
-<div class="grid grid-cols-[auto_1fr] gap-2">
-	<Avatar src={Logo} width="w-12" />
-	<div class="card p-4 variant-filled-tertiary rounded-tl-none space-y-2">
-		<header class="flex justify-between items-center">
-			<p class="font-bold">Powder Hound</p>
-			<small class="opacity-50">5:00 am</small>
-		</header>
-		<p>It's coming down! Copper Mountain has received 12" of snow since midnight.</p>
-	</div>
-</div>
-<p>Sign up for alerts and we'll send you a text when its piling up on your favorite tree runs.</p>
-  <p>Pick the locations and snowfall thresholds, and we'll let you know when its going to be a pow day.</p>
+<p>Sign up for alerts and we'll send you a text when its piling up on your favorite tree runs. Pick the locations and snowfall thresholds, and we'll let you know when its going to be a pow day.</p>
 
       </div>
+
     </div>
   </div>
 </section>
 
 <section id="passes" class="bg-surface-100-800-token">
-  <div class="mx-auto w-full max-w-7xl py-8 px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-10 items-start">
+  <div class="mx-auto w-full max-w-6xl py-8 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
       <div class="space-y-4">
         <h2 class="h2">Beyond Passes</h2>   
-        <p>Whether you ride a big name pass or a small independent mountain - we've got you covered. We currently provide forecasts for 20 mountains and counting across Colroado.</p>
-        <div class="flex justify-center gap-2">
+        <p>Whether you ride a season pass, an independent mountain, or something a little more out there - we've got you covered. Powder Hound currently provide forecasts for 20+ mountains and backcountry zones across Colorado .</p>
+      </div>
+      <div class="flex justify-center gap-2 md:py-16">
         <a class="btn variant-ghost-primary" href="/conditions">
           <div class="flex items-center gap-2">
             <span>View Mountains</span>
