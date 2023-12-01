@@ -50,7 +50,7 @@
             <header class="card-header"><img src={WRF} alt="CAIC forecast graph" class="w-96 h-48"/></header>
             <section class="p-4">
               <h3 class="h3">CAIC Point Forecasts</h3>
-              <p>CAIC Point Forecasts are broken down into 1 hour timesteps for nearly every resort and mountain pass in the state. 
+              <p>CAIC Point Forecasts are broken down into 1 hour data points for nearly every resort and mountain pass in the state. 
                 For those interested in learning more about the underlying models and methods, check out the CAIC's 
                 <a class="anchor" rel="no-referrer" target="_blank" href="https://avalanche.state.co.us/weather/forecast-models/about">about</a>
                 page.</p>
@@ -75,7 +75,7 @@
       </div>
       <div class="space-y-4">
         <h2 class="h2">Tailored Alerts</h2>      
-<p>Sign up for alerts and we'll send you a text when its piling up on your favorite tree runs. Pick the locations and snowfall thresholds, and we'll let you know when its going to be a pow day.</p>
+<p>Sign up for alerts and you'll get a text when it's piling up on your favorite tree runs. Just pick the locations and snowfall thresholds, and we'll let you know when it's going to be a pow day.</p>
 
       </div>
 
@@ -88,7 +88,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
       <div class="space-y-4">
         <h2 class="h2">Beyond Passes</h2>   
-        <p>Whether you ride a season pass, an independent mountain, or something a little more out there - we've got you covered. Powder Hound currently provide forecasts for 20+ mountains and backcountry zones across Colorado .</p>
+        <p>Whether you ride a season pass, an independent mountain, or something a little more out there - we've got you covered. Powder Hound currently provides forecasts for 20+ mountains and backcountry zones across Colorado .</p>
       </div>
       <div class="flex justify-center gap-2 md:py-16">
         <a class="btn variant-ghost-primary" href="/conditions">
