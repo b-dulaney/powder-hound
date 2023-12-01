@@ -63,6 +63,11 @@
 <section id="alerts" class="bg-surface-100-800-token alerts-gradient">
   <div class="mx-auto w-full max-w-6xl py-8 px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
+      <div class="space-y-4 md:order-last">
+        <h2 class="h2">Tailored Alerts</h2>      
+<p>Sign up for alerts and you'll get a text when it's piling up on your favorite tree runs. Just pick the locations and snowfall thresholds, and we'll let you know when it's going to be a pow day.</p>
+
+      </div>
       <div class="grid grid-cols-[auto_1fr] gap-2 py-2">
         <Avatar src={Logo} width="w-12" />
         <div class="card p-4 variant-filled-tertiary rounded-tl-none space-y-2">
@@ -73,11 +78,7 @@
           <p>It's coming down! Copper Mountain has received 12" of snow since midnight.</p>
         </div>
       </div>
-      <div class="space-y-4">
-        <h2 class="h2">Tailored Alerts</h2>      
-<p>Sign up for alerts and you'll get a text when it's piling up on your favorite tree runs. Just pick the locations and snowfall thresholds, and we'll let you know when it's going to be a pow day.</p>
 
-      </div>
 
     </div>
   </div>
