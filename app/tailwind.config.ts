@@ -17,11 +17,10 @@ const config = {
 		)
 	],
 	theme: {
-		extend: {preset: ["wintry"]},
 	},
 	plugins: [
 		forms,
-		skeleton
+		skeleton({themes: {preset: [{name: "wintry", enhancements: true}]}})
 	]
 } satisfies Config;
 

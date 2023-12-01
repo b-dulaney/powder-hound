@@ -36,6 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fortawesome/free-solid-svg-icons": "^6.5.0",
 		"@supabase/ssr": "^0.0.10",
 		"@supabase/supabase-js": "^2.39.0"
 	}
