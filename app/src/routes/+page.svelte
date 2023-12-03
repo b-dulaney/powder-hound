@@ -29,7 +29,7 @@
 </header>
 
 <section id="forecasts" class="bg-surface-100-800-token built-for-gradient">
-  <div class="mx-auto w-full max-w-6xl py-16 px-4">
+  <div class="mx-auto w-full max-w-6xl pt-16 pb-8 px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
       <div class="space-y-4">
         <h2 class="h2">Built for Colorado</h2>
@@ -84,7 +84,7 @@
   </div>
 </section>
 
-<section id="passes" class="bg-surface-100-800-token">
+<section id="passes" class="bg-surface-100-800-token passes-gradient">
   <div class="mx-auto w-full max-w-6xl py-8 px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
       <div class="space-y-4">

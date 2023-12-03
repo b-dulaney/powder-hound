@@ -10,7 +10,7 @@ export async function load() {
     }
     else if(data) {
       return {
-        mountainOverviews: data
+        mountainOverviews: data.sort((a, b) => a.display_name! > b.display_name! ? 1 : -1)
       }
     }
   }
