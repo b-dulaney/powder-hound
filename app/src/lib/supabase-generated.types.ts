@@ -132,6 +132,7 @@ export interface Database {
           caic_code: string | null
           display_name: string
           lat: number
+          location_type: string | null
           lon: number
           model_elevation: number | null
           mountain_id: number
@@ -141,6 +142,7 @@ export interface Database {
           caic_code?: string | null
           display_name: string
           lat: number
+          location_type?: string | null
           lon: number
           model_elevation?: number | null
           mountain_id?: number
@@ -150,6 +152,7 @@ export interface Database {
           caic_code?: string | null
           display_name?: string
           lat?: number
+          location_type?: string | null
           lon?: number
           model_elevation?: number | null
           mountain_id?: number
@@ -279,25 +282,34 @@ export interface Database {
     Views: {
       mountain_overview: {
         Row: {
+          currenttemp: number | null
           display_name: string | null
+          location_type: string | null
           next24hoursnowfall: number | null
           next72hoursnowfall: number | null
           past24hoursnowfall: number | null
           past5daysnowfall: number | null
+          region: string | null
         }
         Insert: {
+          currenttemp?: never
           display_name?: string | null
+          location_type?: string | null
           next24hoursnowfall?: never
           next72hoursnowfall?: never
           past24hoursnowfall?: never
           past5daysnowfall?: never
+          region?: string | null
         }
         Update: {
+          currenttemp?: never
           display_name?: string | null
+          location_type?: string | null
           next24hoursnowfall?: never
           next72hoursnowfall?: never
           past24hoursnowfall?: never
           past5daysnowfall?: never
+          region?: string | null
         }
         Relationships: []
       }
@@ -318,6 +330,12 @@ export interface Database {
       get_all_weather: {
         Args: Record<PropertyKey, never>
         Returns: Json
+      }
+      get_current_temperature_for_mountain: {
+        Args: {
+          id: number
+        }
+        Returns: number
       }
       get_daily_weather: {
         Args: {
