@@ -31,3 +31,11 @@ body {
 		transparent 50%
 	);
 }
+
+.passes-gradient {
+	background-image: radial-gradient(
+		at 100% 100%,
+		rgba(var(--color-tertiary-500) / 0.5) 0px,
+		transparent 50%
+	);
+}
