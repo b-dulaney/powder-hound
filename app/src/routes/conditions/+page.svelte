@@ -10,7 +10,7 @@
 
   const searchLocations = () => {
     return filteredMountains = mountainOverviews?.filter((location) => {
-      return location?.display_name?.toLowerCase().includes(searchInput.toLowerCase());
+      return location?.display_name?.toLowerCase().includes(searchInput.toLowerCase().trim());
     })!;
   }
 
