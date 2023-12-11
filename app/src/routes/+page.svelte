@@ -18,7 +18,7 @@
       <div class="flex gap-4">
         <a class="btn variant-ghost-primary" href="/conditions">
           <div class="flex items-center gap-2">
-            <span>View Conditions</span>
+            <span>View Locations</span>
             <i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
           </div>
         </a>
@@ -89,7 +89,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
       <div class="space-y-4">
         <h2 class="h2">Beyond Passes</h2>   
-        <p>Whether you ride a season pass, an independent mountain, or something a little more out there - we've got you covered. Powder Hound currently provides forecasts for 20+ mountains and backcountry zones across Colorado .</p>
+        <p>Whether you ride a season pass, an independent mountain, or something a little more out there - we've got you covered. Powder Hound currently provides forecasts for 20+ mountains and backcountry zones across Colorado.</p>
       </div>
       <div class="flex justify-center gap-2 md:py-16">
         <a class="btn variant-ghost-primary" href="/conditions">
