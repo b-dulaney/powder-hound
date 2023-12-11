@@ -21,7 +21,7 @@
     <h1 class="h1">Locations</h1>
   </div>
   <div class="flex justify-center mb-4 px-8 md:py-8">
-    <input class="input w-2/3 md:w-1/2" title="Input (search)" type="search" placeholder="Search..." bind:value={searchInput} on:input={searchLocations}/>
+    <input class="input w-2/3 md:w-1/2" autocomplete="off" title="Input (search)" type="search" placeholder="Search..." bind:value={searchInput} on:input={searchLocations}/>
   </div>
     <div class="table-container">
       <table class="table">
