@@ -1,16 +1,18 @@
+import type { MountainOverview } from "$lib/supabase.types";
 import { supabase } from "$lib/supabaseClient";
 
 export async function load() {
-    const {data, error} = await supabase.from("mountain_overview").select()
+    const {data, error} = await supabase.from("mountain_overview").select().returns<MountainOverview[]>();
     
     if(error) {
       return {
-        data: {message: error.message},
+        status: 500,
+        error: error.message,
       }
     }
-    else if(data) {
+    else {
       return {
-        mountainOverviews: data.sort((a, b) => a.display_name! > b.display_name! ? 1 : -1)
+        mountainOverviews: data.sort((a, b) => a.display_name > b.display_name ? 1 : -1)
       }
     }
   }
