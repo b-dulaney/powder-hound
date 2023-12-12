@@ -69,8 +69,8 @@
         <caption class="sr-only">Snow and weather conditions for CO resorts and backcountry areas, column headers with buttons are sortable.</caption>
         <thead class="w-full">
           <tr>
-            <th class="table-cell-fit group" aria-sort={columnSort.name === "location" ? columnSort.asc ? "ascending" : "descending" : "none"}>
-              <button on:click={() => updateColumnSort("location")}>
+            <th class="table-cell-fit" aria-sort={columnSort.name === "location" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button class="group" on:click={() => updateColumnSort("location")}>
                 Location
                 <span class="pl-1" aria-hidden={columnSort.name !== "location"}>
                   {#if columnSort.name === "location" && columnSort.asc}
@@ -83,8 +83,8 @@
                 </span>
               </button>
             </th>
-            <th class="hidden xl:table-cell xl:text-center xl:table-cell-fit group"  aria-sort={columnSort.name === "type" ? columnSort.asc ? "ascending" : "descending" : "none"}>
-              <button on:click={() => updateColumnSort("type")}>
+            <th class="hidden xl:table-cell xl:text-center xl:table-cell-fit"  aria-sort={columnSort.name === "type" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button class="group" on:click={() => updateColumnSort("type")}>
                 Type
                 <span class="pl-1" aria-hidden={columnSort.name !== "type"}>
                   {#if columnSort.name === "type" && columnSort.asc}
@@ -97,8 +97,8 @@
                 </span>
               </button>
             </th>
-            <th class="hidden lg:table-cell lg:text-center lg:table-cell-fit group" aria-sort={columnSort.name === "weather" ? columnSort.asc ? "ascending" : "descending" : "none"}>
-              <button on:click={() => updateColumnSort("weather")}>
+            <th class="hidden lg:table-cell lg:text-center lg:table-cell-fit" aria-sort={columnSort.name === "weather" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button class="group" on:click={() => updateColumnSort("weather")}>
                 Weather
                 <span class="pl-1" aria-hidden={columnSort.name !== "weather"}>
                   {#if columnSort.name === "weather" && columnSort.asc}
@@ -111,8 +111,8 @@
                 </span>
               </button>
             </th>
-            <th class="hidden md:table-cell md:text-center md:table-cell-fit group" aria-sort={columnSort.name === "last5days" ? columnSort.asc ? "ascending" : "descending" : "none"}>
-              <button on:click={() => updateColumnSort("last5days")}>
+            <th class="hidden md:table-cell md:text-center md:table-cell-fit" aria-sort={columnSort.name === "last5days" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button class="group" on:click={() => updateColumnSort("last5days")}>
                 Last 5 Days
                 <span class="pl-1" aria-hidden={columnSort.name !== "last5days"}>
                   {#if columnSort.name === "last5days" && columnSort.asc}
@@ -125,8 +125,8 @@
                 </span>
               </button>
             </th>
-            <th class="text-center table-cell-fit group" aria-sort={columnSort.name === "last24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
-              <button on:click={() => updateColumnSort("last24hours")}>
+            <th class="text-center table-cell-fit" aria-sort={columnSort.name === "last24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button class="group" on:click={() => updateColumnSort("last24hours")}>
                 Last 24H
                 <span class="pl-1" aria-hidden={columnSort.name !== "last24hours"}>
                   {#if columnSort.name === "last24hours" && columnSort.asc}
@@ -139,8 +139,8 @@
                 </span>
               </button>
             </th>
-            <th class="text-center table-cell-fit group" aria-sort={columnSort.name === "next24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
-              <button on:click={() => updateColumnSort("next24hours")}>
+            <th class="text-center table-cell-fit" aria-sort={columnSort.name === "next24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button class="group" on:click={() => updateColumnSort("next24hours")}>
                 Next 24H
                 <span class="pl-1" aria-hidden={columnSort.name !== "next24hours"}>
                   {#if columnSort.name === "next24hours" && columnSort.asc}
@@ -153,8 +153,8 @@
                 </span>
               </button>
             </th>
-            <th class="hidden md:table-cell md:text-center md:table-cell-fit group" aria-sort={columnSort.name === "next72hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
-              <button on:click={() => updateColumnSort("next72hours")}>
+            <th class="hidden md:table-cell md:text-center md:table-cell-fit" aria-sort={columnSort.name === "next72hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button class="group" on:click={() => updateColumnSort("next72hours")}>
                 Next 72H
                 <span class="pl-1" aria-hidden={columnSort.name !== "next72hours"}>
                   {#if columnSort.name === "next72hours" && columnSort.asc}
