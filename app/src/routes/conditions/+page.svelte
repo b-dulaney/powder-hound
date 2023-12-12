@@ -3,16 +3,57 @@
   import type { PageData } from './$types';
   export let data: PageData 
   const { mountainOverviews } = data
-
+  
+  let columnSort = { name: "location", asc: true }
   let searchInput = "";
 
   let filteredMountains: MountainOverview[] = [];
 
   const searchLocations = () => {
-    return filteredMountains = mountainOverviews?.filter((location) => {
+    filteredMountains = mountainOverviews?.filter((location) => {
       return location?.display_name?.toLowerCase().includes(searchInput.toLowerCase().trim());
-    })!;
+    }) || [];
   }
+
+  const updateColumnSort = (sortBy: string) => {
+    if (columnSort.name === sortBy) {
+      columnSort.asc = !columnSort.asc;
+    } else if (sortBy === "location") {
+      columnSort.name = sortBy;
+      columnSort.asc = true;
+    }
+    else {
+      columnSort.name = sortBy;
+      columnSort.asc = false;
+    }
+    sortLocations(columnSort.name, columnSort.asc);
+  }
+
+  const sortLocations = (sortBy: string, asc: boolean) => {
+    console.log("sortLocations", sortBy, asc)
+    const sortOrder = asc ? 1 : -1;
+
+     filteredMountains = mountainOverviews?.sort((a, b) => {
+      switch (sortBy) {
+        case "location":
+          return a.display_name > b.display_name ? sortOrder : -sortOrder;
+        case "type":
+          return (a.location_type > b.location_type ? sortOrder : -sortOrder);
+        case "weather":
+          return (a.currenttemp - b.currenttemp) * sortOrder;
+        case "last5days":
+          return (a.past5daysnowfall - b.past5daysnowfall) * sortOrder;
+        case "last24hours":
+          return (a.past24hoursnowfall - b.past24hoursnowfall) * sortOrder;
+        case "next24hours":
+          return (a.next24hoursnowfall - b.next24hoursnowfall) * sortOrder;
+        case "next72hours":
+          return (a.next72hoursnowfall - b.next72hoursnowfall) * sortOrder;
+        default:
+         return a.display_name > b.display_name ? sortOrder : -sortOrder;
+      }
+    }) || [];
+    }
 
 </script>
 
@@ -25,15 +66,107 @@
   </div>
     <div class="table-container">
       <table class="table">
+        <caption class="sr-only">Snow and weather conditions for CO resorts and backcountry areas, column headers with buttons are sortable.</caption>
         <thead class="w-full">
           <tr>
-            <th class="table-cell-fit">Location</th>
-            <th class="hidden xl:table-cell xl:text-center xl:table-cell-fit">Type</th>
-            <th class="hidden lg:table-cell lg:text-center lg:table-cell-fit">Weather</th>
-            <th class="hidden md:table-cell md:text-center md:table-cell-fit">Last 5 Days</th>
-            <th class="text-center table-cell-fit">Last 24H</th>
-            <th class="text-center table-cell-fit">Next 24H</th>
-            <th class="hidden md:table-cell md:text-center md:table-cell-fit">Next 72H</th>
+            <th class="table-cell-fit group" aria-sort={columnSort.name === "location" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button on:click={() => updateColumnSort("location")}>
+                Location
+                <span class="pl-1" aria-hidden={columnSort.name !== "location"}>
+                  {#if columnSort.name === "location" && columnSort.asc}
+                    <i class="fa-solid fa-sort-up"></i>
+                  {:else if columnSort.name === "location" && !columnSort.asc}
+                    <i class="fa-solid fa-sort-down"></i>
+                  {:else}
+                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  {/if}
+                </span>
+              </button>
+            </th>
+            <th class="hidden xl:table-cell xl:text-center xl:table-cell-fit group"  aria-sort={columnSort.name === "type" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button on:click={() => updateColumnSort("type")}>
+                Type
+                <span class="pl-1" aria-hidden={columnSort.name !== "type"}>
+                  {#if columnSort.name === "type" && columnSort.asc}
+                    <i class="fa-solid fa-sort-up"></i>
+                  {:else if columnSort.name === "type" && !columnSort.asc}
+                    <i class="fa-solid fa-sort-down"></i>
+                  {:else}
+                    <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  {/if}
+                </span>
+              </button>
+            </th>
+            <th class="hidden lg:table-cell lg:text-center lg:table-cell-fit group" aria-sort={columnSort.name === "weather" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button on:click={() => updateColumnSort("weather")}>
+                Weather
+                <span class="pl-1" aria-hidden={columnSort.name !== "weather"}>
+                  {#if columnSort.name === "weather" && columnSort.asc}
+                    <i class="fa-solid fa-sort-up"></i>
+                  {:else if columnSort.name === "weather" && !columnSort.asc}
+                    <i class="fa-solid fa-sort-down"></i>
+                  {:else}
+                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  {/if}
+                </span>
+              </button>
+            </th>
+            <th class="hidden md:table-cell md:text-center md:table-cell-fit group" aria-sort={columnSort.name === "last5days" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button on:click={() => updateColumnSort("last5days")}>
+                Last 5 Days
+                <span class="pl-1" aria-hidden={columnSort.name !== "last5days"}>
+                  {#if columnSort.name === "last5days" && columnSort.asc}
+                    <i class="fa-solid fa-sort-up"></i>
+                  {:else if columnSort.name === "last5days" && !columnSort.asc}
+                    <i class="fa-solid fa-sort-down"></i>
+                  {:else}
+                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  {/if}
+                </span>
+              </button>
+            </th>
+            <th class="text-center table-cell-fit group" aria-sort={columnSort.name === "last24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button on:click={() => updateColumnSort("last24hours")}>
+                Last 24H
+                <span class="pl-1" aria-hidden={columnSort.name !== "last24hours"}>
+                  {#if columnSort.name === "last24hours" && columnSort.asc}
+                    <i class="fa-solid fa-sort-up"></i>
+                  {:else if columnSort.name === "last24hours" && !columnSort.asc}
+                    <i class="fa-solid fa-sort-down"></i>
+                  {:else}
+                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  {/if}
+                </span>
+              </button>
+            </th>
+            <th class="text-center table-cell-fit group" aria-sort={columnSort.name === "next24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button on:click={() => updateColumnSort("next24hours")}>
+                Next 24H
+                <span class="pl-1" aria-hidden={columnSort.name !== "next24hours"}>
+                  {#if columnSort.name === "next24hours" && columnSort.asc}
+                    <i class="fa-solid fa-sort-up"></i>
+                  {:else if columnSort.name === "next24hours" && !columnSort.asc}
+                    <i class="fa-solid fa-sort-down"></i>
+                  {:else}
+                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  {/if}
+                </span>
+              </button>
+            </th>
+            <th class="hidden md:table-cell md:text-center md:table-cell-fit group" aria-sort={columnSort.name === "next72hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button on:click={() => updateColumnSort("next72hours")}>
+                Next 72H
+                <span class="pl-1" aria-hidden={columnSort.name !== "next72hours"}>
+                  {#if columnSort.name === "next72hours" && columnSort.asc}
+                    <i class="fa-solid fa-sort-up"></i>
+                  {:else if columnSort.name === "next72hours" && !columnSort.asc}
+                    <i class="fa-solid fa-sort-down"></i>
+                  {:else}
+                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  {/if}
+                </span>
+              </button>
+            </th>
             <th class="table-cell-fit"></th>
           </tr>
         </thead>
@@ -51,7 +184,7 @@
           {#if filteredMountains.length > 0}
             {#each filteredMountains as row, i}
             <tr>
-                <td  class="table-cell-fit"><a class="anchor text-primary-500-400-token xl:text-lg" href="/conditions">{row.display_name}</a></td>
+                <td class="table-cell-fit"><a class="anchor text-primary-500-400-token xl:text-lg" href="/conditions">{row.display_name}</a></td>
                 <td class="hidden capitalize xl:table-cell xl:text-center xl:table-cell-fit">
                   {#if row.location_type === "resort"}
                   <div class="badge variant-ghost-primary">
