@@ -32,8 +32,9 @@
   const sortLocations = (sortBy: string, asc: boolean) => {
     console.log("sortLocations", sortBy, asc)
     const sortOrder = asc ? 1 : -1;
+    const arrayToSort = filteredMountains.length > 0 ? filteredMountains : mountainOverviews;
 
-     filteredMountains = mountainOverviews?.sort((a, b) => {
+     filteredMountains = arrayToSort?.sort((a, b) => {
       switch (sortBy) {
         case "location":
           return a.display_name > b.display_name ? sortOrder : -sortOrder;
