@@ -19,13 +19,13 @@ export interface Database {
           mountain_id: number
           ncpcp_in: number | null
           relative_humidity: number | null
-          snowfall_in: number | null
-          temp: number | null
-          visbility_miles: number | null
+          snowfall_in: number
+          temp: number
+          visbility_miles: number
           weather_desc: string | null
           wetbulb_temp: number | null
-          wind_deg_speed: string | null
-          wind_gust: number | null
+          wind_deg_speed: string
+          wind_gust: number
         }
         Insert: {
           cei?: number | null
@@ -36,13 +36,13 @@ export interface Database {
           mountain_id: number
           ncpcp_in?: number | null
           relative_humidity?: number | null
-          snowfall_in?: number | null
-          temp?: number | null
-          visbility_miles?: number | null
+          snowfall_in: number
+          temp: number
+          visbility_miles: number
           weather_desc?: string | null
           wetbulb_temp?: number | null
-          wind_deg_speed?: string | null
-          wind_gust?: number | null
+          wind_deg_speed: string
+          wind_gust: number
         }
         Update: {
           cei?: number | null
@@ -53,13 +53,13 @@ export interface Database {
           mountain_id?: number
           ncpcp_in?: number | null
           relative_humidity?: number | null
-          snowfall_in?: number | null
-          temp?: number | null
-          visbility_miles?: number | null
+          snowfall_in?: number
+          temp?: number
+          visbility_miles?: number
           weather_desc?: string | null
           wetbulb_temp?: number | null
-          wind_deg_speed?: string | null
-          wind_gust?: number | null
+          wind_deg_speed?: string
+          wind_gust?: number
         }
         Relationships: [
           {
@@ -129,34 +129,34 @@ export interface Database {
       }
       mountains: {
         Row: {
-          caic_code: string | null
+          caic_code: string
           display_name: string
           lat: number
-          location_type: string | null
+          location_type: string
           lon: number
-          model_elevation: number | null
+          model_elevation: number
           mountain_id: number
-          region: string | null
+          region: string
         }
         Insert: {
-          caic_code?: string | null
+          caic_code: string
           display_name: string
           lat: number
-          location_type?: string | null
+          location_type: string
           lon: number
-          model_elevation?: number | null
+          model_elevation: number
           mountain_id?: number
-          region?: string | null
+          region: string
         }
         Update: {
-          caic_code?: string | null
+          caic_code?: string
           display_name?: string
           lat?: number
-          location_type?: string | null
+          location_type?: string
           lon?: number
-          model_elevation?: number | null
+          model_elevation?: number
           mountain_id?: number
-          region?: string | null
+          region?: string
         }
         Relationships: []
       }
