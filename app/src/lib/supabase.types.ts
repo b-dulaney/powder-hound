@@ -1,6 +1,25 @@
 import type { PostgrestError } from '@supabase/supabase-js';
-import type { Database } from './supabase-generated.types.ts';
+import type { Database as DatabaseGenerated } from './supabase-generated.types';
+import type { MergeDeep } from 'type-fest'
 
+export type Database = MergeDeep<DatabaseGenerated, {
+  public: {
+    Views: {
+      mountain_overview: {
+        Row: {
+          display_name: string;
+          location_type: string;
+          currenttemp: number;
+          next24hoursnowfall: number;
+          next72hoursnowfall: number;
+          past24hoursnowfall: number;
+          past5daysnowfall: number;
+          region: string;
+        }
+      }
+    }
+  }
+}>
 
 export type Tables<T extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][T]['Row']

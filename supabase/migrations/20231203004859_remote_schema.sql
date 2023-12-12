@@ -4,6 +4,8 @@ drop view if exists "public"."mountain_overview";
 
 set check_function_bodies = off;
 
+DROP FUNCTION IF EXISTS public.get_current_temperature_for_mountain(id integer);
+
 CREATE OR REPLACE FUNCTION public.get_current_temperature_for_mountain(id integer)
  RETURNS integer
  LANGUAGE plpgsql
