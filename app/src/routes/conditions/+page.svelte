@@ -13,6 +13,7 @@
     filteredMountains = mountainOverviews?.filter((location) => {
       return location?.display_name?.toLowerCase().includes(searchInput.toLowerCase().trim());
     }) || [];
+    sortLocations(columnSort.name, columnSort.asc);
   }
 
   const updateColumnSort = (sortBy: string) => {
