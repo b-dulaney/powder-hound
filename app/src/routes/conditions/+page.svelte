@@ -63,8 +63,11 @@
   <div class="flex justify-center mb-4">
     <h1 class="h1">Locations</h1>
   </div>
-  <div class="flex justify-center mb-4 px-8 md:py-8">
-    <input class="input w-2/3 md:w-1/2" autocomplete="off" title="Input (search)" type="search" placeholder="Search..." bind:value={searchInput} on:input={searchLocations}/>
+  <div class="flex justify-center items-center mb-4 px-8 md:py-8 w-full">
+    <div class="input-group input-group-divider grid-cols-[auto_1fr_auto] w-3/4 sm:w-2/3 lg:w-1/2 xl:w-1/3">
+      <div class="input-group-shim"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <input type="search" autocomplete="off" placeholder="Search..." bind:value={searchInput} on:input={searchLocations}/>
+    </div>
   </div>
     <div class="table-container">
       <table class="table">
@@ -186,7 +189,7 @@
           {#if filteredMountains.length > 0}
             {#each filteredMountains as row, i}
             <tr>
-                <td class="table-cell-fit"><a class="anchor text-primary-500-400-token xl:text-lg" href="/conditions">{row.display_name}</a></td>
+                <td class="table-cell-fit"><a class="anchor text-primary-500-400-token xl:text-lg" href="/conditions/{row.slug}">{row.display_name}</a></td>
                 <td class="hidden capitalize xl:table-cell xl:text-center xl:table-cell-fit">
                   {#if row.location_type === "resort"}
                   <div class="badge variant-ghost-primary">
@@ -209,7 +212,7 @@
           {:else if mountainOverviews}
             {#each mountainOverviews as row, i}
             <tr>
-                <td  class="table-cell-fit"><a class="anchor text-primary-500-400-token xl:text-lg" href="/conditions">{row.display_name}</a></td>
+                <td  class="table-cell-fit"><a class="anchor text-primary-500-400-token xl:text-lg" href="/conditions/{row.slug}">{row.display_name}</a></td>
                 <td class="hidden capitalize xl:table-cell xl:text-center xl:table-cell-fit">
                   {#if row.location_type === "resort"}
                   <div class="badge variant-ghost-primary">
