@@ -8,6 +8,7 @@ export type Database = MergeDeep<DatabaseGenerated, {
       mountain_overview: {
         Row: {
           display_name: string;
+          slug: string;
           location_type: string;
           currenttemp: number;
           next24hoursnowfall: number;
