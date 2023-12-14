@@ -137,6 +137,7 @@ export interface Database {
           model_elevation: number
           mountain_id: number
           region: string
+          slug: string | null
         }
         Insert: {
           caic_code: string
@@ -147,6 +148,7 @@ export interface Database {
           model_elevation: number
           mountain_id?: number
           region: string
+          slug?: string | null
         }
         Update: {
           caic_code?: string
@@ -157,6 +159,7 @@ export interface Database {
           model_elevation?: number
           mountain_id?: number
           region?: string
+          slug?: string | null
         }
         Relationships: []
       }
@@ -290,6 +293,7 @@ export interface Database {
           past24hoursnowfall: number | null
           past5daysnowfall: number | null
           region: string | null
+          slug: string | null
         }
         Insert: {
           currenttemp?: never
@@ -300,6 +304,7 @@ export interface Database {
           past24hoursnowfall?: never
           past5daysnowfall?: never
           region?: string | null
+          slug?: string | null
         }
         Update: {
           currenttemp?: never
@@ -310,6 +315,7 @@ export interface Database {
           past24hoursnowfall?: never
           past5daysnowfall?: never
           region?: string | null
+          slug?: string | null
         }
         Relationships: []
       }
