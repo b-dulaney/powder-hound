@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { MountainOverview } from '$lib/supabase.types';
+	import WeatherIcon from '$lib/components/weather-icon.svelte';
+  import type { MountainOverview } from '$lib/supabase.types';
   import type { PageData } from './$types';
   export let data: PageData 
   const { mountainOverviews } = data
@@ -43,8 +44,8 @@
           return (a.location_type > b.location_type ? sortOrder : -sortOrder);
         case "weather":
           return (a.currenttemp - b.currenttemp) * sortOrder;
-        case "last5days":
-          return (a.past5daysnowfall - b.past5daysnowfall) * sortOrder;
+        case "last7days":
+          return (a.past7daysnowfall - b.past7daysnowfall) * sortOrder;
         case "last24hours":
           return (a.past24hoursnowfall - b.past24hoursnowfall) * sortOrder;
         case "next24hours":
@@ -83,7 +84,7 @@
                   {:else if columnSort.name === "location" && !columnSort.asc}
                     <i class="fa-solid fa-sort-down"></i>
                   {:else}
-                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  <i class="fa-solid fa-sort opacity-25"></i>
                   {/if}
                 </span>
               </button>
@@ -97,7 +98,7 @@
                   {:else if columnSort.name === "type" && !columnSort.asc}
                     <i class="fa-solid fa-sort-down"></i>
                   {:else}
-                    <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                    <i class="fa-solid fa-sort opacity-25"></i>
                   {/if}
                 </span>
               </button>
@@ -111,21 +112,21 @@
                   {:else if columnSort.name === "weather" && !columnSort.asc}
                     <i class="fa-solid fa-sort-down"></i>
                   {:else}
-                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  <i class="fa-solid fa-sort opacity-25"></i>
                   {/if}
                 </span>
               </button>
             </th>
-            <th class="hidden md:table-cell md:text-center md:table-cell-fit" aria-sort={columnSort.name === "last5days" ? columnSort.asc ? "ascending" : "descending" : "none"}>
-              <button class="group" on:click={() => updateColumnSort("last5days")}>
-                Last 5 Days
-                <span class="pl-1" aria-hidden={columnSort.name !== "last5days"}>
-                  {#if columnSort.name === "last5days" && columnSort.asc}
+            <th class="hidden md:table-cell md:text-center md:table-cell-fit" aria-sort={columnSort.name === "last7days" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+              <button class="group" on:click={() => updateColumnSort("last7days")}>
+                Last 7 Days
+                <span class="pl-1" aria-hidden={columnSort.name !== "last7days"}>
+                  {#if columnSort.name === "last7days" && columnSort.asc}
                     <i class="fa-solid fa-sort-up"></i>
-                  {:else if columnSort.name === "last5days" && !columnSort.asc}
+                  {:else if columnSort.name === "last7days" && !columnSort.asc}
                     <i class="fa-solid fa-sort-down"></i>
                   {:else}
-                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  <i class="fa-solid fa-sort opacity-25"></i>
                   {/if}
                 </span>
               </button>
@@ -139,7 +140,7 @@
                   {:else if columnSort.name === "last24hours" && !columnSort.asc}
                     <i class="fa-solid fa-sort-down"></i>
                   {:else}
-                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  <i class="fa-solid fa-sort opacity-25"></i>
                   {/if}
                 </span>
               </button>
@@ -153,7 +154,7 @@
                   {:else if columnSort.name === "next24hours" && !columnSort.asc}
                     <i class="fa-solid fa-sort-down"></i>
                   {:else}
-                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  <i class="fa-solid fa-sort opacity-25"></i>
                   {/if}
                 </span>
               </button>
@@ -167,7 +168,7 @@
                   {:else if columnSort.name === "next72hours" && !columnSort.asc}
                     <i class="fa-solid fa-sort-down"></i>
                   {:else}
-                  <i class="fa-solid fa-sort opacity-50 md:opacity-0 group-hover:opacity-50"></i>
+                  <i class="fa-solid fa-sort opacity-25"></i>
                   {/if}
                 </span>
               </button>
@@ -201,8 +202,8 @@
                   </div>
                   {/if}
                 </td>
-                <td class="hidden font-semibold lg:table-cell lg:text-center lg:table-cell-fit">{row.currenttemp}&degF</td>
-                <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.past5daysnowfall}"</td>
+                <td class="hidden font-semibold lg:table-cell lg:text-center lg:table-cell-fit">{row.currenttemp}&degF <span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc}/></span></td>
+                <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.past7daysnowfall}"</td>
                 <td class="text-center font-semibold">{row.past24hoursnowfall}"</td>
                 <td class="text-center font-semibold">{row.next24hoursnowfall}"</td>
                 <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.next72hoursnowfall}"</td>
@@ -224,8 +225,8 @@
                   </div>
                   {/if}
                 </td>
-                <td class="hidden font-semibold lg:table-cell lg:text-center lg:table-cell-fit">{row.currenttemp}&degF</td>
-                <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.past5daysnowfall}"</td>
+                <td class="hidden font-semibold lg:table-cell lg:text-center lg:table-cell-fit">{row.currenttemp}&degF <span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc}/></span></td>
+                <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.past7daysnowfall}"</td>
                 <td class="text-center font-semibold">{row.past24hoursnowfall}"</td>
                 <td class="text-center font-semibold">{row.next24hoursnowfall}"</td>
                 <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.next72hoursnowfall}"</td>
