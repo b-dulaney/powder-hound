@@ -19,7 +19,7 @@
     }
 </script>
 
-<div class="flex flex-auto justify-start pl-2 last:pl-0">
+<div class="flex flex-auto justify-start pl-2">
     <div class="flex flex-col justify-center items-center pr-2">
         <p class="font-semibold pl-1">{high_temp}&deg;</p>
         <p class="font-semibold pl-1">{low_temp}&deg;</p>
