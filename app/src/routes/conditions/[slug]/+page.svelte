@@ -3,6 +3,7 @@
     import Chart from 'chart.js/auto'
     import { onMount } from 'svelte';
     import WeatherIcon from "$lib/components/weather-icon.svelte";
+	import WeatherForecastSlice from '$lib/components/weather-forecast-slice.svelte';
     export let data: PageData
     const { mountainDetails } = data
     let recentChart;
@@ -105,9 +106,9 @@
                     <p class="text-2xl font-bold">{mountainDetails.current_temperature}°</p>
                     <p class="text-xl capitalize font-bold">{mountainDetails.current_weather}</p>
                     <div class="flex">
-                        <p class="font-semibold">High {mountainDetails.temperature_range[5].high_temp}&deg;</p>
+                        <p class="font-semibold">High {mountainDetails.temperature_range[1].high_temp}&deg;</p>
                         <p class="font-semibold mx-2">&middot;</p>
-                        <p class="font-semibold">Low {mountainDetails.temperature_range[5].low_temp}&deg;</p>
+                        <p class="font-semibold">Low {mountainDetails.temperature_range[1].low_temp}&deg;</p>
                     </div>
                     <p class="text-xl">
                 </div>
@@ -115,7 +116,18 @@
                         <WeatherIcon weatherDesc={mountainDetails.current_weather} size="large" />
                 </div>
             </div>
-            <a class="anchor self-center mb-3" href="/conditions/{mountainDetails.slug}">View Hourly Forecast <span><i class="fa-solid fa-chevron-right"></i></span></a>    
+            <div class="flex w-full justify-around pl-2 py-2 pr-0">
+                {#each mountainDetails.temperature_range as {date, low_temp, high_temp}, i (i)}
+                            <WeatherForecastSlice 
+                                high_temp={high_temp} 
+                                low_temp={low_temp}
+                                weatherDesc={mountainDetails.daily_weather_conditions[i].daily_weather} 
+                                date={date} 
+                                isLast={i === 4} 
+                            />
+                {/each}
+            </div>
+            <a class="anchor self-center mb-3" href="/conditions/{mountainDetails.slug}/hourly-forecast">View Hourly Forecast <span><i class="fa-solid fa-chevron-right"></i></span></a>    
         </div>
 
     </div>

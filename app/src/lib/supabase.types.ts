@@ -10,7 +10,7 @@ export type TemperatureRange = {
 
 export type DailyWeatherCondition = {
   date: string;
-  weather_desc: string;
+  daily_weather: string;
 }
 
 export type SnowfallTotal = {
