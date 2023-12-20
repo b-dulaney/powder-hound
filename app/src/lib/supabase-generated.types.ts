@@ -66,6 +66,13 @@ export interface Database {
             foreignKeyName: "caic_data_mountain_id_fkey"
             columns: ["mountain_id"]
             isOneToOne: false
+            referencedRelation: "mountain_detail"
+            referencedColumns: ["mountain_id"]
+          },
+          {
+            foreignKeyName: "caic_data_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: false
             referencedRelation: "mountains"
             referencedColumns: ["mountain_id"]
           }
@@ -118,6 +125,13 @@ export interface Database {
           wind_speed?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "daily_forecasts_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: false
+            referencedRelation: "mountain_detail"
+            referencedColumns: ["mountain_id"]
+          },
           {
             foreignKeyName: "daily_forecasts_mountain_id_fkey"
             columns: ["mountain_id"]
@@ -205,6 +219,18 @@ export interface Database {
           }
         ]
       }
+      result: {
+        Row: {
+          jsonb_agg: Json | null
+        }
+        Insert: {
+          jsonb_agg?: Json | null
+        }
+        Update: {
+          jsonb_agg?: Json | null
+        }
+        Relationships: []
+      }
       snow_accumulation: {
         Row: {
           created_at: string
@@ -225,6 +251,13 @@ export interface Database {
           precip_total?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "snow_accumulation_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: false
+            referencedRelation: "mountain_detail"
+            referencedColumns: ["mountain_id"]
+          },
           {
             foreignKeyName: "snow_accumulation_mountain_id_fkey"
             columns: ["mountain_id"]
@@ -276,6 +309,13 @@ export interface Database {
             foreignKeyName: "weekly_forecasts_mountain_id_fkey"
             columns: ["mountain_id"]
             isOneToOne: false
+            referencedRelation: "mountain_detail"
+            referencedColumns: ["mountain_id"]
+          },
+          {
+            foreignKeyName: "weekly_forecasts_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: false
             referencedRelation: "mountains"
             referencedColumns: ["mountain_id"]
           }
@@ -283,6 +323,63 @@ export interface Database {
       }
     }
     Views: {
+      mountain_detail: {
+        Row: {
+          current_temperature: number | null
+          current_weather: string | null
+          display_name: string | null
+          elevation: number | null
+          hourly_weather_data: Json | null
+          lat: number | null
+          location_type: string | null
+          lon: number | null
+          mountain_id: number | null
+          next72hoursnowfall: number | null
+          past7daysnowfall: number | null
+          previous_snowfall_totals: Json | null
+          region: string | null
+          slug: string | null
+          temperature_range: Json | null
+          upcoming_snowfall_totals: Json | null
+        }
+        Insert: {
+          current_temperature?: never
+          current_weather?: never
+          display_name?: string | null
+          elevation?: number | null
+          hourly_weather_data?: never
+          lat?: number | null
+          location_type?: string | null
+          lon?: number | null
+          mountain_id?: number | null
+          next72hoursnowfall?: never
+          past7daysnowfall?: never
+          previous_snowfall_totals?: never
+          region?: string | null
+          slug?: string | null
+          temperature_range?: never
+          upcoming_snowfall_totals?: never
+        }
+        Update: {
+          current_temperature?: never
+          current_weather?: never
+          display_name?: string | null
+          elevation?: number | null
+          hourly_weather_data?: never
+          lat?: number | null
+          location_type?: string | null
+          lon?: number | null
+          mountain_id?: number | null
+          next72hoursnowfall?: never
+          past7daysnowfall?: never
+          previous_snowfall_totals?: never
+          region?: string | null
+          slug?: string | null
+          temperature_range?: never
+          upcoming_snowfall_totals?: never
+        }
+        Relationships: []
+      }
       mountain_overview: {
         Row: {
           currenttemp: number | null
@@ -291,9 +388,10 @@ export interface Database {
           next24hoursnowfall: number | null
           next72hoursnowfall: number | null
           past24hoursnowfall: number | null
-          past5daysnowfall: number | null
+          past7daysnowfall: number | null
           region: string | null
           slug: string | null
+          weather_desc: string | null
         }
         Insert: {
           currenttemp?: never
@@ -302,9 +400,10 @@ export interface Database {
           next24hoursnowfall?: never
           next72hoursnowfall?: never
           past24hoursnowfall?: never
-          past5daysnowfall?: never
+          past7daysnowfall?: never
           region?: string | null
           slug?: string | null
+          weather_desc?: never
         }
         Update: {
           currenttemp?: never
@@ -313,9 +412,10 @@ export interface Database {
           next24hoursnowfall?: never
           next72hoursnowfall?: never
           past24hoursnowfall?: never
-          past5daysnowfall?: never
+          past7daysnowfall?: never
           region?: string | null
           slug?: string | null
+          weather_desc?: never
         }
         Relationships: []
       }
@@ -343,10 +443,22 @@ export interface Database {
         }
         Returns: number
       }
+      get_current_weather_desc: {
+        Args: {
+          id: number
+        }
+        Returns: string
+      }
       get_daily_weather: {
         Args: {
           lat: number
           lon: number
+        }
+        Returns: Json
+      }
+      get_hourly_weather_data: {
+        Args: {
+          id: number
         }
         Returns: Json
       }
@@ -356,11 +468,29 @@ export interface Database {
         }
         Returns: number
       }
-      get_past_5_days_snowfall_for_mountain: {
+      get_past_7_days_snowfall_for_mountain: {
         Args: {
           id: number
         }
         Returns: number
+      }
+      get_previous_snowfall_total: {
+        Args: {
+          mountain_id: number
+        }
+        Returns: Json
+      }
+      get_temperature_range: {
+        Args: {
+          id: number
+        }
+        Returns: Json
+      }
+      get_upcoming_snowfall_total: {
+        Args: {
+          mountain_id: number
+        }
+        Returns: Json
       }
     }
     Enums: {
