@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from "./$types";
+	import type { PageData } from './$types'
     import Chart from 'chart.js/auto'
     import { onMount } from 'svelte';
     import WeatherIcon from "$lib/components/weather-icon.svelte";
@@ -9,8 +9,8 @@
     let upcomingChart
 
     onMount(() => {
-        const recentSnowChart = document.getElementById('recent-snowfall-chart');
-        const upcomingSnowChart = document.getElementById('upcoming-snowfall-chart');
+        const recentSnowChart = document.getElementById('recent-snowfall-chart') as HTMLCanvasElement;
+        const upcomingSnowChart = document.getElementById('upcoming-snowfall-chart') as HTMLCanvasElement;
         recentChart = new Chart(recentSnowChart, {
             type: 'bar',
             data: {

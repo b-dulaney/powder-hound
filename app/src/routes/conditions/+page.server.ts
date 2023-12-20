@@ -1,7 +1,8 @@
 import type { MountainOverview } from "$lib/supabase.types";
 import { supabase } from "$lib/supabaseClient";
+import type { PageServerLoad } from "./$types";
 
-export async function load() {
+export const load: PageServerLoad = async () => {
     const {data, error} = await supabase.from("mountain_overview").select().returns<MountainOverview[]>();
     if(error) {
       return {
