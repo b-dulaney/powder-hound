@@ -2,6 +2,7 @@
 	import WeatherIcon from '$lib/components/weather-icon.svelte';
   import type { MountainOverview } from '$lib/supabase.types';
   import type { PageData } from './$types';
+  import { formatSnowfall } from '$lib/utils';
   export let data: PageData 
   const { mountainOverviews } = data
   
@@ -15,10 +16,6 @@
       return location?.display_name?.toLowerCase().includes(searchInput.toLowerCase().trim());
     }) || [];
     sortLocations(columnSort.name, columnSort.asc);
-  }
-
-  const formatSnowfall = (snowfall: number) => {
-    return (snowfall < 1 && snowfall > 0) ? '<1' : snowfall.toString();
   }
 
   const updateColumnSort = (sortBy: string) => {
