@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Doge from "../public/dog-construction.jpg"
+    import Doge from "../../public/dog-construction.jpg"
 </script>
 
 <div class="flex flex-col items-center justify-center h-auto py-8 px-8">
