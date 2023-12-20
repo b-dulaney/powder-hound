@@ -7,7 +7,6 @@ export async function load({params}) {
     const { data } = await supabase.from("mountain_detail").select().eq("slug", params.slug).returns<MountainDetail[]>().single()
 
     if(data){
-        console.log(data)
         return {
             mountainDetails: data
         }

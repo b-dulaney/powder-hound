@@ -17,6 +17,10 @@
     sortLocations(columnSort.name, columnSort.asc);
   }
 
+  const formatSnowfall = (snowfall: number) => {
+    return (snowfall < 1 && snowfall > 0) ? '<1' : snowfall.toString();
+  }
+
   const updateColumnSort = (sortBy: string) => {
     if (columnSort.name === sortBy) {
       columnSort.asc = !columnSort.asc;
@@ -32,7 +36,6 @@
   }
 
   const sortLocations = (sortBy: string, asc: boolean) => {
-    console.log("sortLocations", sortBy, asc)
     const sortOrder = asc ? 1 : -1;
     const arrayToSort = filteredMountains.length > 0 ? filteredMountains : mountainOverviews;
 
@@ -186,6 +189,16 @@
             </td>
           </tr>
 
+        {#if !mountainOverviews?.length}
+        <tr>
+          <td colspan="8">
+          <div class="flex justify-center m-4">
+            <h3 class="h3">No results found</h3>
+          </div>
+          </td>
+        </tr>
+        {/if}
+
         {:else}
           {#if filteredMountains.length > 0}
             {#each filteredMountains as row, i}
@@ -202,12 +215,12 @@
                   </div>
                   {/if}
                 </td>
-                <td class="hidden font-semibold lg:table-cell lg:text-center lg:table-cell-fit">{row.currenttemp}&degF <span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc}/></span></td>
-                <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.past7daysnowfall}"</td>
-                <td class="text-center font-semibold">{row.past24hoursnowfall}"</td>
-                <td class="text-center font-semibold">{row.next24hoursnowfall}"</td>
-                <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.next72hoursnowfall}"</td>
-                <td class="text-center font-semibold"><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"><i class="fa-regular fa-star"></i></button></td>
+                <td class="hidden font-bold lg:table-cell lg:text-center lg:table-cell-fit">{row.currenttemp}&degF <span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc}/></span></td>
+                <td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit">{formatSnowfall(row.past7daysnowfall)}"</td>
+                <td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
+                <td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
+                <td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit">{formatSnowfall(row.next72hoursnowfall)}"</td>
+                <td class="text-center font-bold"><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"><i class="fa-regular fa-star"></i></button></td>
               </tr>
             {/each}
           {:else if mountainOverviews}
@@ -225,12 +238,12 @@
                   </div>
                   {/if}
                 </td>
-                <td class="hidden font-semibold lg:table-cell lg:text-center lg:table-cell-fit">{row.currenttemp}&degF <span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc}/></span></td>
-                <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.past7daysnowfall}"</td>
-                <td class="text-center font-semibold">{row.past24hoursnowfall}"</td>
-                <td class="text-center font-semibold">{row.next24hoursnowfall}"</td>
-                <td class="hidden font-semibold md:table-cell md:text-center md:table-cell-fit">{row.next72hoursnowfall}"</td>
-                <td class="text-center font-semibold"><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"><i class="fa-regular fa-star"></i></button></td>
+                <td class="hidden font-bold lg:table-cell lg:text-center lg:table-cell-fit">{row.currenttemp}&degF <span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc}/></span></td>
+                <td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit">{formatSnowfall(row.past7daysnowfall)}"</td>
+                <td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
+                <td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
+                <td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit">{formatSnowfall(row.next72hoursnowfall)}"</td>
+                <td class="text-center font-bold"><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"><i class="fa-regular fa-star"></i></button></td>
               </tr>
             {/each}
           {/if}
