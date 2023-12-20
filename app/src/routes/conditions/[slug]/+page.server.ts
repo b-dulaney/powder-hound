@@ -13,5 +13,5 @@ export async function load({params}) {
         }
     }
 
-    throw error(404, "Location not found")
+    error(404, "Location not found");
 }
