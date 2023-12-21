@@ -5,7 +5,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
-	import { convertWindDirection, convertWindSpeed } from '$lib/utils';
+	import { convertWindDirection, convertWindSpeed, weatherConditionsMap } from '$lib/utils';
 	import Snow from '$lib/components/snow.svelte';
 
     export let data: PageData
@@ -20,10 +20,10 @@
         recentChart = new Chart(recentSnowChart, {
             type: 'bar',
             data: {
-                labels: mountainDetails.previous_snowfall_totals.map((snowfall) => snowfall.date).slice(0, 7),
+                labels: mountainDetails.previous_snowfall_totals.map((snowfall) => snowfall.date),
                 datasets: [{
                     label: 'Snowfall (inches)',
-                    data: mountainDetails.previous_snowfall_totals.map((snowfall) => snowfall.snowfall_total).slice(0, 7),
+                    data: mountainDetails.previous_snowfall_totals.map((snowfall) => snowfall.snowfall_total),
                     backgroundColor: ['rgba(54, 162, 235, 0.4)'],
                     borderColor: ['rgb(54, 162, 235)'],
                     borderWidth: 1,
@@ -120,11 +120,11 @@
             <div class="flex justify-between">
                 <div class="flex flex-col p-4">
                     <p class="text-2xl font-bold">{mountainDetails.current_temperature}°</p>
-                    <p class="text-xl capitalize font-bold">{mountainDetails.current_weather}</p>
+                    <p class="text-xl  font-bold">{weatherConditionsMap[mountainDetails.current_weather]}</p>
                     <div class="flex">
-                        <p class="font-semibold">High {mountainDetails.temperature_range[1].high_temp}&deg;</p>
+                        <p class="font-semibold">High {mountainDetails.temperature_range[0].high_temp}&deg;</p>
                         <p class="font-semibold mx-2">&middot;</p>
-                        <p class="font-semibold">Low {mountainDetails.temperature_range[1].low_temp}&deg;</p>
+                        <p class="font-semibold">Low {mountainDetails.temperature_range[0].low_temp}&deg;</p>
                     </div>
                     <p class="text-xl">
                 </div>
@@ -132,26 +132,31 @@
                         <WeatherIcon weatherDesc={mountainDetails.current_weather} size="large" />
                 </div>
             </div>
-            <div class="flex w-full justify-center pl-[10px] py-2">
+            <div class="grid grid-cols-7 px-4 py-2 justify-items-center items-center">
                 {#each mountainDetails.temperature_range as {date, low_temp, high_temp}, i (i)}
                             <WeatherForecastSlice 
                                 high_temp={high_temp} 
                                 low_temp={low_temp}
                                 weatherDesc={mountainDetails.daily_weather_conditions[i].daily_weather} 
                                 date={date} 
-                                isLast={i === 4} 
+                                isLast={i === 3} 
                             />
+                            {#if i < mountainDetails.temperature_range.length - 1}
+                                <hr class="divider-vertical h-3/4 opacity-40" />
+                            {/if}
                 {/each}
+                
             </div>
-            <Accordion class="mt-2">
+
+            <Accordion class="my-2">
                 <AccordionItem>
                     <svelte:fragment slot="summary"><p class="text-center">View Hourly Forecast</p></svelte:fragment>
                     <svelte:fragment slot="content">
                         <ul class="list">
                             {#each mountainDetails.hourly_forecast as {datetime, temp, weather_desc, snowfall, wind_deg_speed}, i (i)}
                                 <li class="!rounded-md">
-                                    <div class="p-2 grid grid-cols-6 gap-4 items-center w-full">
-                                        <p class="text-xs sm:text-sm">{new Date(datetime).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, timeZone: 'America/Denver'})}</p>
+                                    <div class="p-2 grid grid-cols-6 gap-3 items-center w-full">
+                                        <p class="text-xs sm:text-sm text-surface-400">{new Date(datetime).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, timeZone: 'America/Denver'})}</p>
                                         <WeatherIcon datetime={new Date(datetime)} weatherDesc={weather_desc} size="small" />
                                         {#if snowfall > 0}                                            
                                             <p class="text-sm font-semibold">{snowfall}"</p>
@@ -160,9 +165,9 @@
                                         {/if}    
                                         <p class="text-sm">{temp}&deg;</p>
                                         <span class="col-span-2">
-                                            <div class="flex justify-between">
+                                            <div class="flex justify-evenly">
                                                 <p class="text-xs sm:text-sm">
-                                                    <i class="fa-solid fa-wind"></i>&nbsp;{convertWindSpeed(wind_deg_speed)}
+                                                    {convertWindSpeed(wind_deg_speed)}
                                                 </p>
                                                 <p class="text-xs sm:text-sm">
                                                     <i class="fa-solid fa-location-arrow text-primary-500" style="transform: rotate({parseInt(wind_deg_speed.split('/')[0], 10) + 140}deg);"></i>&nbsp;
@@ -189,7 +194,7 @@
     </div>
     <div class="card mt-4">
         <div class="flex flex-col items-center">
-            <p class="text-xl font-bold mt-2">Last 7 Days</p>
+            <p class="text-xl font-bold mt-2">Past Week</p>
             <div class="flex w-full justify-center items-center">
                 <hr class="w-1/4 px-2 !border-slate-700"/>
                 <p class="px-6 text-xl font-semibold">

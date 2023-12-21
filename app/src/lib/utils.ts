@@ -30,7 +30,7 @@ export function convertWindDirection(input: string): string {
 export function convertWindSpeed(input: string): string {
     const speedStr = input.split('/')[1];
     const speed = parseInt(speedStr, 10);
-    return `${speed} mph`;
+    return `${speed} MPH`;
 }
 
 export const formatSnowfall = (snowfall: number) => {
@@ -39,3 +39,14 @@ export const formatSnowfall = (snowfall: number) => {
     }
     return (snowfall < 1 && snowfall > 0) ? '<1' : snowfall.toString();
   }
+
+export const weatherConditionsMap: Record<string, string> = {
+  "isocloud": "Isolated Clouds",
+  "clear": "Clear",
+  "snow": "Snow",
+  "ptlycldy": "Partly Cloudy",
+  "mslycldy": "Mostly Cloudy",
+  "cloudy": "Cloudy",
+  "fog": "Fog",
+  "haze": "Haze",
+}

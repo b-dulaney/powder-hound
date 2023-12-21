@@ -19,15 +19,9 @@
     }
 </script>
 
-<div class="flex flex-auto justify-start pl-2">
-    <div class="flex flex-col justify-center items-center pr-2">
+    <div class="flex flex-col items-center justify-center">
         <p class="font-semibold pl-1">{high_temp}&deg;</p>
         <p class="font-semibold pl-1">{low_temp}&deg;</p>
         <WeatherIcon size="small" weatherDesc={weatherDesc} />
-        <p class="mt-2 text-sm">{formatDate(date)}</p>
+        <p class="mt-2 text-xs sm:text-sm">{formatDate(date)}</p>
     </div>
-    {#if !isLast}
-        <hr class="divider-vertical h-full"/>
-    {/if}
-    
-</div>
