@@ -173,7 +173,7 @@
                 </span>
               </button>
             </th>
-            <th class="table-cell-fit"></th>
+            <th class="sm:table-cell-fit !px-0" aria-hidden></th>
           </tr>
         </thead>
         <tbody>
@@ -217,7 +217,7 @@
                 <td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
                 <td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
                 <td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit">{formatSnowfall(row.next72hoursnowfall)}"</td>
-                <td class="text-center font-bold"><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"><i class="fa-regular fa-star"></i></button></td>
+                <td class="text-center font-bold !px-0"><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"><i class="fa-regular fa-star"></i></button></td>
               </tr>
             {/each}
           {:else if mountainOverviews}
@@ -240,7 +240,7 @@
                 <td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
                 <td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
                 <td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit">{formatSnowfall(row.next72hoursnowfall)}"</td>
-                <td class="text-center font-bold"><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"><i class="fa-regular fa-star"></i></button></td>
+                <td class="text-center font-bold !px-0"><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"><i class="fa-regular fa-star"></i></button></td>
               </tr>
             {/each}
           {/if}
