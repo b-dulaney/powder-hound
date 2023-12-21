@@ -3,7 +3,7 @@
     export let size: "small" | "large" = "large";
     export let datetime: Date = new Date();
     const time = datetime.getHours();
-    const isDaytime = time > 7 && time < 17;
+    const isDaytime = time >= 7 && time <= 17;
     const textStyle = size === 'small' ? 'text-xl' : 'text-3xl';
 
     const weatherIcons: Record<string, string> = {
