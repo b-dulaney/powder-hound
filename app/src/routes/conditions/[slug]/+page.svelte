@@ -132,7 +132,7 @@
                         <WeatherIcon weatherDesc={mountainDetails.current_weather} size="large" />
                 </div>
             </div>
-            <div class="grid grid-cols-7 px-4 py-2 items-center">
+            <div class="grid grid-cols-7 px-4 py-2 items-center w-full gap-0">
                 {#each mountainDetails.temperature_range as {date, low_temp, high_temp}, i (i)}
                             <WeatherForecastSlice 
                                 high_temp={high_temp} 
