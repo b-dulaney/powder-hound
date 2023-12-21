@@ -16,7 +16,7 @@
     </svelte:fragment>
     <slot />
     <svelte:fragment slot="pageFooter">
-      <div class="page-footer bg-surface-50 dark:bg-surface-900 border-t border-surface-500/10 text-xs md:text-base">
+      <div class="page-footer dark:bg-surface-900 border-t border-surface-500/10 text-xs md:text-base">
         <div class="w-full max-w-6xl mx-auto p-4 py-8 space-y-10">
           <section class="flex flex-col justify-between items-center space-y-5 md:space-y-0">
             <div class="grid grid-cols-1 gap-2 place-content-center place-items-center">

@@ -22,20 +22,14 @@ export type HourlyWeatherData = {
   datetime: string;
   temp: number;
   wind_gust: number;
+  snowfall: number;
   weather_desc: string;
-  wing_deg_speed: string;
+  wind_deg_speed: string;
 }
 
 export type Database = MergeDeep<DatabaseGenerated, {
   public: {
     Views: {
-      hourly_forecast: {
-        Row: {
-          mountain_id: number;
-          display_name: string;
-          hourly_weather_data: HourlyWeatherData[];
-        }
-      },
       mountain_overview: {
         Row: {
           display_name: string;
@@ -64,6 +58,7 @@ export type Database = MergeDeep<DatabaseGenerated, {
           mountain_id: number;
           region: string;
           slug: string;
+          hourly_forecast: HourlyWeatherData[];
           daily_weather_conditions: DailyWeatherCondition[];
           previous_snowfall_totals: SnowfallTotal[];
           upcoming_snowfall_totals: SnowfallTotal[];
@@ -86,7 +81,6 @@ export type WeeklyForecast =Tables<'weekly_forecasts'>
 export type CaicData = Tables<'caic_data'>
 export type MountainOverview = Views<'mountain_overview'>
 export type MountainDetail = Views<'mountain_details'>
-export type HourlyForecast = Views<'hourly_forecast'>
 
 type TableTypes = Mountain | SnowAccumulation | DailyForecast | WeeklyForecast | CaicData;
 

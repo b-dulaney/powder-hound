@@ -66,13 +66,6 @@ export interface Database {
             foreignKeyName: "caic_data_mountain_id_fkey"
             columns: ["mountain_id"]
             isOneToOne: false
-            referencedRelation: "hourly_forecast"
-            referencedColumns: ["mountain_id"]
-          },
-          {
-            foreignKeyName: "caic_data_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: false
             referencedRelation: "mountain_detail"
             referencedColumns: ["mountain_id"]
           },
@@ -132,13 +125,6 @@ export interface Database {
           wind_speed?: number | null
         }
         Relationships: [
-          {
-            foreignKeyName: "daily_forecasts_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: false
-            referencedRelation: "hourly_forecast"
-            referencedColumns: ["mountain_id"]
-          },
           {
             foreignKeyName: "daily_forecasts_mountain_id_fkey"
             columns: ["mountain_id"]
@@ -269,13 +255,6 @@ export interface Database {
             foreignKeyName: "snow_accumulation_mountain_id_fkey"
             columns: ["mountain_id"]
             isOneToOne: false
-            referencedRelation: "hourly_forecast"
-            referencedColumns: ["mountain_id"]
-          },
-          {
-            foreignKeyName: "snow_accumulation_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: false
             referencedRelation: "mountain_detail"
             referencedColumns: ["mountain_id"]
           },
@@ -330,13 +309,6 @@ export interface Database {
             foreignKeyName: "weekly_forecasts_mountain_id_fkey"
             columns: ["mountain_id"]
             isOneToOne: false
-            referencedRelation: "hourly_forecast"
-            referencedColumns: ["mountain_id"]
-          },
-          {
-            foreignKeyName: "weekly_forecasts_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: false
             referencedRelation: "mountain_detail"
             referencedColumns: ["mountain_id"]
           },
@@ -351,24 +323,6 @@ export interface Database {
       }
     }
     Views: {
-      hourly_forecast: {
-        Row: {
-          display_name: string | null
-          hourly_weather_data: Json | null
-          mountain_id: number | null
-        }
-        Insert: {
-          display_name?: string | null
-          hourly_weather_data?: never
-          mountain_id?: number | null
-        }
-        Update: {
-          display_name?: string | null
-          hourly_weather_data?: never
-          mountain_id?: number | null
-        }
-        Relationships: []
-      }
       mountain_detail: {
         Row: {
           current_temperature: number | null
@@ -376,6 +330,7 @@ export interface Database {
           daily_weather_conditions: Json | null
           display_name: string | null
           elevation: number | null
+          hourly_forecast: Json | null
           lat: number | null
           location_type: string | null
           lon: number | null
@@ -394,6 +349,7 @@ export interface Database {
           daily_weather_conditions?: never
           display_name?: string | null
           elevation?: number | null
+          hourly_forecast?: never
           lat?: number | null
           location_type?: string | null
           lon?: number | null
@@ -412,6 +368,7 @@ export interface Database {
           daily_weather_conditions?: never
           display_name?: string | null
           elevation?: number | null
+          hourly_forecast?: never
           lat?: number | null
           location_type?: string | null
           lon?: number | null

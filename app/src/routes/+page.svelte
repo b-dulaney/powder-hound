@@ -1,8 +1,3 @@
-<!--
-// v0 by Vercel.
-// https://v0.dev/t/RMJj8VEFsHd
--->
-
 <script lang="ts">
 	import { Avatar } from "@skeletonlabs/skeleton";
   import Logo from "../public/powder-hound-logo-new.png"

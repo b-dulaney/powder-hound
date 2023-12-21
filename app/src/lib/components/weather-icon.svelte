@@ -1,7 +1,8 @@
 <script lang="ts">
     export let weatherDesc: string;
     export let size: "small" | "large" = "large";
-    const time = new Date().getHours();
+    export let datetime: Date = new Date();
+    const time = datetime.getHours();
     const isDaytime = time > 7 && time < 17;
     const textStyle = size === 'small' ? 'text-xl' : 'text-3xl';
 
