@@ -163,7 +163,7 @@
 				{/each}
 			</div>
 
-			<Accordion class="my-2">
+			<Accordion>
 				<AccordionItem>
 					<svelte:fragment slot="summary"
 						><p class="text-center">View Hourly Forecast</p></svelte:fragment
