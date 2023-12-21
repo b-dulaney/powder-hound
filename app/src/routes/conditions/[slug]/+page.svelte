@@ -139,7 +139,6 @@
                                 low_temp={low_temp}
                                 weatherDesc={mountainDetails.daily_weather_conditions[i].daily_weather} 
                                 date={date} 
-                                isLast={i === 3} 
                             />
                             {#if i < mountainDetails.temperature_range.length - 1}
                                 <hr class="divider-vertical h-3/4 opacity-40" />
