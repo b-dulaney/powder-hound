@@ -149,7 +149,7 @@
 					<WeatherIcon weatherDesc={mountainDetails.current_weather} size="large" />
 				</div>
 			</div>
-			<div class="grid grid-cols-7 px-4 py-2 items-center w-full gap-0">
+			<div class="flex justify-between px-4 py-2 items-center w-full">
 				{#each mountainDetails.temperature_range as { date, low_temp, high_temp }, i (i)}
 					<WeatherForecastSlice
 						{high_temp}
@@ -158,7 +158,7 @@
 						{date}
 					/>
 					{#if i < mountainDetails.temperature_range.length - 1}
-						<hr class="divider-vertical h-3/4 opacity-40" />
+						<hr class="divider-vertical opacity-40 h-20" />
 					{/if}
 				{/each}
 			</div>
