@@ -9,7 +9,7 @@
     const weatherIcons: Record<string, string> = {
         haze: 'fa-smog',
         fog: 'fa-smog',
-        isocloudy: isDaytime ? 'fa-cloud-sun' : 'fa-cloud-moon',
+        isocloud: isDaytime ? 'fa-cloud-sun' : 'fa-cloud-moon',
         mslycldy: isDaytime ? 'fa-cloud' : 'fa-cloud-moon',
         ptlycldy: isDaytime ? 'fa-cloud-sun' : 'fa-cloud-moon',
         cloudy: isDaytime ? 'fa-cloud' : 'fa-cloud-moon',
