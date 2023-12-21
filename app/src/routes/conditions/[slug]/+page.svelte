@@ -1,10 +1,15 @@
 <script lang="ts">
-	import type { PageData } from './$types'
-    import Chart from 'chart.js/auto'
-    import { onMount } from 'svelte';
-    import WeatherIcon from "$lib/components/weather-icon.svelte";
 	import WeatherForecastSlice from '$lib/components/weather-forecast-slice.svelte';
+	import WeatherIcon from "$lib/components/weather-icon.svelte";
+	import Chart from 'chart.js/auto';
+	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+	import { convertWindDirection, convertWindSpeed } from '$lib/utils';
+	import Snow from '$lib/components/snow.svelte';
+
     export let data: PageData
+
     const { mountainDetails } = data
     let recentChart;
     let upcomingChart
@@ -82,19 +87,30 @@
             }
         })
     })
-
-    
 </script>
 
-<section id="header-section" class="pt-8 px-4 lg:p-8 xl:p-16flex flex-col ">
-    <h1 class="h1">{mountainDetails.display_name}</h1>
-    <span class="flex items-center"><p class="font-bold mt-2 text-xl text-slate-400 mr-2">Region:</p><p class="text-xl font-bold mt-2">{mountainDetails.region}</p></span>
-    {#if mountainDetails.location_type === "resort"}
-        <div class="badge variant-ghost-primary capitalize mt-2 w-[80px]">{mountainDetails.location_type}</div>
-    {:else}
-        <div class="badge variant-ghost-success capitalize mt-2 w-[100px]">{mountainDetails.location_type}</div>
-    {/if}
+{#if mountainDetails.current_weather === "snow"}
+    <Snow />
+{/if}
+
+<section id="header-section">
+    <ol class="breadcrumb pt-4 px-4">
+        <li class="crumb">&lsaquo; <a class="anchor" href="/conditions">Conditions</a></li>
+        <li class="crumb-separator" aria-hidden>/</li>
+        <li>{mountainDetails.display_name}</li>
+    </ol>
+    
+    <div class="py-4 px-4 lg:p-8 xl:p-16flex flex-col">
+        <h1 class="h1">{mountainDetails.display_name}</h1>
+        <span class="flex items-center"><p class="font-bold mt-2 text-xl text-slate-400 mr-2">Region:</p><p class="text-xl font-bold mt-2">{mountainDetails.region}</p></span>
+        {#if mountainDetails.location_type === "resort"}
+            <div class="badge variant-ghost-primary capitalize mt-2 w-[80px]">{mountainDetails.location_type}</div>
+        {:else}
+            <div class="badge variant-ghost-success capitalize mt-2 w-[100px]">{mountainDetails.location_type}</div>
+        {/if}
+    </div>
 </section>
+
 <section id="forecast-section" class="pt-8 px-4 lg:p-8 xl:p-16">
     <div class="flex justify-center mb-4">
         <h3 class="h3">Weather Forecast</h3>
@@ -127,13 +143,47 @@
                             />
                 {/each}
             </div>
-            <a class="anchor self-center mb-3" href="/conditions/{mountainDetails.slug}/hourly-forecast">View Hourly Forecast <span><i class="fa-solid fa-chevron-right"></i></span></a>    
+            <Accordion class="mt-2">
+                <AccordionItem>
+                    <svelte:fragment slot="summary"><p class="text-center">View Hourly Forecast</p></svelte:fragment>
+                    <svelte:fragment slot="content">
+                        <ul class="list">
+                            {#each mountainDetails.hourly_forecast as {datetime, temp, weather_desc, snowfall, wind_deg_speed}, i (i)}
+                                <li class="!rounded-md">
+                                    <div class="p-2 grid grid-cols-6 gap-4 items-center w-full">
+                                        <p class="text-xs sm:text-sm">{new Date(datetime).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, timeZone: 'America/Denver'})}</p>
+                                        <WeatherIcon datetime={new Date(datetime)} weatherDesc={weather_desc} size="small" />
+                                        {#if snowfall > 0}                                            
+                                            <p class="text-sm font-semibold">{snowfall}"</p>
+                                        {:else}
+                                            <p class="text-sm text-start">--</p>
+                                        {/if}    
+                                        <p class="text-sm">{temp}&deg;</p>
+                                        <span class="col-span-2">
+                                            <div class="flex justify-between">
+                                                <p class="text-xs sm:text-sm">
+                                                    <i class="fa-solid fa-wind"></i>&nbsp;{convertWindSpeed(wind_deg_speed)}
+                                                </p>
+                                                <p class="text-xs sm:text-sm">
+                                                    <i class="fa-solid fa-location-arrow text-primary-500" style="transform: rotate({parseInt(wind_deg_speed.split('/')[0], 10) + 140}deg);"></i>&nbsp;
+                                                    {convertWindDirection(wind_deg_speed)}
+                                                </p>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </li>
+                                <hr class="opacity-60 mt-1 last:hidden" />
+                            {/each}
+                        </ul>
+                    </svelte:fragment>
+                </AccordionItem>
+            </Accordion>  
         </div>
 
     </div>
 </section>
 
-<section id="snow-report" class="pt-8 px-4 lg:p-8 xl:p-16">
+<section id="snow-report" class="py-8 px-4 lg:p-8 xl:p-16">
     <div class="flex justify-center mb-4">
         <h3 class="h3">Snow Report</h3>
     </div>
