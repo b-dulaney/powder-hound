@@ -131,7 +131,7 @@
                 </span>
               </button>
             </th>
-            <th class="text-center table-cell-fit" aria-sort={columnSort.name === "last24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+            <th class="text-center table-cell-fit !px-1" aria-sort={columnSort.name === "last24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
               <button class="group" on:click={() => updateColumnSort("last24hours")}>
                 Last 24H
                 <span class="pl-1" aria-hidden={columnSort.name !== "last24hours"}>
@@ -145,7 +145,7 @@
                 </span>
               </button>
             </th>
-            <th class="text-center table-cell-fit" aria-sort={columnSort.name === "next24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
+            <th class="text-center table-cell-fit !pl-2 !pr-0" aria-sort={columnSort.name === "next24hours" ? columnSort.asc ? "ascending" : "descending" : "none"}>
               <button class="group" on:click={() => updateColumnSort("next24hours")}>
                 Next 24H
                 <span class="pl-1" aria-hidden={columnSort.name !== "next24hours"}>
