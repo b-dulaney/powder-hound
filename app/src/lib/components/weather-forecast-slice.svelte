@@ -19,7 +19,7 @@
     }
 </script>
 
-    <div class="flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center justify-center min-w-[35px]">
         <p class="font-semibold pl-1">{high_temp}&deg;</p>
         <p class="font-semibold pl-1">{low_temp}&deg;</p>
         <WeatherIcon size="small" weatherDesc={weatherDesc} />
