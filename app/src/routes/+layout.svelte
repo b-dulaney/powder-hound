@@ -1,8 +1,18 @@
 <script lang="ts">
 	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
-	import { Avatar } from '@skeletonlabs/skeleton';
-	import Logo from '../public/powder-hound-logo-new.png';
 	import '../app.css';
+	import Logo from '../public/powder-hound-logo-new.png';
+
+	import { afterNavigate } from '$app/navigation';
+	import type { AfterNavigate } from '@sveltejs/kit';
+
+	afterNavigate((params: AfterNavigate) => {
+		const isNewPage = params.from?.url.pathname !== params.to?.url.pathname;
+		const elemPage = document.querySelector('#page');
+		if (isNewPage && elemPage !== null) {
+			elemPage.scrollTop = 0;
+		}
+	});
 </script>
 
 <AppShell>
