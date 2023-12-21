@@ -4,7 +4,6 @@
     export let low_temp: number;
     export let weatherDesc: string;
     export let date: string;
-    export let isLast: boolean;
 
     const formatDate = (date: string) => {
         const options = { weekday: 'short', day: '2-digit', timeZone: 'America/Denver' } as const;
