@@ -261,7 +261,8 @@
 							<td class="table-cell-fit"
 								><a
 									class="anchor text-primary-500-400-token xl:text-lg"
-									href="/conditions/{row.slug}">{row.display_name}</a
+									href="/conditions/{row.slug}"
+									data-sveltekit-preload-data="hover">{row.display_name}</a
 								></td
 							>
 							<td class="hidden capitalize xl:table-cell xl:text-center xl:table-cell-fit">
@@ -301,7 +302,8 @@
 							<td class="table-cell-fit"
 								><a
 									class="anchor text-primary-500-400-token xl:text-lg"
-									href="/conditions/{row.slug}">{row.display_name}</a
+									href="/conditions/{row.slug}"
+									data-sveltekit-preload-data="hover">{row.display_name}</a
 								></td
 							>
 							<td class="hidden capitalize xl:table-cell xl:text-center xl:table-cell-fit">

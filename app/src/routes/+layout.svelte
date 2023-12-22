@@ -1,10 +1,22 @@
 <script lang="ts">
-	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
+	import {
+		AppBar,
+		AppShell,
+		Avatar,
+		ListBox,
+		ListBoxItem,
+		popup,
+		type PopupSettings
+	} from '@skeletonlabs/skeleton';
 	import '../app.css';
-	import Logo from '../public/powder-hound-logo-new.png';
+	import Logo from '../public/new-logo-v2.png';
 
 	import { afterNavigate } from '$app/navigation';
 	import type { AfterNavigate } from '@sveltejs/kit';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+
+	import { storePopup } from '@skeletonlabs/skeleton';
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	afterNavigate((params: AfterNavigate) => {
 		const isNewPage = params.from?.url.pathname !== params.to?.url.pathname;
@@ -13,15 +25,40 @@
 			elemPage.scrollTop = 0;
 		}
 	});
+
+	const userDropdown: PopupSettings = {
+		event: 'focus-click',
+		target: 'userDropdown',
+		placement: 'bottom',
+		closeQuery: '.listbox-item'
+	};
 </script>
 
 <AppShell>
 	<svelte:fragment slot="header">
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<i class="fa-solid fa-bars"></i>
+				<div class="flex justify-start items-center">
+					<i class="fa-solid fa-bars font-bold md:hidden text-xl pr-4"></i>
+					<a href="/" title="Go to Homepage" class="flex items-center">
+						<img src={Logo} alt="Powder Hound Logo" class="w-10 h-10 md:w-12 md:h-12" />
+						<p class="hidden md:inline md:text-2xl md:font-bold pl-2">PowderHound</p>
+					</a>
+				</div>
 			</svelte:fragment>
-			<svelte:fragment slot="trail">Login</svelte:fragment>
+			<svelte:fragment slot="trail">
+				<div class="flex justify-end items-center">
+					<button type="button" class="btn-icon" use:popup={userDropdown}>
+						<i class="fa-solid fa-circle-user text-3xl md:text-4xl" />
+					</button>
+				</div>
+				<span class="pr-8" aria-hidden data-popup="userDropdown">
+					<div class="btn-group-vertical bg-surface-700 shadow-xl">
+						<button>Sign up</button>
+						<button>Login</button>
+					</div>
+				</span>
+			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 	<slot />

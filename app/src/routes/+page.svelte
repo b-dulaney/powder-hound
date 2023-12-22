@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { Avatar } from '@skeletonlabs/skeleton';
-	import Logo from '../public/powder-hound-logo-new.png';
+	import Logo from '../public/new-logo-v2.png';
 	import WRF from '../public/WRFExample.png';
 </script>
 
 <header class="py-8 xl:pt-16 bg-surface-100-800-token hero-gradient" id="hero">
 	<div class="grid grid-cols-1 gap-4 md:gap-10 items-center">
 		<div class="flex flex-col items-center text-center space-y-4 px-4">
-			<img src={Logo} alt="Powder Hound Logo" class="w-28 h-28 lg:w-40 lg:h-40" />
-			<h1 class="h1 text-5xl">You'll never miss another powder day.</h1>
-			<p class="text-xl">
-				View the latest conditions, get accurate predictions, and receive customized snowfall alerts
-				- all 100% free.
+			<img src={Logo} alt="Powder Hound Logo" class="w-36 h-36 lg:w-52 lg:h-52" />
+			<h1 class="h1 text-5xl max-w-xl">You'll never miss another powder day.</h1>
+			<p class="text-xl max-w-xl">
+				View current conditions, get accurate predictions, and receive customized snowfall alerts -
+				all 100% free.
 			</p>
 			<div class="flex gap-4">
-				<a class="btn variant-ghost-primary" href="/conditions">
+				<a class="btn variant-ghost-primary" data-sveltekit-preload-data="hover" href="/conditions">
 					<div class="flex items-center gap-2">
 						<span>View Locations</span>
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
@@ -100,10 +100,10 @@
 				</p>
 			</div>
 			<div class="grid grid-cols-[auto_1fr] gap-2 py-2">
-				<Avatar src={Logo} width="w-12" />
+				<Avatar src={Logo} width="w-12" background="bg-transparent" />
 				<div class="card p-4 variant-filled-tertiary rounded-tl-none space-y-2">
 					<header class="flex justify-between items-center">
-						<p class="font-bold">Powder Hound</p>
+						<p class="font-bold">PowderHound</p>
 						<small class="opacity-50">5:00 am</small>
 					</header>
 					<p>It's coming down! Copper Mountain has received 12" of snow since midnight.</p>
@@ -120,14 +120,14 @@
 				<h2 class="h2">Beyond Passes</h2>
 				<p>
 					Whether you ride a season pass, an independent mountain, or something a little more out
-					there - we've got you covered. Powder Hound currently provides forecasts for 20+ mountains
+					there - we've got you covered. PowderHound currently provides forecasts for 20+ mountains
 					and backcountry zones across Colorado.
 				</p>
 			</div>
 			<div class="flex justify-center gap-2 md:py-16">
-				<a class="btn variant-ghost-primary" href="/conditions">
+				<a class="btn variant-ghost-primary" data-sveltekit-preload-data="hover" href="/conditions">
 					<div class="flex items-center gap-2">
-						<span>View Mountains</span>
+						<span>Find Powder</span>
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>
