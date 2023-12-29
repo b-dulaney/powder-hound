@@ -4,7 +4,7 @@
       "name": "project-root",
       "path": "./"
     },
-    {"name": "sveltekit", "path": "./app"},
+    { "name": "sveltekit", "path": "./app" },
     {
       "name": "supabase",
       "path": "./supabase"
@@ -16,5 +16,6 @@
       "app/": true,
       "supabase/": true
     },
+    "deno.enablePaths": ["./supabase"]
   }
 }

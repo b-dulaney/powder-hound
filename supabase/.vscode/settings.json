@@ -1,10 +1,10 @@
 {
-    "deno.enable": true,
-    "deno.unstable": true,
-    "deno.linting": true,
-    "deno.importMap": "../functions/import_map.json",
-    "[typescript]": {
-        "editor.defaultFormatter": "denoland.vscode-deno"
-    },
-    "typescript.tsserver.experimental.enableProjectDiagnostics": false
+  "deno.enable": true,
+  "deno.unstable": true,
+  "deno.linting": true,
+  "deno.importMap": "../functions/import_map.json",
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false
 }

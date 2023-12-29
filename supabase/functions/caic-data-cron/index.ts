@@ -9,7 +9,7 @@ interface MountainRow {
 
 const API_URL =
   "https://looper.avalanche.state.co.us/weather/ptfcst/wrfhr/current";
-const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const supabase = createClient<Database>(
   Deno.env.get("SUPABASE_URL") ?? "",
@@ -136,7 +136,7 @@ async function updatePointForecastData(
 /** Deno request handler */
 Deno.serve(async (req) => {
   const authHeader = req.headers.get("Authorization")!;
-  if (authHeader !== `Bearer ${ANON_KEY}`) {
+  if (authHeader !== `Bearer ${SERVICE_KEY}`) {
     return new Response(
       JSON.stringify({ message: "Unauthorized" }),
       { status: 401, headers: { "Content-Type": "application/json" } },
