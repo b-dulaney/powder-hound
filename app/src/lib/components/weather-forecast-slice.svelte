@@ -5,10 +5,11 @@
 	export let weatherDesc: string;
 	export let date: string;
 
+	const today = new Date();
+	const todayDateFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+
 	const formatDate = (date: string) => {
 		const options = { weekday: 'short', day: '2-digit', timeZone: 'America/Denver' } as const;
-		const today = new Date();
-		const todayDateFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 		if (date === todayDateFormatted) {
 			return 'Today';
 		}
@@ -24,6 +25,6 @@
 <div class="flex flex-col items-center min-w-[35px]">
 	<p class="font-semibold pl-1">{high_temp}&deg;</p>
 	<p class="font-semibold pl-1">{low_temp}&deg;</p>
-	<WeatherIcon size="small" {weatherDesc} />
+	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== todayDateFormatted} />
 	<p class="mt-2 text-xs sm:text-sm text-surface-400">{formatDate(date)}</p>
 </div>
