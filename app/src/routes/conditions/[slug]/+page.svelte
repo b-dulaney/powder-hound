@@ -53,7 +53,8 @@
 					legend: {
 						display: false
 					}
-				}
+				},
+				responsive: true
 			}
 		});
 
@@ -140,26 +141,27 @@
 					</div>
 					<div class="flex justify-between">
 						<div class="flex flex-col p-4">
-							<p class="text-2xl font-bold">{mountainDetails.current_temperature}°</p>
+							<p class="text-3xl font-bold">{mountainDetails.current_temperature}°</p>
 							<p class="text-xl font-semibold">
 								{weatherConditionsMap[mountainDetails.current_weather]}
 							</p>
 							<div class="flex">
-								<p class="">
+								<p>
 									High {mountainDetails.temperature_range[0].high_temp}&deg;
 								</p>
 								<p class=" mx-2">&middot;</p>
-								<p class="">
+								<p>
 									Low {mountainDetails.temperature_range[0].low_temp}&deg;
 								</p>
 							</div>
-							<p class="text-xl"></p>
 						</div>
 						<div class="flex flex-col p-8 justify-center items-center">
 							<WeatherIcon weatherDesc={mountainDetails.current_weather} size="large" />
 						</div>
 					</div>
-					<div class="flex justify-between px-4 py-2 md:py-6 items-center w-full md:self-center">
+					<div
+						class="flex justify-between px-4 py-2 md:py-6 items-center w-full xl:w-11/12 md:self-center"
+					>
 						{#each mountainDetails.temperature_range as { date, low_temp, high_temp }, i (i)}
 							<WeatherForecastSlice
 								{high_temp}
@@ -228,11 +230,11 @@
 					</Accordion>
 				</div>
 			</div>
-			<div class="card hidden mt-4 w-full lg:p-4 xl:p-6 lg:block overflow-auto max-h-[500px]">
-				<div class="card-header">
+			<div class="card hidden mt-4 w-full lg:p-4 xl:p-6 lg:block">
+				<div class="card-header py-2">
 					<h3 class="h3">Hourly Forecast</h3>
 				</div>
-				<ul class="list p-4">
+				<ul class="list p-4 overflow-auto max-h-[500px]">
 					{#each mountainDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
 						<li class="!rounded-md">
 							<div class="p-2 grid grid-cols-6 gap-3 items-center w-full">
