@@ -99,8 +99,6 @@
 	});
 </script>
 
-<Snow />
-
 <section id="header-section">
 	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-16 pb-2 md:pb-4 px-4">
 		<ol class="breadcrumb">
