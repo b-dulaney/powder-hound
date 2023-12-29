@@ -1,14 +1,34 @@
 <script lang="ts">
-	import { AppBar, AppShell, popup, type PopupSettings } from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell, Avatar, popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import '../app.css';
 	import Logo from '../public/new-logo-v2.png';
 
-	import { afterNavigate } from '$app/navigation';
+	import { afterNavigate, goto, invalidate } from '$app/navigation';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import type { AfterNavigate } from '@sveltejs/kit';
 
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
+	export let data: PageData;
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	onMount(() => {
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth');
+			}
+		});
+
+		return () => {
+			subscription.unsubscribe();
+		};
+	});
 
 	afterNavigate((params: AfterNavigate) => {
 		const isNewPage = params.from?.url.pathname !== params.to?.url.pathname;
@@ -24,6 +44,10 @@
 		placement: 'bottom',
 		closeQuery: '.listbox-item'
 	};
+
+	const logout = async () => {
+		await supabase.auth.signOut();
+	};
 </script>
 
 <AppShell>
@@ -38,14 +62,25 @@
 			<svelte:fragment slot="trail">
 				<div class="flex justify-end items-center">
 					<button type="button" class="btn-icon" use:popup={userDropdown}>
-						<i class="fa-solid fa-circle-user text-3xl md:text-4xl" />
+						{#if session?.user?.user_metadata?.avatar_url}
+							<Avatar src={session.user.user_metadata.avatar_url} />
+						{:else}
+							<i class="fa-solid fa-circle-user text-3xl md:text-4xl" />
+						{/if}
 					</button>
 				</div>
 				<span class="pr-8" aria-hidden data-popup="userDropdown">
-					<div class="btn-group-vertical bg-surface-700 shadow-xl">
-						<button>Sign up</button>
-						<button>Login</button>
-					</div>
+					{#if session}
+						<div class="btn-group-vertical bg-surface-700 shadow-xl">
+							<button class="listbox-item">Settings</button>
+							<button class="listbox-item" on:click={logout}>Logout</button>
+						</div>
+					{:else}
+						<div class="btn-group-vertical bg-surface-700 shadow-xl">
+							<button class="listbox-item">Sign up</button>
+							<button class="listbox-item" on:click={() => goto('/login')}>Login</button>
+						</div>
+					{/if}
 				</span>
 			</svelte:fragment>
 		</AppBar>
