@@ -1,19 +1,11 @@
 <script lang="ts">
-	import {
-		AppBar,
-		AppShell,
-		Avatar,
-		ListBox,
-		ListBoxItem,
-		popup,
-		type PopupSettings
-	} from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell, popup, type PopupSettings } from '@skeletonlabs/skeleton';
 	import '../app.css';
 	import Logo from '../public/new-logo-v2.png';
 
 	import { afterNavigate } from '$app/navigation';
+	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import type { AfterNavigate } from '@sveltejs/kit';
-	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
@@ -58,7 +50,9 @@
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
+
 	<slot />
+
 	<svelte:fragment slot="pageFooter">
 		<div
 			class="page-footer dark:bg-surface-900 border-t border-surface-500/10 text-xs md:text-base"
