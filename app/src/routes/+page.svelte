@@ -5,7 +5,7 @@
 	import Snow from '$lib/components/snow.svelte';
 </script>
 
-<Snow height="h-[526px]" zIndex="-z-10" />
+<Snow height="h-[550px]" zIndex="-z-10" />
 
 <header class="py-8 xl:pt-16" id="hero">
 	<div class="grid grid-cols-1 gap-4 md:gap-10 items-center">
