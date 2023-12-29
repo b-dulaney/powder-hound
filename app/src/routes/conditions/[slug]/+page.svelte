@@ -101,8 +101,8 @@
 
 <section id="header-section">
 	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-16 pb-2 md:pb-4 px-4">
-		<ol class="breadcrumb">
-			<li class="crumb">&lsaquo; <a class="anchor" href="/conditions">Conditions</a></li>
+		<ol class="breadcrumb lg:text-lg">
+			<li class="crumb"><a class="anchor" href="/conditions">Conditions</a></li>
 			<li class="crumb-separator" aria-hidden>/</li>
 			<li>{mountainDetails.display_name}</li>
 		</ol>
@@ -115,13 +115,13 @@
 			>
 			{#if mountainDetails.location_type === 'resort'}
 				<div
-					class="badge variant-ghost-primary capitalize mt-2 w-[80px] lg:text-lg lg:py-0 lg:mt-4"
+					class="badge variant-ghost-primary capitalize mt-2 w-[80px] lg:text-lg lg:font-light lg:py-0 lg:mt-4"
 				>
 					{mountainDetails.location_type}
 				</div>
 			{:else}
 				<div
-					class="badge variant-ghost-success capitalize mt-2 w-[100px] lg:text-lg lg:py-1 lg:mt-4 lg:w-[120px]"
+					class="badge variant-ghost-success capitalize mt-2 w-[100px] lg:text-lg lg:py-1 lg:font-light lg:mt-4 lg:w-[120px]"
 				>
 					{mountainDetails.location_type}
 				</div>
@@ -131,9 +131,9 @@
 </section>
 
 <section id="forecast-section">
-	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-8 pb-8 px-4">
-		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-			<div class="card mt-4 w-full">
+	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-8 px-4">
+		<div class="grid grid-cols-1 gap-4">
+			<div class="card mt-4 md:p-4 xl:p-6 w-full">
 				<div class="flex flex-col h-full justify-around">
 					<div class="card-header">
 						<h3 class="h3">Daily Forecast</h3>
@@ -159,7 +159,7 @@
 							<WeatherIcon weatherDesc={mountainDetails.current_weather} size="large" />
 						</div>
 					</div>
-					<div class="flex justify-between px-4 py-2 items-center w-full lg:self-center">
+					<div class="flex justify-between px-4 py-2 md:py-6 items-center w-full md:self-center">
 						{#each mountainDetails.temperature_range as { date, low_temp, high_temp }, i (i)}
 							<WeatherForecastSlice
 								{high_temp}
@@ -173,7 +173,7 @@
 						{/each}
 					</div>
 
-					<Accordion class="lg:hidden">
+					<Accordion class="lg:hidden mt-2">
 						<AccordionItem>
 							<svelte:fragment slot="summary"
 								><p class="text-center">View Hourly Forecast</p></svelte:fragment
@@ -228,9 +228,9 @@
 					</Accordion>
 				</div>
 			</div>
-			<div class="card hidden mt-4 w-full lg:block overflow-auto max-h-[300px]">
+			<div class="card hidden mt-4 w-full lg:p-4 xl:p-6 lg:block overflow-auto max-h-[500px]">
 				<div class="card-header">
-					<h4 class="h4">Hourly Forecast</h4>
+					<h3 class="h3">Hourly Forecast</h3>
 				</div>
 				<ul class="list p-4">
 					{#each mountainDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
@@ -280,35 +280,35 @@
 </section>
 
 <section id="snow-report">
-	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-12 pb-8 px-4">
-		<div class="flex justify-center mb-4">
-			<h3 class="h3">Snow Report</h3>
-		</div>
+	<div class="mx-auto w-full max-w-6xl pt-4 pb-8 px-4">
 		<div class="grid grid-cols-1 gap-8">
-			<div class="card px-4 lg:px-8">
-				<div class="flex flex-col items-center">
-					<p class="text-xl font-bold mt-2">Past Week</p>
-					<div class="flex w-full justify-center items-center">
-						<hr class="w-1/4 px-2 !border-slate-700" />
-						<p class="px-6 text-xl font-semibold">
-							{mountainDetails.past7daysnowfall < 1 && mountainDetails.past7daysnowfall > 0
-								? '< 1'
-								: mountainDetails.past7daysnowfall}"
-						</p>
-						<hr class="w-1/4 px-2 !border-slate-700" />
+			<div class="card mt-4 md:p-4 xl:p-6 w-full">
+				<div class="card-header">
+					<h3 class="h3">Snow Report</h3>
+				</div>
+				<div class="flex flex-col items-center w-full">
+					<div class="flex flex-col items-center w-full mt-4">
+						<h4 class="h4">Past Week</h4>
+						<div class="flex w-full justify-center items-center">
+							<hr class="w-1/4 px-2 !border-slate-700" />
+							<p class="px-6 text-xl">
+								{mountainDetails.past7daysnowfall < 1 && mountainDetails.past7daysnowfall > 0
+									? '< 1'
+									: mountainDetails.past7daysnowfall}"
+							</p>
+							<hr class="w-1/4 px-2 !border-slate-700" />
+						</div>
+					</div>
+					<div class="w-full p-4" id="recent-snowfall-chart-container">
+						<canvas id="recent-snowfall-chart"></canvas>
 					</div>
 				</div>
-				<div class="w-full p-2" id="recent-snowfall-chart-container">
-					<canvas id="recent-snowfall-chart"></canvas>
-				</div>
-			</div>
 
-			<div class="card px-4 lg:px-8">
-				<div class="flex flex-col items-center">
+				<div class="flex flex-col items-center w-full mt-4">
 					<p class="text-xl font-bold mt-2">Next 72 Hours</p>
 					<div class="flex w-full justify-center items-center">
 						<hr class="w-1/4 px-2 !border-slate-700" />
-						<p class="px-6 text-xl font-semibold">
+						<p class="px-6 text-xl">
 							{mountainDetails.next72hoursnowfall < 1 && mountainDetails.next72hoursnowfall > 0
 								? '< 1'
 								: mountainDetails.next72hoursnowfall}"
@@ -316,7 +316,7 @@
 						<hr class="w-1/4 px-2 !border-slate-700" />
 					</div>
 				</div>
-				<div class="w-full p-2" id="upcoming-snowfall-chart-container">
+				<div class="w-full p-4" id="upcoming-snowfall-chart-container">
 					<canvas id="upcoming-snowfall-chart"></canvas>
 				</div>
 			</div>
