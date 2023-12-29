@@ -99,12 +99,10 @@
 	});
 </script>
 
-{#if mountainDetails.current_weather === 'snow'}
-	<Snow />
-{/if}
+<Snow />
 
 <section id="header-section">
-	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-16 pb-8 px-4">
+	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-16 pb-2 md:pb-4 px-4">
 		<ol class="breadcrumb">
 			<li class="crumb">&lsaquo; <a class="anchor" href="/conditions">Conditions</a></li>
 			<li class="crumb-separator" aria-hidden>/</li>
@@ -114,8 +112,8 @@
 		<div class="flex flex-col mt-4">
 			<h1 class="h1">{mountainDetails.display_name}</h1>
 			<span class="flex items-center"
-				><p class="font-bold mt-2 text-xl text-slate-400 mr-2">Region:</p>
-				<p class="text-xl font-bold mt-2">{mountainDetails.region}</p></span
+				><p class="font-semibold mt-2 text-xl text-slate-400 mr-2">Region:</p>
+				<p class="text-xl font-semibold mt-2">{mountainDetails.region}</p></span
 			>
 			{#if mountainDetails.location_type === 'resort'}
 				<div
@@ -140,20 +138,20 @@
 			<div class="card mt-4 w-full">
 				<div class="flex flex-col h-full justify-around">
 					<div class="card-header">
-						<h4 class="h4">Daily Forecast</h4>
+						<h3 class="h3">Daily Forecast</h3>
 					</div>
 					<div class="flex justify-between">
 						<div class="flex flex-col p-4">
 							<p class="text-2xl font-bold">{mountainDetails.current_temperature}°</p>
-							<p class="text-xl font-bold">
+							<p class="text-xl font-semibold">
 								{weatherConditionsMap[mountainDetails.current_weather]}
 							</p>
 							<div class="flex">
-								<p class="font-semibold">
+								<p class="">
 									High {mountainDetails.temperature_range[0].high_temp}&deg;
 								</p>
-								<p class="font-semibold mx-2">&middot;</p>
-								<p class="font-semibold">
+								<p class=" mx-2">&middot;</p>
+								<p class="">
 									Low {mountainDetails.temperature_range[0].low_temp}&deg;
 								</p>
 							</div>
