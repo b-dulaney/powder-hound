@@ -38,13 +38,10 @@
 	<svelte:fragment slot="header">
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<div class="flex justify-start items-center">
-					<i class="fa-solid fa-bars font-bold md:hidden text-xl pr-4"></i>
-					<a href="/" title="Go to Homepage" class="flex items-center">
-						<img src={Logo} alt="Powder Hound Logo" class="w-10 h-10 md:w-12 md:h-12" />
-						<p class="hidden md:inline md:text-2xl md:font-bold pl-2">PowderHound</p>
-					</a>
-				</div>
+				<a href="/" title="Go to Homepage" class="flex items-center">
+					<img src={Logo} alt="Powder Hound Logo" class="w-10 h-10 md:w-12 md:h-12" />
+					<p class="text-xl md:text-2xl font-bold pl-2">PowderHound</p>
+				</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<div class="flex justify-end items-center">

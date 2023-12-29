@@ -25,5 +25,5 @@
 	<p class="font-semibold pl-1">{high_temp}&deg;</p>
 	<p class="font-semibold pl-1">{low_temp}&deg;</p>
 	<WeatherIcon size="small" {weatherDesc} />
-	<p class="mt-2 text-xs sm:text-sm">{formatDate(date)}</p>
+	<p class="mt-2 text-xs sm:text-sm text-surface-400">{formatDate(date)}</p>
 </div>

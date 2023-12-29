@@ -2,27 +2,32 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import Logo from '../public/new-logo-v2.png';
 	import WRF from '../public/WRFExample.png';
+	import Snow from '$lib/components/snow.svelte';
 </script>
 
-<header class="py-8 xl:pt-16 bg-surface-100-800-token hero-gradient" id="hero">
+<Snow height="h-[526px]" zIndex="-z-10" />
+
+<header class="py-8 xl:pt-16" id="hero">
 	<div class="grid grid-cols-1 gap-4 md:gap-10 items-center">
 		<div class="flex flex-col items-center text-center space-y-4 px-4">
-			<img src={Logo} alt="Powder Hound Logo" class="w-36 h-36 lg:w-52 lg:h-52" />
-			<h1 class="h1 text-5xl max-w-xl">You'll never miss another powder day.</h1>
-			<p class="text-xl max-w-xl">
+			<img src={Logo} alt="Powder Hound Logo" class="w-36 h-36 lg:w-52 lg:h-52 z-10" />
+			<h1 class="h1 text-5xl max-w-xl z-10">You'll never miss another powder day.</h1>
+			<p class="text-xl max-w-xl z-10">
 				View current conditions, get accurate predictions, and receive customized snowfall alerts -
 				all 100% free.
 			</p>
-			<div class="flex gap-4">
-				<a class="btn variant-ghost-primary" data-sveltekit-preload-data="hover" href="/conditions">
+			<div class="flex gap-4 z-10">
+				<a
+					class="btn bg-gradient-to-r variant-gradient-tertiary-secondary"
+					data-sveltekit-preload-data="hover"
+					href="/conditions"
+				>
 					<div class="flex items-center gap-2">
 						<span>View Locations</span>
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>
-				<a class="btn bg-gradient-to-br variant-gradient-primary-secondary" href="/signup"
-					>Sign Up</a
-				>
+				<a class="btn variant-ghost-tertiary" href="/signup">Sign Up</a>
 			</div>
 		</div>
 	</div>

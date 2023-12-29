@@ -1,9 +1,12 @@
 <script>
+	// @ts-nocheck
+
 	import { onMount } from 'svelte';
 	//import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 	import { loadSlim } from 'tsparticles-slim'; // if you are going to use `loadSlim`, install the "tsparticles-slim" package too.
-
 	let ParticlesComponent;
+	export let height = 'h-full';
+	export let zIndex = '-z-50';
 
 	onMount(async () => {
 		const module = await import('svelte-particles');
@@ -12,6 +15,17 @@
 	});
 
 	let particlesConfig = {
+		fullScreen: {
+			enable: false
+		},
+		interactivity: {
+			events: {
+				resize: {
+					delay: 0,
+					enable: true
+				}
+			}
+		},
 		particles: {
 			color: {
 				value: '#fff'
@@ -20,17 +34,17 @@
 				direction: 'bottom',
 				enable: true,
 				outModes: 'out',
-				speed: 2
+				speed: 1.5
 			},
 			number: {
 				density: {
 					enable: true,
 					area: 900
 				},
-				value: 150
+				value: 100
 			},
 			opacity: {
-				value: 0.7
+				value: 0.6
 			},
 			shape: {
 				type: 'circle'
@@ -71,8 +85,7 @@
 <svelte:component
 	this={ParticlesComponent}
 	id="tsparticles"
-	class="absolute w-full h-full -z-50"
-	style=""
+	class="absolute w-full {height} {zIndex}"
 	options={particlesConfig}
 	on:particlesLoaded={onParticlesLoaded}
 	{particlesInit}
