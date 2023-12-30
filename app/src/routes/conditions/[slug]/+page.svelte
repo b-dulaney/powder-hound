@@ -101,28 +101,28 @@
 </script>
 
 <section id="header-section">
-	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-16 pb-2 md:pb-4 px-4">
+	<div class="mx-auto w-full max-w-6xl px-4 pb-2 pt-4 md:pb-4 lg:pt-16">
 		<ol class="breadcrumb lg:text-lg">
 			<li class="crumb"><a class="anchor" href="/conditions">Conditions</a></li>
 			<li class="crumb-separator" aria-hidden>/</li>
 			<li>{mountainDetails.display_name}</li>
 		</ol>
 
-		<div class="flex flex-col mt-4">
+		<div class="mt-4 flex flex-col">
 			<h1 class="h1">{mountainDetails.display_name}</h1>
 			<span class="flex items-center"
-				><p class="font-semibold mt-2 text-xl text-slate-400 mr-2">Region:</p>
-				<p class="text-xl font-semibold mt-2">{mountainDetails.region}</p></span
+				><p class="mr-2 mt-2 text-xl font-semibold text-slate-400">Region:</p>
+				<p class="mt-2 text-xl font-semibold">{mountainDetails.region}</p></span
 			>
 			{#if mountainDetails.location_type === 'resort'}
 				<div
-					class="badge variant-ghost-primary capitalize mt-2 w-[80px] lg:text-lg lg:font-light lg:py-0 lg:mt-4"
+					class="variant-ghost-primary badge mt-2 w-[80px] capitalize lg:mt-4 lg:py-0 lg:text-lg lg:font-light"
 				>
 					{mountainDetails.location_type}
 				</div>
 			{:else}
 				<div
-					class="badge variant-ghost-success capitalize mt-2 w-[100px] lg:text-lg lg:py-1 lg:font-light lg:mt-4 lg:w-[120px]"
+					class="variant-ghost-success badge mt-2 w-[100px] capitalize lg:mt-4 lg:w-[120px] lg:py-1 lg:text-lg lg:font-light"
 				>
 					{mountainDetails.location_type}
 				</div>
@@ -132,10 +132,10 @@
 </section>
 
 <section id="forecast-section">
-	<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-8 px-4">
+	<div class="mx-auto w-full max-w-6xl px-4 pt-4 lg:pt-8">
 		<div class="grid grid-cols-1 gap-4">
-			<div class="card mt-4 md:p-4 xl:p-6 w-full">
-				<div class="flex flex-col h-full justify-around">
+			<div class="card mt-4 w-full md:p-4 xl:p-6">
+				<div class="flex h-full flex-col justify-around">
 					<div class="card-header">
 						<h3 class="h3">Daily Forecast</h3>
 					</div>
@@ -155,12 +155,12 @@
 								</p>
 							</div>
 						</div>
-						<div class="flex flex-col p-8 justify-center items-center">
+						<div class="flex flex-col items-center justify-center p-8">
 							<WeatherIcon weatherDesc={mountainDetails.current_weather} size="large" />
 						</div>
 					</div>
 					<div
-						class="flex justify-between px-4 py-2 md:py-6 items-center w-full xl:w-11/12 md:self-center"
+						class="flex w-full items-center justify-between px-4 py-2 md:self-center md:py-6 xl:w-11/12"
 					>
 						{#each mountainDetails.temperature_range as { date, low_temp, high_temp }, i (i)}
 							<WeatherForecastSlice
@@ -170,12 +170,12 @@
 								{date}
 							/>
 							{#if i < mountainDetails.temperature_range.length - 1}
-								<hr class="divider-vertical opacity-40 h-20" />
+								<hr class="divider-vertical h-20 opacity-40" />
 							{/if}
 						{/each}
 					</div>
 
-					<Accordion class="lg:hidden mt-2">
+					<Accordion class="mt-2 lg:hidden">
 						<AccordionItem>
 							<svelte:fragment slot="summary"
 								><p class="text-center">View Hourly Forecast</p></svelte:fragment
@@ -184,8 +184,8 @@
 								<ul class="list">
 									{#each mountainDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
 										<li class="!rounded-md">
-											<div class="p-2 grid grid-cols-6 gap-3 items-center w-full">
-												<p class="text-xs sm:text-sm text-surface-400">
+											<div class="grid w-full grid-cols-6 items-center gap-3 p-2">
+												<p class="text-xs text-surface-400 sm:text-sm">
 													{new Date(datetime).toLocaleTimeString('en-US', {
 														hour: 'numeric',
 														hour12: true,
@@ -200,7 +200,7 @@
 												{#if snowfall > 0}
 													<p class="text-sm font-semibold">{snowfall}"</p>
 												{:else}
-													<p class="text-sm text-start">--</p>
+													<p class="text-start text-sm">--</p>
 												{/if}
 												<p class="text-sm">{temp}&deg;</p>
 												<span class="col-span-2">
@@ -222,7 +222,7 @@
 												</span>
 											</div>
 										</li>
-										<hr class="opacity-60 mt-1 last:hidden" />
+										<hr class="mt-1 opacity-60 last:hidden" />
 									{/each}
 								</ul>
 							</svelte:fragment>
@@ -230,15 +230,15 @@
 					</Accordion>
 				</div>
 			</div>
-			<div class="card hidden mt-4 w-full lg:p-4 xl:p-6 lg:block">
+			<div class="card mt-4 hidden w-full lg:block lg:p-4 xl:p-6">
 				<div class="card-header py-2">
 					<h3 class="h3">Hourly Forecast</h3>
 				</div>
-				<ul class="list p-4 overflow-auto max-h-[500px]">
+				<ul class="list max-h-[500px] overflow-auto p-4">
 					{#each mountainDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
 						<li class="!rounded-md">
-							<div class="p-2 grid grid-cols-6 gap-3 items-center w-full">
-								<p class="text-xs sm:text-sm text-surface-400">
+							<div class="grid w-full grid-cols-6 items-center gap-3 p-2">
+								<p class="text-xs text-surface-400 sm:text-sm">
 									{new Date(datetime).toLocaleTimeString('en-US', {
 										hour: 'numeric',
 										hour12: true,
@@ -253,7 +253,7 @@
 								{#if snowfall > 0}
 									<p class="text-sm font-semibold">{snowfall}"</p>
 								{:else}
-									<p class="text-sm text-start">--</p>
+									<p class="text-start text-sm">--</p>
 								{/if}
 								<p class="text-sm">{temp}&deg;</p>
 								<span class="col-span-2">
@@ -273,7 +273,7 @@
 								</span>
 							</div>
 						</li>
-						<hr class="opacity-60 mt-1 last:hidden" />
+						<hr class="mt-1 opacity-60 last:hidden" />
 					{/each}
 				</ul>
 			</div>
@@ -282,23 +282,23 @@
 </section>
 
 <section id="snow-report">
-	<div class="mx-auto w-full max-w-6xl pt-4 pb-8 px-4">
+	<div class="mx-auto w-full max-w-6xl px-4 pb-8 pt-4">
 		<div class="grid grid-cols-1 gap-8">
-			<div class="card mt-4 md:p-4 xl:p-6 w-full">
+			<div class="card mt-4 w-full md:p-4 xl:p-6">
 				<div class="card-header">
 					<h3 class="h3">Snow Report</h3>
 				</div>
-				<div class="flex flex-col items-center w-full">
-					<div class="flex flex-col items-center w-full mt-4">
+				<div class="flex w-full flex-col items-center">
+					<div class="mt-4 flex w-full flex-col items-center">
 						<h4 class="h4">Past Week</h4>
-						<div class="flex w-full justify-center items-center">
-							<hr class="w-1/4 px-2 !border-slate-700" />
+						<div class="flex w-full items-center justify-center">
+							<hr class="w-1/4 !border-slate-700 px-2" />
 							<p class="px-6 text-xl">
 								{mountainDetails.past7daysnowfall < 1 && mountainDetails.past7daysnowfall > 0
 									? '< 1'
 									: mountainDetails.past7daysnowfall}"
 							</p>
-							<hr class="w-1/4 px-2 !border-slate-700" />
+							<hr class="w-1/4 !border-slate-700 px-2" />
 						</div>
 					</div>
 					<div class="w-full p-4" id="recent-snowfall-chart-container">
@@ -306,16 +306,16 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col items-center w-full mt-4">
-					<p class="text-xl font-bold mt-2">Next 72 Hours</p>
-					<div class="flex w-full justify-center items-center">
-						<hr class="w-1/4 px-2 !border-slate-700" />
+				<div class="mt-4 flex w-full flex-col items-center">
+					<p class="mt-2 text-xl font-bold">Next 72 Hours</p>
+					<div class="flex w-full items-center justify-center">
+						<hr class="w-1/4 !border-slate-700 px-2" />
 						<p class="px-6 text-xl">
 							{mountainDetails.next72hoursnowfall < 1 && mountainDetails.next72hoursnowfall > 0
 								? '< 1'
 								: mountainDetails.next72hoursnowfall}"
 						</p>
-						<hr class="w-1/4 px-2 !border-slate-700" />
+						<hr class="w-1/4 !border-slate-700 px-2" />
 					</div>
 				</div>
 				<div class="w-full p-4" id="upcoming-snowfall-chart-container">

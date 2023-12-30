@@ -61,12 +61,12 @@
 </script>
 
 <section class="pt-8 md:p-4 lg:p-8 xl:p-16">
-	<div class="flex justify-center mb-4">
+	<div class="mb-4 flex justify-center">
 		<h1 class="h1">Locations</h1>
 	</div>
-	<div class="flex justify-center items-center mb-4 px-8 md:py-8 w-full">
+	<div class="mb-4 flex w-full items-center justify-center px-8 md:py-8">
 		<div
-			class="input-group input-group-divider grid-cols-[auto_1fr_auto] w-3/4 sm:w-2/3 lg:w-1/2 xl:w-1/3"
+			class="input-group input-group-divider w-3/4 grid-cols-[auto_1fr_auto] sm:w-2/3 lg:w-1/2 xl:w-1/3"
 		>
 			<div class="input-group-shim"><i class="fa-solid fa-magnifying-glass"></i></div>
 			<input
@@ -108,7 +108,7 @@
 						</button>
 					</th>
 					<th
-						class="hidden xl:table-cell xl:text-center xl:table-cell-fit"
+						class="hidden xl:table-cell-fit xl:table-cell xl:text-center"
 						aria-sort={columnSort.name === 'type'
 							? columnSort.asc
 								? 'ascending'
@@ -129,7 +129,7 @@
 						</button>
 					</th>
 					<th
-						class="hidden lg:table-cell lg:text-center lg:table-cell-fit"
+						class="hidden lg:table-cell-fit lg:table-cell lg:text-center"
 						aria-sort={columnSort.name === 'weather'
 							? columnSort.asc
 								? 'ascending'
@@ -150,7 +150,7 @@
 						</button>
 					</th>
 					<th
-						class="hidden md:table-cell md:text-center md:table-cell-fit"
+						class="hidden md:table-cell-fit md:table-cell md:text-center"
 						aria-sort={columnSort.name === 'last7days'
 							? columnSort.asc
 								? 'ascending'
@@ -171,7 +171,7 @@
 						</button>
 					</th>
 					<th
-						class="text-center table-cell-fit !px-1"
+						class="table-cell-fit !px-1 text-center"
 						aria-sort={columnSort.name === 'last24hours'
 							? columnSort.asc
 								? 'ascending'
@@ -192,7 +192,7 @@
 						</button>
 					</th>
 					<th
-						class="text-center table-cell-fit !pl-2 !pr-0"
+						class="table-cell-fit !pl-2 !pr-0 text-center"
 						aria-sort={columnSort.name === 'next24hours'
 							? columnSort.asc
 								? 'ascending'
@@ -213,7 +213,7 @@
 						</button>
 					</th>
 					<th
-						class="hidden md:table-cell md:text-center md:table-cell-fit"
+						class="hidden md:table-cell-fit md:table-cell md:text-center"
 						aria-sort={columnSort.name === 'next72hours'
 							? columnSort.asc
 								? 'ascending'
@@ -233,14 +233,14 @@
 							</span>
 						</button>
 					</th>
-					<th class="sm:table-cell-fit !px-0" aria-hidden></th>
+					<th class="!px-0 sm:table-cell-fit" aria-hidden></th>
 				</tr>
 			</thead>
 			<tbody>
 				{#if searchInput && filteredMountains.length === 0}
 					<tr>
 						<td colspan="8">
-							<div class="flex justify-center m-4">
+							<div class="m-4 flex justify-center">
 								<h3 class="h3">No results found</h3>
 							</div>
 						</td>
@@ -249,7 +249,7 @@
 					{#if !mountainOverviews?.length}
 						<tr>
 							<td colspan="8">
-								<div class="flex justify-center m-4">
+								<div class="m-4 flex justify-center">
 									<h3 class="h3">No results found</h3>
 								</div>
 							</td>
@@ -265,32 +265,32 @@
 									data-sveltekit-preload-data="hover">{row.display_name}</a
 								></td
 							>
-							<td class="hidden capitalize xl:table-cell xl:text-center xl:table-cell-fit">
+							<td class="hidden capitalize xl:table-cell-fit xl:table-cell xl:text-center">
 								{#if row.location_type === 'resort'}
-									<div class="badge variant-ghost-primary">
+									<div class="variant-ghost-primary badge">
 										{row.location_type}
 									</div>
 								{:else}
-									<div class="badge variant-ghost-success">
+									<div class="variant-ghost-success badge">
 										{row.location_type}
 									</div>
 								{/if}
 							</td>
-							<td class="hidden font-bold lg:table-cell lg:text-center lg:table-cell-fit"
+							<td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
 								>{row.currenttemp}&degF
 								<span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc} /></span
 								></td
 							>
-							<td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit"
+							<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
 								>{formatSnowfall(row.past7daysnowfall)}"</td
 							>
 							<td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
 							<td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
-							<td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit"
+							<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
 								>{formatSnowfall(row.next72hoursnowfall)}"</td
 							>
-							<td class="text-center font-bold !px-0"
-								><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"
+							<td class="!px-0 text-center font-bold"
+								><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
 									><i class="fa-regular fa-star"></i></button
 								></td
 							>
@@ -306,32 +306,32 @@
 									data-sveltekit-preload-data="hover">{row.display_name}</a
 								></td
 							>
-							<td class="hidden capitalize xl:table-cell xl:text-center xl:table-cell-fit">
+							<td class="hidden capitalize xl:table-cell-fit xl:table-cell xl:text-center">
 								{#if row.location_type === 'resort'}
-									<div class="badge variant-ghost-primary">
+									<div class="variant-ghost-primary badge">
 										{row.location_type}
 									</div>
 								{:else}
-									<div class="badge variant-ghost-success">
+									<div class="variant-ghost-success badge">
 										{row.location_type}
 									</div>
 								{/if}
 							</td>
-							<td class="hidden font-bold lg:table-cell lg:text-center lg:table-cell-fit"
+							<td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
 								>{row.currenttemp}&degF
 								<span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc} /></span
 								></td
 							>
-							<td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit"
+							<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
 								>{formatSnowfall(row.past7daysnowfall)}"</td
 							>
 							<td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
 							<td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
-							<td class="hidden font-bold md:table-cell md:text-center md:table-cell-fit"
+							<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
 								>{formatSnowfall(row.next72hoursnowfall)}"</td
 							>
-							<td class="text-center font-bold !px-0"
-								><button type="button" class="btn btn-icon-sm space-x-0 px-0 py-0 w-[20px]"
+							<td class="!px-0 text-center font-bold"
+								><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
 									><i class="fa-regular fa-star"></i></button
 								></td
 							>
