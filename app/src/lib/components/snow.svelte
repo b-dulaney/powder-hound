@@ -85,7 +85,7 @@
 <svelte:component
 	this={ParticlesComponent}
 	id="tsparticles"
-	class="absolute pr-5 w-full {height} {zIndex}"
+	class="absolute w-full pr-5 {height} {zIndex}"
 	options={particlesConfig}
 	on:particlesLoaded={onParticlesLoaded}
 	{particlesInit}

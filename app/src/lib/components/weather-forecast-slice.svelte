@@ -22,9 +22,9 @@
 	};
 </script>
 
-<div class="flex flex-col items-center min-w-[35px]">
-	<p class="font-semibold pl-1">{high_temp}&deg;</p>
-	<p class="font-semibold pl-1">{low_temp}&deg;</p>
+<div class="flex min-w-[35px] flex-col items-center">
+	<p class="pl-1 font-semibold">{high_temp}&deg;</p>
+	<p class="pl-1 font-semibold">{low_temp}&deg;</p>
 	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== todayDateFormatted} />
-	<p class="mt-2 text-xs sm:text-sm text-surface-400">{formatDate(date)}</p>
+	<p class="mt-2 text-xs text-surface-400 sm:text-sm">{formatDate(date)}</p>
 </div>

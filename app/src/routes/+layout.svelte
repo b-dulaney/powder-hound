@@ -55,12 +55,12 @@
 		<AppBar>
 			<svelte:fragment slot="lead">
 				<a href="/" title="Go to Homepage" class="flex items-center">
-					<img src={Logo} alt="Powder Hound Logo" class="w-10 h-10 md:w-12 md:h-12" />
-					<p class="text-xl md:text-2xl font-bold pl-2">PowderHound</p>
+					<img src={Logo} alt="Powder Hound Logo" class="h-10 w-10 md:h-12 md:w-12" />
+					<p class="pl-2 text-xl font-bold md:text-2xl">PowderHound</p>
 				</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<div class="flex justify-end items-center">
+				<div class="flex items-center justify-end">
 					<button type="button" class="btn-icon" use:popup={userDropdown}>
 						{#if session?.user?.user_metadata?.avatar_url}
 							<Avatar src={session.user.user_metadata.avatar_url} />
@@ -90,18 +90,18 @@
 
 	<svelte:fragment slot="pageFooter">
 		<div
-			class="page-footer dark:bg-surface-900 border-t border-surface-500/10 text-xs md:text-base"
+			class="page-footer border-t border-surface-500/10 text-xs dark:bg-surface-900 md:text-base"
 		>
-			<div class="w-full max-w-6xl mx-auto p-4 py-8 space-y-10">
-				<section class="flex flex-col justify-between items-center space-y-5 md:space-y-0">
-					<div class="grid grid-cols-1 gap-2 place-content-center place-items-center">
-						<img src={Logo} alt="Powder Hound Logo" class="w-10 h-10" />
+			<div class="mx-auto w-full max-w-6xl space-y-10 p-4 py-8">
+				<section class="flex flex-col items-center justify-between space-y-5 md:space-y-0">
+					<div class="grid grid-cols-1 place-content-center place-items-center gap-2">
+						<img src={Logo} alt="Powder Hound Logo" class="h-10 w-10" />
 						<p class="text-sm opacity-80">Powder Hound</p>
-						<span class="badge variant-soft">0.0.1</span>
+						<span class="variant-soft badge">0.0.1</span>
 					</div>
 				</section>
 				<hr class="opacity-20" />
-				<section class="flex flex-col justify-between items-center space-y-4 md:space-y-0">
+				<section class="flex flex-col items-center justify-between space-y-4 md:space-y-0">
 					<p>
 						<a
 							class="anchor"
@@ -109,7 +109,7 @@
 							target="_blank"
 							rel="noreferrer">MIT License</a
 						>
-						<span class="opacity-10 mx-2">|</span>
+						<span class="mx-2 opacity-10">|</span>
 						<a class="anchor" href="mailto:contact@powderhound.io" target="_blank" rel="noreferrer"
 							>Contact</a
 						>
