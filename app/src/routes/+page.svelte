@@ -8,17 +8,17 @@
 <Snow height="h-[550px]" zIndex="-z-10" />
 
 <header class="py-8 xl:pt-16" id="hero">
-	<div class="grid grid-cols-1 gap-4 md:gap-10 items-center">
-		<div class="flex flex-col items-center text-center space-y-4 px-4">
-			<img src={Logo} alt="Powder Hound Logo" class="w-36 h-36 lg:w-52 lg:h-52 z-10" />
-			<h1 class="h1 text-5xl max-w-xl z-10">You'll never miss another powder day.</h1>
-			<p class="text-xl max-w-xl z-10">
+	<div class="grid grid-cols-1 items-center gap-4 md:gap-10">
+		<div class="flex flex-col items-center space-y-4 px-4 text-center">
+			<img src={Logo} alt="Powder Hound Logo" class="z-10 h-36 w-36 lg:h-52 lg:w-52" />
+			<h1 class="h1 z-10 max-w-xl text-5xl">You'll never miss another powder day.</h1>
+			<p class="z-10 max-w-xl text-xl">
 				View current conditions, get accurate predictions, and receive customized snowfall alerts -
 				all 100% free.
 			</p>
-			<div class="flex gap-4 z-10">
+			<div class="z-10 flex gap-4">
 				<a
-					class="btn bg-gradient-to-r variant-gradient-tertiary-secondary"
+					class="btn variant-gradient-tertiary-secondary bg-gradient-to-r"
 					data-sveltekit-preload-data="hover"
 					href="/conditions"
 				>
@@ -27,15 +27,15 @@
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>
-				<a class="btn variant-ghost-tertiary" href="/signup">Sign Up</a>
+				<a class="variant-ghost-tertiary btn" href="/signup">Sign Up</a>
 			</div>
 		</div>
 	</div>
 </header>
 
-<section id="forecasts" class="bg-surface-100-800-token built-for-gradient">
-	<div class="mx-auto w-full max-w-6xl py-8 px-4">
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
+<section id="forecasts" class="built-for-gradient bg-surface-100-800-token">
+	<div class="mx-auto w-full max-w-6xl px-4 py-8">
+		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
 			<div class="space-y-4">
 				<h2 class="h2">Built for Colorado</h2>
 				<p>
@@ -86,16 +86,16 @@
 					</p>
 				</section>
 				<footer class="card-footer mt-2 flex justify-center">
-					<img src={WRF} alt="CAIC forecast graph" class="rounded-lg max-h-56" />
+					<img src={WRF} alt="CAIC forecast graph" class="max-h-56 rounded-lg" />
 				</footer>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section id="alerts" class="bg-surface-100-800-token alerts-gradient">
-	<div class="mx-auto w-full max-w-6xl py-8 px-4">
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
+<section id="alerts" class="alerts-gradient bg-surface-100-800-token">
+	<div class="mx-auto w-full max-w-6xl px-4 py-8">
+		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
 			<div class="space-y-4 md:order-last">
 				<h2 class="h2">Tailored Alerts</h2>
 				<p>
@@ -106,8 +106,8 @@
 			</div>
 			<div class="grid grid-cols-[auto_1fr] gap-2 py-2">
 				<Avatar src={Logo} width="w-12" background="bg-transparent" />
-				<div class="card p-4 variant-filled-tertiary rounded-tl-none space-y-2">
-					<header class="flex justify-between items-center">
+				<div class="card variant-filled-tertiary space-y-2 rounded-tl-none p-4">
+					<header class="flex items-center justify-between">
 						<p class="font-bold">PowderHound</p>
 						<small class="opacity-50">5:00 am</small>
 					</header>
@@ -118,9 +118,9 @@
 	</div>
 </section>
 
-<section id="passes" class="bg-surface-100-800-token passes-gradient">
-	<div class="mx-auto w-full max-w-6xl py-8 px-4">
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 items-start">
+<section id="passes" class="passes-gradient bg-surface-100-800-token">
+	<div class="mx-auto w-full max-w-6xl px-4 py-8">
+		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
 			<div class="space-y-4">
 				<h2 class="h2">Beyond Passes</h2>
 				<p>
@@ -130,7 +130,7 @@
 				</p>
 			</div>
 			<div class="flex justify-center gap-2 md:py-16">
-				<a class="btn variant-ghost-primary" data-sveltekit-preload-data="hover" href="/conditions">
+				<a class="variant-ghost-primary btn" data-sveltekit-preload-data="hover" href="/conditions">
 					<div class="flex items-center gap-2">
 						<span>Find Powder</span>
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
