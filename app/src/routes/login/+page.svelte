@@ -1,7 +1,7 @@
 <script lang="ts">
 	import GithubIcon from '$lib/components/github-icon.svelte';
 	import GoogleIcon from '$lib/components/google-icon.svelte';
-	import { PUBLIC_VERCEL_ENV } from '$env/static/public';
+	import { PUBLIC_SITE_URL, PUBLIC_VERCEL_ENV } from '$env/static/public';
 	import type { PageData } from '../$types';
 	let isResendDisabled = false;
 	let email = '';
@@ -14,8 +14,9 @@
 		await supabase.auth.signInWithOAuth({
 			provider: 'github',
 			options: {
-				redirectTo: '/auth/callback'
+				redirectTo: `${PUBLIC_SITE_URL}/auth/callback`,
 			}
+			
 		});
 	}
 
@@ -23,7 +24,7 @@
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: '/auth/callback',
+				redirectTo: `${PUBLIC_SITE_URL}/auth/callback`,
 				queryParams: {
 					access_type: 'offline',
 					prompt: 'consent'
@@ -37,7 +38,7 @@
 		const { error } = await supabase.auth.signInWithOtp({
 			email,
 			options: {
-				emailRedirectTo: '/auth/callback'
+				emailRedirectTo: `${PUBLIC_SITE_URL}/auth/callback`,
 			}
 		});
 
@@ -83,7 +84,7 @@
 					</button>
 				{/if}
 				<!-- <button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Microsoft</button>
-			<button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Facebook</button> -->
+				<button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Facebook</button> -->
 				<button
 					class="btn btn-lg rounded-md bg-neutral-900"
 					title="Sign in with Github"
