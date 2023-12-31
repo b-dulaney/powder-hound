@@ -6,6 +6,7 @@ export type TemperatureRange = {
 	date: string;
 	low_temp: number;
 	high_temp: number;
+	snowfall: number;
 };
 
 export type DailyWeatherCondition = {

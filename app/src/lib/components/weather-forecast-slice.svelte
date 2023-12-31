@@ -2,6 +2,7 @@
 	import WeatherIcon from '$lib/components/weather-icon.svelte';
 	export let high_temp: number;
 	export let low_temp: number;
+	export let snowfall: number;
 	export let weatherDesc: string;
 	export let date: string;
 
@@ -23,8 +24,9 @@
 </script>
 
 <div class="flex min-w-[35px] flex-col items-center">
-	<p class="pl-1 font-semibold">{high_temp}&deg;</p>
-	<p class="pl-1 font-semibold">{low_temp}&deg;</p>
+	<p class="pl-1 ">{high_temp}&deg;</p>
+	<p class="pl-1 ">{low_temp}&deg;</p>
 	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== todayDateFormatted} />
+	<p class="font-semibold {snowfall > 0 ? 'pl-1' : ''}">{snowfall ? `${snowfall}"` : '--'}</p>
 	<p class="mt-2 text-xs text-surface-400 sm:text-sm">{formatDate(date)}</p>
 </div>

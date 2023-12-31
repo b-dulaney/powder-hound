@@ -6,7 +6,6 @@
 	import type { PageData } from './$types';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import { convertWindDirection, convertWindSpeed, weatherConditionsMap } from '$lib/utils';
-	import Snow from '$lib/components/snow.svelte';
 
 	export let data: PageData;
 
@@ -162,11 +161,12 @@
 					<div
 						class="flex w-full items-center justify-between px-4 py-2 md:self-center md:py-6 xl:w-11/12"
 					>
-						{#each mountainDetails.temperature_range as { date, low_temp, high_temp }, i (i)}
+						{#each mountainDetails.temperature_range as { date, low_temp, high_temp, snowfall }, i (i)}
 							<WeatherForecastSlice
 								{high_temp}
 								{low_temp}
 								weatherDesc={mountainDetails.daily_weather_conditions[i].daily_weather}
+								{snowfall}
 								{date}
 							/>
 							{#if i < mountainDetails.temperature_range.length - 1}
