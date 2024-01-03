@@ -72,12 +72,12 @@
 				<span class="pr-8" aria-hidden data-popup="userDropdown">
 					{#if session}
 						<div class="btn-group-vertical bg-surface-700 shadow-xl">
-							<button class="listbox-item">Settings</button>
+							<button class="listbox-item" on:click={() => goto('/settings')}>Settings</button>
 							<button class="listbox-item" on:click={logout}>Logout</button>
 						</div>
 					{:else}
 						<div class="btn-group-vertical bg-surface-700 shadow-xl">
-							<button class="listbox-item">Sign up</button>
+							<button class="listbox-item" on:click={() => goto('/signup')}>Sign up</button>
 							<button class="listbox-item" on:click={() => goto('/login')}>Login</button>
 						</div>
 					{/if}
