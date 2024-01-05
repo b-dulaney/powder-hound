@@ -7,7 +7,7 @@
 	export let date: string;
 
 	const today = new Date();
-	const todayDateFormatted = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+	const todayDateFormatted = `${today.getFullYear()}-0${today.getMonth() + 1}-${today.getDate()}`;
 
 	const formatDate = (date: string) => {
 		const options = { weekday: 'short', day: '2-digit', timeZone: 'America/Denver' } as const;
