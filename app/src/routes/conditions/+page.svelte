@@ -4,12 +4,12 @@
 	import type { PageData } from './$types';
 	import { formatSnowfall } from '$lib/utils';
 	export let data: PageData;
-	const { mountainOverviews } = data;
-
+	const { mountainOverviews, profile } = data;
 	let columnSort = { name: 'location', asc: true };
 	let searchInput = '';
-
 	let filteredMountains: MountainOverview[] = [];
+
+	const isFavorite = (mountain: MountainOverview) => profile?.favorites?.includes(mountain.mountain_id);
 
 	const searchLocations = () => {
 		filteredMountains =
@@ -57,7 +57,19 @@
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
 				}
 			}) || [];
+
 	};
+
+	mountainOverviews?.sort((a, b) => {
+		if (isFavorite(a) && !isFavorite(b)) {
+			return -1;
+		}
+		if (!isFavorite(a) && isFavorite(b)) {
+			return 1;
+		}
+		return 0;
+	});
+
 </script>
 
 <section class="pt-8 md:p-4 lg:p-8 xl:p-16">
@@ -291,7 +303,13 @@
 							>
 							<td class="!px-0 text-center font-bold"
 								><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
-									><i class="fa-regular fa-star"></i></button
+									>
+									{#if profile?.favorites?.includes(row.mountain_id)}
+									<i class="fa-solid fa-star text-yellow-500"></i>
+									{:else}
+									<i class="fa-regular fa-star"></i>
+									{/if}
+									</button
 								></td
 							>
 						</tr>
@@ -332,7 +350,11 @@
 							>
 							<td class="!px-0 text-center font-bold"
 								><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
-									><i class="fa-regular fa-star"></i></button
+									>{#if profile?.favorites?.includes(row.mountain_id)}
+									<i class="fa-solid fa-star text-yellow-500"></i>
+									{:else}
+									<i class="fa-regular fa-star"></i>
+									{/if}</button
 								></td
 							>
 						</tr>
