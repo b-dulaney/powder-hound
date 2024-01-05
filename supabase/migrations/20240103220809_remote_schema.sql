@@ -253,7 +253,8 @@ BEGIN
         SELECT
             caic_data.datetime::date AS date,
             max(caic_data.temp) AS high_temp,
-            min(caic_data.temp) AS low_temp
+            min(caic_data.temp) AS low_temp,
+            sum(snowfall_in) as snowfall
         FROM
             caic_data
         WHERE
@@ -269,7 +270,8 @@ BEGIN
             jsonb_build_object(
                 'date', date,
                 'high_temp', high_temp,
-                'low_temp', low_temp
+                'low_temp', low_temp,
+                'snowfall', snowfall
             )
         ) INTO result
     FROM
@@ -379,7 +381,8 @@ CREATE OR REPLACE VIEW "public"."mountain_detail" AS
 ALTER TABLE "public"."mountain_detail" OWNER TO "postgres";
 
 CREATE OR REPLACE VIEW "public"."mountain_overview" AS
- SELECT "mountains"."display_name",
+ SELECT "mountains"."mountain_id",
+    "mountains"."display_name",
     "mountains"."region",
     "mountains"."location_type",
     "mountains"."slug",
@@ -407,7 +410,9 @@ CREATE TABLE IF NOT EXISTS "public"."profile" (
     "first_name" "text",
     "last_name" "text",
     "email" "text",
-    "user_id" "uuid"
+    "user_id" "uuid",
+    "alert_thresholds" "jsonb"[],
+    "favorites" smallint[]
 );
 
 ALTER TABLE "public"."profile" OWNER TO "postgres";
@@ -444,6 +449,8 @@ ALTER TABLE ONLY "public"."profile"
 CREATE POLICY "Enable insert for authenticated users only" ON "public"."mountains" FOR INSERT TO "service_role" WITH CHECK (true);
 
 CREATE POLICY "Enable insert for service role only" ON "public"."caic_data" FOR INSERT TO "service_role" WITH CHECK (true);
+
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."profile" FOR INSERT WITH CHECK (true);
 
 CREATE POLICY "Enable read access for all users" ON "public"."caic_data" FOR SELECT USING (true);
 
