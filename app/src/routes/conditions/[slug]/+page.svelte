@@ -146,11 +146,11 @@
 							</p>
 							<div class="flex">
 								<p>
-									High {mountainDetails.temperature_range[0].high_temp}&deg;
+									High {mountainDetails.temperature_range[1].high_temp}&deg;
 								</p>
 								<p class=" mx-2">&middot;</p>
 								<p>
-									Low {mountainDetails.temperature_range[0].low_temp}&deg;
+									Low {mountainDetails.temperature_range[1].low_temp}&deg;
 								</p>
 							</div>
 						</div>
