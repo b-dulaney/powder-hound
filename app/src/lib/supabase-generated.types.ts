@@ -61,29 +61,7 @@ export interface Database {
           wind_deg_speed?: string
           wind_gust?: number
         }
-        Relationships: [
-          {
-            foreignKeyName: "caic_data_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: false
-            referencedRelation: "mountain_detail"
-            referencedColumns: ["mountain_id"]
-          },
-          {
-            foreignKeyName: "caic_data_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: false
-            referencedRelation: "mountain_overview"
-            referencedColumns: ["mountain_id"]
-          },
-          {
-            foreignKeyName: "caic_data_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: false
-            referencedRelation: "mountains"
-            referencedColumns: ["mountain_id"]
-          }
-        ]
+        Relationships: []
       }
       mountains: {
         Row: {
@@ -158,6 +136,155 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      resort_conditions: {
+        Row: {
+          base_depth: number | null
+          display_name: string | null
+          lifts_open: number | null
+          lifts_open_percent: string | null
+          mountain_id: number
+          runs_open: number | null
+          runs_open_percent: string | null
+          snow_stake_url: string | null
+          total_lifts: number | null
+          total_runs: number | null
+          website_url: string | null
+        }
+        Insert: {
+          base_depth?: number | null
+          display_name?: string | null
+          lifts_open?: number | null
+          lifts_open_percent?: string | null
+          mountain_id: number
+          runs_open?: number | null
+          runs_open_percent?: string | null
+          snow_stake_url?: string | null
+          total_lifts?: number | null
+          total_runs?: number | null
+          website_url?: string | null
+        }
+        Update: {
+          base_depth?: number | null
+          display_name?: string | null
+          lifts_open?: number | null
+          lifts_open_percent?: string | null
+          mountain_id?: number
+          runs_open?: number | null
+          runs_open_percent?: string | null
+          snow_stake_url?: string | null
+          total_lifts?: number | null
+          total_runs?: number | null
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resort_conditions_display_name_fkey"
+            columns: ["display_name"]
+            isOneToOne: false
+            referencedRelation: "mountain_detail"
+            referencedColumns: ["display_name"]
+          },
+          {
+            foreignKeyName: "resort_conditions_display_name_fkey"
+            columns: ["display_name"]
+            isOneToOne: false
+            referencedRelation: "mountain_overview"
+            referencedColumns: ["display_name"]
+          },
+          {
+            foreignKeyName: "resort_conditions_display_name_fkey"
+            columns: ["display_name"]
+            isOneToOne: false
+            referencedRelation: "mountains"
+            referencedColumns: ["display_name"]
+          },
+          {
+            foreignKeyName: "resort_conditions_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: true
+            referencedRelation: "mountain_detail"
+            referencedColumns: ["mountain_id"]
+          },
+          {
+            foreignKeyName: "resort_conditions_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: true
+            referencedRelation: "mountain_overview"
+            referencedColumns: ["mountain_id"]
+          },
+          {
+            foreignKeyName: "resort_conditions_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: true
+            referencedRelation: "mountains"
+            referencedColumns: ["mountain_id"]
+          }
+        ]
+      }
+      resort_web_elements: {
+        Row: {
+          base_depth_el: string | null
+          lifts_open_el: string | null
+          mountain_id: number
+          runs_open_el: string | null
+          snow_past_24h_el: string | null
+          total_lifts_el: string | null
+          total_runs_el: string | null
+        }
+        Insert: {
+          base_depth_el?: string | null
+          lifts_open_el?: string | null
+          mountain_id: number
+          runs_open_el?: string | null
+          snow_past_24h_el?: string | null
+          total_lifts_el?: string | null
+          total_runs_el?: string | null
+        }
+        Update: {
+          base_depth_el?: string | null
+          lifts_open_el?: string | null
+          mountain_id?: number
+          runs_open_el?: string | null
+          snow_past_24h_el?: string | null
+          total_lifts_el?: string | null
+          total_runs_el?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resort_web_elements_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: true
+            referencedRelation: "mountain_detail"
+            referencedColumns: ["mountain_id"]
+          },
+          {
+            foreignKeyName: "resort_web_elements_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: true
+            referencedRelation: "mountain_overview"
+            referencedColumns: ["mountain_id"]
+          },
+          {
+            foreignKeyName: "resort_web_elements_mountain_id_fkey"
+            columns: ["mountain_id"]
+            isOneToOne: true
+            referencedRelation: "mountains"
+            referencedColumns: ["mountain_id"]
+          }
+        ]
+      }
+      result: {
+        Row: {
+          jsonb_agg: Json | null
+        }
+        Insert: {
+          jsonb_agg?: Json | null
+        }
+        Update: {
+          jsonb_agg?: Json | null
+        }
+        Relationships: []
       }
     }
     Views: {

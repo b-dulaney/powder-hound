@@ -6,7 +6,9 @@
 	export let weatherDesc: string;
 	export let date: string;
 
-	const today = new Date();
+	let now = new Date();
+	let offset = now.getTimezoneOffset() - (now.getMonth() > 2 && now.getMonth() < 11 ? 360 : 420);
+	let today = new Date(now.getTime() - offset * 60000);
 	const todayDateFormatted = today.toISOString().split('T')[0];
 	
 	const formatDate = (date: string) => {

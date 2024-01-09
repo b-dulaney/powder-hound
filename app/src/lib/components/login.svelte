@@ -12,7 +12,6 @@
     const actionText = action === 'login' ? 'Sign in' : 'Sign up';
 
 	async function signInWithGithub() {
-		console.log(PUBLIC_SITE_URL)
 		await supabase.auth.signInWithOAuth({
 			provider: 'github',
 			options: {
