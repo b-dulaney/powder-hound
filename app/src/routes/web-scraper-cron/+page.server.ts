@@ -168,6 +168,7 @@ export async function load({ request }) {
 
 	const webElements: ResortWebElements = await request.json();
 	const resortConditionsData = await fetchResortConditions(webElements);
+	console.log(resortConditionsData);
 
 	const { error } = await supabase
 		.from('resort_conditions')
@@ -181,6 +182,7 @@ export async function load({ request }) {
 			body: { message: 'Error updating resort conditions' }
 		};
 	} else {
+		console.log(`Resort conditions updated`);
 		return {
 			status: 200,
 			body: { message: 'Resort conditions updated' }
