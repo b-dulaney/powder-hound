@@ -2,7 +2,7 @@ import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
 import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 import type { Database, ResortWebElements } from '$lib/supabase.types';
 import { createClient } from '@supabase/supabase-js';
-import type { RequestEvent } from '@sveltejs/kit';
+import { json, type RequestEvent } from '@sveltejs/kit';
 import { chromium, type Browser, type ElementHandle } from 'playwright';
 import type { Config } from '@sveltejs/adapter-vercel';
 const supabase = createClient<Database>(PUBLIC_SUPABASE_URL ?? '', SUPABASE_SERVICE_ROLE_KEY ?? '');
@@ -180,15 +180,9 @@ export async function POST({ request }: RequestEvent) {
 
 	if (error) {
 		console.error(`Error updating resort conditions`, error);
-		return {
-			status: 500,
-			body: { message: 'Error updating resort conditions' }
-		};
+		return json({ error: error.message }, { status: 500 });
 	} else {
 		console.log(`Resort conditions updated`);
-		return {
-			status: 200,
-			body: { message: 'Resort conditions updated' }
-		};
+		return json({ message: 'Resort conditions updated' }, { status: 200 });
 	}
 }
