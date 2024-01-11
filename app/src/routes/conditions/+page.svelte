@@ -74,7 +74,7 @@
 
 <section class="pt-8 md:p-4 lg:p-8 xl:p-16">
 	<div class="mb-4 flex justify-center">
-		<h1 class="h1">Locations</h1>
+		<h1 class="h1">Conditions</h1>
 	</div>
 	<div class="mb-4 flex w-full items-center justify-center px-8 md:py-8">
 		<div

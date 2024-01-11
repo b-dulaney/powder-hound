@@ -23,7 +23,7 @@
 					href="/conditions"
 				>
 					<div class="flex items-center gap-2">
-						<span>View Locations</span>
+						<span>View Conditions</span>
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>

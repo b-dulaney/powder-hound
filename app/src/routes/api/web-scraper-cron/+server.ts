@@ -10,12 +10,10 @@ const supabase = createClient<Database>(PUBLIC_SUPABASE_URL ?? '', SUPABASE_SERV
 
 async function fetchResortConditions(row: ResortWebElements) {
 	const conditionsData = await scrapeConditions(row);
-	console.log(conditionsData);
 	return conditionsData;
 }
 
 async function scrapeConditions(webElements: ResortWebElements) {
-	console.log('Processing', webElements.mountain_id);
 	const browser = await puppeteer.launch({
 		args: chromium.args,
 		defaultViewport: chromium.defaultViewport,
@@ -25,7 +23,6 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		headless: chromium.headless,
 		ignoreHTTPSErrors: true
 	});
-	console.log('Browser launched');
 	let snowPastWeek: string | null | undefined;
 	let snowTotal: string | null | undefined;
 	let snowType: string | null | undefined;
@@ -33,7 +30,6 @@ async function scrapeConditions(webElements: ResortWebElements) {
 	let runsOpen: string | null | undefined;
 
 	if (webElements.trail_report_url) {
-		console.log('trail url', webElements.trail_report_url);
 		const trailReportPage = await browser.newPage();
 		trailReportPage.setDefaultNavigationTimeout(2 * 60 * 1000);
 		await trailReportPage.goto(webElements.trail_report_url);
@@ -167,7 +163,6 @@ async function scrapeConditions(webElements: ResortWebElements) {
 }
 
 export async function POST({ request }: RequestEvent) {
-	console.log(request);
 	const authorization = request.headers.get('Authorization');
 	if (authorization !== `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
@@ -175,7 +170,6 @@ export async function POST({ request }: RequestEvent) {
 
 	const webElements: ResortWebElements = await request.json();
 	const resortConditionsData = await fetchResortConditions(webElements);
-	console.log(resortConditionsData);
 
 	const { error } = await supabase
 		.from('resort_conditions')
