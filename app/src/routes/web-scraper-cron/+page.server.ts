@@ -1,14 +1,10 @@
+import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
+import { PUBLIC_SUPABASE_URL } from '$env/static/public';
+import type { Database, ResortWebElements } from '$lib/supabase.types';
 import { createClient } from '@supabase/supabase-js';
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { Browser, ElementHandle, chromium } from 'playwright';
-import type { Database, ResortWebElements } from '../src/lib/supabase.types';
+import { chromium, type Browser, type ElementHandle } from 'playwright';
 
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-const supabase = createClient<Database>(
-	process.env.PUBLIC_SUPABASE_URL ?? '',
-	process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
-);
+const supabase = createClient<Database>(PUBLIC_SUPABASE_URL ?? '', SUPABASE_SERVICE_ROLE_KEY ?? '');
 
 async function fetchResortConditions(row: ResortWebElements) {
 	const conditionsData = await scrapeConditions(row);
@@ -155,17 +151,20 @@ async function scrapeConditions(webElements: ResortWebElements) {
 	}
 }
 
-export default async function handler(request: VercelRequest, response: VercelResponse) {
-	const { authorization } = request.headers;
-	if (authorization !== `Bearer ${SERVICE_KEY}`) {
-		return new Response(JSON.stringify({ message: 'Unauthorized' }), {
+export const config = {
+	runtime: 'nodejs18.x'
+};
+
+export async function load({ request }) {
+	const authorization = request.headers.get('Authorization');
+	if (authorization !== `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`) {
+		return {
 			status: 401,
-			headers: { 'Content-Type': 'application/json' }
-		});
+			body: { message: 'Unauthorized' }
+		};
 	}
 
-	const { body } = request;
-	const webElements: ResortWebElements = body;
+	const webElements: ResortWebElements = await request.json();
 	const resortConditionsData = await fetchResortConditions(webElements);
 
 	const { error } = await supabase
@@ -175,8 +174,14 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
 	if (error) {
 		console.error(`Error updating resort conditions`, error);
-		response.status(500).json({ message: 'Error updating resort conditions' });
+		return {
+			status: 500,
+			body: { message: 'Error updating resort conditions' }
+		};
 	} else {
-		response.status(200).json({ message: 'Resort conditions updated successfully' });
+		return {
+			status: 200,
+			body: { message: 'Resort conditions updated' }
+		};
 	}
 }
