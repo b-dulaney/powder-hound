@@ -44,7 +44,7 @@
 		"@supabase/ssr": "^0.0.10",
 		"@supabase/supabase-js": "^2.39.0",
 		"@vercel/speed-insights": "^1.0.2",
-		"@sparticuz/chromium": "^119.0.2",
+		"@sparticuz/chromium-min": "^119.0.2",
 		"puppeteer-core": "^21.5.1",
 		"chart.js": "^4.4.1",
 		"svelte": "^4.2.8",
