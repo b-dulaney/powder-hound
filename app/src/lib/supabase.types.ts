@@ -106,6 +106,7 @@ export type Database = MergeDeep<
 						snow_type: string | null;
 						website_url: string;
 						snow_stake_url: number;
+						updated_at: string;
 					};
 				};
 				resort_web_elements: {
