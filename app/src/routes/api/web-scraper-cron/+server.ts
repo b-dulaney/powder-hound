@@ -3,7 +3,7 @@ import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 import type { Database, ResortWebElements } from '$lib/supabase.types';
 import { createClient } from '@supabase/supabase-js';
 import { json, type RequestEvent } from '@sveltejs/kit';
-import chromium from '@sparticuz/chromium';
+import chromium from '@sparticuz/chromium-min';
 import puppeteer from 'puppeteer-core';
 import type { ElementHandle } from 'puppeteer-core';
 import type { Config } from '@sveltejs/adapter-vercel';
