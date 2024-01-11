@@ -163,10 +163,7 @@ export async function POST({ request }: RequestEvent) {
 	console.log(request);
 	const authorization = request.headers.get('Authorization');
 	if (authorization !== `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`) {
-		return {
-			status: 401,
-			body: { message: 'Unauthorized' }
-		};
+		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
 	const webElements: ResortWebElements = await request.json();
