@@ -19,9 +19,10 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		args: chromium.args,
 		defaultViewport: chromium.defaultViewport,
 		executablePath: await chromium.executablePath(
-			'https://github.com/Sparticuz/chromium/releases/download/v119.0.0/chromium-v119.0.0-pack.tar'
+			'https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar'
 		),
-		headless: 'new'
+		headless: chromium.headless,
+		ignoreHTTPSErrors: true
 	});
 
 	let snowPastWeek: string | null | undefined;
