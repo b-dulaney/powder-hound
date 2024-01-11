@@ -5,9 +5,9 @@
 
 	import { afterNavigate, goto, invalidate } from '$app/navigation';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-	import type { AfterNavigate } from '@sveltejs/kit';
-
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import type { AfterNavigate } from '@sveltejs/kit';
+	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
@@ -48,6 +48,8 @@
 	const logout = async () => {
 		await supabase.auth.signOut();
 	};
+
+	injectSpeedInsights();
 </script>
 
 <AppShell>
@@ -72,12 +74,12 @@
 				<span class="pr-8" aria-hidden data-popup="userDropdown">
 					{#if session}
 						<div class="btn-group-vertical bg-surface-700 shadow-xl">
-							<button class="listbox-item">Settings</button>
+							<button class="listbox-item" on:click={() => goto('/settings')}>Settings</button>
 							<button class="listbox-item" on:click={logout}>Logout</button>
 						</div>
 					{:else}
 						<div class="btn-group-vertical bg-surface-700 shadow-xl">
-							<button class="listbox-item">Sign up</button>
+							<button class="listbox-item" on:click={() => goto('/signup')}>Sign up</button>
 							<button class="listbox-item" on:click={() => goto('/login')}>Login</button>
 						</div>
 					{/if}
