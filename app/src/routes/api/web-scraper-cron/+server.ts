@@ -19,7 +19,9 @@ async function scrapeConditions(webElements: ResortWebElements) {
 	const browser = await puppeteer.launch({
 		args: chromium.args,
 		defaultViewport: chromium.defaultViewport,
-		executablePath: (await chromium.executablePath()) || '/usr/bin/chromium-browser',
+		executablePath: await chromium.executablePath(
+			'https://github.com/Sparticuz/chromium/releases/download/v119.0.0/chromium-v119.0.0-pack.tar'
+		),
 		headless: 'new'
 	});
 
