@@ -153,11 +153,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 	}
 }
 
-export const config = {
-	runtime: 'nodejs18.x'
-};
-
-export async function load({ request }) {
+export async function POST({ request }: { request: Request }) {
 	const authorization = request.headers.get('Authorization');
 	if (authorization !== `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`) {
 		return {
