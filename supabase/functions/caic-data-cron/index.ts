@@ -19,65 +19,80 @@ const supabase = createClient<Database>(
 function parseForecastData(data: string, mountainID: number): CaicData[] {
   const parsedForecastData: CaicData[] = [];
   const lines = data.split("\n");
-
-  let isDataParsingStarted = false;
+  lines.splice(0, 7);
 
   for (const line of lines) {
-    if (line.includes("DATE")) {
-      isDataParsingStarted = true;
-      continue;
+    const values = line.trim().split(/\s+/);
+    // Check if it's the last line with summary information
+    if (values.length === 1) {
+      break;
     }
 
-    if (isDataParsingStarted) {
-      const values = line.trim().split(/\s+/);
-      // Check if it's the last line with summary information
-      if (values.length === 1) {
-        break;
-      }
+    const [
+      date,
+      time,
+      temp,
+      dewPoint,
+      relativeHumidity,
+      wind_degree_speed,
+      wind_gust,
+      cei,
+      visibility,
+      weather_desc,
+      ncpcp,
+      cnpcp,
+      snowfall_in,
+      wetbulb_temp,
+    ] = values;
 
-      const [
-        date,
-        time,
-        temp,
-        dewPoint,
-        relativeHumidity,
-        wind_degree_speed,
-        wind_gust,
-        cei,
-        visibility,
-        weather_desc,
-        ncpcp,
-        cnpcp,
-        snowfall_in,
-        wetbulb_temp,
-      ] = values;
+    // Parse the 'date' string into a Date object
+    const dateObj = new Date(date);
 
-      // Create an object with the parsed values
-      const parsedPointForecast: CaicData = {
-        mountain_id: mountainID,
-        datetime: `${date} ${time}`,
-        temp: +temp,
-        dew_point: +dewPoint,
-        relative_humidity: +relativeHumidity,
-        wind_deg_speed: wind_degree_speed,
-        wind_gust: +wind_gust,
-        cei: +cei,
-        visbility_miles: +visibility,
-        weather_desc,
-        ncpcp_in: +ncpcp,
-        cnpcp_in: +cnpcp,
-        snowfall_in: +snowfall_in,
-        wetbulb_temp: +wetbulb_temp,
-        created_at: new Date().toISOString(),
-      };
+    // Determine the start and end of daylight saving time for the year of the date
+    const startDst = new Date(`03/14/${dateObj.getFullYear()} 02:00`);
+    const endDst = new Date(`11/07/${dateObj.getFullYear()} 02:00`);
 
-      // Push the object to the array
-      parsedForecastData.push(parsedPointForecast);
-    }
+    // Adjust the start and end dates based on the day of the week
+    startDst.setDate(14 - startDst.getDay());
+    endDst.setDate(7 - endDst.getDay());
+
+    // Determine whether the date falls within the daylight saving time period
+    const timezone = (dateObj >= startDst && dateObj < endDst) ? "MDT" : "MST";
+
+    // Parse the 'date' and 'time' strings into a Date object with the correct timezone
+    const datetimeInMountainTime = new Date(`${date} ${time} ${timezone}`);
+    // Convert the Date object to UTC
+    const datetimeInUTC = new Date(
+      datetimeInMountainTime.getTime() +
+        datetimeInMountainTime.getTimezoneOffset() * 60000,
+    );
+
+    // Format the UTC Date object into a string
+    const utcDatetimeString = datetimeInUTC.toISOString();
+
+    // Create an object with the parsed values
+    const parsedPointForecast: CaicData = {
+      mountain_id: mountainID,
+      datetime: utcDatetimeString,
+      temp: +temp,
+      dew_point: +dewPoint,
+      relative_humidity: +relativeHumidity,
+      wind_deg_speed: wind_degree_speed,
+      wind_gust: +wind_gust,
+      cei: +cei,
+      visbility_miles: +visibility,
+      weather_desc,
+      ncpcp_in: +ncpcp,
+      cnpcp_in: +cnpcp,
+      snowfall_in: +snowfall_in,
+      wetbulb_temp: +wetbulb_temp,
+      created_at: new Date().toISOString(),
+    };
+
+    // Push the object to the array
+    parsedForecastData.push(parsedPointForecast);
   }
 
-  // Remove the first 2 header rows from the parsed data
-  parsedForecastData.splice(0, 2);
   return parsedForecastData;
 }
 
@@ -121,7 +136,7 @@ async function updatePointForecastData(
 ): Promise<DbResult<CaicData>> {
   const { data, error } = await supabase
     .from("caic_data")
-    .upsert(forecastData, { ignoreDuplicates: false })
+    .upsert(forecastData, { onConflict: "mountain_id, datetime" })
     .select();
 
   if (error) {

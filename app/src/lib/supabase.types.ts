@@ -6,6 +6,13 @@ export type TemperatureRange = {
 	date: string;
 	low_temp: number;
 	high_temp: number;
+	snowfall: number;
+};
+
+export type AlertThreshold = {
+	id: number;
+	name: string;
+	threshold: number;
 };
 
 export type DailyWeatherCondition = {
@@ -34,6 +41,7 @@ export type Database = MergeDeep<
 			Views: {
 				mountain_overview: {
 					Row: {
+						mountain_id: number;
 						display_name: string;
 						slug: string;
 						location_type: string;
@@ -68,6 +76,19 @@ export type Database = MergeDeep<
 					};
 				};
 			};
+			Tables: {
+				profile: {
+					Row: {
+						id: number;
+						fist_name: string | null;
+						last_name: string | null;
+						email: string | null;
+						user_id: string | null;
+						favorites: number[];
+						alert_thresholds: AlertThreshold[];
+					};
+				};
+			};
 		};
 	}
 >;
@@ -80,6 +101,7 @@ export type Views<T extends keyof Database['public']['Views']> =
 
 export type Mountain = Tables<'mountains'>;
 export type CaicData = Tables<'caic_data'>;
+export type Profile = Tables<'profile'>;
 export type MountainOverview = Views<'mountain_overview'>;
 export type MountainDetail = Views<'mountain_details'>;
 
