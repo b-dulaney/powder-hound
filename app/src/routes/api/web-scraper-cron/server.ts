@@ -2,8 +2,9 @@ import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
 import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 import type { Database, ResortWebElements } from '$lib/supabase.types';
 import { createClient } from '@supabase/supabase-js';
+import type { RequestEvent } from '@sveltejs/kit';
 import { chromium, type Browser, type ElementHandle } from 'playwright';
-
+import type { Config } from '@sveltejs/adapter-vercel';
 const supabase = createClient<Database>(PUBLIC_SUPABASE_URL ?? '', SUPABASE_SERVICE_ROLE_KEY ?? '');
 
 async function fetchResortConditions(row: ResortWebElements) {
@@ -153,7 +154,13 @@ async function scrapeConditions(webElements: ResortWebElements) {
 	}
 }
 
-export async function POST({ request }: { request: Request }) {
+export const config: Config = {
+	split: true,
+	runtime: 'nodejs18.x'
+};
+
+export async function POST({ request }: RequestEvent) {
+	console.log(request);
 	const authorization = request.headers.get('Authorization');
 	if (authorization !== `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`) {
 		return {
