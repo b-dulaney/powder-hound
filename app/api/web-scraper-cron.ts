@@ -1,0 +1,182 @@
+import { createClient } from '@supabase/supabase-js';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { Browser, ElementHandle, chromium } from 'playwright';
+import type { Database, ResortWebElements } from '../src/lib/supabase.types';
+
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+const supabase = createClient<Database>(
+	process.env.PUBLIC_SUPABASE_URL ?? '',
+	process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
+);
+
+async function fetchResortConditions(row: ResortWebElements) {
+	const conditionsData = await scrapeConditions(row);
+	console.log(conditionsData);
+	return conditionsData;
+}
+
+async function scrapeConditions(webElements: ResortWebElements) {
+	const browser: Browser = await chromium.launch();
+
+	let snowPastWeek: string | null = null;
+	let snowTotal: string | null = null;
+	let snowType: string | null = null;
+	let liftsOpen: string | null = null;
+	let runsOpen: string | null = null;
+
+	if (webElements.trail_report_url) {
+		const trailReportPage = await browser.newPage();
+		trailReportPage.setDefaultNavigationTimeout(2 * 60 * 1000);
+		await trailReportPage.goto(webElements.trail_report_url);
+
+		const page = await browser.newPage();
+		page.setDefaultNavigationTimeout(2 * 60 * 1000);
+		await page.goto(webElements.conditions_url);
+
+		const baseDepthEl = await page.waitForSelector(webElements.base_depth_el);
+		const baseDepth = await baseDepthEl?.evaluate((el) => el.textContent);
+
+		const snowPast24HoursEl = await page.waitForSelector(webElements.snow_past_24h_el);
+		const snowPast24Hours = await snowPast24HoursEl?.evaluate((el) => el.textContent);
+
+		const snowPast48HoursEl = await page.waitForSelector(webElements.snow_past_48h_el);
+		const snowPast48Hours = await snowPast48HoursEl?.evaluate((el) => el.textContent);
+
+		if (webElements.lifts_open_el) {
+			const liftsOpenEl = await trailReportPage.waitForSelector(webElements.lifts_open_el);
+			liftsOpen = await liftsOpenEl?.evaluate((el) => el.textContent);
+		}
+
+		if (webElements.runs_open_el) {
+			const runsOpenEl = await trailReportPage.waitForSelector(webElements.runs_open_el);
+			runsOpen = await runsOpenEl?.evaluate((el) => el.textContent);
+		}
+
+		if (webElements.snow_past_week_el) {
+			const snowPastWeekEl = await page.waitForSelector(webElements.snow_past_week_el);
+			snowPastWeek = await snowPastWeekEl?.evaluate((el) => el.textContent);
+		}
+		if (webElements.snow_total_el) {
+			const snowTotalEl = await page.waitForSelector(webElements.snow_total_el);
+			snowTotal = await snowTotalEl?.evaluate((el) => el.textContent);
+		}
+		if (webElements.snow_type_el) {
+			const snowTypeEl = await page.waitForSelector(webElements.snow_type_el);
+			snowType = await snowTypeEl?.evaluate((el) => el.textContent);
+		}
+		await browser.close();
+
+		return {
+			mountain_id: webElements.mountain_id,
+			base_depth: parseInt(baseDepth!),
+			lifts_open: parseInt(liftsOpen!) ?? null,
+			runs_open: parseInt(runsOpen!) ?? null,
+			snow_past_24h: parseInt(snowPast24Hours!),
+			snow_past_48h: parseInt(snowPast48Hours!),
+			snow_past_week: parseInt(snowPastWeek!) ?? null,
+			snow_total: parseInt(snowTotal!) ?? null,
+			snow_type: snowType ?? null
+		};
+	} else {
+		const page = await browser.newPage();
+		page.setDefaultNavigationTimeout(2 * 60 * 1000);
+		await page.goto(webElements.conditions_url);
+
+		const baseDepthEl = await page.waitForSelector(webElements.base_depth_el);
+		const baseDepth = await baseDepthEl?.evaluate((el) => el.textContent);
+
+		// Eldora has a wonky layout for their conditions page that does not match other Alterra resorts. Must click a button to display the conditions popup.
+		if (webElements.mountain_id === 6) {
+			const buttonSelector =
+				'div.styles__StyledFeedContainer-sc-1sc7djp-0:nth-child(3) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)';
+			const conditionsButton = (await page.waitForSelector(
+				buttonSelector
+			)) as ElementHandle<HTMLElement>;
+			console.log(conditionsButton);
+			await conditionsButton.evaluate((b) => b.click());
+		}
+
+		if (webElements.lifts_open_el) {
+			const liftsOpenEl = await page.waitForSelector(webElements.lifts_open_el);
+			liftsOpen = await liftsOpenEl?.evaluate((el) => el.textContent);
+
+			if (liftsOpen?.includes('/')) {
+				liftsOpen = liftsOpen.split('/')[0];
+			}
+			if (liftsOpen?.includes('of')) {
+				liftsOpen = liftsOpen.split('of')[0];
+				liftsOpen = liftsOpen.replace(/\D/g, '');
+			}
+		}
+
+		if (webElements.runs_open_el) {
+			const runsOpenEl = await page.waitForSelector(webElements.runs_open_el);
+			runsOpen = await runsOpenEl?.evaluate((el) => el.textContent);
+			if (runsOpen?.includes('/')) {
+				runsOpen = runsOpen.split('/')[0];
+			}
+			if (runsOpen?.includes('of')) {
+				runsOpen = runsOpen.split('of')[0];
+				runsOpen = runsOpen.replace(/\D/g, '');
+			}
+		}
+
+		const snowPast24HoursEl = await page.waitForSelector(webElements.snow_past_24h_el);
+		const snowPast24Hours = await snowPast24HoursEl?.evaluate((el) => el.textContent);
+
+		const snowPast48HoursEl = await page.waitForSelector(webElements.snow_past_48h_el);
+		const snowPast48Hours = await snowPast48HoursEl?.evaluate((el) => el.textContent);
+
+		if (webElements.snow_past_week_el) {
+			const snowPastWeekEl = await page.waitForSelector(webElements.snow_past_week_el);
+			snowPastWeek = await snowPastWeekEl?.evaluate((el) => el.textContent);
+		}
+		if (webElements.snow_total_el) {
+			const snowTotalEl = await page.waitForSelector(webElements.snow_total_el);
+			snowTotal = await snowTotalEl?.evaluate((el) => el.textContent);
+		}
+		if (webElements.snow_type_el) {
+			const snowTypeEl = await page.waitForSelector(webElements.snow_type_el);
+			snowType = await snowTypeEl?.evaluate((el) => el.textContent);
+		}
+		await browser.close();
+		return {
+			mountain_id: webElements.mountain_id,
+			base_depth: parseInt(baseDepth!),
+			lifts_open: parseInt(liftsOpen!) ?? null,
+			runs_open: parseInt(runsOpen!) ?? null,
+			snow_past_24h: parseInt(snowPast24Hours!),
+			snow_past_48h: parseInt(snowPast48Hours!),
+			snow_past_week: parseInt(snowPastWeek!) ?? null,
+			snow_total: parseInt(snowTotal!) ?? null,
+			snow_type: snowType ?? null
+		};
+	}
+}
+
+export default async function handler(request: VercelRequest, response: VercelResponse) {
+	const { authorization } = request.headers;
+	if (authorization !== `Bearer ${SERVICE_KEY}`) {
+		return new Response(JSON.stringify({ message: 'Unauthorized' }), {
+			status: 401,
+			headers: { 'Content-Type': 'application/json' }
+		});
+	}
+
+	const { body } = request;
+	const webElements: ResortWebElements = body;
+	const resortConditionsData = await fetchResortConditions(webElements);
+
+	const { error } = await supabase
+		.from('resort_conditions')
+		.update(resortConditionsData)
+		.eq('mountain_id', webElements.mountain_id);
+
+	if (error) {
+		console.error(`Error updating resort conditions`, error);
+		response.status(500).json({ message: 'Error updating resort conditions' });
+	} else {
+		response.status(200).json({ message: 'Resort conditions updated successfully' });
+	}
+}

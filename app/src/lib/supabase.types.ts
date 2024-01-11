@@ -88,6 +88,41 @@ export type Database = MergeDeep<
 						alert_thresholds: AlertThreshold[];
 					};
 				};
+				resort_conditions: {
+					Row: {
+						mountain_id: number;
+						display_name: string;
+						base_depth: number;
+						total_lifts: number;
+						lifts_open: number;
+						lifts_open_percent: number;
+						total_runs: number;
+						runs_open: number;
+						runs_open_percent: number;
+						snow_past_24h: number;
+						snow_past_48h: number;
+						snow_past_week: number;
+						snow_total: number;
+						snow_type: string | null;
+						website_url: string;
+						snow_stake_url: number;
+					};
+				};
+				resort_web_elements: {
+					Row: {
+						mountain_id: number;
+						conditions_url: string;
+						trail_report_url: string | null;
+						base_depth_el: string;
+						lifts_open_el: string | null;
+						runs_open_el: string | null;
+						snow_past_24h_el: string;
+						snow_past_48h_el: string;
+						snow_past_week_el: string | null;
+						snow_total_el: string | null;
+						snow_type_el: string | null;
+					};
+				};
 			};
 		};
 	}
@@ -102,10 +137,12 @@ export type Views<T extends keyof Database['public']['Views']> =
 export type Mountain = Tables<'mountains'>;
 export type CaicData = Tables<'caic_data'>;
 export type Profile = Tables<'profile'>;
+export type ResortConditions = Tables<'resort_conditions'>;
+export type ResortWebElements = Tables<'resort_web_elements'>;
 export type MountainOverview = Views<'mountain_overview'>;
 export type MountainDetail = Views<'mountain_details'>;
 
-type TableTypes = Mountain | CaicData;
+type TableTypes = Mountain | CaicData | ResortConditions | ResortWebElements | Profile;
 
 export type DbResult<T extends TableTypes> = {
 	data: T[] | null;
