@@ -5,17 +5,9 @@
 	export let snowfall: number;
 	export let weatherDesc: string;
 	export let date: string;
-
-	let now = new Date();
-	let offset = now.getTimezoneOffset() - (now.getMonth() > 2 && now.getMonth() < 11 ? 360 : 420);
-	let today = new Date(now.getTime() - offset * 60000);
-	const todayDateFormatted = today.toISOString().split('T')[0];
 	
 	const formatDate = (date: string) => {
 		const options = { weekday: 'short', day: '2-digit', timeZone: 'America/Denver' } as const;
-		if (date === todayDateFormatted) {
-			return 'Today';
-		}
 		const formattedDayOfTheWeek = new Date(`${date}T07:00:00Z`).toLocaleDateString(
 			'en-US',
 			options
@@ -28,7 +20,7 @@
 <div class="flex min-w-[35px] flex-col items-center">
 	<p class="pl-1 ">{high_temp}&deg;</p>
 	<p class="pl-1 ">{low_temp}&deg;</p>
-	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== todayDateFormatted} />
+	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== 'Today'} />
 	<p class="font-semibold {snowfall > 0 ? 'pl-1' : ''}">{snowfall ? `${snowfall}"` : '--'}</p>
-	<p class="mt-2 text-xs text-surface-400 sm:text-sm">{formatDate(date)}</p>
+	<p class="mt-2 text-xs text-surface-400 sm:text-sm">{date === 'Today' ? date : formatDate(date)}</p>
 </div>
