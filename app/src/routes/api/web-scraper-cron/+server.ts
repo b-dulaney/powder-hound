@@ -3,7 +3,9 @@ import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 import type { Database, ResortWebElements } from '$lib/supabase.types';
 import { createClient } from '@supabase/supabase-js';
 import { json, type RequestEvent } from '@sveltejs/kit';
-import { chromium, type Browser, type ElementHandle } from 'playwright';
+import chromium from '@sparticuz/chromium';
+import puppeteer from 'puppeteer-core';
+import type { ElementHandle } from 'puppeteer-core';
 import type { Config } from '@sveltejs/adapter-vercel';
 const supabase = createClient<Database>(PUBLIC_SUPABASE_URL ?? '', SUPABASE_SERVICE_ROLE_KEY ?? '');
 
@@ -14,13 +16,18 @@ async function fetchResortConditions(row: ResortWebElements) {
 }
 
 async function scrapeConditions(webElements: ResortWebElements) {
-	const browser: Browser = await chromium.launch();
+	const browser = await puppeteer.launch({
+		args: chromium.args,
+		defaultViewport: chromium.defaultViewport,
+		executablePath: (await chromium.executablePath()) || '/usr/bin/chromium-browser',
+		headless: 'new'
+	});
 
-	let snowPastWeek: string | null = null;
-	let snowTotal: string | null = null;
-	let snowType: string | null = null;
-	let liftsOpen: string | null = null;
-	let runsOpen: string | null = null;
+	let snowPastWeek: string | null | undefined;
+	let snowTotal: string | null | undefined;
+	let snowType: string | null | undefined;
+	let liftsOpen: string | null | undefined;
+	let runsOpen: string | null | undefined;
 
 	if (webElements.trail_report_url) {
 		const trailReportPage = await browser.newPage();
