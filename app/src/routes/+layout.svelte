@@ -5,9 +5,9 @@
 
 	import { afterNavigate, goto, invalidate } from '$app/navigation';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-	import type { AfterNavigate } from '@sveltejs/kit';
-
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import type { AfterNavigate } from '@sveltejs/kit';
+	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
@@ -48,6 +48,8 @@
 	const logout = async () => {
 		await supabase.auth.signOut();
 	};
+
+	injectSpeedInsights();
 </script>
 
 <AppShell>
