@@ -6,7 +6,6 @@ import { json, type RequestEvent } from '@sveltejs/kit';
 import chromium from '@sparticuz/chromium-min';
 import puppeteer from 'puppeteer-core';
 import type { ElementHandle } from 'puppeteer-core';
-import type { Config } from '@sveltejs/adapter-vercel';
 const supabase = createClient<Database>(PUBLIC_SUPABASE_URL ?? '', SUPABASE_SERVICE_ROLE_KEY ?? '');
 
 async function fetchResortConditions(row: ResortWebElements) {
@@ -162,11 +161,6 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		};
 	}
 }
-
-export const config: Config = {
-	split: true,
-	runtime: 'nodejs18.x'
-};
 
 export async function POST({ request }: RequestEvent) {
 	console.log(request);
