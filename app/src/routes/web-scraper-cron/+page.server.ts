@@ -72,7 +72,8 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			snow_past_48h: parseInt(snowPast48Hours!),
 			snow_past_week: parseInt(snowPastWeek!) ?? null,
 			snow_total: parseInt(snowTotal!) ?? null,
-			snow_type: snowType ?? null
+			snow_type: snowType ?? null,
+			updated_at: new Date().toISOString()
 		};
 	} else {
 		const page = await browser.newPage();
@@ -146,7 +147,8 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			snow_past_48h: parseInt(snowPast48Hours!),
 			snow_past_week: parseInt(snowPastWeek!) ?? null,
 			snow_total: parseInt(snowTotal!) ?? null,
-			snow_type: snowType ?? null
+			snow_type: snowType ?? null,
+			updated_at: new Date().toISOString()
 		};
 	}
 }

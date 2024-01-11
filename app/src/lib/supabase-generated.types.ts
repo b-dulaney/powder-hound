@@ -146,6 +146,7 @@ export interface Database {
 					snow_type: string | null;
 					total_lifts: number | null;
 					total_runs: number | null;
+					updated_at: string | null;
 				};
 				Insert: {
 					base_depth?: number | null;
@@ -161,6 +162,7 @@ export interface Database {
 					snow_type?: string | null;
 					total_lifts?: number | null;
 					total_runs?: number | null;
+					updated_at: string | null;
 				};
 				Update: {
 					base_depth?: number | null;
@@ -176,6 +178,7 @@ export interface Database {
 					snow_type?: string | null;
 					total_lifts?: number | null;
 					total_runs?: number | null;
+					updated_at: string | null;
 				};
 				Relationships: [
 					{
