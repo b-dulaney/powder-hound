@@ -136,40 +136,46 @@ export interface Database {
 					base_depth: number | null;
 					display_name: string | null;
 					lifts_open: number | null;
-					lifts_open_percent: string | null;
 					mountain_id: number;
 					runs_open: number | null;
-					runs_open_percent: string | null;
+					snow_past_24h: number | null;
+					snow_past_48h: number | null;
+					snow_past_week: number | null;
 					snow_stake_url: string | null;
+					snow_total: number | null;
+					snow_type: string | null;
 					total_lifts: number | null;
 					total_runs: number | null;
-					website_url: string | null;
 				};
 				Insert: {
 					base_depth?: number | null;
 					display_name?: string | null;
 					lifts_open?: number | null;
-					lifts_open_percent?: string | null;
 					mountain_id: number;
 					runs_open?: number | null;
-					runs_open_percent?: string | null;
+					snow_past_24h?: number | null;
+					snow_past_48h?: number | null;
+					snow_past_week?: number | null;
 					snow_stake_url?: string | null;
+					snow_total?: number | null;
+					snow_type?: string | null;
 					total_lifts?: number | null;
 					total_runs?: number | null;
-					website_url?: string | null;
 				};
 				Update: {
 					base_depth?: number | null;
 					display_name?: string | null;
 					lifts_open?: number | null;
-					lifts_open_percent?: string | null;
 					mountain_id?: number;
 					runs_open?: number | null;
-					runs_open_percent?: string | null;
+					snow_past_24h?: number | null;
+					snow_past_48h?: number | null;
+					snow_past_week?: number | null;
 					snow_stake_url?: string | null;
+					snow_total?: number | null;
+					snow_type?: string | null;
 					total_lifts?: number | null;
 					total_runs?: number | null;
-					website_url?: string | null;
 				};
 				Relationships: [
 					{
@@ -219,30 +225,42 @@ export interface Database {
 			resort_web_elements: {
 				Row: {
 					base_depth_el: string | null;
+					conditions_url: string | null;
 					lifts_open_el: string | null;
 					mountain_id: number;
 					runs_open_el: string | null;
 					snow_past_24h_el: string | null;
-					total_lifts_el: string | null;
-					total_runs_el: string | null;
+					snow_past_48h_el: string | null;
+					snow_past_week_el: string | null;
+					snow_total_el: string | null;
+					snow_type_el: string | null;
+					trail_report_url: string | null;
 				};
 				Insert: {
 					base_depth_el?: string | null;
+					conditions_url?: string | null;
 					lifts_open_el?: string | null;
 					mountain_id: number;
 					runs_open_el?: string | null;
 					snow_past_24h_el?: string | null;
-					total_lifts_el?: string | null;
-					total_runs_el?: string | null;
+					snow_past_48h_el?: string | null;
+					snow_past_week_el?: string | null;
+					snow_total_el?: string | null;
+					snow_type_el?: string | null;
+					trail_report_url?: string | null;
 				};
 				Update: {
 					base_depth_el?: string | null;
+					conditions_url?: string | null;
 					lifts_open_el?: string | null;
 					mountain_id?: number;
 					runs_open_el?: string | null;
 					snow_past_24h_el?: string | null;
-					total_lifts_el?: string | null;
-					total_runs_el?: string | null;
+					snow_past_48h_el?: string | null;
+					snow_past_week_el?: string | null;
+					snow_total_el?: string | null;
+					snow_type_el?: string | null;
+					trail_report_url?: string | null;
 				};
 				Relationships: [
 					{
@@ -267,18 +285,6 @@ export interface Database {
 						referencedColumns: ['mountain_id'];
 					}
 				];
-			};
-			result: {
-				Row: {
-					jsonb_agg: Json | null;
-				};
-				Insert: {
-					jsonb_agg?: Json | null;
-				};
-				Update: {
-					jsonb_agg?: Json | null;
-				};
-				Relationships: [];
 			};
 		};
 		Views: {
