@@ -101,11 +101,11 @@ export type Database = MergeDeep<
 						runs_open_percent: number;
 						snow_past_24h: number;
 						snow_past_48h: number;
-						snow_past_week: number;
-						snow_total: number;
+						snow_past_week: number | null;
+						snow_total: number | null;
 						snow_type: string | null;
 						website_url: string;
-						snow_stake_url: number;
+						snow_stake_url: string | null;
 						updated_at: string;
 					};
 				};
