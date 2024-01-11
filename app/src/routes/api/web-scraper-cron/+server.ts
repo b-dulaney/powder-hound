@@ -15,6 +15,7 @@ async function fetchResortConditions(row: ResortWebElements) {
 }
 
 async function scrapeConditions(webElements: ResortWebElements) {
+	console.log('Processing', webElements.mountain_id);
 	const browser = await puppeteer.launch({
 		args: chromium.args,
 		defaultViewport: chromium.defaultViewport,
@@ -24,7 +25,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		headless: chromium.headless,
 		ignoreHTTPSErrors: true
 	});
-
+	console.log('Browser launched');
 	let snowPastWeek: string | null | undefined;
 	let snowTotal: string | null | undefined;
 	let snowType: string | null | undefined;
@@ -32,6 +33,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 	let runsOpen: string | null | undefined;
 
 	if (webElements.trail_report_url) {
+		console.log('trail url', webElements.trail_report_url);
 		const trailReportPage = await browser.newPage();
 		trailReportPage.setDefaultNavigationTimeout(2 * 60 * 1000);
 		await trailReportPage.goto(webElements.trail_report_url);
@@ -86,6 +88,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			updated_at: new Date().toISOString()
 		};
 	} else {
+		console.log('no trail url', webElements.trail_report_url);
 		const page = await browser.newPage();
 		page.setDefaultNavigationTimeout(2 * 60 * 1000);
 		await page.goto(webElements.conditions_url);
