@@ -50,3 +50,13 @@ export const weatherConditionsMap: Record<string, string> = {
 	fog: 'Fog',
 	haze: 'Haze'
 };
+
+export const formatDate = (date: string) => {
+	if (date === 'Today') {
+		return date;
+	}
+	const options = { weekday: 'short', day: '2-digit', timeZone: 'America/Denver' } as const;
+	const formattedDayOfTheWeek = new Date(`${date}T07:00:00Z`).toLocaleDateString('en-US', options);
+	const reversedFormat = formattedDayOfTheWeek.split(' ').reverse().join(' ');
+	return reversedFormat;
+};

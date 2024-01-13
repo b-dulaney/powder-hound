@@ -1,102 +1,14 @@
 <script lang="ts">
-	import WeatherForecastSlice from '$lib/components/weather-forecast-slice.svelte';
+	import WeatherForecastSlice from './weather-forecast-slice.svelte';
 	import WeatherIcon from '$lib/components/weather-icon.svelte';
-	import Chart from 'chart.js/auto';
-	import { onMount } from 'svelte';
-	import type { PageData } from './$types';
-	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import { convertWindDirection, convertWindSpeed, weatherConditionsMap } from '$lib/utils';
-
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+	import type { PageData } from './$types';
+	import ResortLayout from './resort-layout.svelte';
+	import BackcountryLayout from './backcountry-layout.svelte';
 	export let data: PageData;
 
-	const { mountainDetails } = data;
-	let recentChart;
-	let upcomingChart;
-
-	onMount(() => {
-		const recentSnowChart = document.getElementById('recent-snowfall-chart') as HTMLCanvasElement;
-		const upcomingSnowChart = document.getElementById(
-			'upcoming-snowfall-chart'
-		) as HTMLCanvasElement;
-		recentChart = new Chart(recentSnowChart, {
-			type: 'bar',
-			data: {
-				labels: mountainDetails.previous_snowfall_totals.map((snowfall) => snowfall.date),
-				datasets: [
-					{
-						label: 'Snowfall (inches)',
-						data: mountainDetails.previous_snowfall_totals.map(
-							(snowfall) => snowfall.snowfall_total
-						),
-						backgroundColor: ['rgba(54, 162, 235, 0.4)'],
-						borderColor: ['rgb(54, 162, 235)'],
-						borderWidth: 1,
-						maxBarThickness: 30
-					}
-				]
-			},
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true,
-						ticks: {
-							callback: function (value, index, values) {
-								return value + '"';
-							},
-							stepSize: 1,
-							maxTicksLimit: 5
-						}
-					}
-				},
-				plugins: {
-					legend: {
-						display: false
-					}
-				},
-				responsive: true
-			}
-		});
-
-		upcomingChart = new Chart(upcomingSnowChart, {
-			type: 'bar',
-			data: {
-				labels: mountainDetails.upcoming_snowfall_totals.map((snowfall) => snowfall.date).slice(-4),
-				datasets: [
-					{
-						label: 'Snowfall (inches)',
-						data: mountainDetails.upcoming_snowfall_totals
-							.map((snowfall) => snowfall.snowfall_total)
-							.slice(-4),
-						backgroundColor: ['rgba(54, 162, 235, 0.4)'],
-						borderColor: ['rgb(54, 162, 235)'],
-						borderWidth: 1,
-						maxBarThickness: 30,
-						base: 0
-					}
-				]
-			},
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true,
-						ticks: {
-							callback: function (value, index, values) {
-								return value + '"';
-							},
-							stepSize: 1,
-							maxTicksLimit: 5
-						}
-					}
-				},
-				plugins: {
-					legend: {
-						display: false
-					}
-				},
-				responsive: true
-			}
-		});
-	});
+	const { mountainDetails, resortConditions, gridCols } = data;
 </script>
 
 <section id="header-section">
@@ -115,13 +27,13 @@
 			>
 			{#if mountainDetails.location_type === 'resort'}
 				<div
-					class="variant-ghost-primary badge mt-2 w-[80px] capitalize lg:mt-4 lg:py-0 lg:text-lg lg:font-light"
+					class="variant-ghost-primary badge mt-2 w-[80px] capitalize lg:mt-4 lg:py-0 lg:text-lg lg:font-normal"
 				>
 					{mountainDetails.location_type}
 				</div>
 			{:else}
 				<div
-					class="variant-ghost-success badge mt-2 w-[100px] capitalize lg:mt-4 lg:w-[120px] lg:py-1 lg:text-lg lg:font-light"
+					class="variant-ghost-success badge mt-2 w-[100px] capitalize lg:mt-4 lg:w-[120px] lg:py-1 lg:text-lg lg:font-normal"
 				>
 					{mountainDetails.location_type}
 				</div>
@@ -130,15 +42,21 @@
 	</div>
 </section>
 
+{#if resortConditions}
+	<ResortLayout {mountainDetails} {resortConditions} {gridCols} />
+{:else}
+	<BackcountryLayout {mountainDetails} />
+{/if}
+
 <section id="forecast-section">
-	<div class="mx-auto w-full max-w-6xl px-4 pt-4 lg:pt-8">
+	<div class="mx-auto w-full max-w-6xl px-4 pt-4 pb-9 lg:pt-8">
 		<div class="grid grid-cols-1 gap-4">
 			<div class="card mt-4 w-full md:p-4 xl:p-6">
 				<div class="flex h-full flex-col justify-around">
 					<div class="card-header">
 						<h3 class="h3">Daily Forecast</h3>
 					</div>
-					<div class="flex justify-between">
+					<div class="flex justify-between sm:w-1/2 sm:self-center py-4">
 						<div class="flex flex-col p-4">
 							<p class="text-3xl font-bold">{mountainDetails.current_temperature}°</p>
 							<p class="text-xl font-semibold">
@@ -281,47 +199,3 @@
 	</div>
 </section>
 
-<section id="snow-report">
-	<div class="mx-auto w-full max-w-6xl px-4 pb-8 pt-4">
-		<div class="grid grid-cols-1 gap-8">
-			<div class="card mt-4 w-full md:p-4 xl:p-6">
-				<div class="card-header">
-					<h3 class="h3">Snow Report</h3>
-				</div>
-				<div class="flex w-full flex-col items-center">
-					<div class="mt-4 flex w-full flex-col items-center">
-						<h4 class="h4">Past Week</h4>
-						<div class="flex w-full items-center justify-center">
-							<hr class="w-1/4 !border-slate-700 px-2" />
-							<p class="px-6 text-xl">
-								{mountainDetails.past7daysnowfall < 1 && mountainDetails.past7daysnowfall > 0
-									? '< 1'
-									: mountainDetails.past7daysnowfall}"
-							</p>
-							<hr class="w-1/4 !border-slate-700 px-2" />
-						</div>
-					</div>
-					<div class="w-full p-4" id="recent-snowfall-chart-container">
-						<canvas id="recent-snowfall-chart"></canvas>
-					</div>
-				</div>
-
-				<div class="mt-4 flex w-full flex-col items-center">
-					<p class="mt-2 text-xl font-bold">Next 72 Hours</p>
-					<div class="flex w-full items-center justify-center">
-						<hr class="w-1/4 !border-slate-700 px-2" />
-						<p class="px-6 text-xl">
-							{mountainDetails.next72hoursnowfall < 1 && mountainDetails.next72hoursnowfall > 0
-								? '< 1'
-								: mountainDetails.next72hoursnowfall}"
-						</p>
-						<hr class="w-1/4 !border-slate-700 px-2" />
-					</div>
-				</div>
-				<div class="w-full p-4" id="upcoming-snowfall-chart-container">
-					<canvas id="upcoming-snowfall-chart"></canvas>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
