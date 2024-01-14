@@ -47,7 +47,7 @@
 					<div class="card-header">
 						<h3 class="h3">Upcoming Snowfall</h3>
 					</div>
-					<div class="flex flex-col items-center justify-center">
+					<div class="flex flex-col h-5/6 items-center justify-evenly mt-6">
 						<div class="my-4 flex w-full flex-col items-center">
 							<p class="py-2 text-xl font-bold">Next 72 Hours</p>
 							<div class="flex w-full items-center justify-center">
