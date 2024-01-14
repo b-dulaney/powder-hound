@@ -47,6 +47,7 @@
 		"@supabase/supabase-js": "^2.39.0",
 		"@vercel/speed-insights": "^1.0.2",
 		"d3-scale": "^4.0.2",
+		"dayjs": "^1.11.10",
 		"layerchart": "^0.27.1",
 		"puppeteer-core": "19.6.3",
 		"svelte": "^4.2.8",
