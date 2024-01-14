@@ -11,7 +11,7 @@ const config = {
 		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
 	],
 	theme: {},
-	plugins: [forms, skeleton({ themes: { preset: [{ name: 'wintry', enhancements: true }] } })]
+	plugins: [forms, skeleton({ themes: { preset: [{ name: 'crimson', enhancements: true }] } })]
 } satisfies Config;
 
 export default config;

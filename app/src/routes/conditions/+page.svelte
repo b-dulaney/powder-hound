@@ -279,7 +279,7 @@
 							>
 							<td class="hidden capitalize xl:table-cell-fit xl:table-cell xl:text-center">
 								{#if row.location_type === 'resort'}
-									<div class="variant-ghost-primary badge">
+									<div class="variant-ghost-secondary badge">
 										{row.location_type}
 									</div>
 								{:else}
@@ -326,7 +326,7 @@
 							>
 							<td class="hidden capitalize xl:table-cell-fit xl:table-cell xl:text-center">
 								{#if row.location_type === 'resort'}
-									<div class="variant-ghost-primary badge">
+									<div class="variant-ghost-secondary badge">
 										{row.location_type}
 									</div>
 								{:else}

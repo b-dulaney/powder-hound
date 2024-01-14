@@ -1,20 +1,34 @@
 <script lang="ts">
     import {Chart, Svg, Group, LinearGradient, Arc, Text } from 'layerchart'
-	import { cubicInOut } from 'svelte/easing';
+	  import { cubicInOut } from 'svelte/easing';
     export let open: number
     export let total: number
     export let type: 'Lifts' | 'Runs'
+
+    const pctOpen = open / total * 100
+    let arcGradient = ["rgba(var(--color-primary-500) / 1)", "rgba(var(--color-secondary-500) / 1)"]
+    if(pctOpen <= 33){
+      arcGradient = ["rgba(var(--color-primary-600) / 1)", "rgba(var(--color-primary-500) / 1)"]
+    }
+    if(pctOpen >= 33 && pctOpen <= 66) {
+      arcGradient = ["rgba(var(--color-warning-600) / 1)", "rgba(var(--color-warning-500) / 1)"]
+    }
+    if(pctOpen >= 66 && pctOpen <= 75) {
+      arcGradient = ["rgba(var(--color-warning-500) / 1)", "#0a7854"]
+    }
+    if(pctOpen >= 75) {
+      arcGradient = ["#0a7854", "#0FBA81"]
+    }
 </script>
 
-
-<div class="flex flex-col items-center h-full p-4 gap-2">
-    <div class="p-4 h-[100px]">
-    <Chart>
+<div class="flex flex-col items-center h-full p-4 gap-2 w-full">
+    <div class="p-4 h-[100px] w-full">
+    <Chart ssr>
         <Svg title="Number of open {type}">
           <Group center>
             <Group y={16}>
               <LinearGradient
-                stops={["rgba(var(--color-tertiary-500) / 1)", "rgba(var(--color-primary-500) / 1)"]}
+                stops={arcGradient}
                 let:url
               >
                 <Arc
