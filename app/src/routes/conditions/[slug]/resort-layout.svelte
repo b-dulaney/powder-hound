@@ -5,6 +5,7 @@
 	import { Chart, Svg, Axis, Bars, Highlight, RectClipPath, Tooltip, TooltipItem } from "layerchart";
 	import OpenArc from "./open-arc.svelte";
 	import SnowDisplay from "./snow-display.svelte";
+	import dayjs from "dayjs";
 
     export let mountainDetails: MountainDetail;
     export let resortConditions: ResortConditions;
@@ -19,7 +20,7 @@
 			<div class="card mt-4 md:px-4 md:py-2">
 				<div class="card-header">
 					<h3 class="h3">Snow/Lift Conditions</h3>
-					<p class="text-surface-400 py-2">Updated at: {new Date(resortConditions.updated_at).toLocaleTimeString('en-US', {timeZone: 'America/Denver', timeStyle: 'short'})}</p>
+					<p class="text-surface-400 py-2">Updated at: {dayjs(resortConditions?.updated_at).format('h:mm A')}</p>
 
 				</div>
 				<div class="flex flex-col max-h-full pt-6 pb-4">
@@ -75,11 +76,11 @@
 								tooltip={{ mode: "band" }}
 							  >
 								<Svg>
-								  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-300 stroke-surface-300 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+								  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
 								  />
 								  <Axis
 									placement="bottom"
-									labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-300 stroke-surface-300", dy: 20,}}
+									labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100", dy: 20,}}
 									tickSize={0}
 									format={(d) => formatDate(d)}
 								  />
@@ -99,7 +100,7 @@
 								  </Highlight>
 								</Svg>
 								
-								<Tooltip header={(data) => data.date} let:data>
+								<Tooltip header={(data) => dayjs(data.date).format('MMM DD YYYY')} let:data>
 									<TooltipItem label="Snowfall (in)" value={data.snowfall_total} />
 								  </Tooltip>
 							  </Chart>
