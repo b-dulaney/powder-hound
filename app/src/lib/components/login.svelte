@@ -108,7 +108,7 @@
 						placeholder="Email"
 					/>
 					<button
-						class="variant-filled-tertiary btn btn-lg w-full rounded-md"
+						class="variant-filled-primary btn btn-lg w-full rounded-md"
 						on:click={signInWithEmail}>{actionText}</button
 					>
 				</div>
@@ -130,7 +130,7 @@
 					<hr class="flex-auto px-4" />
 				</div>
 				<button
-					class="variant-filled-tertiary btn btn-lg rounded-md"
+					class="variant-filled-primary btn btn-lg rounded-md"
 					on:click={resendEmail}
 					disabled={isResendDisabled}>Resend email</button
 				>
