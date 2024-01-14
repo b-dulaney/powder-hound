@@ -7,6 +7,14 @@ body {
 	@apply h-full overflow-hidden;
 }
 
+h1 {
+	@apply font-bold;
+}
+
+h2 {
+	@apply font-semibold;
+}
+
 .built-for-gradient {
 	background-image: radial-gradient(
 		at 0% 100%,

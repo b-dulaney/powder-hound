@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export function convertWindDirection(input: string): string {
 	const degreeStr = input.split('/')[0];
 	const degree = parseInt(degreeStr, 10);
@@ -55,8 +57,6 @@ export const formatDate = (date: string) => {
 	if (date === 'Today') {
 		return date;
 	}
-	const options = { weekday: 'short', day: '2-digit', timeZone: 'America/Denver' } as const;
-	const formattedDayOfTheWeek = new Date(`${date}T07:00:00Z`).toLocaleDateString('en-US', options);
-	const reversedFormat = formattedDayOfTheWeek.split(' ').reverse().join(' ');
-	return reversedFormat;
+
+	return dayjs(date).format('ddd DD');
 };

@@ -20,7 +20,7 @@
 				<div class="card-header">
 					<h3 class="h3">Snow/Lift Conditions</h3>
 				</div>
-				<div class="flex flex-col h-auto justify-evenly pt-6 pb-4">
+				<div class="flex flex-col max-h-full pt-6 pb-4">
 						<div class="grid items-center grid-cols-2 md:px-4">
 							{#if resortConditions?.snow_type}
 								<div class="col-span-2 flex flex-col items-center">
@@ -40,7 +40,7 @@
 							<OpenArc open={resortConditions?.lifts_open} total={resortConditions?.total_lifts} type="Lifts" />
 							<OpenArc open={resortConditions?.runs_open} total={resortConditions?.total_runs} type="Runs" />
 						</div>
-						<p class="col-span-2 text-center text-surface-400 py-2">Updated at: {new Date(resortConditions.updated_at).toLocaleTimeString('en-US', {timeZone: 'America/Denver', timeStyle: 'short'})}</p>
+						<p class="text-center text-surface-400 py-2">Updated at: {new Date(resortConditions.updated_at).toLocaleTimeString('en-US', {timeZone: 'America/Denver', timeStyle: 'short'})}</p>
 					</div>
 					</div>
 				<div class="card mt-4 md:px-4 md:py-2">
