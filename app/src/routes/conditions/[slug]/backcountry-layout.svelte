@@ -2,6 +2,7 @@
 	import type { MountainDetail } from "$lib/supabase.types";
 	import { formatDate } from "$lib/utils";
 	import { scaleBand } from "d3-scale";
+	import dayjs from "dayjs";
 	import { Chart, Svg, Axis, Bars, Highlight, RectClipPath, Tooltip, TooltipItem } from "layerchart";
 
     export let mountainDetails: MountainDetail;
@@ -39,13 +40,13 @@
 							tooltip={{ mode: "band" }}
 						  >
 							<Svg>
-							  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-300 stroke-surface-300 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+							  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100", dx: -15}} tickSize={10} format={(d) => `${d}''`}
 							  />
 							  <Axis
 								placement="bottom"
 								labelProps={{rotate: 315,
 									textAnchor: "end",
-									class: "text-sm md:text-lg tracking-widest fill-surface-300 stroke-surface-300", dy: 20,}}
+									class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100", dy: 20,}}
 								tickSize={0}
 								format={(d) => formatDate(d)}
 							  />
@@ -65,7 +66,7 @@
 							  </Highlight>
 							</Svg>
 							
-							<Tooltip header={(data) => data.date} let:data>
+							<Tooltip header={(data) => dayjs(data.date).format('MMM DD YYYY')} let:data>
 								<TooltipItem label="Snowfall (in)" value={data.snowfall_total} />
 							  </Tooltip>
 						  </Chart>
@@ -100,11 +101,11 @@
 							tooltip={{ mode: "band" }}
 						  >
 							<Svg>
-							  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-300 stroke-surface-300 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+							  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
 							  />
 							  <Axis
 								placement="bottom"
-								labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-300 stroke-surface-300", dy: 20,}}
+								labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100", dy: 20,}}
 								tickSize={0}
 								format={(d) => formatDate(d)}
 							  />
@@ -124,7 +125,7 @@
 							  </Highlight>
 							</Svg>
 							
-							<Tooltip header={(data) => data.date} let:data>
+							<Tooltip header={(data) => dayjs(data.date).format('MMM DD YYYY')} let:data>
 								<TooltipItem label="Snowfall (in)" value={data.snowfall_total} />
 							  </Tooltip>
 						  </Chart>
