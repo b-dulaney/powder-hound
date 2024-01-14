@@ -12,11 +12,11 @@
 </script>
 
 <section id="header-section">
-	<div class="mx-auto w-full max-w-6xl px-4 pb-2 pt-4 md:pb-4 lg:pt-16">
+	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
 		<ol class="breadcrumb lg:text-lg">
-			<li class="crumb"><a class="anchor" href="/conditions">Conditions</a></li>
-			<li class="crumb-separator" aria-hidden>/</li>
-			<li>{mountainDetails.display_name}</li>
+			<li class="crumb"><a class="anchor !text-surface-300" href="/conditions">Conditions</a></li>
+			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+			<li class="text-surface-300">{mountainDetails.display_name}</li>
 		</ol>
 
 		<div class="mt-4 flex flex-col">
@@ -27,7 +27,7 @@
 			>
 			{#if mountainDetails.location_type === 'resort'}
 				<div
-					class="variant-ghost-primary badge mt-2 w-[80px] capitalize lg:mt-4 lg:py-0 lg:text-lg lg:font-normal"
+					class="variant-ghost-secondary badge mt-2 w-[80px] capitalize lg:mt-4 lg:py-0 lg:text-lg lg:font-normal"
 				>
 					{mountainDetails.location_type}
 				</div>
@@ -43,20 +43,20 @@
 </section>
 
 {#if resortConditions}
-	<ResortLayout {mountainDetails} {resortConditions} {gridCols} />
+	<ResortLayout {mountainDetails} {resortConditions} />
 {:else}
 	<BackcountryLayout {mountainDetails} />
 {/if}
 
 <section id="forecast-section">
-	<div class="mx-auto w-full max-w-6xl px-4 pt-4 pb-9 lg:pt-8">
-		<div class="grid grid-cols-1 gap-4">
+	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pt-4 pb-9 lg:pt-6">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 			<div class="card mt-4 w-full md:p-4 xl:p-6">
-				<div class="flex h-full flex-col justify-around">
-					<div class="card-header">
-						<h3 class="h3">Daily Forecast</h3>
-					</div>
-					<div class="flex justify-between sm:w-1/2 sm:self-center py-4">
+				<div class="card-header">
+					<h3 class="h3">Daily Forecast</h3>
+				</div>
+				<div class="flex h-full flex-col justify-evenly">
+					<div class="flex justify-between sm:w-2/3 sm:self-center py-4">
 						<div class="flex flex-col p-4">
 							<p class="text-3xl font-bold">{mountainDetails.current_temperature}°</p>
 							<p class="text-xl font-semibold">
@@ -84,16 +84,15 @@
 								{high_temp}
 								{low_temp}
 								weatherDesc={mountainDetails.daily_weather_conditions[i].daily_weather}
-								{snowfall}
 								{date}
 							/>
 							{#if i < mountainDetails.temperature_range.length - 1}
-								<hr class="divider-vertical h-20 opacity-40" />
+								<hr class="divider-vertical h-20" />
 							{/if}
 						{/each}
 					</div>
 
-					<Accordion class="mt-2 lg:hidden">
+					<Accordion class="py-10 lg:hidden">
 						<AccordionItem>
 							<svelte:fragment slot="summary"
 								><p class="text-center">View Hourly Forecast</p></svelte:fragment
@@ -149,10 +148,10 @@
 				</div>
 			</div>
 			<div class="card mt-4 hidden w-full lg:block lg:p-4 xl:p-6">
-				<div class="card-header py-2">
+				<div class="card-header">
 					<h3 class="h3">Hourly Forecast</h3>
 				</div>
-				<ul class="list max-h-[500px] overflow-auto p-4">
+				<ul class="list max-h-[500px] overflow-auto px-4 py-6">
 					{#each mountainDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
 						<li class="!rounded-md">
 							<div class="grid w-full grid-cols-6 items-center gap-3 p-2">

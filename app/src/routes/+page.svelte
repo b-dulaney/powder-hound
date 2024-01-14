@@ -18,7 +18,7 @@
 			</p>
 			<div class="z-10 flex gap-4">
 				<a
-					class="btn variant-gradient-tertiary-secondary bg-gradient-to-r"
+					class="btn variant-filled-primary bg-gradient-to-r"
 					data-sveltekit-preload-data="hover"
 					href="/conditions"
 				>
@@ -27,7 +27,7 @@
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>
-				<a class="variant-ghost-tertiary btn" href="/signup">Sign Up</a>
+				<a class="variant-ghost-secondary btn" href="/signup">Sign Up</a>
 			</div>
 		</div>
 	</div>
@@ -106,7 +106,7 @@
 			</div>
 			<div class="grid grid-cols-[auto_1fr] gap-2 py-2">
 				<Avatar src={Logo} width="w-12" background="bg-transparent" />
-				<div class="card variant-filled-tertiary space-y-2 rounded-tl-none p-4">
+				<div class="card variant-filled-secondary space-y-2 rounded-tl-none p-4">
 					<header class="flex items-center justify-between">
 						<p class="font-bold">PowderHound</p>
 						<small class="opacity-50">5:00 am</small>

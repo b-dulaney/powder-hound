@@ -58,7 +58,7 @@
 			<svelte:fragment slot="lead">
 				<a href="/" title="Go to Homepage" class="flex items-center">
 					<img src={Logo} alt="Powder Hound Logo" class="h-10 w-10 md:h-12 md:w-12" />
-					<p class="pl-2 text-xl font-bold md:text-2xl">PowderHound</p>
+					<p class="pl-2 text-xl font-bold md:text-2xl">Powder<span class="gradient-heading">Hound</span></p>
 				</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
