@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 import { json, type RequestEvent } from '@sveltejs/kit';
 import chromium from '@sparticuz/chromium-min';
 import puppeteer from 'puppeteer-core';
+import { getTextContent } from '$lib/utils';
 import type { ElementHandle } from 'puppeteer-core';
 const supabase = createClient<Database>(PUBLIC_SUPABASE_URL ?? '', SUPABASE_SERVICE_ROLE_KEY ?? '');
 
@@ -23,11 +24,11 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		headless: chromium.headless,
 		ignoreHTTPSErrors: true
 	});
-	let snowPastWeek: string | null | undefined;
-	let snowTotal: string | null | undefined;
-	let snowType: string | null | undefined;
-	let liftsOpen: string | null | undefined;
-	let runsOpen: string | null | undefined;
+	let snowPastWeek: string | null;
+	let snowTotal: string | null;
+	let snowType: string | null = '';
+	let liftsOpen: string | null;
+	let runsOpen: string | null;
 
 	if (webElements.trail_report_url) {
 		const trailReportPage = await browser.newPage();
@@ -38,36 +39,28 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		page.setDefaultNavigationTimeout(2 * 60 * 1000);
 		await page.goto(webElements.conditions_url);
 
-		const baseDepthEl = await page.waitForSelector(webElements.base_depth_el);
-		const baseDepth = await baseDepthEl?.evaluate((el) => el.textContent);
+		const baseDepth = await getTextContent(page, webElements.base_depth_el);
 
-		const snowPast24HoursEl = await page.waitForSelector(webElements.snow_past_24h_el);
-		const snowPast24Hours = await snowPast24HoursEl?.evaluate((el) => el.textContent);
+		const snowPast24Hours = await getTextContent(page, webElements.base_depth_el);
 
-		const snowPast48HoursEl = await page.waitForSelector(webElements.snow_past_48h_el);
-		const snowPast48Hours = await snowPast48HoursEl?.evaluate((el) => el.textContent);
+		const snowPast48Hours = await getTextContent(page, webElements.base_depth_el);
 
 		if (webElements.lifts_open_el) {
-			const liftsOpenEl = await trailReportPage.waitForSelector(webElements.lifts_open_el);
-			liftsOpen = await liftsOpenEl?.evaluate((el) => el.textContent);
+			liftsOpen = await getTextContent(trailReportPage, webElements.lifts_open_el);
 		}
 
 		if (webElements.runs_open_el) {
-			const runsOpenEl = await trailReportPage.waitForSelector(webElements.runs_open_el);
-			runsOpen = await runsOpenEl?.evaluate((el) => el.textContent);
+			runsOpen = await getTextContent(trailReportPage, webElements.runs_open_el);
 		}
 
 		if (webElements.snow_past_week_el) {
-			const snowPastWeekEl = await page.waitForSelector(webElements.snow_past_week_el);
-			snowPastWeek = await snowPastWeekEl?.evaluate((el) => el.textContent);
+			snowPastWeek = await getTextContent(page, webElements.snow_past_week_el);
 		}
 		if (webElements.snow_total_el) {
-			const snowTotalEl = await page.waitForSelector(webElements.snow_total_el);
-			snowTotal = await snowTotalEl?.evaluate((el) => el.textContent);
+			snowTotal = await getTextContent(page, webElements.snow_total_el);
 		}
 		if (webElements.snow_type_el) {
-			const snowTypeEl = await page.waitForSelector(webElements.snow_type_el);
-			snowType = await snowTypeEl?.evaluate((el) => el.textContent);
+			snowType = await getTextContent(page, webElements.snow_type_el);
 		}
 		await browser.close();
 
@@ -80,17 +73,15 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			snow_past_48h: parseInt(snowPast48Hours!),
 			snow_past_week: parseInt(snowPastWeek!) ?? null,
 			snow_total: parseInt(snowTotal!) ?? null,
-			snow_type: snowType ?? null,
+			snow_type: snowType,
 			updated_at: new Date().toISOString()
 		};
 	} else {
-		console.log('no trail url', webElements.trail_report_url);
 		const page = await browser.newPage();
 		page.setDefaultNavigationTimeout(2 * 60 * 1000);
 		await page.goto(webElements.conditions_url);
 
-		const baseDepthEl = await page.waitForSelector(webElements.base_depth_el);
-		const baseDepth = await baseDepthEl?.evaluate((el) => el.textContent);
+		const baseDepth = await getTextContent(page, webElements.base_depth_el);
 
 		// Eldora has a wonky layout for their conditions page that does not match other Alterra resorts. Must click a button to display the conditions popup.
 		if (webElements.mountain_id === 6) {
@@ -99,13 +90,11 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			const conditionsButton = (await page.waitForSelector(
 				buttonSelector
 			)) as ElementHandle<HTMLElement>;
-			console.log(conditionsButton);
 			await conditionsButton.evaluate((b) => b.click());
 		}
 
 		if (webElements.lifts_open_el) {
-			const liftsOpenEl = await page.waitForSelector(webElements.lifts_open_el);
-			liftsOpen = await liftsOpenEl?.evaluate((el) => el.textContent);
+			liftsOpen = await getTextContent(page, webElements.lifts_open_el);
 
 			if (liftsOpen?.includes('/')) {
 				liftsOpen = liftsOpen.split('/')[0];
@@ -117,8 +106,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		}
 
 		if (webElements.runs_open_el) {
-			const runsOpenEl = await page.waitForSelector(webElements.runs_open_el);
-			runsOpen = await runsOpenEl?.evaluate((el) => el.textContent);
+			runsOpen = await getTextContent(page, webElements.runs_open_el);
 			if (runsOpen?.includes('/')) {
 				runsOpen = runsOpen.split('/')[0];
 			}
@@ -128,24 +116,19 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			}
 		}
 
-		const snowPast24HoursEl = await page.waitForSelector(webElements.snow_past_24h_el);
-		const snowPast24Hours = await snowPast24HoursEl?.evaluate((el) => el.textContent);
-
-		const snowPast48HoursEl = await page.waitForSelector(webElements.snow_past_48h_el);
-		const snowPast48Hours = await snowPast48HoursEl?.evaluate((el) => el.textContent);
+		const snowPast24Hours = await getTextContent(page, webElements.snow_past_24h_el);
+		const snowPast48Hours = await getTextContent(page, webElements.snow_past_48h_el);
 
 		if (webElements.snow_past_week_el) {
-			const snowPastWeekEl = await page.waitForSelector(webElements.snow_past_week_el);
-			snowPastWeek = await snowPastWeekEl?.evaluate((el) => el.textContent);
+			snowPastWeek = await getTextContent(page, webElements.snow_past_week_el);
 		}
 		if (webElements.snow_total_el) {
-			const snowTotalEl = await page.waitForSelector(webElements.snow_total_el);
-			snowTotal = await snowTotalEl?.evaluate((el) => el.textContent);
+			snowTotal = await getTextContent(page, webElements.snow_total_el);
 		}
 		if (webElements.snow_type_el) {
-			const snowTypeEl = await page.waitForSelector(webElements.snow_type_el);
-			snowType = await snowTypeEl?.evaluate((el) => el.textContent);
+			snowType = await getTextContent(page, webElements.snow_type_el);
 		}
+
 		await browser.close();
 		return {
 			mountain_id: webElements.mountain_id,
@@ -156,7 +139,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			snow_past_48h: parseInt(snowPast48Hours!),
 			snow_past_week: parseInt(snowPastWeek!) ?? null,
 			snow_total: parseInt(snowTotal!) ?? null,
-			snow_type: snowType ?? null,
+			snow_type: snowType,
 			updated_at: new Date().toISOString()
 		};
 	}
@@ -170,6 +153,7 @@ export async function POST({ request }: RequestEvent) {
 
 	const webElements: ResortWebElements = await request.json();
 	const resortConditionsData = await fetchResortConditions(webElements);
+	console.log(resortConditionsData);
 
 	const { error } = await supabase
 		.from('resort_conditions')
