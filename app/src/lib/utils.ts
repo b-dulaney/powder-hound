@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import type { Page } from 'puppeteer-core';
 
 export function convertWindDirection(input: string): string {
 	const degreeStr = input.split('/')[0];
@@ -60,3 +61,12 @@ export const formatDate = (date: string) => {
 
 	return dayjs(date).format('ddd DD');
 };
+
+export async function getTextContent(page: Page, selector: string): Promise<string | null> {
+	try {
+		const el = await page.waitForSelector(selector);
+		return el?.evaluate((el) => el.textContent) ?? null;
+	} catch (error) {
+		return null;
+	}
+}

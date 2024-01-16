@@ -3,6 +3,58 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
 	public: {
 		Tables: {
+			avalanche_forecasts: {
+				Row: {
+					avalanche_summary: string | null;
+					danger_levels: Json[] | null;
+					forecast_url: string | null;
+					issue_date: string | null;
+					mountain_id: number;
+					overall_danger_level: number | null;
+					updated_at: string;
+				};
+				Insert: {
+					avalanche_summary?: string | null;
+					danger_levels?: Json[] | null;
+					forecast_url?: string | null;
+					issue_date?: string | null;
+					mountain_id?: number;
+					overall_danger_level?: number | null;
+					updated_at?: string;
+				};
+				Update: {
+					avalanche_summary?: string | null;
+					danger_levels?: Json[] | null;
+					forecast_url?: string | null;
+					issue_date?: string | null;
+					mountain_id?: number;
+					overall_danger_level?: number | null;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'avalanche_forecasts_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'mountain_detail';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'avalanche_forecasts_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'mountain_overview';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'avalanche_forecasts_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'mountains';
+						referencedColumns: ['mountain_id'];
+					}
+				];
+			};
 			caic_data: {
 				Row: {
 					cei: number | null;
@@ -67,7 +119,7 @@ export interface Database {
 					model_elevation: number;
 					mountain_id: number;
 					region: string;
-					slug: string | null;
+					slug: string;
 				};
 				Insert: {
 					caic_code: string;
@@ -78,7 +130,7 @@ export interface Database {
 					model_elevation: number;
 					mountain_id?: number;
 					region: string;
-					slug?: string | null;
+					slug: string;
 				};
 				Update: {
 					caic_code?: string;
@@ -89,7 +141,7 @@ export interface Database {
 					model_elevation?: number;
 					mountain_id?: number;
 					region?: string;
-					slug?: string | null;
+					slug?: string;
 				};
 				Relationships: [];
 			};
@@ -136,6 +188,7 @@ export interface Database {
 					base_depth: number | null;
 					display_name: string | null;
 					lifts_open: number | null;
+					lifts_url: string | null;
 					mountain_id: number;
 					runs_open: number | null;
 					snow_past_24h: number | null;
@@ -146,12 +199,14 @@ export interface Database {
 					snow_type: string | null;
 					total_lifts: number | null;
 					total_runs: number | null;
+					trails_url: string | null;
 					updated_at: string | null;
 				};
 				Insert: {
 					base_depth?: number | null;
 					display_name?: string | null;
 					lifts_open?: number | null;
+					lifts_url?: string | null;
 					mountain_id: number;
 					runs_open?: number | null;
 					snow_past_24h?: number | null;
@@ -162,12 +217,14 @@ export interface Database {
 					snow_type?: string | null;
 					total_lifts?: number | null;
 					total_runs?: number | null;
-					updated_at: string | null;
+					trails_url?: string | null;
+					updated_at?: string | null;
 				};
 				Update: {
 					base_depth?: number | null;
 					display_name?: string | null;
 					lifts_open?: number | null;
+					lifts_url?: string | null;
 					mountain_id?: number;
 					runs_open?: number | null;
 					snow_past_24h?: number | null;
@@ -178,7 +235,8 @@ export interface Database {
 					snow_type?: string | null;
 					total_lifts?: number | null;
 					total_runs?: number | null;
-					updated_at: string | null;
+					trails_url?: string | null;
+					updated_at?: string | null;
 				};
 				Relationships: [
 					{
@@ -471,6 +529,10 @@ export interface Database {
 					mountain_id: number;
 				};
 				Returns: Json;
+			};
+			process_resort_web_elements: {
+				Args: Record<PropertyKey, never>;
+				Returns: undefined;
 			};
 		};
 		Enums: {

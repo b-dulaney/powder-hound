@@ -1,6 +1,7 @@
 import type { PostgrestError } from '@supabase/supabase-js';
 import type { Database as DatabaseGenerated } from './supabase-generated.types';
 import type { MergeDeep } from 'type-fest';
+import type dayjs from 'dayjs';
 
 export type TemperatureRange = {
 	date: string;
@@ -32,6 +33,18 @@ export type HourlyWeatherData = {
 	snowfall: number;
 	weather_desc: string;
 	wind_deg_speed: string;
+};
+
+export type AvalancheRating = {
+	level: 0 | 1 | 2 | 3 | 4 | 5;
+	rating: 'No Rating' | 'Low' | 'Moderate' | 'Considerable' | 'High' | 'Extreme';
+};
+
+export type AvalancheDangerLevel = {
+	date: string | dayjs.Dayjs;
+	above_treeline: AvalancheRating;
+	near_treeline: AvalancheRating;
+	below_treeline: AvalancheRating;
 };
 
 export type Database = MergeDeep<
@@ -124,6 +137,26 @@ export type Database = MergeDeep<
 						snow_type_el: string | null;
 					};
 				};
+				avalanche_forecasts: {
+					Row: {
+						mountain_id: number;
+						avalanche_summary: string | null;
+						issue_date: string | null;
+						overall_danger_level: number | null;
+						danger_levels: AvalancheDangerLevel[];
+						forecast_url: string | null;
+						updated_at: string;
+					};
+					Update: {
+						avalanche_summary?: string | null;
+						danger_levels?: AvalancheDangerLevel[] | null;
+						forecast_url?: string | null;
+						issue_date?: string | null;
+						mountain_id?: number;
+						overall_danger_level?: number | null;
+						updated_at?: string;
+					};
+				};
 			};
 		};
 	}
@@ -138,12 +171,19 @@ export type Views<T extends keyof Database['public']['Views']> =
 export type Mountain = Tables<'mountains'>;
 export type CaicData = Tables<'caic_data'>;
 export type Profile = Tables<'profile'>;
+export type AvalancheForecast = Tables<'avalanche_forecasts'>;
 export type ResortConditions = Tables<'resort_conditions'>;
 export type ResortWebElements = Tables<'resort_web_elements'>;
 export type MountainOverview = Views<'mountain_overview'>;
 export type MountainDetail = Views<'mountain_details'>;
 
-type TableTypes = Mountain | CaicData | ResortConditions | ResortWebElements | Profile;
+type TableTypes =
+	| AvalancheForecast
+	| Mountain
+	| CaicData
+	| ResortConditions
+	| ResortWebElements
+	| Profile;
 
 export type DbResult<T extends TableTypes> = {
 	data: T[] | null;
