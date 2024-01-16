@@ -42,7 +42,7 @@ h2 {
 .gradient-heading {
 	@apply box-decoration-clone bg-clip-text text-transparent;
 	/* Direction */
-	@apply bg-gradient-to-r;
+	@apply bg-gradient-to-br;
 	/* Color Stops */
 	@apply from-primary-400 to-primary-500;
 }
