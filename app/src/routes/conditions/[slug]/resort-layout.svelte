@@ -49,10 +49,10 @@
 					</div>
 					<div class="flex flex-col h-5/6 items-center justify-evenly mt-6">
 						<div class="my-4 flex w-full flex-col items-center">
-							<p class="py-2 text-xl font-bold">Next 72 Hours</p>
+							<p class="py-2 text-xl">Next 72 Hours</p>
 							<div class="flex w-full items-center justify-center">
 								<hr class="w-1/4 !border-slate-700 px-2" />
-								<p class="px-6 text-xl">
+								<p class="px-6 text-xl font-bold">
 									{mountainDetails.next72hoursnowfall < 1 && mountainDetails.next72hoursnowfall > 0
 										? '< 1'
 										: mountainDetails.next72hoursnowfall}"

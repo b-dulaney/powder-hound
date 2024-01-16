@@ -56,5 +56,5 @@
         </Svg>
       </Chart>
     </div>
-    <h4 class="!font-semibold xl:text-lg">{type} Open</h4>
+    <h4 class="xl:text-lg">{type} Open</h4>
 </div>
