@@ -5,9 +5,8 @@
 	import ResortsTable from './resorts-table.svelte';
 	export let data: PageData;
 	const { resortOverviews, backcountryOverviews, profile } = data;
-	import { resortSearchInput, backcountrySearchInput } from './stores';
+	import { resortSearchInput, backcountrySearchInput, activeTab } from './stores';
 
-	let tabSet: number = 0;
 	let filteredResorts = resortOverviews;
 	let filteredBackcountry = backcountryOverviews;
 
@@ -34,17 +33,17 @@
 
 	<div class="pt-4 flex w-full justify-center">
 		<TabGroup justify="justify-center">
-			<Tab bind:group={tabSet} value={0} name="Ski Resorts" class="md:text-xl">
+			<Tab bind:group={$activeTab} value={0} name="Ski Resorts" class="md:text-xl">
 				Ski Resorts
 			</Tab>
-			<Tab bind:group={tabSet} value={1} name="Backcountry" class="md:text-xl">
+			<Tab bind:group={$activeTab} value={1} name="Backcountry" class="md:text-xl">
 				Backcountry
 			</Tab>
 		</TabGroup>
 	</div>
 
 
-	{#if tabSet ===  0}
+	{#if $activeTab ===  0}
 		<ResortsTable resortOverviews={filteredResorts} favorites={profile?.favorites ?? []} />
 	{:else}
 		<BackcountryTable backcountryOverviews={filteredBackcountry} favorites={profile?.favorites ?? []} />
