@@ -1,37 +1,43 @@
-import type { MountainOverview } from '$lib/supabase.types';
+import type { BackcountryOverview, MountainOverview } from '$lib/supabase.types';
 import { supabase } from '$lib/supabaseClient';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.getSession();
 
-	const { data: mountains, error: mountainsError } = await supabase
+	const { data: resortData, error: resortError } = await supabase
 		.from('mountain_overview')
 		.select()
 		.returns<MountainOverview[]>();
 
-	if (mountainsError) {
-		return {
-			status: 500,
-			error: mountainsError.message
-		};
-	} else {
-		if (!session) {
-			return {
-				mountainOverviews: mountains.sort((a, b) => (a.display_name > b.display_name ? 1 : -1))
-			};
-		}
-		const { data: profileData, error: profileError } = await supabase.from('profile').select();
+	const { data: backcountryData, error: backcountryError } = await supabase
+		.from('backcountry_overview')
+		.select()
+		.returns<BackcountryOverview[]>();
 
-		if (profileError) {
-			return {
-				status: 500,
-				error: profileError.message
-			};
-		}
+	if (resortError || backcountryError) {
+		error(500, 'Error fetching conditions data');
+	}
+
+	if (!session) {
 		return {
-			mountainOverviews: mountains.sort((a, b) => (a.display_name > b.display_name ? 1 : -1)),
-			profile: profileData[0]
+			resortOverviews: resortData.sort((a, b) => (a.display_name > b.display_name ? 1 : -1)),
+			backcountryOverviews: backcountryData.sort((a, b) =>
+				a.display_name > b.display_name ? 1 : -1
+			)
 		};
 	}
+	const { data: profileData, error: profileError } = await supabase.from('profile').select();
+
+	if (profileError) {
+		error(500, 'Error fetching profile data');
+	}
+	return {
+		resortOverviews: resortData.sort((a, b) => (a.display_name > b.display_name ? 1 : -1)),
+		backcountryOverviews: backcountryData.sort((a, b) =>
+			a.display_name > b.display_name ? 1 : -1
+		),
+		profile: profileData[0]
+	};
 };
