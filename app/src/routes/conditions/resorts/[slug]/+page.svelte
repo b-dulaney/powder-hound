@@ -1,11 +1,11 @@
 <script lang="ts">
-	import WeatherForecastSlice from './weather-forecast-slice.svelte';
+	import WeatherForecastSlice from '$lib/components/weather-forecast-slice.svelte';
 	import WeatherIcon from '$lib/components/weather-icon.svelte';
 	import { convertWindDirection, convertWindSpeed, weatherConditionsMap } from '$lib/utils';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 	import ResortLayout from './resort-layout.svelte';
-	import BackcountryLayout from './backcountry-layout.svelte';
+	import BackcountryLayout from '../../backcountry/[slug]/backcountry-layout.svelte';
 	export let data: PageData;
 
 	const { mountainDetails, resortConditions, gridCols } = data;
@@ -44,8 +44,6 @@
 
 {#if resortConditions}
 	<ResortLayout {mountainDetails} {resortConditions} />
-{:else}
-	<BackcountryLayout {mountainDetails} />
 {/if}
 
 <section id="forecast-section">
