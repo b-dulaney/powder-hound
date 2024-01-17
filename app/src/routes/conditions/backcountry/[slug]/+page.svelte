@@ -24,19 +24,11 @@
 				><p class="mr-2 mt-2 text-xl font-semibold text-slate-400">Region:</p>
 				<p class="mt-2 text-xl font-semibold">{backcountryDetails.region}</p></span
 			>
-			{#if backcountryDetails.location_type === 'resort'}
-				<div
-					class="variant-ghost-secondary badge mt-2 w-[80px] capitalize lg:mt-4 lg:py-0 lg:text-lg lg:font-normal"
-				>
-					{backcountryDetails.location_type}
-				</div>
-			{:else}
 				<div
 					class="variant-ghost-success badge mt-2 w-[100px] capitalize lg:mt-4 lg:w-[120px] lg:py-1 lg:text-lg lg:font-normal"
 				>
 					{backcountryDetails.location_type}
 				</div>
-			{/if}
 		</div>
 	</div>
 </section>

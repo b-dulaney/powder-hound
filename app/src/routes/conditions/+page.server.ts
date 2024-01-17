@@ -1,4 +1,4 @@
-import type { BackcountryOverview, MountainOverview } from '$lib/supabase.types';
+import type { BackcountryOverview, ResortOverview } from '$lib/supabase.types';
 import { supabase } from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -7,9 +7,9 @@ export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.getSession();
 
 	const { data: resortData, error: resortError } = await supabase
-		.from('mountain_overview')
+		.from('resort_overview')
 		.select()
-		.returns<MountainOverview[]>();
+		.returns<ResortOverview[]>();
 
 	const { data: backcountryData, error: backcountryError } = await supabase
 		.from('backcountry_overview')

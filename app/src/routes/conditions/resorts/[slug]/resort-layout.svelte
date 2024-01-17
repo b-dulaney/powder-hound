@@ -1,17 +1,16 @@
 <script lang="ts">
-	import type { MountainDetail, ResortConditions } from "$lib/supabase.types";
+	import type { ResortDetail } from "$lib/supabase.types";
 	import { formatDate } from "$lib/utils";
 	import { scaleBand } from "d3-scale";
-	import { Chart, Svg, Axis, Bars, Highlight, RectClipPath, Tooltip, TooltipItem } from "layerchart";
+	import dayjs from "dayjs";
+	import { Axis, Bars, Chart, Highlight, RectClipPath, Svg, Tooltip, TooltipItem } from "layerchart";
 	import OpenArc from "./open-arc.svelte";
 	import SnowDisplay from "./snow-display.svelte";
-	import dayjs from "dayjs";
 
-    export let mountainDetails: MountainDetail;
-    export let resortConditions: ResortConditions;
+    export let resortDetails: ResortDetail;
 </script>
 
-{#if !resortConditions}
+{#if !resortDetails}
     <div class="placeholder-card w-full h-[400px] animate-pulse" />
 {:else}
 <section id="mountain-info">
@@ -20,27 +19,27 @@
 			<div class="card mt-4 md:px-4 md:py-2">
 				<div class="card-header">
 					<h3 class="h3">Snow/Lift Conditions</h3>
-					<p class="text-surface-400 py-2">Updated at: {dayjs(resortConditions?.updated_at).format('h:mm A')}</p>
+					<p class="text-surface-400 py-2">Updated at: {dayjs(resortDetails?.updated_at).format('h:mm A')}</p>
 
 				</div>
 						<div class="grid items-center grid-cols-2 md:px-4 py-4">
-							{#if resortConditions?.snow_type}
+							{#if resortDetails?.snow_type}
 								<div class="col-span-2 flex flex-col items-center">
-									<p class="py-2 font-bold text-xl lg:text-2xl">{resortConditions?.snow_type}</p>
+									<p class="py-2 font-bold text-xl lg:text-2xl">{resortDetails?.snow_type}</p>
 									<p class="font-semibold lg:text-xl">Overall Snowpack</p>
 								</div>
 							{/if}
-							<SnowDisplay value={resortConditions.base_depth} type="Base Depth" />
-							<SnowDisplay value={resortConditions.snow_past_24h} type="Last 24 Hours" />
-							<SnowDisplay value={resortConditions.snow_past_48h} type="Last 48 Hours" />
-							{#if resortConditions?.snow_past_week}
-								<SnowDisplay value={resortConditions.snow_past_week} type="Last 7 Days" />
+							<SnowDisplay value={resortDetails.base_depth} type="Base Depth" />
+							<SnowDisplay value={resortDetails.snow_past_24h} type="Last 24 Hours" />
+							<SnowDisplay value={resortDetails.snow_past_48h} type="Last 48 Hours" />
+							{#if resortDetails?.snow_past_week}
+								<SnowDisplay value={resortDetails.snow_past_week} type="Last 7 Days" />
 							{/if}
-							{#if resortConditions?.snow_total}
-								<SnowDisplay value={resortConditions?.snow_total} type="Season Total" />
+							{#if resortDetails?.snow_total}
+								<SnowDisplay value={resortDetails?.snow_total} type="Season Total" />
 							{/if}
-							<OpenArc open={resortConditions?.lifts_open} total={resortConditions?.total_lifts} type="Lifts" />
-							<OpenArc open={resortConditions?.runs_open} total={resortConditions?.total_runs} type="Runs" />
+							<OpenArc open={resortDetails?.lifts_open} total={resortDetails?.total_lifts} type="Lifts" />
+							<OpenArc open={resortDetails?.runs_open} total={resortDetails?.total_runs} type="Runs" />
 						</div>
 					</div>
 				<div class="card mt-4 md:px-4 md:py-2">
@@ -53,9 +52,9 @@
 							<div class="flex w-full items-center justify-center">
 								<hr class="w-1/4 !border-slate-700 px-2" />
 								<p class="px-6 text-xl font-bold">
-									{mountainDetails.next72hoursnowfall < 1 && mountainDetails.next72hoursnowfall > 0
+									{resortDetails.next72hoursnowfall < 1 && resortDetails.next72hoursnowfall > 0
 										? '< 1'
-										: mountainDetails.next72hoursnowfall}"
+										: resortDetails.next72hoursnowfall}"
 								</p>
 								<hr class="w-1/4 !border-slate-700 px-2" />
 							</div>
@@ -64,9 +63,9 @@
 							<div class="h-[400px] w-[400px]">
 								<Chart
 								ssr
-								data={mountainDetails.upcoming_snowfall_totals}
+								data={resortDetails.upcoming_snowfall_totals}
 								x="date"
-								xScale={scaleBand().domain(mountainDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
+								xScale={scaleBand().domain(resortDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
 								y="snowfall_total"
 								yDomain={[0, null]}
 								yNice

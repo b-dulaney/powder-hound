@@ -1,13 +1,13 @@
 <script lang="ts">
 	import WeatherIcon from "$lib/components/weather-icon.svelte";
-	import type { MountainOverview } from "$lib/supabase.types";
+	import type { ResortOverview } from "$lib/supabase.types";
 	import { formatSnowfall } from "$lib/utils";
     import { resortSearchInput, resortColumnSort } from "./stores";
 
-    export let resortOverviews: MountainOverview[];
+    export let resortOverviews: ResortOverview[];
     export let favorites: number[];
 
-    const isFavorite = (mountain: MountainOverview) => favorites.includes(mountain.mountain_id);
+    const isFavorite = (mountain: ResortOverview) => favorites.includes(mountain.mountain_id);
 
     const updateColumnSort = (sortBy: string) => {
 		if ($resortColumnSort.name === sortBy) {
@@ -31,15 +31,13 @@
 					case 'location':
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
 					case 'weather':
-						return (a.currenttemp - b.currenttemp) * sortOrder;
-					case 'last7days':
-						return (a.past7daysnowfall - b.past7daysnowfall) * sortOrder;
+						return (a.current_temp - b.current_temp) * sortOrder;
 					case 'last24hours':
-						return (a.past24hoursnowfall - b.past24hoursnowfall) * sortOrder;
+						return (a.snow_past_24h - b.snow_past_24h) * sortOrder;
 					case 'next24hours':
-						return (a.next24hoursnowfall - b.next24hoursnowfall) * sortOrder;
-					case 'next72hours':
-						return (a.next72hoursnowfall - b.next72hoursnowfall) * sortOrder;
+						return (a.snow_next_24h - b.snow_next_24h) * sortOrder;
+					case 'last48hours':
+						return (a.snow_past_48h - b.snow_past_48h) * sortOrder;
 					default:
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
 				}
@@ -122,18 +120,18 @@
                 </th>
                 <th
                     class="hidden md:table-cell-fit md:table-cell md:text-center"
-                    aria-sort={$resortColumnSort.name === 'last7days'
+                    aria-sort={$resortColumnSort.name === 'last48hours'
                         ? $resortColumnSort.asc
                             ? 'ascending'
                             : 'descending'
                         : 'none'}
                 >
-                    <button class="group" on:click={() => updateColumnSort('last7days')}>
-                        Last 7 Days
-                        <span class="pl-1" aria-hidden={$resortColumnSort.name !== 'last7days'}>
-                            {#if $resortColumnSort.name === 'last7days' && $resortColumnSort.asc}
+                    <button class="group" on:click={() => updateColumnSort('last48hours')}>
+                        Next 72H
+                        <span class="pl-1" aria-hidden={$resortColumnSort.name !== 'last48hours'}>
+                            {#if $resortColumnSort.name === 'last48hours' && $resortColumnSort.asc}
                                 <i class="fa-solid fa-sort-up"></i>
-                            {:else if $resortColumnSort.name === 'last7days' && !$resortColumnSort.asc}
+                            {:else if $resortColumnSort.name === 'last48hours' && !$resortColumnSort.asc}
                                 <i class="fa-solid fa-sort-down"></i>
                             {:else}
                                 <i class="fa-solid fa-sort opacity-25"></i>
@@ -183,27 +181,6 @@
                         </span>
                     </button>
                 </th>
-                <th
-                    class="hidden md:table-cell-fit md:table-cell md:text-center"
-                    aria-sort={$resortColumnSort.name === 'next72hours'
-                        ? $resortColumnSort.asc
-                            ? 'ascending'
-                            : 'descending'
-                        : 'none'}
-                >
-                    <button class="group" on:click={() => updateColumnSort('next72hours')}>
-                        Next 72H
-                        <span class="pl-1" aria-hidden={$resortColumnSort.name !== 'next72hours'}>
-                            {#if $resortColumnSort.name === 'next72hours' && $resortColumnSort.asc}
-                                <i class="fa-solid fa-sort-up"></i>
-                            {:else if $resortColumnSort.name === 'next72hours' && !$resortColumnSort.asc}
-                                <i class="fa-solid fa-sort-down"></i>
-                            {:else}
-                                <i class="fa-solid fa-sort opacity-25"></i>
-                            {/if}
-                        </span>
-                    </button>
-                </th>
                 <th class="!px-0 sm:table-cell-fit" aria-hidden></th>
             </tr>
         </thead>
@@ -223,23 +200,20 @@
                         <td class="table-cell-fit"
                             ><a
                                 class="anchor text-primary-500-400-token xl:text-lg"
-                                href="/conditions/{row.slug}"
+                                href="/conditions/resorts/{row.slug}"
                                 data-sveltekit-preload-data="hover">{row.display_name}</a
                             ></td
                         >
                         <td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
-                            >{row.currenttemp}&degF
-                            <span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc} /></span
+                            >{row.current_temp}&degF
+                            <span class="p-2"><WeatherIcon size="small" weatherDesc={row.current_weather} /></span
                             ></td
                         >
                         <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-                            >{formatSnowfall(row.past7daysnowfall)}"</td
-                        >
-                        <td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
-                        <td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
-                        <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-                            >{formatSnowfall(row.next72hoursnowfall)}"</td
-                        >
+                        >{formatSnowfall(row.snow_past_48h)}"</td
+                    >
+                        <td class="text-center font-bold">{formatSnowfall(row.snow_past_24h)}"</td>
+                        <td class="text-center font-bold">{formatSnowfall(row.snow_next_24h)}"</td>
                         <td class="!px-0 text-center font-bold"
                             ><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
                                 >

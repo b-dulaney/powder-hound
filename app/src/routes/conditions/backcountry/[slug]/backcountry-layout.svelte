@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { BackcountryDetail, MountainDetail } from "$lib/supabase.types";
+	import type { BackcountryDetail } from "$lib/supabase.types";
 	import { formatDate } from "$lib/utils";
 	import { scaleBand } from "d3-scale";
 	import dayjs from "dayjs";
-	import { Chart, Svg, Axis, Bars, Highlight, RectClipPath, Tooltip, TooltipItem } from "layerchart";
+	import { Axis, Bars, Chart, Highlight, RectClipPath, Svg, Tooltip, TooltipItem } from "layerchart";
 
     export let backcountryDetails: BackcountryDetail;
 </script>
@@ -20,9 +20,9 @@
 					<div class="flex w-full items-center justify-center">
 						<hr class="w-1/4 !border-slate-700 px-2" />
 						<p class="px-6 text-xl">
-							{backcountryDetails.past7daysnowfall < 1 && backcountryDetails.past7daysnowfall > 0
+							{backcountryDetails.snow_past_7d < 1 && backcountryDetails.snow_past_7d > 0
 								? '< 1'
-								: backcountryDetails.past7daysnowfall}"
+								: backcountryDetails.snow_past_7d}"
 						</p>
 						<hr class="w-1/4 !border-slate-700 px-2" />
 					</div>
@@ -81,9 +81,9 @@
 					<div class="flex w-full items-center justify-center">
 						<hr class="w-1/4 !border-slate-700 px-2" />
 						<p class="px-6 text-xl">
-							{backcountryDetails.next72hoursnowfall < 1 && backcountryDetails.next72hoursnowfall > 0
+							{backcountryDetails.snow_next_72h < 1 && backcountryDetails.snow_next_72h > 0
 								? '< 1'
-								: backcountryDetails.next72hoursnowfall}"
+								: backcountryDetails.snow_next_72h}"
 						</p>
 						<hr class="w-1/4 !border-slate-700 px-2" />
 					</div>

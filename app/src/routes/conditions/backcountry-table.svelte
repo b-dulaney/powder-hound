@@ -34,15 +34,15 @@
 					case 'location':
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
 					case 'weather':
-						return (a.currenttemp - b.currenttemp) * sortOrder;
+						return (a.current_temp - b.current_temp) * sortOrder;
 					case 'last7days':
-						return (a.past7daysnowfall - b.past7daysnowfall) * sortOrder;
+						return (a.snow_past_7d - b.snow_past_7d) * sortOrder;
 					case 'last24hours':
-						return (a.past24hoursnowfall - b.past24hoursnowfall) * sortOrder;
+						return (a.snow_past_24h - b.snow_past_24h) * sortOrder;
 					case 'next24hours':
-						return (a.next24hoursnowfall - b.next24hoursnowfall) * sortOrder;
+						return (a.snow_next_24h - b.snow_next_24h) * sortOrder;
 					case 'next72hours':
-						return (a.next72hoursnowfall - b.next72hoursnowfall) * sortOrder;
+						return (a.snow_next_72h - b.snow_next_72h) * sortOrder;
 					default:
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
 				}
@@ -233,17 +233,17 @@
                             ></td
                         >
                         <td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
-                            >{row.currenttemp}&degF
-                            <span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc} /></span
+                            >{row.current_temp}&degF
+                            <span class="p-2"><WeatherIcon size="small" weatherDesc={row.current_weather} /></span
                             ></td
                         >
                         <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-                            >{formatSnowfall(row.past7daysnowfall)}"</td
+                            >{formatSnowfall(row.snow_past_7d)}"</td
                         >
-                        <td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
-                        <td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
+                        <td class="text-center font-bold">{formatSnowfall(row.snow_past_24h)}"</td>
+                        <td class="text-center font-bold">{formatSnowfall(row.snow_next_24h)}"</td>
                         <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-                            >{formatSnowfall(row.next72hoursnowfall)}"</td
+                            >{formatSnowfall(row.snow_next_72h)}"</td
                         >
                         <td class="!px-0 text-center font-bold"
                             ><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"

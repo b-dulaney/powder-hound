@@ -5,10 +5,9 @@
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 	import ResortLayout from './resort-layout.svelte';
-	import BackcountryLayout from '../../backcountry/[slug]/backcountry-layout.svelte';
 	export let data: PageData;
 
-	const { mountainDetails, resortConditions, gridCols } = data;
+	const { resortDetails } = data;
 </script>
 
 <section id="header-section">
@@ -16,35 +15,25 @@
 		<ol class="breadcrumb lg:text-lg">
 			<li class="crumb"><a class="anchor !text-surface-300" href="/conditions">Conditions</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-			<li class="text-surface-300">{mountainDetails.display_name}</li>
+			<li class="text-surface-300">{resortDetails.display_name}</li>
 		</ol>
 
 		<div class="mt-4 flex flex-col">
-			<h1 class="h1">{mountainDetails.display_name}</h1>
+			<h1 class="h1">{resortDetails.display_name}</h1>
 			<span class="flex items-center"
 				><p class="mr-2 mt-2 text-xl font-semibold text-slate-400">Region:</p>
-				<p class="mt-2 text-xl font-semibold">{mountainDetails.region}</p></span
+				<p class="mt-2 text-xl font-semibold">{resortDetails.region}</p></span
 			>
-			{#if mountainDetails.location_type === 'resort'}
 				<div
 					class="variant-ghost-secondary badge mt-2 w-[80px] capitalize lg:mt-4 lg:py-0 lg:text-lg lg:font-normal"
 				>
-					{mountainDetails.location_type}
+					{resortDetails.location_type}
 				</div>
-			{:else}
-				<div
-					class="variant-ghost-success badge mt-2 w-[100px] capitalize lg:mt-4 lg:w-[120px] lg:py-1 lg:text-lg lg:font-normal"
-				>
-					{mountainDetails.location_type}
-				</div>
-			{/if}
 		</div>
 	</div>
 </section>
 
-{#if resortConditions}
-	<ResortLayout {mountainDetails} {resortConditions} />
-{/if}
+<ResortLayout {resortDetails} />
 
 <section id="forecast-section">
 	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pt-4 pb-9 lg:pt-6">
@@ -56,35 +45,35 @@
 				<div class="flex h-full flex-col justify-evenly">
 					<div class="flex justify-between sm:w-2/3 sm:self-center py-4">
 						<div class="flex flex-col p-4">
-							<p class="text-3xl font-bold">{mountainDetails.current_temperature}°</p>
+							<p class="text-3xl font-bold">{resortDetails.current_temperature}°</p>
 							<p class="text-xl font-semibold">
-								{weatherConditionsMap[mountainDetails.current_weather]}
+								{weatherConditionsMap[resortDetails.current_weather]}
 							</p>
 							<div class="flex">
 								<p>
-									High {mountainDetails.temperature_range[1].high_temp}&deg;
+									High {resortDetails.temperature_range[1].high_temp}&deg;
 								</p>
 								<p class=" mx-2">&middot;</p>
 								<p>
-									Low {mountainDetails.temperature_range[1].low_temp}&deg;
+									Low {resortDetails.temperature_range[1].low_temp}&deg;
 								</p>
 							</div>
 						</div>
 						<div class="flex flex-col items-center justify-center p-8">
-							<WeatherIcon weatherDesc={mountainDetails.current_weather} size="large" />
+							<WeatherIcon weatherDesc={resortDetails.current_weather} size="large" />
 						</div>
 					</div>
 					<div
 						class="flex w-full items-center justify-between px-4 py-2 md:self-center md:py-6 xl:w-11/12"
 					>
-						{#each mountainDetails.temperature_range as { date, low_temp, high_temp, snowfall }, i (i)}
+						{#each resortDetails.temperature_range as { date, low_temp, high_temp, snowfall }, i (i)}
 							<WeatherForecastSlice
 								{high_temp}
 								{low_temp}
-								weatherDesc={mountainDetails.daily_weather_conditions[i].daily_weather}
+								weatherDesc={resortDetails.daily_weather_conditions[i].daily_weather}
 								{date}
 							/>
-							{#if i < mountainDetails.temperature_range.length - 1}
+							{#if i < resortDetails.temperature_range.length - 1}
 								<hr class="divider-vertical h-20" />
 							{/if}
 						{/each}
@@ -97,7 +86,7 @@
 							>
 							<svelte:fragment slot="content">
 								<ul class="list">
-									{#each mountainDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
+									{#each resortDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
 										<li class="!rounded-md">
 											<div class="grid w-full grid-cols-6 items-center gap-3 p-2">
 												<p class="text-xs text-surface-400 sm:text-sm">
@@ -150,7 +139,7 @@
 					<h3 class="h3">Hourly Forecast</h3>
 				</div>
 				<ul class="list max-h-[500px] overflow-auto px-4 py-6">
-					{#each mountainDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
+					{#each resortDetails.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
 						<li class="!rounded-md">
 							<div class="grid w-full grid-cols-6 items-center gap-3 p-2">
 								<p class="text-xs text-surface-400 sm:text-sm">
