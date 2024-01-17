@@ -52,9 +52,9 @@
 							<div class="flex w-full items-center justify-center">
 								<hr class="w-1/4 !border-slate-700 px-2" />
 								<p class="px-6 text-xl font-bold">
-									{resortDetails.next72hoursnowfall < 1 && resortDetails.next72hoursnowfall > 0
+									{resortDetails.snow_next_72h < 1 && resortDetails.snow_next_72h > 0
 										? '< 1'
-										: resortDetails.next72hoursnowfall}"
+										: resortDetails.snow_next_72h}"
 								</p>
 								<hr class="w-1/4 !border-slate-700 px-2" />
 							</div>
