@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { MountainDetail } from "$lib/supabase.types";
+	import type { BackcountryDetail, MountainDetail } from "$lib/supabase.types";
 	import { formatDate } from "$lib/utils";
 	import { scaleBand } from "d3-scale";
 	import dayjs from "dayjs";
 	import { Chart, Svg, Axis, Bars, Highlight, RectClipPath, Tooltip, TooltipItem } from "layerchart";
 
-    export let mountainDetails: MountainDetail;
+    export let backcountryDetails: BackcountryDetail;
 </script>
 
 <section id="recent-and-upcoming-snowfall">
@@ -20,9 +20,9 @@
 					<div class="flex w-full items-center justify-center">
 						<hr class="w-1/4 !border-slate-700 px-2" />
 						<p class="px-6 text-xl">
-							{mountainDetails.past7daysnowfall < 1 && mountainDetails.past7daysnowfall > 0
+							{backcountryDetails.past7daysnowfall < 1 && backcountryDetails.past7daysnowfall > 0
 								? '< 1'
-								: mountainDetails.past7daysnowfall}"
+								: backcountryDetails.past7daysnowfall}"
 						</p>
 						<hr class="w-1/4 !border-slate-700 px-2" />
 					</div>
@@ -30,9 +30,9 @@
 						<div class="h-[400px]  w-[400px]">
 							<Chart
 							ssr
-							data={mountainDetails.previous_snowfall_totals}
+							data={backcountryDetails.previous_snowfall_totals}
 							x="date"
-							xScale={scaleBand().domain(mountainDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
+							xScale={scaleBand().domain(backcountryDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
 							y="snowfall_total"
 							yDomain={[0, 18]}
 							yNice
@@ -81,9 +81,9 @@
 					<div class="flex w-full items-center justify-center">
 						<hr class="w-1/4 !border-slate-700 px-2" />
 						<p class="px-6 text-xl">
-							{mountainDetails.next72hoursnowfall < 1 && mountainDetails.next72hoursnowfall > 0
+							{backcountryDetails.next72hoursnowfall < 1 && backcountryDetails.next72hoursnowfall > 0
 								? '< 1'
-								: mountainDetails.next72hoursnowfall}"
+								: backcountryDetails.next72hoursnowfall}"
 						</p>
 						<hr class="w-1/4 !border-slate-700 px-2" />
 					</div>
@@ -91,9 +91,9 @@
 						<div class="h-[400px] w-[400px]">
 							<Chart
 							ssr
-							data={mountainDetails.upcoming_snowfall_totals}
+							data={backcountryDetails.upcoming_snowfall_totals}
 							x="date"
-							xScale={scaleBand().domain(mountainDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
+							xScale={scaleBand().domain(backcountryDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
 							y="snowfall_total"
 							yDomain={[0, 18]}
 							yNice
