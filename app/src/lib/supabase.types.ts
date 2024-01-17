@@ -52,18 +52,22 @@ export type Database = MergeDeep<
 	{
 		public: {
 			Views: {
-				mountain_overview: {
+				resort_overview: {
 					Row: {
 						mountain_id: number;
 						display_name: string;
 						slug: string;
 						location_type: string;
-						currenttemp: number;
-						weather_desc: string;
-						next24hoursnowfall: number;
-						next72hoursnowfall: number;
-						past24hoursnowfall: number;
-						past7daysnowfall: number;
+						current_temp: number;
+						current_weather: string;
+						base_depth: number;
+						runs_open: number;
+						total_runs: number;
+						lifts_open: number;
+						total_lifts: number;
+						snow_past_24h: number;
+						snow_past_48h: number;
+						snow_next_24h: number;
 						region: string;
 					};
 				};
@@ -73,12 +77,12 @@ export type Database = MergeDeep<
 						display_name: string;
 						slug: string;
 						location_type: string;
-						currenttemp: number;
-						weather_desc: string;
-						next24hoursnowfall: number;
-						next72hoursnowfall: number;
-						past24hoursnowfall: number;
-						past7daysnowfall: number;
+						current_temp: number;
+						current_weather: string;
+						snow_next_24h: number;
+						snow_next_72h: number;
+						snow_past_24h: number;
+						snow_past_7d: number;
 						region: string;
 						overall_danger_level: number;
 					};
@@ -89,8 +93,8 @@ export type Database = MergeDeep<
 						current_weather: string;
 						display_name: string;
 						location_type: string;
-						next72hoursnowfall: number;
-						past7daysnowfall: number;
+						snow_past_7d: number;
+						snow_next_72h: number;
 						mountain_id: number;
 						region: string;
 						slug: string;
@@ -106,20 +110,31 @@ export type Database = MergeDeep<
 						forecast_url: string;
 					};
 				};
-				mountain_details: {
+				resort_detail: {
 					Row: {
 						current_temperature: number;
 						current_weather: string;
 						display_name: string;
-						elevation: number;
-						lat: number;
 						location_type: string;
 						next72hoursnowfall: number;
 						past7daysnowfall: number;
-						lon: number;
 						mountain_id: number;
 						region: string;
 						slug: string;
+						base_depth: number;
+						total_lifts: number;
+						lifts_open: number;
+						total_runs: number;
+						runs_open: number;
+						snow_past_24h: number;
+						snow_past_48h: number;
+						snow_past_week: number | null;
+						snow_total: number | null;
+						snow_type: string | null;
+						snow_stake_url: string | null;
+						updated_at: string;
+						lifts_url: string;
+						trails_url: string;
 						hourly_forecast: HourlyWeatherData[];
 						daily_weather_conditions: DailyWeatherCondition[];
 						previous_snowfall_totals: SnowfallTotal[];
@@ -157,6 +172,8 @@ export type Database = MergeDeep<
 						snow_total: number | null;
 						snow_type: string | null;
 						website_url: string;
+						lifts_url: string;
+						trails_url: string;
 						snow_stake_url: string | null;
 						updated_at: string;
 					};
@@ -213,8 +230,8 @@ export type Profile = Tables<'profile'>;
 export type AvalancheForecast = Tables<'avalanche_forecasts'>;
 export type ResortConditions = Tables<'resort_conditions'>;
 export type ResortWebElements = Tables<'resort_web_elements'>;
-export type MountainOverview = Views<'mountain_overview'>;
-export type MountainDetail = Views<'mountain_details'>;
+export type ResortOverview = Views<'resort_overview'>;
+export type ResortDetail = Views<'resort_detail'>;
 export type BackcountryOverview = Views<'backcountry_overview'>;
 export type BackcountryDetail = Views<'backcountry_detail'>;
 
