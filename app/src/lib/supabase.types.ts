@@ -116,8 +116,8 @@ export type Database = MergeDeep<
 						current_weather: string;
 						display_name: string;
 						location_type: string;
-						next72hoursnowfall: number;
-						past7daysnowfall: number;
+						snow_next_72h: number;
+						snow_past_7d: number;
 						mountain_id: number;
 						region: string;
 						slug: string;
