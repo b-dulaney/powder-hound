@@ -67,6 +67,45 @@ export type Database = MergeDeep<
 						region: string;
 					};
 				};
+				backcountry_overview: {
+					Row: {
+						mountain_id: number;
+						display_name: string;
+						slug: string;
+						location_type: string;
+						currenttemp: number;
+						weather_desc: string;
+						next24hoursnowfall: number;
+						next72hoursnowfall: number;
+						past24hoursnowfall: number;
+						past7daysnowfall: number;
+						region: string;
+						overall_danger_level: number;
+					};
+				};
+				backcountry_detail: {
+					Row: {
+						current_temperature: number;
+						current_weather: string;
+						display_name: string;
+						location_type: string;
+						next72hoursnowfall: number;
+						past7daysnowfall: number;
+						mountain_id: number;
+						region: string;
+						slug: string;
+						hourly_forecast: HourlyWeatherData[];
+						daily_weather_conditions: DailyWeatherCondition[];
+						previous_snowfall_totals: SnowfallTotal[];
+						upcoming_snowfall_totals: SnowfallTotal[];
+						temperature_range: TemperatureRange[];
+						avalanche_summary: string | null;
+						issue_date: string | null;
+						overall_danger_level: number;
+						danger_levels: AvalancheDangerLevel[];
+						forecast_url: string;
+					};
+				};
 				mountain_details: {
 					Row: {
 						current_temperature: number;
@@ -176,6 +215,8 @@ export type ResortConditions = Tables<'resort_conditions'>;
 export type ResortWebElements = Tables<'resort_web_elements'>;
 export type MountainOverview = Views<'mountain_overview'>;
 export type MountainDetail = Views<'mountain_details'>;
+export type BackcountryOverview = Views<'backcountry_overview'>;
+export type BackcountryDetail = Views<'backcountry_detail'>;
 
 type TableTypes =
 	| AvalancheForecast

@@ -36,6 +36,20 @@ export interface Database {
 						foreignKeyName: 'avalanche_forecasts_mountain_id_fkey';
 						columns: ['mountain_id'];
 						isOneToOne: true;
+						referencedRelation: 'backcountry_detail';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'avalanche_forecasts_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'backcountry_overview';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'avalanche_forecasts_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
 						referencedRelation: 'mountain_detail';
 						referencedColumns: ['mountain_id'];
 					},
@@ -243,6 +257,20 @@ export interface Database {
 						foreignKeyName: 'resort_conditions_display_name_fkey';
 						columns: ['display_name'];
 						isOneToOne: false;
+						referencedRelation: 'backcountry_detail';
+						referencedColumns: ['display_name'];
+					},
+					{
+						foreignKeyName: 'resort_conditions_display_name_fkey';
+						columns: ['display_name'];
+						isOneToOne: false;
+						referencedRelation: 'backcountry_overview';
+						referencedColumns: ['display_name'];
+					},
+					{
+						foreignKeyName: 'resort_conditions_display_name_fkey';
+						columns: ['display_name'];
+						isOneToOne: false;
 						referencedRelation: 'mountain_detail';
 						referencedColumns: ['display_name'];
 					},
@@ -259,6 +287,20 @@ export interface Database {
 						isOneToOne: false;
 						referencedRelation: 'mountains';
 						referencedColumns: ['display_name'];
+					},
+					{
+						foreignKeyName: 'resort_conditions_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'backcountry_detail';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_conditions_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'backcountry_overview';
+						referencedColumns: ['mountain_id'];
 					},
 					{
 						foreignKeyName: 'resort_conditions_mountain_id_fkey';
@@ -328,6 +370,20 @@ export interface Database {
 						foreignKeyName: 'resort_web_elements_mountain_id_fkey';
 						columns: ['mountain_id'];
 						isOneToOne: true;
+						referencedRelation: 'backcountry_detail';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_web_elements_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'backcountry_overview';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_web_elements_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
 						referencedRelation: 'mountain_detail';
 						referencedColumns: ['mountain_id'];
 					},
@@ -349,6 +405,44 @@ export interface Database {
 			};
 		};
 		Views: {
+			backcountry_detail: {
+				Row: {
+					avalanche_summary: string | null;
+					currenttemp: number | null;
+					danger_levels: Json[] | null;
+					display_name: string | null;
+					forecast_url: string | null;
+					issue_date: string | null;
+					location_type: string | null;
+					mountain_id: number | null;
+					next24hoursnowfall: number | null;
+					next72hoursnowfall: number | null;
+					overall_danger_level: number | null;
+					past24hoursnowfall: number | null;
+					past7daysnowfall: number | null;
+					region: string | null;
+					slug: string | null;
+					weather_desc: string | null;
+				};
+				Relationships: [];
+			};
+			backcountry_overview: {
+				Row: {
+					currenttemp: number | null;
+					display_name: string | null;
+					location_type: string | null;
+					mountain_id: number | null;
+					next24hoursnowfall: number | null;
+					next72hoursnowfall: number | null;
+					overall_danger_level: number | null;
+					past24hoursnowfall: number | null;
+					past7daysnowfall: number | null;
+					region: string | null;
+					slug: string | null;
+					weather_desc: string | null;
+				};
+				Relationships: [];
+			};
 			mountain_detail: {
 				Row: {
 					current_temperature: number | null;
@@ -529,6 +623,10 @@ export interface Database {
 					mountain_id: number;
 				};
 				Returns: Json;
+			};
+			process_avalanche_forecast: {
+				Args: Record<PropertyKey, never>;
+				Returns: undefined;
 			};
 			process_resort_web_elements: {
 				Args: Record<PropertyKey, never>;

@@ -1,19 +1,22 @@
 <script lang="ts">
 	import WeatherIcon from '$lib/components/weather-icon.svelte';
 	import type { MountainOverview } from '$lib/supabase.types';
-	import type { PageData } from './$types';
 	import { formatSnowfall } from '$lib/utils';
+	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
+	import type { PageData } from './$types';
 	export let data: PageData;
-	const { mountainOverviews, profile } = data;
+	const { resortOverviews, backcountryOverviews, profile } = data;
 	let columnSort = { name: 'location', asc: true };
 	let searchInput = '';
-	let filteredMountains: MountainOverview[] = [];
+	let tabSet: number = 0;
+	$: filteredMountains = (tabSet === 0 ? resortOverviews : backcountryOverviews);
 
 	const isFavorite = (mountain: MountainOverview) => profile?.favorites?.includes(mountain.mountain_id);
 
 	const searchLocations = () => {
+		const arrayToFilter = tabSet === 0 ? resortOverviews : backcountryOverviews;
 		filteredMountains =
-			mountainOverviews?.filter((location) => {
+		arrayToFilter.filter((location) => {
 				return location?.display_name?.toLowerCase().includes(searchInput.toLowerCase().trim());
 			}) || [];
 		sortLocations(columnSort.name, columnSort.asc);
@@ -34,10 +37,9 @@
 
 	const sortLocations = (sortBy: string, asc: boolean) => {
 		const sortOrder = asc ? 1 : -1;
-		const arrayToSort = filteredMountains.length > 0 ? filteredMountains : mountainOverviews;
 
 		filteredMountains =
-			arrayToSort?.sort((a, b) => {
+			filteredMountains.sort((a, b) => {
 				switch (sortBy) {
 					case 'location':
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
@@ -60,7 +62,7 @@
 
 	};
 
-	mountainOverviews?.sort((a, b) => {
+	filteredMountains?.sort((a, b) => {
 		if (isFavorite(a) && !isFavorite(b)) {
 			return -1;
 		}
@@ -72,7 +74,7 @@
 
 </script>
 
-<section class="pt-8 md:p-4 lg:p-8 xl:p-16">
+<section class="pt-8 md:p-4 max-w-[120rem] mx-auto lg:p-8 xl:p-16">
 	<div class="mb-4 flex justify-center">
 		<h1 class="h1">Conditions</h1>
 	</div>
@@ -90,11 +92,21 @@
 			/>
 		</div>
 	</div>
+	<div class="py-4 flex w-full justify-center">
+		<TabGroup justify="justify-center">
+			<Tab bind:group={tabSet} value={0} name="Ski Resorts" class="md:text-xl">
+				Ski Resorts
+			</Tab>
+			<Tab bind:group={tabSet} value={1} name="Backcountry" class="md:text-xl">
+				Backcountry
+			</Tab>
+		</TabGroup>
+	</div>
 	<div class="table-container">
 		<table class="table">
 			<caption class="sr-only"
 				>Snow and weather conditions for CO resorts and backcountry areas, column headers with
-				buttons are sortable.</caption
+				buttons are sortable. Switch between categories with the tabs above.</caption
 			>
 			<thead class="w-full">
 				<tr>
@@ -257,17 +269,8 @@
 							</div>
 						</td>
 					</tr>
-
-					{#if !mountainOverviews?.length}
-						<tr>
-							<td colspan="8">
-								<div class="m-4 flex justify-center">
-									<h3 class="h3">No results found</h3>
-								</div>
-							</td>
-						</tr>
-					{/if}
-				{:else if filteredMountains.length > 0}
+					
+				{:else}
 					{#each filteredMountains as row, i}
 						<tr>
 							<td class="table-cell-fit"
@@ -310,51 +313,6 @@
 									<i class="fa-regular fa-star"></i>
 									{/if}
 									</button
-								></td
-							>
-						</tr>
-					{/each}
-				{:else if mountainOverviews}
-					{#each mountainOverviews as row, i}
-						<tr>
-							<td class="table-cell-fit"
-								><a
-									class="anchor text-primary-500-400-token xl:text-lg"
-									href="/conditions/{row.slug}"
-									data-sveltekit-preload-data="hover">{row.display_name}</a
-								></td
-							>
-							<td class="hidden capitalize xl:table-cell-fit xl:table-cell xl:text-center">
-								{#if row.location_type === 'resort'}
-									<div class="variant-ghost-secondary badge">
-										{row.location_type}
-									</div>
-								{:else}
-									<div class="variant-ghost-success badge">
-										{row.location_type}
-									</div>
-								{/if}
-							</td>
-							<td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
-								>{row.currenttemp}&degF
-								<span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc} /></span
-								></td
-							>
-							<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-								>{formatSnowfall(row.past7daysnowfall)}"</td
-							>
-							<td class="text-center font-bold">{formatSnowfall(row.past24hoursnowfall)}"</td>
-							<td class="text-center font-bold">{formatSnowfall(row.next24hoursnowfall)}"</td>
-							<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-								>{formatSnowfall(row.next72hoursnowfall)}"</td
-							>
-							<td class="!px-0 text-center font-bold"
-								><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
-									>{#if profile?.favorites?.includes(row.mountain_id)}
-									<i class="fa-solid fa-star text-yellow-500"></i>
-									{:else}
-									<i class="fa-regular fa-star"></i>
-									{/if}</button
 								></td
 							>
 						</tr>
