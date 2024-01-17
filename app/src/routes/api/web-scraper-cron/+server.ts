@@ -41,9 +41,9 @@ async function scrapeConditions(webElements: ResortWebElements) {
 
 		const baseDepth = await getTextContent(page, webElements.base_depth_el);
 
-		const snowPast24Hours = await getTextContent(page, webElements.base_depth_el);
+		const snowPast24Hours = await getTextContent(page, webElements.snow_past_24h_el);
 
-		const snowPast48Hours = await getTextContent(page, webElements.base_depth_el);
+		const snowPast48Hours = await getTextContent(page, webElements.snow_past_48h_el);
 
 		if (webElements.lifts_open_el) {
 			liftsOpen = await getTextContent(trailReportPage, webElements.lifts_open_el);
