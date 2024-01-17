@@ -43,8 +43,6 @@
 				switch (sortBy) {
 					case 'location':
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
-					case 'type':
-						return a.location_type > b.location_type ? sortOrder : -sortOrder;
 					case 'weather':
 						return (a.currenttemp - b.currenttemp) * sortOrder;
 					case 'last7days':
@@ -124,27 +122,6 @@
 								{#if columnSort.name === 'location' && columnSort.asc}
 									<i class="fa-solid fa-sort-up"></i>
 								{:else if columnSort.name === 'location' && !columnSort.asc}
-									<i class="fa-solid fa-sort-down"></i>
-								{:else}
-									<i class="fa-solid fa-sort opacity-25"></i>
-								{/if}
-							</span>
-						</button>
-					</th>
-					<th
-						class="hidden xl:table-cell-fit xl:table-cell xl:text-center"
-						aria-sort={columnSort.name === 'type'
-							? columnSort.asc
-								? 'ascending'
-								: 'descending'
-							: 'none'}
-					>
-						<button class="group" on:click={() => updateColumnSort('type')}>
-							Type
-							<span class="pl-1" aria-hidden={columnSort.name !== 'type'}>
-								{#if columnSort.name === 'type' && columnSort.asc}
-									<i class="fa-solid fa-sort-up"></i>
-								{:else if columnSort.name === 'type' && !columnSort.asc}
 									<i class="fa-solid fa-sort-down"></i>
 								{:else}
 									<i class="fa-solid fa-sort opacity-25"></i>
@@ -280,17 +257,6 @@
 									data-sveltekit-preload-data="hover">{row.display_name}</a
 								></td
 							>
-							<td class="hidden capitalize xl:table-cell-fit xl:table-cell xl:text-center">
-								{#if row.location_type === 'resort'}
-									<div class="variant-ghost-secondary badge">
-										{row.location_type}
-									</div>
-								{:else}
-									<div class="variant-ghost-success badge">
-										{row.location_type}
-									</div>
-								{/if}
-							</td>
 							<td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
 								>{row.currenttemp}&degF
 								<span class="p-2"><WeatherIcon size="small" weatherDesc={row.weather_desc} /></span
