@@ -1,7 +1,8 @@
 <script lang="ts">
-	import WeatherIcon from "$lib/components/weather-icon.svelte";
+	import AvalancheDangerIcon from "$lib/components/avalanche-danger-icon.svelte";
+import WeatherIcon from "$lib/components/weather-icon.svelte";
 	import type { BackcountryOverview } from "$lib/supabase.types";
-	import { formatSnowfall } from "$lib/utils";
+	import { formatSnowfall, avalancheDangerRatingsMap } from "$lib/utils";
 	import { backcountrySearchInput, backcountryColumnSort } from "./stores";
     export let favorites: number[];
     export let backcountryOverviews: BackcountryOverview[];
@@ -35,6 +36,8 @@
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
 					case 'weather':
 						return (a.current_temp - b.current_temp) * sortOrder;
+                    case 'danger':
+                        return (a.overall_danger_level - b.overall_danger_level) * sortOrder;
 					case 'last7days':
 						return (a.snow_past_7d - b.snow_past_7d) * sortOrder;
 					case 'last24hours':
@@ -105,6 +108,27 @@
                     </button>
                 </th>
                 <th
+                class="hidden sm:table-cell-fit sm:table-cell sm:text-center"
+                aria-sort={$backcountryColumnSort.name === 'danger'
+                    ? $backcountryColumnSort.asc
+                        ? 'ascending'
+                        : 'descending'
+                    : 'none'}
+            >
+                <button class="group" on:click={() => updateColumnSort('danger')}>
+                    Avalanche Danger
+                    <span class="pl-1" aria-hidden={$backcountryColumnSort.name !== 'danger'}>
+                        {#if $backcountryColumnSort.name === 'danger' && $backcountryColumnSort.asc}
+                            <i class="fa-solid fa-sort-up"></i>
+                        {:else if $backcountryColumnSort.name === 'danger' && !$backcountryColumnSort.asc}
+                            <i class="fa-solid fa-sort-down"></i>
+                        {:else}
+                            <i class="fa-solid fa-sort opacity-25"></i>
+                        {/if}
+                    </span>
+                </button>
+            </th>
+                <th
                     class="hidden lg:table-cell-fit lg:table-cell lg:text-center"
                     aria-sort={$backcountryColumnSort.name === 'weather'
                         ? $backcountryColumnSort.asc
@@ -126,7 +150,7 @@
                     </button>
                 </th>
                 <th
-                    class="hidden md:table-cell-fit md:table-cell md:text-center"
+                    class="hidden lg:table-cell-fit lg:table-cell lg:text-center"
                     aria-sort={$backcountryColumnSort.name === 'last7days'
                         ? $backcountryColumnSort.asc
                             ? 'ascending'
@@ -225,27 +249,37 @@
             {:else}
                 {#each backcountryOverviews as row, i}
                     <tr>
-                        <td class="table-cell-fit"
-                            ><a
-                                class="anchor text-primary-500-400-token xl:text-lg"
+                        <td class="table-cell-fit !align-middle"
+                            >
+                            <a
+                                class="anchor text-primary-500-400-token xl:text-lg whitespace-nowrap"
                                 href="/conditions/backcountry/{row.slug}"
                                 data-sveltekit-preload-data="hover">{row.display_name}</a
-                            ></td
+                            >
+                        </td
                         >
-                        <td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
+                        <td class="hidden  !align-middle font-bold sm:table-cell-fit sm:table-cell sm:text-center"
+                        >
+                        <div class="flex items-center justify-center">
+                        <span class="p-2"><AvalancheDangerIcon dangerLevel={row.overall_danger_level} size='40px' /></span
+                        >
+                        {avalancheDangerRatingsMap[row.overall_danger_level]}
+                    </div></td
+                    >
+                        <td class="hidden  !align-middle font-bold lg:table-cell-fit lg:table-cell lg:text-center"
                             >{row.current_temp}&degF
                             <span class="p-2"><WeatherIcon size="small" weatherDesc={row.current_weather} /></span
                             ></td
                         >
-                        <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
+                        <td class="hidden  !align-middle font-bold lg:table-cell-fit lg:table-cell lg:text-center"
                             >{formatSnowfall(row.snow_past_7d)}"</td
                         >
-                        <td class="text-center font-bold">{formatSnowfall(row.snow_past_24h)}"</td>
-                        <td class="text-center font-bold">{formatSnowfall(row.snow_next_24h)}"</td>
-                        <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
+                        <td class="text-center  !align-middle font-bold">{formatSnowfall(row.snow_past_24h)}"</td>
+                        <td class="text-center  !align-middle font-bold">{formatSnowfall(row.snow_next_24h)}"</td>
+                        <td class="hidden  !align-middle font-bold md:table-cell-fit md:table-cell md:text-center"
                             >{formatSnowfall(row.snow_next_72h)}"</td
                         >
-                        <td class="!px-0 text-center font-bold"
+                        <td class="!px-0 text-center !align-middle font-bold"
                             ><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
                                 >
                                 {#if isFavorite(row)}

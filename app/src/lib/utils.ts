@@ -70,3 +70,12 @@ export async function getTextContent(page: Page, selector: string): Promise<stri
 		return null;
 	}
 }
+
+export const avalancheDangerRatingsMap: Record<number, string> = {
+	0: 'No Rating',
+	1: 'Low',
+	2: 'Moderate',
+	3: 'Considerable',
+	4: 'High',
+	5: 'Extreme'
+};
