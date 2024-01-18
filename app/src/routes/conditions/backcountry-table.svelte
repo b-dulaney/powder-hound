@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AvalancheDangerIcon from "$lib/components/avalanche-danger-icon.svelte";
-import WeatherIcon from "$lib/components/weather-icon.svelte";
+    import WeatherIcon from "$lib/components/weather-icon.svelte";
 	import type { BackcountryOverview } from "$lib/supabase.types";
 	import { formatSnowfall, avalancheDangerRatingsMap } from "$lib/utils";
 	import { backcountrySearchInput, backcountryColumnSort } from "./stores";
