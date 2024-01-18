@@ -45,7 +45,7 @@
 				<div class="flex h-full flex-col justify-evenly">
 					<div class="flex justify-between sm:w-2/3 sm:self-center py-4">
 						<div class="flex flex-col p-4">
-							<p class="text-3xl font-bold">{resortDetails.current_temperature}°</p>
+							<p class="text-3xl font-bold">{resortDetails.current_temp}°</p>
 							<p class="text-xl font-semibold">
 								{weatherConditionsMap[resortDetails.current_weather]}
 							</p>

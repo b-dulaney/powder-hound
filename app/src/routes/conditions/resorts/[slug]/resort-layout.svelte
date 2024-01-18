@@ -73,7 +73,7 @@
 								tooltip={{ mode: "band" }}
 							  >
 								<Svg>
-								  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+								  <Axis placement="left" rule grid={{ style: "stroke-dasharray: 4", }} labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
 								  />
 								  <Axis
 									placement="bottom"
@@ -81,7 +81,7 @@
 									tickSize={0}
 									format={(d) => formatDate(d)}
 								  />
-								  <Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 transition-colors opacity-50" />
+								  <Bars radius={8} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors" />
 								  <Highlight area>
 									<svelte:fragment slot="area" let:area>
 									  <RectClipPath
@@ -91,7 +91,7 @@
 										height={area.height}
 										spring
 									  >
-										<Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 opacity-100" />
+										<Bars radius={8} strokeWidth={2} class="fill-primary-400 stroke-primary-300" />
 									  </RectClipPath>
 									</svelte:fragment>
 								  </Highlight>

@@ -1,25 +1,24 @@
 <script lang="ts">
 	import type { BackcountryDetail } from "$lib/supabase.types";
-	import { formatDate, avalancheDangerCardBorderMap } from "$lib/utils";
+	import { formatDate } from "$lib/utils";
 	import { scaleBand } from "d3-scale";
 	import dayjs from "dayjs";
 	import { Axis, Bars, Chart, Highlight, RectClipPath, Svg, Tooltip, TooltipItem } from "layerchart";
 	import AvalancheDangerIcon from "$lib/components/avalanche-danger-icon.svelte";
     export let backcountryDetails: BackcountryDetail;
-	const avalancheCardBorderClass = avalancheDangerCardBorderMap[backcountryDetails.overall_danger_level]
 
 </script>
 
 
 <section id="avalanche-forecast">
 	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pt-4">
-		<div class="alert variant-glass-secondary">
+		<div class="alert variant-ghost-primary">
 			<div class="flex flex-col">
 				<span class="flex justify-start items-center"><i class="fa-solid fa-circle-exclamation px-2"/><strong class="whitespace-nowrap">Backcountry Forecasts</strong></span>
 				<p>These forecasts are for use by experienced backcountry skiers and snowboarders. This summary is not a replacement for the full CAIC report. View the full report for {backcountryDetails.display_name} <a target="_blank" rel="noopener" class="anchor !text-surface-50" href={backcountryDetails.forecast_url}>here</a>.</p>
 			</div>
 		</div>
-			<div class="card mt-4 w-full md:p-4 xl:p-6 border {avalancheCardBorderClass}">
+			<div class="card mt-4 w-full md:p-4 xl:p-6 ">
 				<div class="card-header">
 					<h3 class="h3">Avalanche Ratings</h3>
 					<p class="text-surface-400 py-2">Issued on: {backcountryDetails.issue_date}</p>
@@ -86,17 +85,18 @@
 							tooltip={{ mode: "band" }}
 						  >
 							<Svg>
-							  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+							  <Axis placement="left" rule grid={{ style: "stroke-dasharray: 4" }} labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={10} format={(d) => `${d}''`}
 							  />
 							  <Axis
 								placement="bottom"
+								
 								labelProps={{rotate: 315,
 									textAnchor: "end",
 									class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dy: 20,}}
 								tickSize={0}
 								format={(d) => formatDate(d)}
 							  />
-							  <Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 transition-colors" />
+							  <Bars radius={8} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors" />
 							  <Highlight area>
 								<svelte:fragment slot="area" let:area>
 								  <RectClipPath
@@ -147,7 +147,7 @@
 							tooltip={{ mode: "band" }}
 						  >
 						  <Svg>
-							<Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+							<Axis placement="left" rule grid={{ style: "stroke-dasharray: 4", }} labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={10} format={(d) => `${d}''`}
 							/>
 							<Axis
 							  placement="bottom"
@@ -156,7 +156,7 @@
 							  tickSize={0}
 							  format={(d) => formatDate(d)}
 							/>
-							<Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 transition-colors" />
+							<Bars radius={8} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors" />
 							<Highlight area>
 							  <svelte:fragment slot="area" let:area>
 								<RectClipPath

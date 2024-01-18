@@ -112,7 +112,7 @@ export type Database = MergeDeep<
 				};
 				resort_detail: {
 					Row: {
-						current_temperature: number;
+						current_temp: number;
 						current_weather: string;
 						display_name: string;
 						location_type: string;

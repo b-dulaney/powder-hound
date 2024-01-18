@@ -82,12 +82,3 @@ export const avalancheDangerRatingsMap: Record<number, string> = {
 	4: 'High',
 	5: 'Extreme'
 };
-
-export const avalancheDangerCardBorderMap: Record<number, string> = {
-	0: 'border-surface-500',
-	1: 'border-success-500',
-	2: 'border-warning-500',
-	3: 'border-orange-400',
-	4: 'border-red-500',
-	5: 'border-red-500'
-};
