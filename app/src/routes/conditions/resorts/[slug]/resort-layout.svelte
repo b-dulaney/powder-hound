@@ -38,8 +38,8 @@
 							{#if resortDetails?.snow_total}
 								<SnowDisplay value={resortDetails?.snow_total} type="Season Total" />
 							{/if}
-							<OpenArc open={resortDetails?.lifts_open} total={resortDetails?.total_lifts} type="Lifts" />
-							<OpenArc open={resortDetails?.runs_open} total={resortDetails?.total_runs} type="Runs" />
+							<OpenArc open={resortDetails?.lifts_open} total={resortDetails?.total_lifts} url={resortDetails.lifts_url} type="Lifts" />
+							<OpenArc open={resortDetails?.runs_open} total={resortDetails?.total_runs} url={resortDetails.trails_url} type="Runs" />
 						</div>
 					</div>
 				<div class="card mt-4 md:px-4 md:py-2">
