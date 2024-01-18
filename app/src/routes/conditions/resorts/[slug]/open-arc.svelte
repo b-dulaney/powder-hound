@@ -1,6 +1,7 @@
 <script lang="ts">
     import {Chart, Svg, Group, LinearGradient, Arc, Text } from 'layerchart'
 	  import { cubicInOut } from 'svelte/easing';
+    export let url: string
     export let open: number
     export let total: number
     export let type: 'Lifts' | 'Runs'
@@ -56,5 +57,5 @@
         </Svg>
       </Chart>
     </div>
-    <h4 class="xl:text-lg">{type} Open</h4>
+    <a class="anchor xl:text-lg !text-surface-50" href={url} target="_blank" rel="noopener">{type} Open <span class="text-2xl">&rsaquo;</span></a>
 </div>
