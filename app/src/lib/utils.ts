@@ -58,6 +58,9 @@ export const formatDate = (date: string) => {
 	if (date === 'Today') {
 		return date;
 	}
+	if (dayjs(date).isSame(dayjs(), 'day')) {
+		return 'Today';
+	}
 
 	return dayjs(date).format('ddd DD');
 };
@@ -78,4 +81,13 @@ export const avalancheDangerRatingsMap: Record<number, string> = {
 	3: 'Considerable',
 	4: 'High',
 	5: 'Extreme'
+};
+
+export const avalancheDangerCardBorderMap: Record<number, string> = {
+	0: 'border-surface-500',
+	1: 'border-success-500',
+	2: 'border-warning-500',
+	3: 'border-orange-400',
+	4: 'border-red-500',
+	5: 'border-red-500'
 };

@@ -1,12 +1,58 @@
 <script lang="ts">
 	import type { BackcountryDetail } from "$lib/supabase.types";
-	import { formatDate } from "$lib/utils";
+	import { formatDate, avalancheDangerCardBorderMap } from "$lib/utils";
 	import { scaleBand } from "d3-scale";
 	import dayjs from "dayjs";
 	import { Axis, Bars, Chart, Highlight, RectClipPath, Svg, Tooltip, TooltipItem } from "layerchart";
-
+	import AvalancheDangerIcon from "$lib/components/avalanche-danger-icon.svelte";
     export let backcountryDetails: BackcountryDetail;
+	const avalancheCardBorderClass = avalancheDangerCardBorderMap[backcountryDetails.overall_danger_level]
+
 </script>
+
+
+<section id="avalanche-forecast">
+	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pt-4">
+		<div class="alert variant-glass-secondary">
+			<div class="flex flex-col">
+				<span class="flex justify-start items-center"><i class="fa-solid fa-circle-exclamation px-2"/><strong class="whitespace-nowrap">Backcountry Forecasts</strong></span>
+				<p>These forecasts are for use by experienced backcountry skiers and snowboarders. This summary is not a replacement for the full CAIC report. View the full report for {backcountryDetails.display_name} <a target="_blank" rel="noopener" class="anchor !text-surface-50" href={backcountryDetails.forecast_url}>here</a>.</p>
+			</div>
+		</div>
+			<div class="card mt-4 w-full md:p-4 xl:p-6 border {avalancheCardBorderClass}">
+				<div class="card-header">
+					<h3 class="h3">Avalanche Ratings</h3>
+					<p class="text-surface-400 py-2">Issued on: {backcountryDetails.issue_date}</p>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
+					{#each backcountryDetails.danger_levels as {date, above_treeline, near_treeline, below_treeline}}
+					<div id="avy-forecast-container" class="w-full">	
+						<h4 class="h4 py-2">{date}
+						</h4>
+						<div class="flex flex-col w-full">
+							<div class="flex justify-between items-center border-b border-b-surface-400 w-full bg-surface-600 p-2">
+								<p class="whitespace-nowrap text-sm min-w-[105px]">Above Treeline</p>
+								<p class="flex-grow font-semibold text-sm text-center">{above_treeline.level} - {above_treeline.rating}</p>
+								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={above_treeline.level} size='30px'/></span>
+							</div>
+							<div class="flex justify-between items-center border-b border-b-surface-400 w-full p-2">
+								<p class="whitespace-nowrap text-sm min-w-[105px]">Near Treeline</p>
+								<p class="flex-grow font-semibold text-sm text-center">{near_treeline.level} - {near_treeline.rating}</p>
+								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={near_treeline.level} size='30px'/></span>
+							</div>
+							<div class="flex justify-between items-center gap-0 border-b border-b-surface-400 w-full bg-surface-600 p-2">
+								<p class="whitespace-nowrap text-sm min-w-[105px]">Below Treeline</p>
+								<p class="flex-grow font-semibold text-sm text-center">{below_treeline.level} - {below_treeline.rating}</p>
+								<span class="flex-shrink"><AvalancheDangerIcon dangerLevel={below_treeline.level} size='30px'/></span>
+							</div>
+						</div>
+					</div>
+					{/each}
+				</div>
+				<p class="p-4">{backcountryDetails.avalanche_summary}</p>
+            </div>
+        </div>
+</section>
 
 <section id="recent-and-upcoming-snowfall">
 	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pt-4">
@@ -40,17 +86,17 @@
 							tooltip={{ mode: "band" }}
 						  >
 							<Svg>
-							  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+							  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={10} format={(d) => `${d}''`}
 							  />
 							  <Axis
 								placement="bottom"
 								labelProps={{rotate: 315,
 									textAnchor: "end",
-									class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100", dy: 20,}}
+									class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dy: 20,}}
 								tickSize={0}
 								format={(d) => formatDate(d)}
 							  />
-							  <Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 transition-colors opacity-50" />
+							  <Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 transition-colors" />
 							  <Highlight area>
 								<svelte:fragment slot="area" let:area>
 								  <RectClipPath
@@ -60,7 +106,7 @@
 									height={area.height}
 									spring
 								  >
-									<Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 opacity-100" />
+									<Bars radius={8} strokeWidth={2} class="fill-primary-400 stroke-primary-300" />
 								  </RectClipPath>
 								</svelte:fragment>
 							  </Highlight>
@@ -93,37 +139,38 @@
 							ssr
 							data={backcountryDetails.upcoming_snowfall_totals}
 							x="date"
-							xScale={scaleBand().domain(backcountryDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
+							xScale={scaleBand().domain(backcountryDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.4).paddingOuter(0.4)}
 							y="snowfall_total"
 							yDomain={[0, 18]}
 							yNice
 							padding={{ left: 24, bottom: 36 }}
 							tooltip={{ mode: "band" }}
 						  >
-							<Svg>
-							  <Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
-							  />
-							  <Axis
-								placement="bottom"
-								labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100", dy: 20,}}
-								tickSize={0}
-								format={(d) => formatDate(d)}
-							  />
-							  <Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 transition-colors opacity-50" />
-							  <Highlight area>
-								<svelte:fragment slot="area" let:area>
-								  <RectClipPath
-									x={area.x}
-									y={area.y}
-									width={area.width}
-									height={area.height}
-									spring
-								  >
-									<Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 opacity-100" />
-								  </RectClipPath>
-								</svelte:fragment>
-							  </Highlight>
-							</Svg>
+						  <Svg>
+							<Axis placement="left" rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+							/>
+							<Axis
+							  placement="bottom"
+							  labelProps={{
+								  class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dy: 20,}}
+							  tickSize={0}
+							  format={(d) => formatDate(d)}
+							/>
+							<Bars radius={8} strokeWidth={2} class="fill-primary-500 stroke-primary-400 transition-colors" />
+							<Highlight area>
+							  <svelte:fragment slot="area" let:area>
+								<RectClipPath
+								  x={area.x}
+								  y={area.y}
+								  width={area.width}
+								  height={area.height}
+								  spring
+								>
+								  <Bars radius={8} strokeWidth={2} class="fill-primary-400 stroke-primary-300" />
+								</RectClipPath>
+							  </svelte:fragment>
+							</Highlight>
+						  </Svg>
 							
 							<Tooltip header={(data) => dayjs(data.date).format('MMM DD YYYY')} let:data>
 								<TooltipItem label="Snowfall (in)" value={data.snowfall_total} />
