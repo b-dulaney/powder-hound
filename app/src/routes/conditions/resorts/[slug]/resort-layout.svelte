@@ -59,7 +59,7 @@
 								<hr class="w-1/4 !border-slate-700 px-2" />
 							</div>
 						</div>
-						<div class="flex justify-center items-center w-full px-6 py-6">
+						<div class="flex justify-center items-center w-full p-8">
 							<div class="h-[400px] w-[400px]">
 								<Chart
 								ssr
@@ -67,7 +67,7 @@
 								x="date"
 								xScale={scaleBand().domain(resortDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
 								y="snowfall_total"
-								yDomain={[0, null]}
+								yDomain={[0, 18]}
 								yNice
 								padding={{ left: 24, bottom: 36 }}
 								tooltip={{ mode: "band" }}

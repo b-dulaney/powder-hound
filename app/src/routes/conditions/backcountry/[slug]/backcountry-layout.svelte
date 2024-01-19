@@ -71,7 +71,7 @@
 						</p>
 						<hr class="w-1/4 !border-slate-700 px-2" />
 					</div>
-					<div class="flex justify-center items-center w-full px-6 py-8">
+					<div class="flex justify-center items-center w-full p-8">
 						<div class="h-[400px]  w-[400px]">
 							<Chart
 							ssr
@@ -133,7 +133,7 @@
 						</p>
 						<hr class="w-1/4 !border-slate-700 px-2" />
 					</div>
-					<div class="flex justify-center items-center w-full px-6 py-8">
+					<div class="flex justify-center items-center w-full p-8">
 						<div class="h-[400px] w-[400px]">
 							<Chart
 							ssr
