@@ -61,9 +61,13 @@ async function scrapeAvalancheForecast(mountain: MountainCoordinates): Promise<A
 	const forecastUrl = `https://avalanche.state.co.us/?lat=${mountain.lat}&lng=${mountain.lon}`;
 	await page.goto(forecastUrl);
 
-	const avalancheSummaryOne = await getInnerHTML(page, AVALANCHE_SUMMARY_ONE_SELECTOR);
-	const avalancheSummaryTwo = await getInnerHTML(page, AVALANCHE_SUMMARY_TWO_SELECTOR);
-	const avalancheSummary = `${avalancheSummaryOne} ${avalancheSummaryTwo}`;
+	const avalancheSummaryOne = (await getInnerHTML(page, AVALANCHE_SUMMARY_ONE_SELECTOR)) ?? '';
+	const avalancheSummaryTwo = (await getInnerHTML(page, AVALANCHE_SUMMARY_TWO_SELECTOR)) ?? '';
+
+	const avalancheSummary =
+		avalancheSummaryTwo.length > 0
+			? `${avalancheSummaryOne}\n${avalancheSummaryTwo}`
+			: avalancheSummaryOne;
 	const issueDate = await getTextContent(page, ISSUE_DATE_SELECTOR);
 
 	const dayOne = (await getTextContent(page, DAY_ONE_SELECTOR)) ?? dayjs('dddd, MMM D');

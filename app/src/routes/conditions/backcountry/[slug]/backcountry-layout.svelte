@@ -10,7 +10,6 @@
 
 </script>
 
-
 <section id="avalanche-forecast">
 	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pt-4">
 		<div class="alert variant-ghost-primary">
@@ -49,7 +48,7 @@
 					</div>
 					{/each}
 				</div>
-				<p class="p-4">{backcountryDetails.avalanche_summary}</p>
+				<p class="p-4">{@html backcountryDetails.avalanche_summary}</p>
             </div>
         </div>
 </section>
@@ -184,3 +183,15 @@
 			</Card>
 	</div>
 </section>
+
+<style>
+	:global(a) {
+		--tw-text-opacity: 1;
+    	color: rgb(var(--color-primary-500) / var(--tw-text-opacity));
+    	text-decoration-line: underline;
+	}
+	:global(a:hover) {
+	    --tw-brightness: brightness(1.1);
+    	filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+</style>
