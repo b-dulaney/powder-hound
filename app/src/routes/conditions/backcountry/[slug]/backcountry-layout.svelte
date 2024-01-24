@@ -185,12 +185,12 @@
 </section>
 
 <style>
-	:global(a) {
+	p :global(a) {
 		--tw-text-opacity: 1;
     	color: rgb(var(--color-primary-500) / var(--tw-text-opacity));
     	text-decoration-line: underline;
 	}
-	:global(a:hover) {
+	p :global(a:hover) {
 	    --tw-brightness: brightness(1.1);
     	filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
