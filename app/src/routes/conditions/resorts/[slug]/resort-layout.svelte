@@ -6,6 +6,7 @@
 	import { Axis, Bars, Chart, Highlight, RectClipPath, Svg, Tooltip, TooltipItem } from "layerchart";
 	import OpenArc from "./open-arc.svelte";
 	import SnowDisplay from "./snow-display.svelte";
+	import Card from "$lib/components/card.svelte";
 
     export let resortDetails: ResortDetail;
 </script>
@@ -16,36 +17,38 @@
 <section id="mountain-info">
 	<div class="mx-auto w-full max-w-[90rem] px-4 pt-4 lg:pt-6">
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-			<div class="card mt-4 md:px-4 md:py-2">
-				<div class="card-header">
-					<h3 class="h3">Snow/Lift Conditions</h3>
-					<p class="text-surface-400 py-2">Updated at: {dayjs(resortDetails?.updated_at).format('h:mm A')}</p>
-
-				</div>
-						<div class="grid items-center grid-cols-2 md:px-4 py-4">
-							{#if resortDetails?.snow_type}
-								<div class="col-span-2 flex flex-col items-center">
-									<p class="py-2 font-bold text-xl lg:text-2xl">{resortDetails?.snow_type}</p>
-									<p class="font-semibold lg:text-xl">Overall Snowpack</p>
-								</div>
-							{/if}
-							<SnowDisplay value={resortDetails.base_depth} type="Base Depth" />
-							<SnowDisplay value={resortDetails.snow_past_24h} type="Last 24 Hours" />
-							<SnowDisplay value={resortDetails.snow_past_48h} type="Last 48 Hours" />
-							{#if resortDetails?.snow_past_week}
-								<SnowDisplay value={resortDetails.snow_past_week} type="Last 7 Days" />
-							{/if}
-							{#if resortDetails?.snow_total}
-								<SnowDisplay value={resortDetails?.snow_total} type="Season Total" />
-							{/if}
-							<OpenArc open={resortDetails?.lifts_open} total={resortDetails?.total_lifts} url={resortDetails.lifts_url} type="Lifts" />
-							<OpenArc open={resortDetails?.runs_open} total={resortDetails?.total_runs} url={resortDetails.trails_url} type="Runs" />
-						</div>
+			<Card>
+				<svelte:fragment slot="header">
+					Snow/Lift Conditions
+				</svelte:fragment>
+				<svelte:fragment slot="header-subtitle">
+					Updated at: {dayjs(resortDetails?.updated_at).format('h:mm A')}
+				</svelte:fragment>
+				<svelte:fragment slot="body">
+					<div class="grid items-center grid-cols-2 md:px-4 xl:p-6">
+						{#if resortDetails?.snow_type}
+							<div class="col-span-2 flex flex-col items-center">
+								<p class="py-2 font-bold text-xl lg:text-2xl">{resortDetails?.snow_type}</p>
+								<p class="font-semibold lg:text-xl">Overall Snowpack</p>
+							</div>
+						{/if}
+						<SnowDisplay value={resortDetails.base_depth} type="Base Depth" />
+						<SnowDisplay value={resortDetails.snow_past_24h} type="Last 24 Hours" />
+						<SnowDisplay value={resortDetails.snow_past_48h} type="Last 48 Hours" />
+						{#if resortDetails?.snow_past_week}
+							<SnowDisplay value={resortDetails.snow_past_week} type="Last 7 Days" />
+						{/if}
+						{#if resortDetails?.snow_total}
+							<SnowDisplay value={resortDetails?.snow_total} type="Season Total" />
+						{/if}
+						<OpenArc open={resortDetails?.lifts_open} total={resortDetails?.total_lifts} url={resortDetails.lifts_url} type="Lifts" />
+						<OpenArc open={resortDetails?.runs_open} total={resortDetails?.total_runs} url={resortDetails.trails_url} type="Runs" />
 					</div>
-				<div class="card mt-4 md:px-4 md:py-2">
-					<div class="card-header">
-						<h3 class="h3">Upcoming Snowfall</h3>
-					</div>
+				</svelte:fragment>
+			</Card>
+				<Card>
+					<svelte:fragment slot="header">Upcoming Snowfall</svelte:fragment>
+					<svelte:fragment slot="body">
 					<div class="flex flex-col h-5/6 items-center justify-evenly mt-6">
 						<div class="my-4 flex w-full flex-col items-center">
 							<p class="py-2 text-xl">Next 72 Hours</p>
@@ -104,8 +107,8 @@
 							  </div>
 							  </div>
 					</div>
-
-				</div>
+				</svelte:fragment>
+				</Card>
 		</div>
 	</div>
 </section>
