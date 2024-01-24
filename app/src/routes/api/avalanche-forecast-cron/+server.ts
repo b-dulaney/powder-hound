@@ -7,7 +7,7 @@ import type {
 	AvalancheRating,
 	Database
 } from '$lib/supabase.types';
-import { getTextContent } from '$lib/utils';
+import { getInnerHTML, getTextContent } from '$lib/utils';
 import chromium from '@sparticuz/chromium-min';
 import { createClient } from '@supabase/supabase-js';
 import { json, type RequestEvent } from '@sveltejs/kit';
@@ -17,7 +17,8 @@ import puppeteer from 'puppeteer-core';
 import {
 	ABOVE_TREE_LINE_DAY_ONE_SELECTOR,
 	ABOVE_TREE_LINE_DAY_TWO_SELECTOR,
-	AVALANCHE_SUMMARY_SELECTOR,
+	AVALANCHE_SUMMARY_ONE_SELECTOR,
+	AVALANCHE_SUMMARY_TWO_SELECTOR,
 	BELOW_TREE_LINE_DAY_ONE_SELECTOR,
 	BELOW_TREE_LINE_DAY_TWO_SELECTOR,
 	DAY_ONE_SELECTOR,
@@ -60,7 +61,9 @@ async function scrapeAvalancheForecast(mountain: MountainCoordinates): Promise<A
 	const forecastUrl = `https://avalanche.state.co.us/?lat=${mountain.lat}&lng=${mountain.lon}`;
 	await page.goto(forecastUrl);
 
-	const avalancheSummary = await getTextContent(page, AVALANCHE_SUMMARY_SELECTOR);
+	const avalancheSummaryOne = await getInnerHTML(page, AVALANCHE_SUMMARY_ONE_SELECTOR);
+	const avalancheSummaryTwo = await getInnerHTML(page, AVALANCHE_SUMMARY_TWO_SELECTOR);
+	const avalancheSummary = `${avalancheSummaryOne} ${avalancheSummaryTwo}`;
 	const issueDate = await getTextContent(page, ISSUE_DATE_SELECTOR);
 
 	const dayOne = (await getTextContent(page, DAY_ONE_SELECTOR)) ?? dayjs('dddd, MMM D');

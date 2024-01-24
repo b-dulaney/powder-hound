@@ -74,6 +74,15 @@ export async function getTextContent(page: Page, selector: string): Promise<stri
 	}
 }
 
+export async function getInnerHTML(page: Page, selector: string): Promise<string | null> {
+	try {
+		const el = await page.waitForSelector(selector);
+		return el?.evaluate((el) => el.innerHTML) ?? null;
+	} catch (error) {
+		return null;
+	}
+}
+
 export const avalancheDangerRatingsMap: Record<number, string> = {
 	0: 'No Rating',
 	1: 'Low',
