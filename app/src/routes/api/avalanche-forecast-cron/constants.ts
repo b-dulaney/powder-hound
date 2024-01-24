@@ -1,4 +1,5 @@
-export const AVALANCHE_SUMMARY_SELECTOR = '.sm\\:pt-4 > p:nth-child(1)';
+export const AVALANCHE_SUMMARY_ONE_SELECTOR = '.sm\\:pt-4 > p:nth-child(1)';
+export const AVALANCHE_SUMMARY_TWO_SELECTOR = '.sm\\:pt-4 > p:nth-child(2)';
 export const ISSUE_DATE_SELECTOR = 'span.whitespace-nowrap:nth-child(3)';
 export const DAY_ONE_SELECTOR =
 	'div.mt-4:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)';
