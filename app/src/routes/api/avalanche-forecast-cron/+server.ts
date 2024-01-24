@@ -66,7 +66,7 @@ async function scrapeAvalancheForecast(mountain: MountainCoordinates): Promise<A
 
 	const avalancheSummary =
 		avalancheSummaryTwo.length > 0
-			? `${avalancheSummaryOne}\n\n${avalancheSummaryTwo}`
+			? `${avalancheSummaryOne}<br>${avalancheSummaryTwo}`
 			: avalancheSummaryOne;
 	const issueDate = await getTextContent(page, ISSUE_DATE_SELECTOR);
 
