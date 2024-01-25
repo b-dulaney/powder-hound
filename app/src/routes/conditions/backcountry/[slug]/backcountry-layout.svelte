@@ -95,7 +95,7 @@
 									tickSize={0}
 									format={(d) => formatDate(d)}
 								/>
-								<Bars radius={8} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors" />
+								<Bars radius={1} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors opacity-90" />
 								<Highlight area>
 									<svelte:fragment slot="area" let:area>
 									<RectClipPath
@@ -105,7 +105,7 @@
 										height={area.height}
 										spring
 									>
-										<Bars radius={8} strokeWidth={2} class="fill-primary-400 stroke-primary-300" />
+										<Bars radius={1} strokeWidth={2} class="fill-primary-400 stroke-primary-300 opacity-100" />
 									</RectClipPath>
 									</svelte:fragment>
 								</Highlight>
@@ -153,19 +153,19 @@
 								tickSize={0}
 								format={(d) => formatDate(d)}
 								/>
-								<Bars radius={8} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors" />
+								<Bars radius={1} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors opacity-90" />
 								<Highlight area>
-								<svelte:fragment slot="area" let:area>
+									<svelte:fragment slot="area" let:area>
 									<RectClipPath
-									x={area.x}
-									y={area.y}
-									width={area.width}
-									height={area.height}
-									spring
+										x={area.x}
+										y={area.y}
+										width={area.width}
+										height={area.height}
+										spring
 									>
-									<Bars radius={8} strokeWidth={2} class="fill-primary-400 stroke-primary-300" />
+										<Bars radius={1} strokeWidth={2} class="fill-primary-400 stroke-primary-300 opacity-100" />
 									</RectClipPath>
-								</svelte:fragment>
+									</svelte:fragment>
 								</Highlight>
 							</Svg>
 								
