@@ -2,6 +2,10 @@
     export let drawerClose: () => void;
     export let logout: () => void;
     export let session: any;
+    import { page } from '$app/stores';
+
+    $: classesActive = (href: string) => (href === $page.url.pathname ? '!variant-filled-primary rounded-lg p-2' : '');
+
 </script>
 
 <section class="p-4 space-y-4 overflow-y-auto pb-20">
@@ -9,13 +13,8 @@
     <nav class="list-nav">
         <ul>
             <li>
-                <a href="/conditions" on:click={drawerClose}>
-                    <span class="flex-auto">Ski Resorts</span>
-                </a>
-            </li>
-            <li>
-                <a href="/conditions" on:click={drawerClose}>
-                    <span class="flex-auto">Backcountry</span>
+                <a class="{classesActive('/conditions')}" href="/conditions" on:click={drawerClose}>
+                    <span class="flex-auto">View Conditions</span>
                 </a>
             </li>
         </ul>
@@ -26,7 +25,7 @@
         {#if session}
         <ul>
             <li>
-                <a href="/alerts" on:click={drawerClose}>
+                <a class="{classesActive('/alerts')}" href="/alerts" on:click={drawerClose}>
                     <span class="flex-auto">Alerts</span>
                 </a>
             </li>
@@ -39,12 +38,12 @@
         {:else}
         <ul>
             <li>
-                <a href="/signup" on:click={drawerClose}>
+                <a class="{classesActive('/signup')}" href="/signup" on:click={drawerClose}>
                     <span class="flex-auto">Sign Up</span>
                 </a>
             </li>
             <li>
-                <a href="/login" on:click={drawerClose}>
+                <a class="{classesActive('/login')}" href="/login" on:click={drawerClose}>
                     <span class="flex-auto">Login</span>
                 </a>
             </li>
@@ -66,12 +65,12 @@
                 </a>
             </li>
             <li>
-                <a href="/privacy-policy" on:click={drawerClose}>
+                <a class="{classesActive('/privacy-policy')}" href="/privacy-policy" on:click={drawerClose}>
                     <span class="flex-auto">Privacy Policy</span>
                 </a>
             </li>
             <li>
-                <a href="/terms-of-use" on:click={drawerClose}>
+                <a class="{classesActive('/terms-of-use')}" href="/terms-of-use" on:click={drawerClose}>
                     <span class="flex-auto">Terms of Use
                     </span>
                 </a>
