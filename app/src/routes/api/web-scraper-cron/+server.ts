@@ -27,6 +27,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 	let snowPastWeek: string | null;
 	let snowTotal: string | null;
 	let snowType: string | null = '';
+	let snowOvernight: string | null;
 	let liftsOpen: string | null;
 	let runsOpen: string | null;
 
@@ -52,7 +53,9 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		if (webElements.runs_open_el) {
 			runsOpen = await getTextContent(trailReportPage, webElements.runs_open_el);
 		}
-
+		if (webElements.snow_overnight_el) {
+			snowOvernight = await getTextContent(trailReportPage, webElements.snow_overnight_el);
+		}
 		if (webElements.snow_past_week_el) {
 			snowPastWeek = await getTextContent(page, webElements.snow_past_week_el);
 		}
@@ -122,6 +125,9 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		if (webElements.snow_past_week_el) {
 			snowPastWeek = await getTextContent(page, webElements.snow_past_week_el);
 		}
+		if (webElements.snow_overnight_el) {
+			snowOvernight = await getTextContent(page, webElements.snow_overnight_el);
+		}
 		if (webElements.snow_total_el) {
 			snowTotal = await getTextContent(page, webElements.snow_total_el);
 		}
@@ -135,6 +141,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			base_depth: parseInt(baseDepth!),
 			lifts_open: parseInt(liftsOpen!) ?? null,
 			runs_open: parseInt(runsOpen!) ?? null,
+			snow_overnight: parseInt(snowOvernight!) ?? null,
 			snow_past_24h: parseInt(snowPast24Hours!),
 			snow_past_48h: parseInt(snowPast48Hours!),
 			snow_past_week: parseInt(snowPastWeek!) ?? null,

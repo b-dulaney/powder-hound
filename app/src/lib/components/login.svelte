@@ -75,7 +75,7 @@
 			<div class="mb-4 flex flex-col gap-2 p-4">
 				{#if PUBLIC_VERCEL_ENV !== 'production'}
 					<button
-						class="btn btn-lg rounded-md bg-red-500"
+						class="btn btn-lg rounded-md bg-red-500 text-white"
 						title="Sign in with Google"
 						on:click={signInWithGoogle}
 					>
@@ -86,7 +86,7 @@
 				<!-- <button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Microsoft</button>
 				<button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Facebook</button> -->
 				<button
-					class="btn btn-lg rounded-md bg-neutral-900"
+					class="btn btn-lg rounded-md bg-neutral-900 text-white"
 					title="Sign in with Github"
 					on:click={signInWithGithub}
 				>
@@ -126,7 +126,7 @@
 				</p>
 				<div class="mt-4 flex w-full items-center justify-center p-2">
 					<hr class="flex-auto px-4" />
-					<span class="px-4">Didn't receive an email?</span>
+					<span class="px-2">Didn't receive an email?</span>
 					<hr class="flex-auto px-4" />
 				</div>
 				<button

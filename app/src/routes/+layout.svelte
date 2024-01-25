@@ -1,20 +1,36 @@
 <script lang="ts">
-	import { AppBar, AppShell, Avatar, popup, type PopupSettings } from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell, Avatar, Drawer, popup, storePopup, getDrawerStore, type PopupSettings, type DrawerSettings, Toast } from '@skeletonlabs/skeleton';
 	import '../app.css';
 	import Logo from '../public/new-logo-v2.png';
 
 	import { afterNavigate, goto, invalidate } from '$app/navigation';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-	import { storePopup } from '@skeletonlabs/skeleton';
 	import type { AfterNavigate } from '@sveltejs/kit';
 	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import { initializeStores } from '@skeletonlabs/skeleton';
+	import SidebarNav from '$lib/components/sidebar-nav.svelte';
 	export let data: PageData;
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
+	initializeStores();
+
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	const drawerSettings: DrawerSettings = {
+		width: 'w-[280px] md:w-[480px]'
+	}
+	const drawerStore = getDrawerStore();
+
+	function drawerOpen(): void {
+		drawerStore.open(drawerSettings);
+	}
+
+	function drawerClose(): void {
+		drawerStore.close();
+	}
 
 	onMount(() => {
 		const {
@@ -47,21 +63,32 @@
 
 	const logout = async () => {
 		await supabase.auth.signOut();
+		drawerStore.close();
 	};
 
 	injectSpeedInsights();
 </script>
 
+
+<Toast />
+<Drawer>
+	<SidebarNav session={session} drawerClose={drawerClose} logout={logout} />
+</Drawer>
 <AppShell>
 	<svelte:fragment slot="header">
 		<AppBar>
 			<svelte:fragment slot="lead">
+				<button on:click={drawerOpen} type="button" class="btn-icon !bg-transparent md:hidden"><i class="fa fa-solid fa-bars text-xl" /></button>
 				<a href="/" title="Go to Homepage" class="flex items-center">
 					<img src={Logo} alt="Powder Hound Logo" class="h-10 w-10 md:h-12 md:w-12" />
-					<p class="pl-2 text-xl font-bold md:text-2xl">Powder<span class="gradient-heading">Hound</span></p>
+					<p class="pl-1 md:pl-2 text-xl font-bold md:text-2xl">Powder<span class="gradient-heading">Hound</span></p>
 				</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
+				<div class="hidden md:flex items-center justify-between">
+					<a href="/conditions" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Conditions</a>
+					<a href="/alerts" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Alerts</a>
+				</div>
 				<div class="flex items-center justify-end">
 					<button type="button" class="btn-icon" use:popup={userDropdown}>
 						{#if session?.user?.user_metadata?.avatar_url}
@@ -74,7 +101,6 @@
 				<span class="pr-8" aria-hidden data-popup="userDropdown">
 					{#if session}
 						<div class="btn-group-vertical bg-surface-700 shadow-xl">
-							<button class="listbox-item" on:click={() => goto('/settings')}>Settings</button>
 							<button class="listbox-item" on:click={logout}>Logout</button>
 						</div>
 					{:else}
