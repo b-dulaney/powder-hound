@@ -13,7 +13,7 @@
 			<img src={Logo} alt="Powder Hound Logo" class="z-10 h-36 w-36 lg:h-52 lg:w-52" />
 			<h1 class="h1 z-10 max-w-xl text-5xl">You'll never miss another powder day.</h1>
 			<p class="z-10 max-w-xl text-xl">
-				View current conditions, get accurate predictions, and receive customized snowfall alerts -
+				PowderHound lets you view current conditions, get accurate predictions, and receive customized snowfall alerts -
 				all 100% free.
 			</p>
 			<div class="z-10 flex gap-4">

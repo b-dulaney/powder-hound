@@ -155,6 +155,22 @@ export type Database = MergeDeep<
 						alert_thresholds: AlertThreshold[];
 					};
 				};
+				user_alerts: {
+					Row: {
+						id: number;
+						user_id: string;
+						alert_thresholds: AlertThreshold[];
+						created_at: string;
+						updated_at: string;
+					};
+					Update: {
+						id: number;
+						user_id: string;
+						alert_thresholds: AlertThreshold[];
+						created_at: string;
+						updated_at: string;
+					};
+				};
 				resort_conditions: {
 					Row: {
 						mountain_id: number;
@@ -227,6 +243,7 @@ export type Views<T extends keyof Database['public']['Views']> =
 export type Mountain = Tables<'mountains'>;
 export type CaicData = Tables<'caic_data'>;
 export type Profile = Tables<'profile'>;
+export type UserAlerts = Tables<'user_alerts'>;
 export type AvalancheForecast = Tables<'avalanche_forecasts'>;
 export type ResortConditions = Tables<'resort_conditions'>;
 export type ResortWebElements = Tables<'resort_web_elements'>;
@@ -241,7 +258,8 @@ type TableTypes =
 	| CaicData
 	| ResortConditions
 	| ResortWebElements
-	| Profile;
+	| Profile
+	| UserAlerts;
 
 export type DbResult<T extends TableTypes> = {
 	data: T[] | null;

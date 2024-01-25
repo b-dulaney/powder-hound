@@ -3,15 +3,23 @@ import { redirect } from '@sveltejs/kit';
 export const GET = async (event) => {
 	const {
 		url,
-		locals: { supabase }
+		locals: { supabase, getSession }
 	} = event;
 	const code = url.searchParams.get('code') as string;
-	const next = url.searchParams.get('next') ?? '/';
 
 	if (code) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
 		if (!error) {
-			throw redirect(303, `/${next.slice(1)}`);
+			const session = await getSession();
+			await supabase.auth.setSession({
+				access_token: session.access_token,
+				refresh_token: session.refresh_token
+			});
+			const { data: profileData } = await supabase.from('profile').select().maybeSingle();
+			if (!profileData) {
+				return redirect(301, '/alerts/initial-setup');
+			}
+			throw redirect(301, '/conditions');
 		}
 	}
 
