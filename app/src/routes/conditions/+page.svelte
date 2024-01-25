@@ -28,7 +28,7 @@
 
 <section class="pt-8 md:p-4 max-w-[120rem] mx-auto lg:p-8 xl:p-16">
 	<div class="mb-4 flex justify-center">
-		<h1 class="h1 !text-3xl">Conditions</h1>
+		<h1 class="h1">Conditions</h1>
 	</div>
 
 	<div class="pt-4 flex w-full justify-center">

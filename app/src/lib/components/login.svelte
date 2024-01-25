@@ -113,6 +113,7 @@
 					>
 				</div>
 			</div>
+			<p class="text-sm p-4 text-center">By registering you agree to PowderHound's <a class="anchor" href="/terms-of-use">Terms of Use</a> and acknowledge that you've read our <a class="anchor" href="/privacy-policy">Privacy Policy</a>.</p>
 		</div>
 	{:else}
 		<div class="card max-w-sm p-4">

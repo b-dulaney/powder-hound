@@ -56,13 +56,24 @@
     <nav class="list-nav">
         <ul>
             <li>
-                <a href="/conditions/backcountry">
+                <a href="https://github.com/b-dulaney/powder-hound" on:click={drawerClose}>
                     <span class="flex-auto">Github</span>
                 </a>
             </li>
             <li>
-                <a href="/conditions/resorts">
+                <a href="mailto:contact@powderhound.com" target="_blank" rel="noopener" on:click={drawerClose}>
                     <span class="flex-auto">Contact</span>
+                </a>
+            </li>
+            <li>
+                <a href="/privacy-policy" on:click={drawerClose}>
+                    <span class="flex-auto">Privacy Policy</span>
+                </a>
+            </li>
+            <li>
+                <a href="/terms-of-use" on:click={drawerClose}>
+                    <span class="flex-auto">Terms of Use
+                    </span>
                 </a>
             </li>
         </ul>

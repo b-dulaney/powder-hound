@@ -141,6 +141,10 @@
 						<a class="anchor" href="mailto:contact@powderhound.io" target="_blank" rel="noreferrer"
 							>Contact</a
 						>
+						<span class="mx-2 opacity-10">|</span>
+						<a class="anchor" href="/privacy-policy">Privacy Policy</a>
+						<span class="mx-2 opacity-10">|</span>
+						<a class="anchor" href="/terms-of-use">Terms of Use</a>
 					</p>
 				</section>
 			</div>

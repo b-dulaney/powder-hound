@@ -5,7 +5,7 @@
 	import Snow from '$lib/components/snow.svelte';
 </script>
 
-<Snow height="h-[550px]" zIndex="-z-10" />
+<Snow height="h-[600px]" zIndex="-z-10" />
 
 <header class="py-8 xl:pt-16" id="hero">
 	<div class="grid grid-cols-1 items-center gap-4 md:gap-10">
@@ -13,7 +13,7 @@
 			<img src={Logo} alt="Powder Hound Logo" class="z-10 h-36 w-36 lg:h-52 lg:w-52" />
 			<h1 class="h1 z-10 max-w-xl text-5xl">You'll never miss another powder day.</h1>
 			<p class="z-10 max-w-xl text-xl">
-				PowderHound lets you view current conditions, get accurate predictions, and receive customized snowfall alerts -
+				PowderHound lets you view current snow conditions, get accurate predictions, and receive customized snowfall alerts -
 				all 100% free.
 			</p>
 			<div class="z-10 flex gap-4">
