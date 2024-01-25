@@ -283,9 +283,9 @@
                             ><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
                                 >
                                 {#if isFavorite(row)}
-                                <i class="fa-solid fa-star text-yellow-500"></i>
+                                <i class="fa-solid fa-bell text-yellow-500"></i>
                                 {:else}
-                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-bell"></i>
                                 {/if}
                                 </button
                             ></td
