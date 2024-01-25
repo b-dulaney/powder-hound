@@ -96,6 +96,53 @@ async function scrapeConditions(webElements: ResortWebElements) {
 			await conditionsButton.evaluate((b) => b.click());
 		}
 
+		// PowderHorn does not show total runs or lifts, so we need to get creative here.
+		if (webElements.mountain_id === 27) {
+			await page.waitForSelector(
+				'.bg-grey:nth-child(2), .bg-grey:nth-child(4), .bg-grey:nth-child(6), .bg-grey:nth-child(8), .bg-grey:nth-child(10)'
+			);
+
+			// Extract the number of open lifts based on the specified CSS selectors
+			const openLiftsCount = await page.evaluate(() => {
+				const selectors = [
+					'.bg-grey:nth-child(2)',
+					'.bg-grey:nth-child(4)',
+					'.bg-grey:nth-child(6)',
+					'.bg-grey:nth-child(8)',
+					'.bg-grey:nth-child(10)'
+				];
+
+				// Check if each element contains the "fa-check-square-o" icon
+				return selectors.reduce((count, selector) => {
+					const element = document.querySelector(selector);
+					if (element && element.querySelector('.fa-check-square-o')) {
+						return count + 1;
+					}
+					return count;
+				}, 0);
+			});
+			liftsOpen = openLiftsCount.toString();
+
+			await page.waitForSelector('.groomers');
+
+			// Extract the number of open runs based on the specified logic
+			const openRunsCount = await page.evaluate(() => {
+				const runElements = document.querySelectorAll('.groomers');
+
+				// Check if each run element contains either "fa-check-square-o" or "fa-circle-o" icon
+				return Array.from(runElements).reduce((count, runElement) => {
+					const checkIcon = runElement.querySelector('.fa-check-square-o');
+					const circleIcon = runElement.querySelector('.fa-circle-o');
+
+					if (checkIcon || circleIcon) {
+						return count + 1;
+					}
+					return count;
+				}, 0);
+			});
+			runsOpen = openRunsCount.toString();
+		}
+
 		if (webElements.lifts_open_el) {
 			liftsOpen = await getTextContent(page, webElements.lifts_open_el);
 
