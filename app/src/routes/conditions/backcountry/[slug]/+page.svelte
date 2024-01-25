@@ -22,7 +22,7 @@
 		<div class="mt-4 flex flex-col">
 			<h1 class="h1">{backcountryDetails.display_name}</h1>
 			<span class="flex items-center"
-				><p class="mr-2 mt-2 text-xl font-semibold text-slate-400">Region:</p>
+				><p class="mr-2 mt-2 text-xl font-semibold text-surface-300">Region:</p>
 				<p class="mt-2 text-xl font-semibold">{backcountryDetails.region}</p></span
 			>
 				<div
