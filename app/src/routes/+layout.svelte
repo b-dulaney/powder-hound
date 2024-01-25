@@ -55,10 +55,10 @@
 	});
 
 	const userDropdown: PopupSettings = {
-		event: 'focus-click',
+		event: 'click',
 		target: 'userDropdown',
 		placement: 'bottom',
-		closeQuery: '.listbox-item'
+		closeQuery: '.listbox-item, .btn-icon'
 	};
 
 	const logout = async () => {
