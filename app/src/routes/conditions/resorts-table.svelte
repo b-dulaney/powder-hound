@@ -127,7 +127,7 @@
                         : 'none'}
                 >
                     <button class="group" on:click={() => updateColumnSort('last48hours')}>
-                        Next 72H
+                        Last 48H
                         <span class="pl-1" aria-hidden={$resortColumnSort.name !== 'last48hours'}>
                             {#if $resortColumnSort.name === 'last48hours' && $resortColumnSort.asc}
                                 <i class="fa-solid fa-sort-up"></i>
@@ -218,9 +218,9 @@
                             ><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
                                 >
                                 {#if isFavorite(row)}
-                                <i class="fa-solid fa-star text-yellow-500"></i>
+                                <i class="fa-solid fa-bell text-yellow-500"></i>
                                 {:else}
-                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-bell"></i>
                                 {/if}
                                 </button
                             ></td
