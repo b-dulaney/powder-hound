@@ -1,12 +1,7 @@
 <script lang="ts">
     export let dangerLevel = 0;
     export let size = '100px';
-    import AvyDangerConsiderable from '../../public/avy-danger-considerable.png';
-    import AvyDangerHigh from '../../public/avy-danger-high.png';
-    import AvyDangerLow from '../../public/avy-danger-low.png';
-    import AvyDangerModerate from '../../public/avy-danger-moderate.png';
-    import AvyDangerNoRating from '../../public/avy-danger-no-rating.png';
-
+    
     let iconName: string;
     $: {
         switch (dangerLevel) {
@@ -35,15 +30,15 @@
 </script>
 
 {#if dangerLevel === 0}
-<img src={AvyDangerNoRating} alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-no-rating.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
 {:else if dangerLevel === 1}
-<img src={AvyDangerLow} alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-low.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
 {:else if dangerLevel === 2}
-<img src={AvyDangerModerate} alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-moderate.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
 {:else if dangerLevel === 3}
-<img src={AvyDangerConsiderable} alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-moderate.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
 {:else if dangerLevel === 4}
-<img src={AvyDangerHigh} alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-high.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
 {:else if dangerLevel === 5}
-<img src={AvyDangerHigh} alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-high.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
 {/if}
