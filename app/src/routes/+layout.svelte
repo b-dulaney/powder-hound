@@ -8,7 +8,6 @@
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import { initializeStores } from '@skeletonlabs/skeleton';
 	import type { AfterNavigate } from '@sveltejs/kit';
-	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
@@ -65,8 +64,6 @@
 		await supabase.auth.signOut();
 		drawerStore.close();
 	};
-
-	injectSpeedInsights();
 </script>
 
 
