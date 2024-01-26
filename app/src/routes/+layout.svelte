@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AppBar, AppShell, Avatar, Drawer, popup, storePopup, getDrawerStore, type PopupSettings, type DrawerSettings, Toast } from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell, Avatar, Drawer, popup, storePopup, getDrawerStore, type PopupSettings, type DrawerSettings, Toast, ProgressBar } from '@skeletonlabs/skeleton';
 	import '../app.css';
 	import Logo from '../public/new-logo-v2.png';
 
@@ -10,6 +10,7 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { initializeStores } from '@skeletonlabs/skeleton';
+	import { navigating } from '$app/stores'
 	import SidebarNav from '$lib/components/sidebar-nav.svelte';
 	export let data: PageData;
 	let { supabase, session } = data;
@@ -114,6 +115,9 @@
 				</span>
 			</svelte:fragment>
 		</AppBar>
+		{#if $navigating}
+			<ProgressBar height="h-1" meter="bg-primary-500" />
+		{/if}
 	</svelte:fragment>
 
 	<slot />
@@ -126,7 +130,7 @@
 				<section class="flex flex-col items-center justify-between space-y-5 md:space-y-0">
 					<div class="grid grid-cols-1 place-content-center place-items-center gap-2">
 						<img src={Logo} alt="Powder Hound Logo" class="h-10 w-10" />
-						<p class="text-sm opacity-80">Powder Hound</p>
+						<p class="text-sm opacity-80">PowderHound</p>
 						<span class="variant-soft badge">0.0.1</span>
 					</div>
 				</section>
