@@ -93,8 +93,10 @@
 					<button type="button" class="btn-icon" use:popup={userDropdown}>
 						{#if session?.user?.user_metadata?.avatar_url}
 							<Avatar src={session.user.user_metadata.avatar_url} />
+						{:else if session?.user?.email}
+							<Avatar initials={session?.user?.email[0]} background="bg-secondary-500"/>
 						{:else}
-							<i class="fa-solid fa-circle-user text-3xl md:text-4xl" />
+						<i class="fa-solid fa-circle-user text-3xl md:text-4xl" />
 						{/if}
 					</button>
 				</div>
