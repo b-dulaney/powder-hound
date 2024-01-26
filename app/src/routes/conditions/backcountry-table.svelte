@@ -261,7 +261,7 @@
                         <td class="hidden  !align-middle font-bold sm:table-cell-fit sm:table-cell sm:text-center"
                         >
                         <div class="flex items-center justify-center">
-                        <span class="p-2"><AvalancheDangerIcon dangerLevel={row.overall_danger_level} size='40px' /></span
+                        <span class="p-2"><AvalancheDangerIcon dangerLevel={row.overall_danger_level} size='50px' /></span
                         >
                         {avalancheDangerRatingsMap[row.overall_danger_level]}
                     </div></td

@@ -30,15 +30,15 @@
 </script>
 
 {#if dangerLevel === 0}
-<enhanced:img src='../../public/avy-danger-no-rating.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-no-rating.png' alt={`Avalanche danger: ${iconName}`} style="width: {size}" />
 {:else if dangerLevel === 1}
-<enhanced:img src='../../public/avy-danger-low.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-low.png' alt={`Avalanche danger: ${iconName}`} style="width: {size}" />
 {:else if dangerLevel === 2}
-<enhanced:img src='../../public/avy-danger-moderate.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-moderate.png' alt={`Avalanche danger: ${iconName}`} style="width: {size}" />
 {:else if dangerLevel === 3}
-<enhanced:img src='../../public/avy-danger-moderate.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-considerable.png' alt={`Avalanche danger: ${iconName}`} style="width: {size}" />
 {:else if dangerLevel === 4}
-<enhanced:img src='../../public/avy-danger-high.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-high.png' alt={`Avalanche danger: ${iconName}`} style="width: {size}" />
 {:else if dangerLevel === 5}
-<enhanced:img src='../../public/avy-danger-high.png' alt={`Avalanche danger: ${iconName}`} style={`height: ${size};`} />
+<enhanced:img src='../../public/avy-danger-high.png' alt={`Avalanche danger: ${iconName}`} style="width: {size}" />
 {/if}
