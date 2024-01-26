@@ -3,6 +3,10 @@
 	import Logo from '../public/new-logo-v2.png';
 	import WRF from '../public/WRFExample.png';
 	import Snow from '$lib/components/snow.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+	const { session } = data;
 </script>
 
 <Snow height="h-[600px]" zIndex="-z-10" />
@@ -27,7 +31,9 @@
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>
-				<a class="variant-ghost-secondary btn" href="/signup">Sign Up</a>
+				{#if !session}
+					<a class="variant-ghost-secondary btn" href="/signup">Sign Up</a>
+				{/if}
 			</div>
 		</div>
 	</div>
