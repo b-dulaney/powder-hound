@@ -79,7 +79,7 @@
 	<svelte:fragment slot="header">
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<button on:click={drawerOpen} type="button" class="btn-icon !bg-transparent md:hidden"><i class="fa fa-solid fa-bars text-xl" /></button>
+				<button on:click={drawerOpen} type="button" aria-label="Menu" class="btn-icon !bg-transparent md:hidden"><i class="fa fa-solid fa-bars text-xl" /></button>
 				<a href="/" title="Go to Homepage" class="flex items-center">
 					<img src={Logo} alt="Powder Hound Logo" class="h-10 w-10 md:h-12 md:w-12" />
 					<p class="pl-1 md:pl-2 text-xl font-bold md:text-2xl">Powder<span class="gradient-heading">Hound</span></p>
@@ -91,7 +91,7 @@
 					<a href="/alerts" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Alerts</a>
 				</div>
 				<div class="flex items-center justify-end">
-					<button type="button" class="btn-icon" use:popup={userDropdown}>
+					<button aria-label="Profile" type="button" class="btn-icon" use:popup={userDropdown}>
 						{#if session?.user?.user_metadata?.avatar_url}
 							<Avatar src={session.user.user_metadata.avatar_url} />
 						{:else if session?.user?.email}
