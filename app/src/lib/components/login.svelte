@@ -3,9 +3,13 @@
 	import GoogleIcon from '$lib/components/google-icon.svelte';
 	import { PUBLIC_SITE_URL, PUBLIC_VERCEL_ENV } from '$env/static/public';
 	import type { SupabaseClient } from '@supabase/supabase-js';
-	let isResendDisabled = false;
+	import { enhance } from '$app/forms';
+	import type { ActionData } from '../../routes/login/$types';
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
+	
+	export let form: ActionData;
+	let formLoading = false;
 	let email = '';
-	let emailSent = false;
 
 	export let supabase: SupabaseClient;
     export let action: 'login' | 'signup' = 'login';
@@ -33,47 +37,19 @@
 			}
 		});
 	}
-
-	async function signInWithEmail() {
-		emailSent = true;
-		const { error } = await supabase.auth.signInWithOtp({
-			email,
-			options: {
-				emailRedirectTo: `${PUBLIC_SITE_URL}/auth/callback`,
-			}
-		});
-
-		if (error) {
-			console.error(error);
-		}
-	}
-
-	async function resendEmail() {
-		isResendDisabled = true;
-		const { error } = await supabase.auth.signInWithOtp({
-			email,
-			options: {
-				emailRedirectTo: `${PUBLIC_SITE_URL}/auth/callback`
-			}
-		});
-
-		if (error) {
-			console.error(error);
-		}
-
-		setTimeout(() => {
-			isResendDisabled = false;
-		}, 30000);
-	}
 </script>
-
-	{#if !emailSent}
+	{#if !form?.success}
 		<div class="card max-w-sm p-4">
 			<div class="card-header text-center">
 				<p class="text-xl font-semibold">{actionText} with</p>
 			</div>
-			<form>
-
+			<form method="POST" action="?/login" use:enhance={() => {
+				formLoading = true;
+				return async ({ update }) => {
+					formLoading = false;
+					update();
+				};
+			}}>
 				<div class="mb-4 flex flex-col gap-2 p-4">
 					{#if PUBLIC_VERCEL_ENV !== 'production'}
 						<button
@@ -104,17 +80,28 @@
 					</div>
 					<p class="mb-2 text-center text-xl font-semibold">Continue with email</p>
 					<div>
-						<input
-							class="input mb-3 !rounded-md"
+						<label class="label mb-4">
+							<span>Email</span>
+							<input
+							class="input !rounded-md"
 							type="email"
+							name="email"
 							autocomplete="email"
 							bind:value={email}
 							placeholder="Email"
 						/>
+						</label>
+						{#if form?.missing}<p class="pt-2 pb-4"><span class="px-2 text-primary-500">*</span>The email field is required</p>{/if}
 						<button
 							type="submit"
 							class="variant-filled-primary btn btn-lg w-full rounded-md"
-							on:click={signInWithEmail}>{actionText}</button
+							formAction="?/login">
+							{#if formLoading}
+								<ProgressRadial value={undefined} width="w-8"/>
+							{:else}
+								{actionText}
+							{/if}
+						</button
 						>
 					</div>
 				</div>
@@ -122,16 +109,16 @@
 			<p class="text-sm p-4 text-center">By registering you agree to PowderHound's <a class="anchor" href="/terms-of-use">Terms of Use</a> and acknowledge that you've read our <a class="anchor" href="/privacy-policy">Privacy Policy</a>.</p>
 		</div>
 	{:else}
-		<div class="card max-w-sm p-4">
+		<div class="card p-2 md:p-4 mx-4 mt-20">
 			<div class="card-header text-center">
 				<p class="text-center text-3xl font-semibold">Check your email</p>
 			</div>
-			<div class="mb-4 flex flex-col items-center justify-between gap-4 p-4">
+			<div class="mb-4 flex flex-col items-center justify-between gap-4 p-4 max-w-sm md:max-w-lg">
 				<p class="text-center text-xl">
 					We've sent a magic link to <span class="font-semibold text-primary-400">{email}</span>.
 					Follow the link in the email to sign in to your account.
 				</p>
-				<div class="mt-4 flex w-full items-center justify-center p-2">
+				<!-- <div class="mt-4 flex w-full items-center justify-center p-2">
 					<hr class="flex-auto px-4" />
 					<span class="px-2">Didn't receive an email?</span>
 					<hr class="flex-auto px-4" />
@@ -142,7 +129,7 @@
 					disabled={isResendDisabled}>Resend email</button
 				>
 				<button class="anchor mt-2 !text-surface-400" on:click={() => {emailSent = false; email = '';}}
-					>{actionText} with another method</button>
+					>{actionText} with another method</button> -->
 			</div>
 		</div>
 	{/if}
