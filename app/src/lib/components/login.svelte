@@ -9,7 +9,6 @@
 	
 	export let form: ActionData;
 	let formLoading = false;
-	let email = '';
 
 	export let supabase: SupabaseClient;
     export let action: 'login' | 'signup' = 'login';
@@ -86,23 +85,28 @@
 							class="input !rounded-md"
 							type="email"
 							name="email"
+							required
 							autocomplete="email"
-							bind:value={email}
 							placeholder="Email"
 						/>
 						</label>
 						{#if form?.missing}<p class="pt-2 pb-4"><span class="px-2 text-primary-500">*</span>The email field is required</p>{/if}
-						<button
+						{#if formLoading}
+							<button
 							type="submit"
 							class="variant-filled-primary btn btn-lg w-full rounded-md"
+							disabled
 							formAction="?/login">
-							{#if formLoading}
 								<ProgressRadial value={undefined} width="w-8"/>
-							{:else}
-								{actionText}
-							{/if}
-						</button
-						>
+							</button>
+						{:else}
+							<button
+								type="submit"
+								class="variant-filled-primary btn btn-lg w-full rounded-md"
+								formAction="?/login">
+									{actionText}
+							</button>
+						{/if}
 					</div>
 				</div>
 			</form>
@@ -115,7 +119,7 @@
 			</div>
 			<div class="mb-4 flex flex-col items-center justify-between gap-4 p-4 max-w-sm md:max-w-lg">
 				<p class="text-center text-xl">
-					We've sent a magic link to <span class="font-semibold text-primary-400">{email}</span>.
+					We've sent a magic link to <span class="font-semibold text-primary-400">{form?.email}</span>.
 					Follow the link in the email to sign in to your account.
 				</p>
 				<!-- <div class="mt-4 flex w-full items-center justify-center p-2">
