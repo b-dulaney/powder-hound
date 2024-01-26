@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Snow from '$lib/components/snow.svelte';
 	import { Avatar } from '@skeletonlabs/skeleton';
-	import Logo from '../public/new-logo-v2.png';
+	import LogoIcon from '../public/logo-icon.png';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -110,7 +110,7 @@
 				</p>
 			</div>
 			<div class="grid grid-cols-[auto_1fr] gap-2 py-2">
-				<Avatar src={Logo} width="w-12" background="bg-transparent" />
+				<Avatar src={LogoIcon} width="w-12" background="bg-transparent" />
 				<div class="card variant-filled-secondary space-y-2 rounded-tl-none p-4">
 					<header class="flex items-center justify-between">
 						<p class="font-bold">PowderHound</p>
