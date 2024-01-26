@@ -1,8 +1,7 @@
 <script lang="ts">
+	import Snow from '$lib/components/snow.svelte';
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import Logo from '../public/new-logo-v2.png';
-	import WRF from '../public/WRFExample.png';
-	import Snow from '$lib/components/snow.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -14,10 +13,10 @@
 <header class="py-8 xl:pt-16" id="hero">
 	<div class="grid grid-cols-1 items-center gap-4 md:gap-10">
 		<div class="flex flex-col items-center space-y-4 px-4 text-center">
-			<img src={Logo} alt="Powder Hound Logo" class="z-10 h-36 w-36 lg:h-52 lg:w-52" />
+			<enhanced:img src='../public/new-logo-v2.png' alt="Powder Hound Logo" class="z-10 h-36 w-36 lg:h-52 lg:w-52" />
 			<h1 class="h1 z-10 max-w-xl text-5xl">You'll never miss another powder day.</h1>
 			<p class="z-10 max-w-xl text-xl">
-				PowderHound lets you view current snow conditions, get accurate predictions, and receive customized snowfall alerts -
+				View current snow conditions, get accurate predictions, and receive customized snowfall alerts -
 				all 100% free.
 			</p>
 			<div class="z-10 flex gap-4">
@@ -32,7 +31,7 @@
 					</div>
 				</a>
 				{#if !session}
-					<a class="variant-ghost-secondary btn" href="/signup">Sign Up</a>
+					<a class="variant-ghost-secondary btn" href="/signup">Get Alerts</a>
 				{/if}
 			</div>
 		</div>
@@ -92,7 +91,7 @@
 					</p>
 				</section>
 				<footer class="card-footer mt-2 flex justify-center">
-					<img src={WRF} alt="CAIC forecast graph" class="max-h-56 rounded-lg" />
+					<enhanced:img src="../public/WRFExample.png" alt="CAIC forecast graph" class="w-[350px] rounded-lg" />
 				</footer>
 			</div>
 		</div>

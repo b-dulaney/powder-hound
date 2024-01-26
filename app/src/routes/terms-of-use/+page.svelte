@@ -1,7 +1,6 @@
 <script lang="ts">
     import Card from '$lib/components/card.svelte';
-    import Logo from '../../public/new-logo-v2.png';
-</script>
+    </script>
 
 <section id="header-section">
 	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
@@ -12,7 +11,7 @@
                 <li class="text-surface-300">Terms of Use</li>
             </ol>
             <div class="flex flex-col justify-center items-center">
-                <img src={Logo} alt="Powder Hound Logo" class="h-36 w-36" />
+                <enhanced:img src='../../public/new-logo-v2.png' alt="Powder Hound Logo" class="h-36 w-36" />
                 <h1 class="h1 !text-4xl">Terms of Use</h1>
             </div>
         </div>
