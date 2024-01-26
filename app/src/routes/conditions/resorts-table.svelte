@@ -32,6 +32,10 @@
 						return a.display_name > b.display_name ? sortOrder : -sortOrder;
 					case 'weather':
 						return (a.current_temp - b.current_temp) * sortOrder;
+                    case 'baseDepth':
+                        return (a.base_depth - b.base_depth) * sortOrder;
+                    case 'runsOpen':
+                        return ((a.runs_open / a.total_runs) - (b.runs_open / b.total_runs)) * sortOrder;
 					case 'last24hours':
 						return (a.snow_past_24h - b.snow_past_24h) * sortOrder;
 					case 'next24hours':
@@ -117,6 +121,48 @@
                             {/if}
                         </span>
                     </button>
+                </th>
+                <th
+                class="hidden lg:table-cell-fit lg:table-cell lg:text-center"
+                aria-sort={$resortColumnSort.name === 'baseDepth'
+                    ? $resortColumnSort.asc
+                        ? 'ascending'
+                        : 'descending'
+                    : 'none'}
+            >
+                <button class="group" on:click={() => updateColumnSort('baseDepth')}>
+                    Base Depth
+                    <span class="pl-1" aria-hidden={$resortColumnSort.name !== 'baseDepth'}>
+                        {#if $resortColumnSort.name === 'baseDepth' && $resortColumnSort.asc}
+                            <i class="fa-solid fa-sort-up"></i>
+                        {:else if $resortColumnSort.name === 'baseDepth' && !$resortColumnSort.asc}
+                            <i class="fa-solid fa-sort-down"></i>
+                        {:else}
+                            <i class="fa-solid fa-sort opacity-25"></i>
+                        {/if}
+                    </span>
+                </button>
+                </th>
+                <th
+                class="hidden lg:table-cell-fit lg:table-cell lg:text-center"
+                aria-sort={$resortColumnSort.name === 'runsOpen'
+                    ? $resortColumnSort.asc
+                        ? 'ascending'
+                        : 'descending'
+                    : 'none'}
+            >
+                <button class="group" on:click={() => updateColumnSort('runsOpen')}>
+                    Runs Open
+                    <span class="pl-1" aria-hidden={$resortColumnSort.name !== 'runsOpen'}>
+                        {#if $resortColumnSort.name === 'runsOpen' && $resortColumnSort.asc}
+                            <i class="fa-solid fa-sort-up"></i>
+                        {:else if $resortColumnSort.name === 'runsOpen' && !$resortColumnSort.asc}
+                            <i class="fa-solid fa-sort-down"></i>
+                        {:else}
+                            <i class="fa-solid fa-sort opacity-25"></i>
+                        {/if}
+                    </span>
+                </button>
                 </th>
                 <th
                     class="hidden md:table-cell-fit md:table-cell md:text-center"
@@ -209,6 +255,10 @@
                             <span class="p-2"><WeatherIcon size="small" weatherDesc={row.current_weather} /></span
                             ></td
                         >
+                        <td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
+                            >{row.base_depth}”</td>
+                        <td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
+                            >{Math.round((row.runs_open / row.total_runs) * 100)}%</td>
                         <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
                         >{formatSnowfall(row.snow_past_48h)}"</td
                     >
