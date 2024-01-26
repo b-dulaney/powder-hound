@@ -53,7 +53,7 @@
 		const { error } = await supabase.auth.signInWithOtp({
 			email,
 			options: {
-				emailRedirectTo: '/auth/callback'
+				emailRedirectTo: `${PUBLIC_SITE_URL}/auth/callback`
 			}
 		});
 
@@ -72,47 +72,53 @@
 			<div class="card-header text-center">
 				<p class="text-xl font-semibold">{actionText} with</p>
 			</div>
-			<div class="mb-4 flex flex-col gap-2 p-4">
-				{#if PUBLIC_VERCEL_ENV !== 'production'}
+			<form>
+
+				<div class="mb-4 flex flex-col gap-2 p-4">
+					{#if PUBLIC_VERCEL_ENV !== 'production'}
+						<button
+							type="button"
+							class="btn btn-lg rounded-md bg-red-500 text-white"
+							title="Sign in with Google"
+							on:click={signInWithGoogle}
+						>
+							<span><GoogleIcon /></span>
+							<span>Google</span>
+						</button>
+					{/if}
+					<!-- <button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Microsoft</button>
+					<button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Facebook</button> -->
 					<button
-						class="btn btn-lg rounded-md bg-red-500 text-white"
-						title="Sign in with Google"
-						on:click={signInWithGoogle}
+						type="button"
+						class="btn btn-lg rounded-md bg-neutral-900 text-white"
+						title="Sign in with Github"
+						on:click={signInWithGithub}
 					>
-						<span><GoogleIcon /></span>
-						<span>Google</span>
+						<span><GithubIcon /></span>
+						<span>Github</span>
 					</button>
-				{/if}
-				<!-- <button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Microsoft</button>
-				<button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Facebook</button> -->
-				<button
-					class="btn btn-lg rounded-md bg-neutral-900 text-white"
-					title="Sign in with Github"
-					on:click={signInWithGithub}
-				>
-					<span><GithubIcon /></span>
-					<span>Github</span>
-				</button>
-				<div class="flex items-center justify-center p-2">
-					<hr class="w-1/4 px-4" />
-					<span class="px-4">Or</span>
-					<hr class="w-1/4 px-4" />
+					<div class="flex items-center justify-center p-2">
+						<hr class="w-1/4 px-4" />
+						<span class="px-4">Or</span>
+						<hr class="w-1/4 px-4" />
+					</div>
+					<p class="mb-2 text-center text-xl font-semibold">Continue with email</p>
+					<div>
+						<input
+							class="input mb-3 !rounded-md"
+							type="email"
+							autocomplete="email"
+							bind:value={email}
+							placeholder="Email"
+						/>
+						<button
+							type="submit"
+							class="variant-filled-primary btn btn-lg w-full rounded-md"
+							on:click={signInWithEmail}>{actionText}</button
+						>
+					</div>
 				</div>
-				<p class="mb-2 text-center text-xl font-semibold">Continue with email</p>
-				<div>
-					<input
-						class="input mb-3 !rounded-md"
-						type="email"
-						autocomplete="email"
-						bind:value={email}
-						placeholder="Email"
-					/>
-					<button
-						class="variant-filled-primary btn btn-lg w-full rounded-md"
-						on:click={signInWithEmail}>{actionText}</button
-					>
-				</div>
-			</div>
+			</form>
 			<p class="text-sm p-4 text-center">By registering you agree to PowderHound's <a class="anchor" href="/terms-of-use">Terms of Use</a> and acknowledge that you've read our <a class="anchor" href="/privacy-policy">Privacy Policy</a>.</p>
 		</div>
 	{:else}
@@ -135,9 +141,8 @@
 					on:click={resendEmail}
 					disabled={isResendDisabled}>Resend email</button
 				>
-				<a class="anchor mt-2 !text-surface-400" href="/login" data-sveltekit-reload
-					>{actionText} with another method</a
-				>
+				<button class="anchor mt-2 !text-surface-400" on:click={() => {emailSent = false; email = '';}}
+					>{actionText} with another method</button>
 			</div>
 		</div>
 	{/if}
