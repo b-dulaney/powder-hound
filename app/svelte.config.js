@@ -13,7 +13,11 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter({
 			maxDuration: 120,
-			precompress: true
+			images: {
+				sizes: [128, 256, 480, 640, 750, 828, 1080, 1200, 1920],
+				domains: [],
+				formats: ['image/avif', 'image/webp']
+			}
 		})
 	}
 };
