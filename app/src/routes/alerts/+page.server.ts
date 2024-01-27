@@ -27,8 +27,7 @@ export const load = async (event) => {
 		const { data: alertsData, error: alertsError } = await supabase
 			.from('user_alerts')
 			.select()
-			.returns<UserAlerts[]>()
-			.maybeSingle();
+			.returns<UserAlerts[]>();
 
 		if (alertsError) {
 			error(500);
@@ -36,7 +35,7 @@ export const load = async (event) => {
 
 		return {
 			userProfile: profileData,
-			alerts: alertsData?.alert_thresholds
+			alerts: alertsData
 		};
 	}
 

@@ -8,12 +8,13 @@
     let inputChipList: string[] = [];
 
     interface AlertThreshold {
-        id: number;
+        mountain_id: number;
         name: string;
         threshold: number;
     }
 
     const alertThresholds: AlertThreshold[] = [];
+
     const autoCompleteOptions: AutocompleteOption<string>[] = mountainData?.map((m) => ({
         label: m.display_name,
         value: m.display_name
@@ -23,7 +24,7 @@
         inputChipList = [...inputChipList, e.detail.label];
         const mountain = mountainData?.find((m) => m.display_name === e.detail.label);
         alertThresholds.push({
-            id: mountain?.mountain_id!,
+            mountain_id: mountain?.mountain_id!,
             name: mountain?.display_name!,
             threshold: 1
         })
@@ -37,13 +38,16 @@
         const {error: profileError} = await supabase.from('profile').insert({
             user_id: userId,
             email, 
-            favorites: alertThresholds.map((i) => i.id),
+            favorites: alertThresholds.map((i) => i.mountain_id),
         })
-
-        const {error: alertError} = await supabase.from('user_alerts').insert({
+        
+        const {error: alertError} = await supabase.from('user_alerts').insert(alertThresholds.map((a) => ({
             user_id: userId,
-            alert_thresholds: alertThresholds
-        })
+            email,
+            display_name: a.name,
+            mountain_id: a.mountain_id,
+            threshold_inches: a.threshold,
+        })))
 
         if (profileError || alertError) {
             console.error(profileError, alertError);
