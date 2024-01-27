@@ -25,13 +25,13 @@
         const alertToUpdate = alerts?.find((a) => a.id === id);
         if(!alertToUpdate || !alerts) return;
 
-        alertToUpdate.threshold = parseInt(value);
-        const { data, error } = await supabase.from('user_alerts').update({ alert_thresholds: [...alerts] }).eq('user_id', userProfile.user_id).returns<UserAlerts[]>().select().single();
+        alertToUpdate.threshold_inches = parseInt(value);
+        const { data, error } = await supabase.from('user_alerts').upsert([...alerts]).eq('user_id', userProfile.user_id).returns<UserAlerts[]>().select();
 
         if (error) {
             toastStore.trigger(updateFailedToast);
         } else {
-            alerts = data?.alert_thresholds;
+            alerts = data;
             toastStore.trigger(updateSuccessfulToast);
         }
     }
@@ -60,11 +60,11 @@
                 {#if !alerts?.length}
                     <p class="text-center">You don't have any alerts set up yet. Add one from the <a class="anchor" href="/conditions" data-sveltekit-preload-data>Conditions</a> page.</p>
                 {:else}
-                {#each alerts as { id, name, threshold } }
+                {#each alerts as { id, display_name,  threshold_inches } }
                     <div class="flex justify-between w-full items-center mb-2 gap-4 md:gap-8">
-                        <p class="md:text-xl grow">{name}</p>
+                        <p class="md:text-xl grow">{display_name}</p>
                         <div class="flex md:shrink md:w-1/4 lg:w-1/6 md:justify-end">
-                            <select class="select text-center" on:change={(e)=> onThresholdChange(e, id)} value={threshold}>
+                            <select class="select text-center" on:change={(e)=> onThresholdChange(e, id)} value={threshold_inches}>
                                 <option value={1}>1+ in</option>
                                 <option value={3}>3+ in</option>
                                 <option value={6}>6+ in</option>
