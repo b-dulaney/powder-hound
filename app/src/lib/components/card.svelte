@@ -1,4 +1,4 @@
-<div class="card mt-4 md:px-4 md:py-2">
+<div class="card mt-4 md:px-4 md:py-2 w-full">
     <div class="card-header">
         <h3 class="h3">
             <slot name="header"></slot>

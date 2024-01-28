@@ -67,9 +67,9 @@
                         <svelte:fragment slot="header">Favorite Locations</svelte:fragment>
                         <p class="max-w-xl">Select the locations that we'll send you snowfall alerts for. You can add more at any time.</p>
                         <div class="flex flex-col gap-2 mt-4 items-center">
-                            <InputChip class="max-w-sm md:max-w-full" bind:input={inputChip} bind:value={inputChipList} name="chips" chips="variant-filled-secondary" placeholder='Search...' allowUpperCase />
+                            <InputChip class="max-w-sm md:max-w-xl" bind:input={inputChip} bind:value={inputChipList} name="chips" chips="variant-filled-secondary" placeholder='Search...' allowUpperCase />
 
-                            <div class="card w-full variant-ghost-surface max-w-sm md:max-w-full max-h-56 p-4 overflow-y-auto" tabindex="-1">
+                            <div class="card w-full variant-ghost-surface max-w-sm md:max-w-xl max-h-56 p-4 overflow-y-auto" tabindex="-1">
                                 <Autocomplete
                                     bind:input={inputChip}
                                     options={autoCompleteOptions}

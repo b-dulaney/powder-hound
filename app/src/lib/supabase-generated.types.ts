@@ -177,30 +177,24 @@ export interface Database {
       }
       profile: {
         Row: {
-          alert_thresholds: Json[] | null
+          created_at: string
           email: string
           favorites: number[] | null
-          first_name: string | null
           id: number
-          last_name: string | null
           user_id: string
         }
         Insert: {
-          alert_thresholds?: Json[] | null
+          created_at?: string
           email: string
           favorites?: number[] | null
-          first_name?: string | null
           id?: number
-          last_name?: string | null
           user_id: string
         }
         Update: {
-          alert_thresholds?: Json[] | null
+          created_at?: string
           email?: string
           favorites?: number[] | null
-          first_name?: string | null
           id?: number
-          last_name?: string | null
           user_id?: string
         }
         Relationships: [

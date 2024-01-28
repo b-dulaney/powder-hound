@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { AppBar, AppShell, Avatar, Drawer, ProgressBar, Toast, getDrawerStore, popup, storePopup, type DrawerSettings, type PopupSettings } from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell, Avatar, Drawer, ProgressBar, Toast, getDrawerStore, popup, storePopup, type DrawerSettings, type PopupSettings, Modal } from '@skeletonlabs/skeleton';
 	import '../app.css';
 
-	import { afterNavigate, goto, invalidate } from '$app/navigation';
+	import { afterNavigate, goto, invalidate, invalidateAll } from '$app/navigation';
 	import { navigating } from '$app/stores';
 	import SidebarNav from '$lib/components/sidebar-nav.svelte';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
@@ -63,10 +63,12 @@
 	const logout = async () => {
 		await supabase.auth.signOut();
 		drawerStore.close();
+		invalidateAll();
 	};
 </script>
 
 
+<Modal />
 <Toast />
 <Drawer>
 	<SidebarNav session={session} drawerClose={drawerClose} logout={logout} />
