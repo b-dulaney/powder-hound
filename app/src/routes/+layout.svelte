@@ -106,9 +106,9 @@
 							<button class="listbox-item" on:click={logout}>Logout</button>
 						</div>
 					{:else}
-						<div class="btn-group-vertical w-24 bg-surface-600 shadow-xl">
-							<button class="listbox-item" on:click={() => goto('/signup')}>Sign up</button>
-							<button class="listbox-item" on:click={() => goto('/login')}>Login</button>
+						<div class="btn-group-vertical w-24 bg-surface-600 shadow-xl z-10 opacity-100">
+							<button class="listbox-item z-10 opacity-100" on:click={() => goto('/signup')}>Sign up</button>
+							<button class="listbox-item z-10 opacity-100" on:click={() => goto('/login')}>Login</button>
 						</div>
 					{/if}
 				</span>
