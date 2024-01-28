@@ -30,6 +30,11 @@
                 </a>
             </li>
             <li>
+                <a class="{classesActive('/settings')}" href="/settings" on:click={drawerClose}>
+                    <span class="flex-auto">Settings</span>
+                </a>
+            </li>
+            <li>
                 <button class="w-full text-start" on:click={logout}>
                     <span class="flex-auto">Logout</span>
                 </button>
