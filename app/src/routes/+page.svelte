@@ -13,13 +13,13 @@
 <header class="py-8 xl:pt-16" id="hero">
 	<div class="grid grid-cols-1 items-center gap-4 md:gap-10">
 		<div class="flex flex-col items-center space-y-4 px-4 text-center">
-			<enhanced:img src='../public/new-logo-v2.png' alt="Powder Hound Logo" class="z-10 h-36 w-36 lg:h-52 lg:w-52" />
-			<h1 class="h1 z-10 max-w-xl text-5xl">You'll never miss another powder day.</h1>
-			<p class="z-10 max-w-xl text-xl">
+			<enhanced:img src='../public/new-logo-v2.png' alt="Powder Hound Logo" class="z-0 h-36 w-36 lg:h-52 lg:w-52" />
+			<h1 class="h1 z-0 max-w-xl text-5xl">You'll never miss another powder day.</h1>
+			<p class="z-0 max-w-xl text-xl">
 				View current snow conditions, get accurate predictions, and receive customized snowfall alerts -
 				all 100% free.
 			</p>
-			<div class="z-10 flex gap-4">
+			<div class="z-0 flex gap-4">
 				<a
 					class="btn variant-filled-primary bg-gradient-to-r"
 					data-sveltekit-preload-data="hover"
