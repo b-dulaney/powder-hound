@@ -52,17 +52,17 @@
    
 </script>
 
-<ol class="breadcrumb lg:text-lg p-4 lg:px-8 xl:px-16">
-	<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
-	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-	<li class="text-surface-300">Alerts</li>
-</ol>
-
 <section id="alerts">
-    <div class="md:p-4 max-w-7xl mx-auto lg:p-8 xl:p-16">
+    <div class="mx-auto w-full lg:max-w-[90rem] md:px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
+        <ol class="breadcrumb lg:text-lg px-4 md:px-0 pb-5">
+            <li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
+            <li class="crumb-separator" aria-hidden>&rsaquo;</li>
+            <li class="text-surface-300">Alerts</li>
+        </ol>
+        
         <h1 class="h1 text-center !text-3xl mb-4">Alerts</h1>
-        <div class="w-full max-h-full flex justify-center p-4">
-            <div class="card max-w-4xl w-full p-4 max-h-full overflow-y-auto">
+        <div class="w-full max-h-full flex justify-center">
+            <div class="card w-full p-4 max-h-full overflow-y-auto">
                 {#if !alerts?.length}
                     <p class="text-center">You don't have any alerts set up yet. Add one from the <a class="anchor" href="/conditions" data-sveltekit-preload-data>Conditions</a> page.</p>
                 {:else}
