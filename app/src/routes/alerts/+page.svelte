@@ -52,8 +52,14 @@
    
 </script>
 
+<ol class="breadcrumb lg:text-lg p-4 lg:px-8 xl:px-16">
+	<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+	<li class="text-surface-300">Alerts</li>
+</ol>
+
 <section id="alerts">
-    <div class="pt-8 md:p-4 max-w-[120rem] mx-auto lg:p-8 xl:p-16">
+    <div class="md:p-4 max-w-7xl mx-auto lg:p-8 xl:p-16">
         <h1 class="h1 text-center !text-3xl mb-4">Alerts</h1>
         <div class="w-full max-h-full flex justify-center p-4">
             <div class="card max-w-4xl w-full p-4 max-h-full overflow-y-auto">
@@ -79,6 +85,7 @@
                             <button class="btn btn-sm variant-ghost-primary" on:click={() => handleDelete(id)}>Delete <i class="fa fa-solid fa-trash ml-2" /></button>
                         </div>
                     </div>
+                    <hr class="w-full opacity-80 my-3 last:hidden" />
                 {/each}
                 {/if}
             </div>
