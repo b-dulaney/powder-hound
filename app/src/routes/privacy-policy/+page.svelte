@@ -3,24 +3,21 @@
     </script>
 
 <section id="header-section">
-	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
-        <div class="flex flex-col gap-4">
-            <ol class="breadcrumb lg:text-lg">
-                <li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
-                <li class="crumb-separator" aria-hidden>&rsaquo;</li>
-                <li class="text-surface-300">Privacy Policy</li>
-            </ol>
+    <div class="mx-auto w-full lg:max-w-[90rem] md:px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
+        <ol class="breadcrumb lg:text-lg px-4 md:px-0 pb-5">
+            <li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
+            <li class="crumb-separator" aria-hidden>&rsaquo;</li>
+            <li class="text-surface-300">Privacy Policy</li>
+        </ol>
             <div class="flex flex-col justify-center items-center">
                 <enhanced:img src='../../public/new-logo-v2.png' alt="Powder Hound Logo" class="h-36 w-36" />
                 <h1 class="h1 !text-4xl">Privacy Policy</h1>
             </div>
         </div>
-
-    </div>
 </section>
 
 <section id="policy-section">
-    <div class="mx-auto w-full max-w-6xl lg:max-w-[60rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
+    <div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
     <Card>
         <svelte:fragment slot="header-subtitle">Updated January 25th, 2024</svelte:fragment>
         <svelte:fragment slot="body">
