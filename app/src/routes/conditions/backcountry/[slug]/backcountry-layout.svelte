@@ -30,19 +30,19 @@
 						</h4>
 						<div class="flex flex-col w-full">
 							<div class="flex justify-between items-center border-b border-b-surface-400 w-full bg-surface-600 p-2">
-								<p class="whitespace-nowrap text-sm min-w-[105px]">Above Treeline</p>
-								<p class="flex-grow font-semibold text-sm text-center">{above_treeline.level} - {above_treeline.rating}</p>
-								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={above_treeline.level} size='30px'/></span>
+								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Above Treeline</p>
+								<p class="flex-grow font-semibold text-sm md:text-base text-center">{above_treeline.level} - {above_treeline.rating}</p>
+								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={above_treeline.level} size='40px'/></span>
 							</div>
 							<div class="flex justify-between items-center border-b border-b-surface-400 w-full p-2">
-								<p class="whitespace-nowrap text-sm min-w-[105px]">Near Treeline</p>
-								<p class="flex-grow font-semibold text-sm text-center">{near_treeline.level} - {near_treeline.rating}</p>
-								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={near_treeline.level} size='30px'/></span>
+								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Near Treeline</p>
+								<p class="flex-grow font-semibold text-sm md:text-base text-center">{near_treeline.level} - {near_treeline.rating}</p>
+								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={near_treeline.level} size='40px'/></span>
 							</div>
 							<div class="flex justify-between items-center gap-0 border-b border-b-surface-400 w-full bg-surface-600 p-2">
-								<p class="whitespace-nowrap text-sm min-w-[105px]">Below Treeline</p>
-								<p class="flex-grow font-semibold text-sm text-center">{below_treeline.level} - {below_treeline.rating}</p>
-								<span class="flex-shrink"><AvalancheDangerIcon dangerLevel={below_treeline.level} size='30px'/></span>
+								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Below Treeline</p>
+								<p class="flex-grow font-semibold text-sm md:text-base text-center">{below_treeline.level} - {below_treeline.rating}</p>
+								<span class="flex-shrink"><AvalancheDangerIcon dangerLevel={below_treeline.level} size='40px'/></span>
 							</div>
 						</div>
 					</div>

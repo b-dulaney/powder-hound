@@ -88,7 +88,7 @@
                             : 'descending'
                         : 'none'}
                 >
-                    <button class="group" on:click={() => updateColumnSort('location')}>
+                    <button class="group md:pl-1" on:click={() => updateColumnSort('location')}>
                         Location
                         <span class="pl-1" aria-hidden={$resortColumnSort.name !== 'location'}>
                             {#if $resortColumnSort.name === 'location' && $resortColumnSort.asc}
@@ -245,7 +245,7 @@
                     <tr>
                         <td class="table-cell-fit"
                             ><a
-                                class="anchor text-primary-500-400-token xl:text-lg"
+                                class="anchor text-primary-500-400-token xl:text-lg md:pl-2"
                                 href="/conditions/resorts/{row.slug}"
                                 data-sveltekit-preload-data="hover">{row.display_name}</a
                             ></td
