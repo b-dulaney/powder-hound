@@ -94,7 +94,7 @@
                             : 'descending'
                         : 'none'}
                 >
-                    <button class="group" on:click={() => updateColumnSort('location')}>
+                    <button class="group md:pl-1" on:click={() => updateColumnSort('location')}>
                         Location
                         <span class="pl-1" aria-hidden={$backcountryColumnSort.name !== 'location'}>
                             {#if $backcountryColumnSort.name === 'location' && $backcountryColumnSort.asc}
@@ -252,7 +252,7 @@
                         <td class="table-cell-fit !align-middle"
                             >
                             <a
-                                class="anchor text-primary-500-400-token xl:text-lg whitespace-nowrap"
+                                class="anchor text-primary-500-400-token xl:text-lg whitespace-nowrap md:pl-2"
                                 href="/conditions/backcountry/{row.slug}"
                                 data-sveltekit-preload-data="hover">{row.display_name}</a
                             >
