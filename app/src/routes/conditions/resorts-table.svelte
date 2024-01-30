@@ -1,13 +1,104 @@
 <script lang="ts">
 	import WeatherIcon from "$lib/components/weather-icon.svelte";
-	import type { ResortOverview } from "$lib/supabase.types";
+	import type { ResortOverview, UserAlerts } from "$lib/supabase.types";
 	import { formatSnowfall } from "$lib/utils";
-    import { resortSearchInput, resortColumnSort } from "./stores";
-
+	import type { Session } from "@supabase/supabase-js";
+    import { resortSearchInput, resortColumnSort, selectedMountain } from "./stores";
+    import { getModalStore, getToastStore, type ModalSettings, type ToastSettings } from "@skeletonlabs/skeleton";
+	import { goto, invalidate, invalidateAll } from "$app/navigation";
+    export let session: Session | null;
     export let resortOverviews: ResortOverview[];
-    export let favorites: number[];
+    export let alerts: UserAlerts[];
+    $: mappedAlerts = alerts.map((alert) => alert.mountain_id);
 
-    const isFavorite = (mountain: ResortOverview) => favorites.includes(mountain.mountain_id);
+    const modalStore = getModalStore();
+    const toastStore = getToastStore();
+
+    const addSuccessfulToast: ToastSettings = {
+        timeout: 2000,
+        message: 'Alert added successfully.',
+        background: 'variant-filled-secondary'
+    }
+
+    const deleteSuccessfulToast: ToastSettings = {
+        timeout: 2000,
+        message: 'Alert disabled successfully.',
+        background: 'variant-filled-tertiary'
+    }
+
+    const deleteFailedToast: ToastSettings = {
+        timeout: 3000,
+        message: 'Failed to disable alert. Please try again.',
+        background: 'variant-filled-error'
+    }
+
+    const addFailedToast: ToastSettings = {
+        timeout: 3000,
+        message: 'Failed to add alert. Please try again.',
+        background: 'variant-filled-error'
+    }
+
+    $: isFavorite = (mountain: ResortOverview) => mappedAlerts.includes(mountain.mountain_id);
+
+    async function deleteAlert(mountain: ResortOverview) {
+        const alertId = alerts.find((a) => a.mountain_id === mountain.mountain_id)?.id;
+        if(!alertId) return;
+        
+        const response = await fetch(`/api/alerts/${alertId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                mountain_id: mountain.mountain_id,
+                user_id: session?.user.id,
+            }),
+        });
+        if (response.ok) {
+            mappedAlerts = mappedAlerts.filter((id) => id !== mountain.mountain_id);
+            toastStore.trigger(deleteSuccessfulToast);
+            invalidate('update:alerts');
+        } else {
+            toastStore.trigger(deleteFailedToast);
+        }
+    }
+
+    const handleAlertClick = (mountain: ResortOverview) => {
+        if(session){
+            if(isFavorite(mountain)){
+            deleteAlert(mountain)
+        } else {
+            selectedMountain.set(mountain);
+            
+            new Promise<boolean>((resolve) => {
+                const alertModal: ModalSettings = {
+                    type: 'component',
+                    title: 'Set Alert',
+                    component: 'alertModal',
+                    meta: {
+                        user_id: session?.user.id,
+                        email: session?.user.email,
+                    },
+                    response: (r: any) => {
+                        resolve(r);
+                    },
+                }
+                modalStore.trigger(alertModal);
+            }).then(async (r: any) => {
+                if(r.success){
+                    mappedAlerts = [...mappedAlerts, mountain.mountain_id];
+                    toastStore.trigger(addSuccessfulToast);
+                    invalidate('update:alerts');
+                } else if(r.error) {
+                    toastStore.trigger(addFailedToast);
+                }
+            });
+	
+        }
+        } else {
+            goto('/login')
+        }
+    }
 
     const updateColumnSort = (sortBy: string) => {
 		if ($resortColumnSort.name === sortBy) {
@@ -49,13 +140,7 @@
 
 	};
 
-    resortColumnSort.subscribe((value) => {
-        sortLocations(value.name, value.asc);
-    });
 
-    $: if(resortOverviews.length > 0) {
-        sortLocations($resortColumnSort.name, $resortColumnSort.asc);
-    }	
 </script>
 
 <div class="py-4 flex w-full items-center justify-center">
@@ -264,17 +349,17 @@
                     >
                         <td class="text-center font-bold">{formatSnowfall(row.snow_past_24h)}"</td>
                         <td class="text-center font-bold">{formatSnowfall(row.snow_next_24h)}"</td>
-                        <td class="!px-0 text-center font-bold"
-                            ><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
-                                >
-                                {#if isFavorite(row)}
+                        <td class="!px-0 text-center font-bold">
+                            {#if isFavorite(row)}
+                            <button type="button" title="Remove alert" aria-label="Remove alert" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0 hover:scale-125" on:click={() => handleAlertClick(row)}>
                                 <i class="fa-solid fa-bell text-yellow-500"></i>
-                                {:else}
+                            </button>
+                            {:else}
+                            <button type="button" title="Add alert" aria-label="Add alert" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0 hover:scale-125" on:click={() => handleAlertClick(row)}>
                                 <i class="fa-regular fa-bell"></i>
-                                {/if}
-                                </button
-                            ></td
-                        >
+                            </button>
+                            {/if}
+                        </td>
                     </tr>
                 {/each}
             {/if}

@@ -159,14 +159,22 @@ export type Database = MergeDeep<
 					Row: {
 						id: number;
 						user_id: string;
-						alert_thresholds: AlertThreshold[];
+						mountain_id: number;
+						display_name: string;
+						email: string;
+						threshold_inches: number;
+						paused: boolean;
 						created_at: string;
 						updated_at: string;
 					};
 					Update: {
 						id: number;
 						user_id: string;
-						alert_thresholds: AlertThreshold[];
+						mountain_id: number;
+						display_name: string;
+						email: string;
+						threshold_inches: number;
+						paused: boolean;
 						created_at: string;
 						updated_at: string;
 					};

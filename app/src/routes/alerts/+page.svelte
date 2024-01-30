@@ -17,8 +17,8 @@
     }
 
     export let data: PageData;
-    const { userProfile, supabase } = data;
-    let { alerts } = data;
+    const { userProfile } = data;
+    $: alerts = data.alerts;
 
     async function onThresholdChange(e: Event, id: number) {
         const { value } = e.target as HTMLSelectElement;
@@ -26,13 +26,19 @@
         if(!alertToUpdate || !alerts) return;
 
         alertToUpdate.threshold_inches = parseInt(value);
-        const { data, error } = await supabase.from('user_alerts').upsert([...alerts]).eq('user_id', userProfile.user_id).returns<UserAlerts[]>().select();
+        const response = await fetch(`/api/alerts/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(alertToUpdate)
+        });
+        console.log(response);
 
-        if (error) {
-            toastStore.trigger(updateFailedToast);
-        } else {
-            alerts = data;
+        if (response.ok) {
             toastStore.trigger(updateSuccessfulToast);
+        } else {
+            toastStore.trigger(updateFailedToast);
         }
     }
 
@@ -40,13 +46,21 @@
         const alertToDelete = alerts?.find((a) => a.id === id);
         if(!alertToDelete || !alerts) return;
         const newAlerts = alerts.filter((a) => a.id !== id);
-        const { data, error } = await supabase.from('user_alerts').update({ alert_thresholds: newAlerts }).eq('user_id', userProfile.user_id).returns<UserAlerts[]>().select().single();
+        
+        const response = await fetch(`/api/alerts/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ mountain_id: id, user_id: userProfile.user_id })
+        });
 
-        if (error) {
-            toastStore.trigger(updateFailedToast);
-        } else {
-            alerts = data?.alert_thresholds;
+        if(response.ok) {
+            alerts = newAlerts;
             toastStore.trigger(updateSuccessfulToast);
+        } else {
+            toastStore.trigger(updateFailedToast);
+        
         }
     }
    
@@ -71,10 +85,10 @@
                         <p class="md:text-xl grow">{display_name}</p>
                         <div class="flex md:shrink md:w-1/4 lg:w-1/6 md:justify-end">
                             <select class="select text-center" on:change={(e)=> onThresholdChange(e, id)} value={threshold_inches}>
-                                <option value={1}>1+ in</option>
-                                <option value={3}>3+ in</option>
-                                <option value={6}>6+ in</option>
-                                <option value={12}>12+ in</option>
+                                <option value={1}>1+ inch</option>
+                                <option value={3}>3+ inches</option>
+                                <option value={6}>6+ inches</option>
+                                <option value={12}>12+ inches</option>
                             </select>
                         </div>
 
