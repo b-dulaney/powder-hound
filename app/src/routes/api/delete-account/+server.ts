@@ -7,7 +7,6 @@ export const POST = async (event: RequestEvent) => {
 	const { userId } = data as { userId: string };
 
 	const { error } = await supabase.auth.admin.deleteUser(userId);
-
 	if (error) {
 		return new Response(
 			JSON.stringify({

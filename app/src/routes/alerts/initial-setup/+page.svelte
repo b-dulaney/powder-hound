@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
     export let data: PageData;
-    const { userExists, supabase, mountainData, userId, email } = data;
+    const { supabase, mountainData, userId, email } = data;
     let inputChip = '';
     let inputChipList: string[] = [];
 
@@ -35,22 +35,17 @@
     }
 
     async function onComplete() {
-        const {error: profileError} = await supabase.from('profile').insert({
-            user_id: userId,
-            email, 
-            favorites: alertThresholds.map((i) => i.mountain_id),
-        })
-        
         const {error: alertError} = await supabase.from('user_alerts').insert(alertThresholds.map((a) => ({
             user_id: userId,
             email,
             display_name: a.name,
             mountain_id: a.mountain_id,
             threshold_inches: a.threshold,
+            paused: false
         })))
 
-        if (profileError || alertError) {
-            console.error(profileError, alertError);
+        if (alertError) {
+            console.error(alertError);
         }
         goto('/conditions', {replaceState: true});
     }
@@ -58,7 +53,6 @@
 </script>
 
 <div class="w-full max-h-full flex justify-center p-4">
-    {#if !userExists}
         <div class="flex flex-col gap-4">
             <h1 class="h1 text-center !text-3xl">Set up Alerts</h1>
             <div class="card w-full p-4 max-h-full overflow-y-auto">
@@ -126,5 +120,4 @@
                 </Stepper>
             </div>
         </div>
-    {/if}
 </div>
