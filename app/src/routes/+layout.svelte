@@ -104,7 +104,7 @@
 						{/if}
 					</button>
 				</div>
-				<span class="pr-8" aria-hidden data-popup="userDropdown">
+				<span class="pr-4" aria-hidden data-popup="userDropdown">
 					{#if session}
 						<div class="btn-group-vertical w-24 bg-surface-600 shadow-xl">
 							<button class="listbox-item" on:click={() => goto('/settings')}>Settings</button>

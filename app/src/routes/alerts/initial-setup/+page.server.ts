@@ -1,3 +1,4 @@
+import type { UserAlerts } from '$lib/supabase.types';
 import { error, redirect } from '@sveltejs/kit';
 
 export const load = async (event) => {
@@ -12,30 +13,29 @@ export const load = async (event) => {
 		refresh_token: session.refresh_token
 	});
 
-	const { data: profileData, error: profileError } = await supabase
-		.from('profile')
+	const { data: alertsData, error: alertsError } = await supabase
+		.from('user_alerts')
 		.select()
-		.maybeSingle();
+		.returns<UserAlerts[]>();
 
 	const { data: mountainData, error: mountainError } = await supabase
 		.from('mountains')
 		.select('mountain_id, display_name')
 		.order('display_name', { ascending: true });
 
-	if (!profileData && !profileError) {
+	if (alertsData && alertsData.length === 0) {
 		return {
-			userExists: false,
 			userId: session.user.id,
 			email: session.user.email,
 			mountainData
 		};
 	}
 
-	if (profileData) {
+	if (alertsData && alertsData.length > 0) {
 		redirect(301, '/alerts');
 	}
 
-	if (profileError || mountainError) {
+	if (alertsError || mountainError) {
 		error(500);
 	}
 };
