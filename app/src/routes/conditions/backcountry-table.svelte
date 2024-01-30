@@ -1,17 +1,45 @@
 <script lang="ts">
 	import AvalancheDangerIcon from "$lib/components/avalanche-danger-icon.svelte";
     import WeatherIcon from "$lib/components/weather-icon.svelte";
-	import type { BackcountryOverview } from "$lib/supabase.types";
+	import type { BackcountryOverview, UserAlerts } from "$lib/supabase.types";
 	import { formatSnowfall, avalancheDangerRatingsMap } from "$lib/utils";
-	import { backcountrySearchInput, backcountryColumnSort } from "./stores";
-    export let favorites: number[];
+	import type { Session } from "@supabase/supabase-js";
+	import { backcountrySearchInput, backcountryColumnSort, selectedMountain } from "./stores";
+	import { getModalStore, getToastStore, type ModalSettings, type ToastSettings } from "@skeletonlabs/skeleton";
+	import { goto } from "$app/navigation";
+    export let session: Session | null;
+    export let alerts: UserAlerts[];
     export let backcountryOverviews: BackcountryOverview[];
+    let mappedAlerts = alerts.map((alert) => alert.mountain_id);
 
-    const isFavorite = (mountain: BackcountryOverview) => favorites.includes(mountain.mountain_id);
+    const modalStore = getModalStore();
+    const toastStore = getToastStore();
 
-    $: if(backcountryOverviews.length > 0) {
-        sortLocations($backcountryColumnSort.name, $backcountryColumnSort.asc);
+    const addSuccessfulToast: ToastSettings = {
+        timeout: 2000,
+        message: 'Alert added successfully.',
+        background: 'variant-filled-secondary'
     }
+
+    const deleteSuccessfulToast: ToastSettings = {
+        timeout: 2000,
+        message: 'Alert disabled successfully.',
+        background: 'variant-filled-tertiary'
+    }
+
+    const deleteFailedToast: ToastSettings = {
+        timeout: 3000,
+        message: 'Failed to disable alert. Please try again.',
+        background: 'variant-filled-error'
+    }
+
+    const addFailedToast: ToastSettings = {
+        timeout: 3000,
+        message: 'Failed to add alert. Please try again.',
+        background: 'variant-filled-error'
+    }
+
+    $: isFavorite = (mountain: BackcountryOverview) => mappedAlerts.includes(mountain.mountain_id);
 
     const updateColumnSort = (sortBy: string) => {
 		if ($backcountryColumnSort.name === sortBy) {
@@ -53,13 +81,61 @@
 
 	};
 
-    backcountryColumnSort.subscribe((value) => {
-        sortLocations(value.name, value.asc);
-    });
+    async function deleteAlert(mountain: BackcountryOverview) {
+        const alertId = alerts.find((a) => a.mountain_id === mountain.mountain_id)?.id;
+        if(!alertId) return;
 
-    $: if(backcountryOverviews.length > 0) {
-        sortLocations($backcountryColumnSort.name, $backcountryColumnSort.asc);
+        const response = await fetch(`/api/alerts/${alertId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.ok) {
+            mappedAlerts = mappedAlerts.filter((id) => id !== mountain.mountain_id);
+            toastStore.trigger(deleteSuccessfulToast);
+        } else {
+            toastStore.trigger(deleteFailedToast);
+        }
     }
+
+    const handleAlertClick = (mountain: BackcountryOverview) => {
+        if(session){
+            if(isFavorite(mountain)){
+            deleteAlert(mountain)
+        } else {
+            selectedMountain.set(mountain);
+            
+            new Promise<boolean>((resolve) => {
+                const alertModal: ModalSettings = {
+                    type: 'component',
+                    title: 'Set Alert',
+                    component: 'alertModal',
+                    meta: {
+                        user_id: session?.user.id,
+                        email: session?.user.email,
+                    },
+                    response: (r: boolean) => {
+                        resolve(r);
+                    },
+                }
+                modalStore.trigger(alertModal);
+            }).then((r: boolean) => {
+                if(r){
+                    mappedAlerts = [...mappedAlerts, mountain.mountain_id];
+                    toastStore.trigger(addSuccessfulToast);
+                } else {
+                    toastStore.trigger(addFailedToast);
+                }
+            });
+	
+        }
+        } else {
+            goto('/login');
+        }
+
+    }
+
 
 
 </script>
@@ -279,17 +355,17 @@
                         <td class="hidden  !align-middle font-bold md:table-cell-fit md:table-cell md:text-center"
                             >{formatSnowfall(row.snow_next_72h)}"</td
                         >
-                        <td class="!px-0 text-center !align-middle font-bold"
-                            ><button type="button" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0"
-                                >
-                                {#if isFavorite(row)}
+                        <td class="!px-0 text-center !align-middle font-bold">
+                            {#if isFavorite(row)}
+                            <button type="button" title="Remove alert" aria-label="Remove alert" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0 hover:scale-125" on:click={() => handleAlertClick(row)}>
                                 <i class="fa-solid fa-bell text-yellow-500"></i>
-                                {:else}
+                            </button>
+                            {:else}
+                            <button type="button" title="Add alert" aria-label="Add alert" class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0 hover:scale-125" on:click={() => handleAlertClick(row)}>
                                 <i class="fa-regular fa-bell"></i>
-                                {/if}
-                                </button
-                            ></td
-                        >
+                            </button>
+                            {/if}
+                        </td>
                     </tr>
                 {/each}
             {/if}

@@ -35,7 +35,7 @@ export const load = async (event) => {
 
 		return {
 			userProfile: profileData,
-			alerts: alertsData
+			alerts: alertsData.sort((a, b) => (a.display_name > b.display_name ? 1 : -1))
 		};
 	}
 

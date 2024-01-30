@@ -4,7 +4,9 @@
 	import BackcountryTable from './backcountry-table.svelte';
 	import ResortsTable from './resorts-table.svelte';
 	export let data: PageData;
-	const { resortOverviews, backcountryOverviews, profile, session } = data;
+	const { resortOverviews, backcountryOverviews } = data;
+	$: alerts = data.alerts
+	$: session = data.session
 	import { resortSearchInput, backcountrySearchInput, activeTab } from './stores';
 
 	let filteredResorts = resortOverviews;
@@ -49,8 +51,8 @@
 
 
 	{#if $activeTab ===  0}
-		<ResortsTable resortOverviews={filteredResorts} favorites={profile?.favorites ?? []} />
+		<ResortsTable resortOverviews={filteredResorts} session={session} alerts={alerts ?? []} />
 	{:else}
-		<BackcountryTable backcountryOverviews={filteredBackcountry} favorites={profile?.favorites ?? []} />
+		<BackcountryTable backcountryOverviews={filteredBackcountry} session={session} alerts={alerts ?? []} />
 	{/if}
 </section>

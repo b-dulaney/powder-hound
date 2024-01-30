@@ -537,7 +537,6 @@ Deno.serve(async (req) => {
     });
 
     const data = await res.json();
-    console.log(data);
   });
 
   return new Response(

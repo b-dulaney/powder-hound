@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { AppBar, AppShell, Avatar, Drawer, ProgressBar, Toast, getDrawerStore, popup, storePopup, type DrawerSettings, type PopupSettings, Modal } from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell, Avatar, Drawer, ProgressBar, Toast, getDrawerStore, popup, storePopup, type DrawerSettings, type PopupSettings, Modal, type ModalComponent } from '@skeletonlabs/skeleton';
 	import '../app.css';
+	import AlertModal from '$lib/components/alert-modal.svelte';
 
 	import { afterNavigate, goto, invalidate, invalidateAll } from '$app/navigation';
 	import { navigating } from '$app/stores';
@@ -17,6 +18,10 @@
 	initializeStores();
 
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	const modalRegiestry: Record<string, ModalComponent> = {
+		alertModal: { ref: AlertModal}
+	}
 
 	const drawerSettings: DrawerSettings = {
 		width: 'w-[280px] md:w-[480px]'
@@ -68,7 +73,7 @@
 </script>
 
 
-<Modal />
+<Modal components={modalRegiestry}/>
 <Toast />
 <Drawer>
 	<SidebarNav session={session} drawerClose={drawerClose} logout={logout} />
