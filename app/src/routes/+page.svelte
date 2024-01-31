@@ -3,7 +3,6 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import LogoIcon from '../public/logo-icon.png';
 	import type { PageData } from './$types';
-
 	export let data: PageData;
 	const { session } = data;
 </script>
@@ -39,7 +38,7 @@
 </header>
 
 <section id="forecasts" class="built-for-gradient bg-surface-100-800-token">
-	<div class="mx-auto w-full max-w-6xl px-4 py-8">
+	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
 		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
 			<div class="space-y-4">
 				<h2 class="h2">Built for Colorado</h2>
@@ -67,19 +66,16 @@
 						HRRR</a
 					> forecasts to provide the most accurate snowfall predictions for Colorado's premier ski destinations.
 				</p>
-				<hr class="opacity-20" />
-				<p>
-					Weather forecasts are available up to 72 hours in advance and are updated hourly.
-					Accumulated snowfall is updated constantly, so you'll always have the full picture when
-					deciding where to ride.
+				<hr class="opacity-60" />
+				<p class="pb-2">
+					Weather forecasts are available up to 72 hours in advance and are updated hourly. For in-bounds locations, PowderHound provides information on snowpack, lift status, open terrain, and more.
 				</p>
 			</div>
 			<div class="card">
 				<section class="p-4">
 					<h3 class="h3">CAIC Point Forecasts</h3>
-					<p>
-						CAIC Point Forecasts are broken down into 1 hour data points for nearly every resort and
-						mountain pass in the state. For those interested in learning more about the underlying
+					<p class="pt-1">
+						Broken down into hourly data points for any location in the state, these high-res forecasts provide accurate snow and weather predictions that are tailored to Colorado. For those interested in learning more about the underlying
 						models and methods, check out the CAIC's
 						<a
 							class="anchor"
@@ -99,14 +95,14 @@
 </section>
 
 <section id="alerts" class="alerts-gradient bg-surface-100-800-token">
-	<div class="mx-auto w-full max-w-6xl px-4 py-8">
+	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
 		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
 			<div class="space-y-4 md:order-last">
 				<h2 class="h2">Tailored Alerts</h2>
 				<p>
-					Sign up for alerts and you'll get a text when it's piling up on your favorite tree runs.
+					Sign up for alerts and you'll get notified when it's piling up on your favorite tree runs.
 					Just pick the locations and snowfall thresholds, and we'll let you know when it's going to
-					be a pow day.
+					be a powder day.
 				</p>
 			</div>
 			<div class="grid grid-cols-[auto_1fr] gap-2 py-2">
@@ -114,9 +110,9 @@
 				<div class="card variant-filled-secondary space-y-2 rounded-tl-none p-4">
 					<header class="flex items-center justify-between">
 						<p class="font-bold">PowderHound</p>
-						<small class="opacity-50">5:00 am</small>
+						<small class="opacity-50">5:30 am</small>
 					</header>
-					<p>It's coming down! Copper Mountain has received 12" of snow since midnight.</p>
+					<p>It's coming down! Copper Mountain has received 12" of snow overnight.</p>
 				</div>
 			</div>
 		</div>
@@ -124,24 +120,19 @@
 </section>
 
 <section id="passes" class="passes-gradient bg-surface-100-800-token">
-	<div class="mx-auto w-full max-w-6xl px-4 py-8">
+	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
 		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
 			<div class="space-y-4">
-				<h2 class="h2">Beyond Passes</h2>
+				<h2 class="h2">Know Before You Go</h2>
 				<p>
-					Whether you ride a season pass, an independent mountain, or something a little more out
-					there - we've got you covered. PowderHound currently provides forecasts for 20+ mountains
-					and backcountry zones across Colorado.
+					Get the avalanche forecast and weather conditions for your favorite backcountry spots. PowderHound can help you make informed decisions about your next trip beyond the ropes.
 				</p>
 			</div>
-			<div class="flex justify-center gap-2 md:py-16">
-				<a class="variant-ghost-primary btn" data-sveltekit-preload-data="hover" href="/conditions">
-					<div class="flex items-center gap-2">
-						<span>Find Powder</span>
-						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
-					</div>
-				</a>
-			</div>
+			<div class="flex justify-between gap-2">
+				<enhanced:img src="../public/avy-danger-low.png" />
+				<enhanced:img src="../public/avy-danger-moderate.png" />
+				<enhanced:img src="../public/avy-danger-considerable.png" />
+				<enhanced:img src="../public/avy-danger-high.png" />
 		</div>
 	</div>
 </section>
