@@ -46,14 +46,14 @@ async function handleSave() {
     <div class="flex flex-col gap-4 py-4">
         <div class="flex justify-between items-center gap-2">
             <p class="font-semibold">{$selectedMountain?.display_name}</p>
-            <select class="select w-1/3 text-center" bind:value={threshold_inches}>
+            <select class="select w-2/5 text-center" bind:value={threshold_inches}>
                 <option value={1}>1+ inch</option>
                 <option value={3}>3+ inches</option>
                 <option value={6}>6+ inches</option>
                 <option value={12}>12+ inches</option>
             </select>
         </div>
-        <footer class="modal-footer mt-2 {parent.regionFooter}">
+        <footer class="modal-footer mt-4 {parent.regionFooter}">
             <button class="btn variant-outline-tertiary" on:click={parent.onClose}>Cancel</button>
             <button class="btn variant-filled-primary" on:click={handleSave}>Save</button>
         </footer>
