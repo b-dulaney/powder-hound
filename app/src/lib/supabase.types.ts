@@ -68,6 +68,7 @@ export type Database = MergeDeep<
 						snow_past_24h: number;
 						snow_past_48h: number;
 						snow_next_24h: number;
+						snow_next_72h: number;
 						region: string;
 					};
 				};
