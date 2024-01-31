@@ -6,11 +6,11 @@
 	import type { Session } from "@supabase/supabase-js";
 	import { backcountrySearchInput, backcountryColumnSort, selectedMountain } from "./stores";
 	import { getModalStore, getToastStore, type ModalSettings, type ToastSettings } from "@skeletonlabs/skeleton";
-	import { goto } from "$app/navigation";
+	import { goto, invalidate } from "$app/navigation";
     export let session: Session | null;
     export let alerts: UserAlerts[];
     export let backcountryOverviews: BackcountryOverview[];
-    let mappedAlerts = alerts.map((alert) => alert.mountain_id);
+    $: mappedAlerts = alerts.map((alert) => alert.mountain_id);
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
@@ -115,25 +115,25 @@
                         user_id: session?.user.id,
                         email: session?.user.email,
                     },
-                    response: (r: boolean) => {
+                    response: (r: any) => {
                         resolve(r);
                     },
                 }
                 modalStore.trigger(alertModal);
-            }).then((r: boolean) => {
-                if(r){
+            }).then(async (r: any) => {
+                if(r.success){
                     mappedAlerts = [...mappedAlerts, mountain.mountain_id];
                     toastStore.trigger(addSuccessfulToast);
-                } else {
+                    invalidate('update:alerts');
+                } else if(r.error) {
                     toastStore.trigger(addFailedToast);
                 }
             });
 	
         }
         } else {
-            goto('/login');
+            goto('/login')
         }
-
     }
 
 
