@@ -6,6 +6,7 @@
     const { supabase, mountainData, userId, email } = data;
     let inputChip = '';
     let inputChipList: string[] = [];
+    let top: HTMLHeadingElement; 
 
     interface AlertThreshold {
         mountain_id: number;
@@ -19,6 +20,10 @@
         label: m.display_name,
         value: m.display_name
     }))
+
+    function scrollToTop(){
+        top.scrollIntoView();
+    }
 
     function onInputChipSelect(e: CustomEvent<AutocompleteOption<string>>) {
         inputChipList = [...inputChipList, e.detail.label];
@@ -54,9 +59,9 @@
 
 <div class="w-full max-h-full flex justify-center p-4">
         <div class="flex flex-col gap-4">
-            <h1 class="h1 text-center !text-3xl">Set up Alerts</h1>
+            <h1 class="h1 text-center !text-3xl" bind:this={top}>Set up Alerts</h1>
             <div class="card w-full p-4 max-h-full overflow-y-auto">
-                <Stepper on:complete={onComplete}>
+                <Stepper on:complete={onComplete} on:step={scrollToTop} on:next={scrollToTop} on:back={scrollToTop}>
                     <Step>
                         <svelte:fragment slot="header">Favorite Locations</svelte:fragment>
                         <p class="max-w-xl">Select the locations that we'll send you snowfall alerts for. You can add more at any time.</p>
