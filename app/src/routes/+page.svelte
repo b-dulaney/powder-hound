@@ -4,7 +4,7 @@
 	import LogoIcon from '../public/logo-icon.png';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	const { session } = data;
+	$: session = data.session;
 </script>
 
 <Snow height="h-[600px]" zIndex="-z-10" />
