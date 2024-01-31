@@ -10,6 +10,7 @@ interface Alert {
   display_name: string;
   snow_overnight: number;
   snow_past_24h: number;
+  backcountry_snow_past_24h: number;
   threshold_inches: number;
 }
 
@@ -68,7 +69,8 @@ function buildAlertsTable(alerts: Alert[]): string {
                               <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px 10px 25px;word-break:break-word;">
                                   <div style="font-family:Open Sans,Roboto,Arial,sans-serif;font-size:18px;line-height:1.7;text-align:center;color:#1A1C26;">${
-      alert.snow_overight ?? alert.snow_past_24h
+      alert.snow_overight ?? alert.snow_past_24h ??
+        alert.backcountry_snow_past_24h
     }"<br></div>
                                 </td>
                               </tr>

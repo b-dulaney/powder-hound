@@ -42,13 +42,6 @@ export interface Database {
             foreignKeyName: "avalanche_forecasts_mountain_id_fkey"
             columns: ["mountain_id"]
             isOneToOne: true
-            referencedRelation: "alert_thresholds"
-            referencedColumns: ["mountain_id"]
-          },
-          {
-            foreignKeyName: "avalanche_forecasts_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: true
             referencedRelation: "backcountry_detail"
             referencedColumns: ["mountain_id"]
           },
@@ -179,22 +172,16 @@ export interface Database {
         Row: {
           created_at: string
           email: string
-          favorites: number[] | null
-          id: number
           user_id: string
         }
         Insert: {
           created_at?: string
           email: string
-          favorites?: number[] | null
-          id?: number
           user_id: string
         }
         Update: {
           created_at?: string
           email?: string
-          favorites?: number[] | null
-          id?: number
           user_id?: string
         }
         Relationships: [
@@ -270,13 +257,6 @@ export interface Database {
             foreignKeyName: "resort_conditions_display_name_fkey"
             columns: ["display_name"]
             isOneToOne: false
-            referencedRelation: "alert_thresholds"
-            referencedColumns: ["display_name"]
-          },
-          {
-            foreignKeyName: "resort_conditions_display_name_fkey"
-            columns: ["display_name"]
-            isOneToOne: false
             referencedRelation: "backcountry_detail"
             referencedColumns: ["display_name"]
           },
@@ -307,13 +287,6 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "resort_overview"
             referencedColumns: ["display_name"]
-          },
-          {
-            foreignKeyName: "resort_conditions_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: true
-            referencedRelation: "alert_thresholds"
-            referencedColumns: ["mountain_id"]
           },
           {
             foreignKeyName: "resort_conditions_mountain_id_fkey"
@@ -400,13 +373,6 @@ export interface Database {
             foreignKeyName: "resort_web_elements_mountain_id_fkey"
             columns: ["mountain_id"]
             isOneToOne: true
-            referencedRelation: "alert_thresholds"
-            referencedColumns: ["mountain_id"]
-          },
-          {
-            foreignKeyName: "resort_web_elements_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: true
             referencedRelation: "backcountry_detail"
             referencedColumns: ["mountain_id"]
           },
@@ -439,6 +405,18 @@ export interface Database {
             referencedColumns: ["mountain_id"]
           }
         ]
+      }
+      result_data: {
+        Row: {
+          json_agg: Json | null
+        }
+        Insert: {
+          json_agg?: Json | null
+        }
+        Update: {
+          json_agg?: Json | null
+        }
+        Relationships: []
       }
       user_alerts: {
         Row: {
@@ -479,13 +457,6 @@ export interface Database {
             foreignKeyName: "user_alerts_display_name_fkey"
             columns: ["display_name"]
             isOneToOne: false
-            referencedRelation: "alert_thresholds"
-            referencedColumns: ["display_name"]
-          },
-          {
-            foreignKeyName: "user_alerts_display_name_fkey"
-            columns: ["display_name"]
-            isOneToOne: false
             referencedRelation: "backcountry_detail"
             referencedColumns: ["display_name"]
           },
@@ -516,13 +487,6 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "resort_overview"
             referencedColumns: ["display_name"]
-          },
-          {
-            foreignKeyName: "user_alerts_mountain_id_fkey"
-            columns: ["mountain_id"]
-            isOneToOne: false
-            referencedRelation: "alert_thresholds"
-            referencedColumns: ["mountain_id"]
           },
           {
             foreignKeyName: "user_alerts_mountain_id_fkey"
@@ -668,6 +632,7 @@ export interface Database {
           runs_open: number | null
           slug: string | null
           snow_next_24h: number | null
+          snow_next_72h: number | null
           snow_past_24h: number | null
           snow_past_48h: number | null
           total_lifts: number | null
@@ -750,6 +715,7 @@ export interface Database {
           threshold_inches: number
           snow_overnight: number
           snow_past_24h: number
+          backcountry_snow_past_24h: number
           url: string
         }[]
       }
