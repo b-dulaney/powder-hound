@@ -135,7 +135,7 @@
 					<div class="grid grid-cols-1 place-content-center place-items-center gap-2">
 						<enhanced:img src='../public/new-logo-v2.png' alt="Powder Hound Logo" class="h-10 w-10" />
 						<p class="text-sm opacity-80">PowderHound</p>
-						<span class="variant-soft badge">0.0.1</span>
+						<span class="variant-soft badge">1.0.0</span>
 					</div>
 				</section>
 				<hr class="opacity-20" />

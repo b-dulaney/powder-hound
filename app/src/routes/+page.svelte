@@ -5,6 +5,7 @@
 	import type { PageData } from './$types';
 	export let data: PageData;
 	$: session = data.session;
+	const caicDataCount = data.caicDataCount;
 </script>
 
 <Snow height="h-[600px]" zIndex="-z-10" />
@@ -96,7 +97,7 @@
 	</div>
 </section>
 
-<section id="alerts" class="alerts-gradient bg-surface-100-800-token">
+<section id="alerts" class="bg-surface-50-900-token">
 	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
 		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
 			<div class="space-y-4 md:order-last">
@@ -123,7 +124,7 @@
 
 <section id="passes" class="passes-gradient bg-surface-100-800-token">
 	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
-		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
+		<div class="grid grid-cols-1 items-start gap-10 md:grid-cols-2">
 			<div class="space-y-4">
 				<h2 class="h2">Know Before You Go</h2>
 				<p>
@@ -137,4 +138,25 @@
 				<enhanced:img src="../public/avy-danger-high.png" alt="Avalanche danger high icon"/>
 		</div>
 	</div>
+</section>
+
+<section id="stats" class="stats-gradient bg-surface-100-800-token">
+	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
+	<div class="flex flex-col lg:flex-row justify-center items-center gap-10">
+		<div class="space-y-1">
+			<span class="block font-heading-token text-8xl font-bold">30+</span>
+			<p class="block opacity-50 pl-1">Total locations</p>
+		</div>
+		<div class="border-t lg:border-t-0 lg:border-l border-surface-500/50 w-20 lg:w-1 lg:h-20"></div>
+		<div class="space-y-1">
+			<span class="block font-heading-token text-8xl font-bold">10+</span>
+			<p class="block opacity-50  pl-1">Backcountry zones</p>
+		</div>
+		<div class="border-t lg:border-t-0 lg:border-l border-surface-500/50 w-20 lg:w-1 lg:h-20"></div>
+		<div class="space-y-1">
+			<span class="block font-heading-token text-8xl font-bold">{caicDataCount}</span>
+			<p class="block opacity-50">Hourly data points</p>
+		</div>
+	</div>
+</div>
 </section>
