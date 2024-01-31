@@ -129,10 +129,10 @@
 				</p>
 			</div>
 			<div class="flex justify-between gap-2">
-				<enhanced:img src="../public/avy-danger-low.png" />
-				<enhanced:img src="../public/avy-danger-moderate.png" />
-				<enhanced:img src="../public/avy-danger-considerable.png" />
-				<enhanced:img src="../public/avy-danger-high.png" />
+				<enhanced:img src="../public/avy-danger-low.png" alt="Avalanche danger low icon" />
+				<enhanced:img src="../public/avy-danger-moderate.png" alt="Avalanche danger moderate icon"/>
+				<enhanced:img src="../public/avy-danger-considerable.png" alt="Avalanche danger considerable icon"/>
+				<enhanced:img src="../public/avy-danger-high.png" alt="Avalanche danger high icon"/>
 		</div>
 	</div>
 </section>
