@@ -35,10 +35,10 @@
 						<SnowDisplay value={resortDetails.base_depth} type="Base Depth" />
 						<SnowDisplay value={resortDetails.snow_past_24h} type="Last 24 Hours" />
 						<SnowDisplay value={resortDetails.snow_past_48h} type="Last 48 Hours" />
-						{#if resortDetails?.snow_past_week}
-							<SnowDisplay value={resortDetails.snow_past_week} type="Last 7 Days" />
+						{#if resortDetails?.snow_past_week !== null && resortDetails?.snow_past_week >= 0}
+							<SnowDisplay value={resortDetails?.snow_past_week} type="Last 7 Days" />
 						{/if}
-						{#if resortDetails?.snow_total}
+						{#if resortDetails?.snow_total !== null && resortDetails.snow_total >= 0}
 							<SnowDisplay value={resortDetails?.snow_total} type="Season Total" />
 						{/if}
 						<OpenArc open={resortDetails?.lifts_open} total={resortDetails?.total_lifts} url={resortDetails.lifts_url} type="Lifts" />
