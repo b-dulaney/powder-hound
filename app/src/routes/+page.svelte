@@ -31,6 +31,8 @@
 				</a>
 				{#if !session}
 					<a class="variant-ghost-secondary btn" href="/signup">Get Alerts</a>
+				{:else}
+					<a class="variant-ghost-secondary btn" href="/alerts">Manage Alerts</a>
 				{/if}
 			</div>
 		</div>
