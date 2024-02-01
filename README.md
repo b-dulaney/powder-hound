@@ -23,15 +23,21 @@ Dev Preview: https://dev.powderhound.io
 
 ## Tech Stack
 
-SvelteKit, Supabase, SkeletonUI, Vite, Typescript, TailwindCSS
+SvelteKit, Supabase, Vite, Typescript, SkeletonUI, TailwindCSS
 
 ## Roadmap
+
+This is pretty informal for now as I'm building this project out in my spare time. With that said, here's a list of things that I would like to include eventually:
+
+- Email/SMS OTP login
 
 - SMS alerts
 
 - Additional SSO providers
 
 - Resort live feeds (lift cams, snow stakes, etc.)
+
+- User-uploaded reports (think along the lines of AllTrails reviews - conditions reports, images, links to CAIC observations, etc)
 
 ## Feedback
 
