@@ -23,7 +23,13 @@ Dev Preview: https://dev.powderhound.io
 
 ## Tech Stack
 
-SvelteKit, Supabase, Vite, Typescript, SkeletonUI, TailwindCSS
+SvelteKit, Supabase, Vite, Typescript, SkeletonUI, TailwindCSS, Vercel
+
+## How It Works
+- Weather data for each location is collected hourly from the CAIC point forecast [API](https://avalanche.state.co.us/weather/point-forecasts) via scheduled Supabase edge function
+- Resort conditions data and Avalanche forecasts are collected with a web scraper
+  - Web scraping is done via SvelteKit API route (AWS lambda function) using [Puppeteer](https://pptr.dev/)
+- Cron jobs kick off email-alert edge functions at 4:30pm and 5:30am to send out forecast and overnight snowfall alerts when user-defined thresholds are met
 
 ## Roadmap
 
@@ -41,4 +47,4 @@ This is pretty informal for now as I'm building this project out in my spare tim
 
 ## Feedback
 
-If you have any feedback or features that you would like to see, please reach out to contact@powderhound.io
+If you have any feedback or features that you would like to see, please reach out to contact@powderhound.io or open an issue here.
