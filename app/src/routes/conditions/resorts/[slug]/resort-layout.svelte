@@ -70,7 +70,7 @@
 								x="date"
 								xScale={scaleBand().domain(resortDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
 								y="snowfall_total"
-								yDomain={[0, 18]}
+								yDomain={[0, null]}
 								yNice
 								padding={{ left: 24, bottom: 36 }}
 								tooltip={{ mode: "band" }}
