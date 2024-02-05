@@ -119,10 +119,7 @@ async function scrapeAvalancheForecast(mountain: MountainCoordinates): Promise<A
 	const overallDangerLevel = Math.max(
 		dangerDayOne.above_treeline.level,
 		dangerDayOne.near_treeline.level,
-		dangerDayOne.below_treeline.level,
-		dangerDayTwo.above_treeline.level,
-		dangerDayTwo.near_treeline.level,
-		dangerDayTwo.below_treeline.level
+		dangerDayOne.below_treeline.level
 	);
 
 	return {
