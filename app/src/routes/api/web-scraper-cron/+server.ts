@@ -1,6 +1,6 @@
 import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
 import { PUBLIC_SUPABASE_URL } from '$env/static/public';
-import type { Database, ResortWebElements } from '$lib/supabase.types';
+import type { Database, ResortConditions, ResortWebElements } from '$lib/supabase.types';
 import { createClient } from '@supabase/supabase-js';
 import { json, type RequestEvent } from '@sveltejs/kit';
 import chromium from '@sparticuz/chromium-min';
@@ -14,6 +14,21 @@ async function fetchResortConditions(row: ResortWebElements) {
 	return conditionsData;
 }
 
+async function retryFetchResortConditions(
+	webElements: ResortWebElements,
+	retries: number
+): Promise<Partial<ResortConditions> | null> {
+	const result = await fetchResortConditions(webElements);
+	if (result !== null) {
+		return result;
+	} else if (retries > 0) {
+		console.log(`Retrying fetchResortConditions, ${retries} retries left...`);
+		return retryFetchResortConditions(webElements, retries - 1);
+	} else {
+		throw new Error('Failed to fetch resort conditions after multiple attempts');
+	}
+}
+
 async function scrapeConditions(webElements: ResortWebElements) {
 	const browser = await puppeteer.launch({
 		args: chromium.args,
@@ -24,27 +39,17 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		headless: chromium.headless,
 		ignoreHTTPSErrors: true
 	});
-	let snowPastWeek: string | null;
-	let snowTotal: string | null;
+	let snowPastWeek: string | null = '';
+	let snowTotal: string | null = '';
 	let snowType: string | null = '';
-	let snowOvernight: string | null;
-	let liftsOpen: string | null;
-	let runsOpen: string | null;
+	let snowOvernight: string | null = '';
+	let liftsOpen: string | null = '';
+	let runsOpen: string | null = '';
 
 	if (webElements.trail_report_url) {
 		const trailReportPage = await browser.newPage();
 		trailReportPage.setDefaultNavigationTimeout(2 * 60 * 1000);
 		await trailReportPage.goto(webElements.trail_report_url);
-
-		const page = await browser.newPage();
-		page.setDefaultNavigationTimeout(2 * 60 * 1000);
-		await page.goto(webElements.conditions_url);
-
-		const baseDepth = await getTextContent(page, webElements.base_depth_el);
-
-		const snowPast24Hours = await getTextContent(page, webElements.snow_past_24h_el);
-
-		const snowPast48Hours = await getTextContent(page, webElements.snow_past_48h_el);
 
 		if (webElements.lifts_open_el) {
 			liftsOpen = await getTextContent(trailReportPage, webElements.lifts_open_el);
@@ -56,6 +61,17 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		if (webElements.snow_overnight_el) {
 			snowOvernight = await getTextContent(trailReportPage, webElements.snow_overnight_el);
 		}
+
+		const page = await browser.newPage();
+		page.setDefaultNavigationTimeout(2 * 60 * 1000);
+		await page.goto(webElements.conditions_url);
+
+		const baseDepth = await getTextContent(page, webElements.base_depth_el);
+
+		const snowPast24Hours = await getTextContent(page, webElements.snow_past_24h_el);
+
+		const snowPast48Hours = await getTextContent(page, webElements.snow_past_48h_el);
+
 		if (webElements.snow_past_week_el) {
 			snowPastWeek = await getTextContent(page, webElements.snow_past_week_el);
 		}
@@ -67,15 +83,20 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		}
 		await browser.close();
 
+		if (!baseDepth || !liftsOpen || !runsOpen || !snowPast24Hours || !snowPast48Hours) {
+			return null;
+		}
+
 		return {
 			mountain_id: webElements.mountain_id,
-			base_depth: parseInt(baseDepth!),
-			lifts_open: parseInt(liftsOpen!) ?? null,
-			runs_open: parseInt(runsOpen!) ?? null,
-			snow_past_24h: parseInt(snowPast24Hours!),
-			snow_past_48h: parseInt(snowPast48Hours!),
-			snow_past_week: parseInt(snowPastWeek!) ?? null,
-			snow_total: parseInt(snowTotal!) ?? null,
+			base_depth: parseInt(baseDepth),
+			lifts_open: parseInt(liftsOpen),
+			runs_open: parseInt(runsOpen),
+			snow_overnight: snowOvernight ? parseInt(snowOvernight) : null,
+			snow_past_24h: parseInt(snowPast24Hours),
+			snow_past_48h: parseInt(snowPast48Hours),
+			snow_past_week: snowPastWeek ? parseInt(snowPastWeek) : null,
+			snow_total: snowTotal ? parseInt(snowTotal) : null,
 			snow_type: snowType,
 			updated_at: new Date().toISOString()
 		};
@@ -183,16 +204,21 @@ async function scrapeConditions(webElements: ResortWebElements) {
 		}
 
 		await browser.close();
+
+		if (!baseDepth || !liftsOpen || !runsOpen || !snowPast24Hours || !snowPast48Hours) {
+			return null;
+		}
+
 		return {
 			mountain_id: webElements.mountain_id,
-			base_depth: parseInt(baseDepth!),
-			lifts_open: parseInt(liftsOpen!) ?? null,
-			runs_open: parseInt(runsOpen!) ?? null,
-			snow_overnight: parseInt(snowOvernight!) ?? null,
-			snow_past_24h: parseInt(snowPast24Hours!),
-			snow_past_48h: parseInt(snowPast48Hours!),
-			snow_past_week: parseInt(snowPastWeek!) ?? null,
-			snow_total: parseInt(snowTotal!) ?? null,
+			base_depth: parseInt(baseDepth),
+			lifts_open: parseInt(liftsOpen),
+			runs_open: parseInt(runsOpen),
+			snow_overnight: snowOvernight ? parseInt(snowOvernight) : null,
+			snow_past_24h: parseInt(snowPast24Hours),
+			snow_past_48h: parseInt(snowPast48Hours),
+			snow_past_week: snowPastWeek ? parseInt(snowPastWeek) : null,
+			snow_total: snowTotal ? parseInt(snowTotal) : null,
 			snow_type: snowType,
 			updated_at: new Date().toISOString()
 		};
@@ -200,6 +226,7 @@ async function scrapeConditions(webElements: ResortWebElements) {
 }
 
 export async function POST({ request }: RequestEvent) {
+	const retries = 3;
 	const authorization = request.headers.get('Authorization');
 	if (authorization !== `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
@@ -207,18 +234,26 @@ export async function POST({ request }: RequestEvent) {
 
 	const webElements: ResortWebElements = await request.json();
 	const resortConditionsData = await fetchResortConditions(webElements);
-	console.log(resortConditionsData);
 
-	const { error } = await supabase
-		.from('resort_conditions')
-		.update(resortConditionsData)
-		.eq('mountain_id', webElements.mountain_id);
-
-	if (error) {
-		console.error(`Error updating resort conditions`, error);
-		return json({ error: error.message }, { status: 500 });
+	if (!resortConditionsData) {
+		try {
+			retryFetchResortConditions(webElements, retries);
+		} catch (e) {
+			console.error(`Error scraping resort conditions`, e);
+			return json({ error: `Error scraping resort conditions` }, { status: 500 });
+		}
 	} else {
-		console.log(`Resort conditions updated`);
-		return json({ message: 'Resort conditions updated' }, { status: 200 });
+		const { error } = await supabase
+			.from('resort_conditions')
+			.update(resortConditionsData)
+			.eq('mountain_id', webElements.mountain_id);
+
+		if (error) {
+			console.error(`Error updating resort conditions`, error);
+			return json({ error: error.message }, { status: 500 });
+		} else {
+			console.log(`Resort conditions updated`);
+			return json({ message: 'Resort conditions updated' }, { status: 200 });
+		}
 	}
 }
