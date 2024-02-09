@@ -8,6 +8,13 @@
 	const caicDataCount = data.caicDataCount;
 </script>
 
+<svelte:head>
+	<title>
+		PowderHound - Snow forecasts and powder alerts for Colorado
+	</title>
+	<meta name="description" content="Get the latest snow forecasts, powder alerts, and avalanche conditions for Colorado's ski resorts and backcountry.">
+</svelte:head>
+
 <Snow height="h-[600px]" zIndex="-z-10" />
 
 <header class="py-8 xl:pt-16" id="hero">

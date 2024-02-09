@@ -11,6 +11,13 @@
 	const { backcountryDetails } = data;
 </script>
 
+<svelte:head>
+	<title>
+		PowderHound - {backcountryDetails.display_name} snow forecast and avalanche conditions
+	</title>
+    <meta name="description" content={`Weekly snowfall, 72-hour forecast, and avalanche conditions for ${backcountryDetails.display_name}`}>
+</svelte:head>
+
 <section id="header-section">
 	<div class="mx-auto w-full lg:max-w-[90rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
 		<ol class="breadcrumb lg:text-lg">

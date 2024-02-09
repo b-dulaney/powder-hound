@@ -57,6 +57,12 @@
 
 </script>
 
+<svelte:head>
+	<title>
+		PowderHound - Set up your alerts
+	</title>
+</svelte:head>
+
 <div class="w-full max-h-full flex justify-center p-4">
         <div class="flex flex-col gap-4">
             <h1 class="h1 text-center !text-3xl" bind:this={top}>Set up Alerts</h1>

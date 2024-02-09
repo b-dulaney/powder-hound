@@ -65,6 +65,13 @@
 
 </script>
 
+<svelte:head>
+	<title>
+		PowderHound - Settings
+	</title>
+	<meta name="description" content="Manage your PowderHound account and data">
+</svelte:head>
+
 <section id="profile">
     <div class="mx-auto w-full lg:max-w-[90rem] md:px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
         <ol class="breadcrumb lg:text-lg px-4 md:px-0 pb-5">

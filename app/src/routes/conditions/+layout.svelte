@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { TabGroup, TabAnchor } from "@skeletonlabs/skeleton";
-    import { page } from '$app/stores';
-    $: activeRoute = $page.url.pathname.split('/')[2];
-    
+    import { page } from '$app/stores';    
 </script>
 
 <section class="mx-auto w-full lg:max-w-[90rem] md:px-4 pt-4 lg:pt-8">
