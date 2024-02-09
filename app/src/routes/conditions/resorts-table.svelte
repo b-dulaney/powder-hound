@@ -346,7 +346,7 @@
                         <td class="text-center font-bold">{formatSnowfall(row.snow_past_24h)}"</td>
                         <td class="text-center font-bold">{formatSnowfall(row.snow_next_24h)}"</td>
                         <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-                        >{row.snow_next_72h}"</td
+                        >{formatSnowfall(row.snow_next_72h)}"</td
                     >
                         <td class="!px-0 text-center font-bold">
                             {#if isFavorite(row)}
