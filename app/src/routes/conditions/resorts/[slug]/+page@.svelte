@@ -137,7 +137,7 @@
 													</span>
 												</div>
 											</li>
-											<hr class="mt-1 opacity-60 last:hidden" />
+											<hr class="mt-1 opacity-60 last:hidden" aria-hidden />
 										{/each}
 									</ul>
 								</svelte:fragment>
