@@ -15,10 +15,10 @@
 
 	<div class="pt-4 flex w-full justify-center">
 		<TabGroup justify="justify-center">
-			<TabAnchor selected={$page.url.pathname === '/conditions/resorts'} name="Ski Resorts" class="md:text-xl" href="/conditions/resorts" data-sveltekit-preload-data-hover>
+			<TabAnchor role="tab" selected={$page.url.pathname === '/conditions/resorts'} name="Ski Resorts" class="md:text-xl" href="/conditions/resorts" data-sveltekit-preload-data-hover>
 				Ski Resorts
 			</TabAnchor>
-			<TabAnchor selected={$page.url.pathname === '/conditions/backcountry'} name="Backcountry" class="md:text-xl" href="/conditions/backcountry" data-sveltekit-preload-data-hover>
+			<TabAnchor role="tab" selected={$page.url.pathname === '/conditions/backcountry'} name="Backcountry" class="md:text-xl" href="/conditions/backcountry" data-sveltekit-preload-data-hover>
 				Backcountry
 			</TabAnchor>
 		</TabGroup>
