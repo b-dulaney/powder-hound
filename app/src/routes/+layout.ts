@@ -3,6 +3,8 @@ import type { LayoutLoad } from './$types';
 import { createBrowserClient, isBrowser, parse } from '@supabase/ssr';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
+export const prerender = 'auto';
+
 export const load: LayoutLoad = async ({ fetch, data, depends }) => {
 	depends('supabase:auth');
 
