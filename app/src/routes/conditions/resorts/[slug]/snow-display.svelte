@@ -5,5 +5,5 @@
 
 <div class="flex flex-col items-center justify-center h-full p-4 gap-2">
     <p class="text-2xl md:text-3xl xl:text-3xl font-bold">{value}<span class="tracking-tighter">"</span></p>
-    <h4 class="xl:text-lg">{type}</h4>
+    <p class="xl:text-lg">{type}</p>
 </div>

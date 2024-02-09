@@ -15,19 +15,21 @@
 		<div class="alert variant-ghost-primary">
 			<div class="flex flex-col">
 				<span class="flex justify-start items-center"><i class="fa-solid fa-circle-exclamation px-2"/><strong class="whitespace-nowrap">Backcountry Forecasts</strong></span>
-				<p>These forecasts are for use by experienced backcountry skiers and snowboarders. This summary is not a replacement for the full CAIC report. View the full report for {backcountryDetails.display_name} <a target="_blank" rel="noopener" class="anchor !text-surface-50" href={backcountryDetails.forecast_url}>here</a>.</p>
+				<p>These forecasts are for use by experienced backcountry skiers and snowboarders. This summary is not a replacement for the detailed CAIC report. Make sure to read the full 
+					<a target="_blank" rel="noopener" class="anchor !text-surface-50" href={backcountryDetails.forecast_url}>{backcountryDetails.display_name} report</a>
+					 before heading out.</p>
 			</div>
 		</div>
 			<div class="card mt-4 w-full md:p-4 xl:p-6 ">
 				<div class="card-header">
-					<h3 class="h3">Avalanche Ratings</h3>
+					<h2 class="h3">Avalanche Ratings</h2>
 					<p class="text-surface-400 py-2">Issued on: {backcountryDetails.issue_date}</p>
 				</div>
 				<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
 					{#each backcountryDetails.danger_levels as {date, above_treeline, near_treeline, below_treeline}}
 					<div id="avy-forecast-container" class="w-full">	
-						<h4 class="h4 py-2">{date}
-						</h4>
+						<h3 class="h4 py-2">{date}
+						</h3>
 						<div class="flex flex-col w-full">
 							<div class="flex justify-between items-center border-b border-b-surface-400 w-full bg-surface-600 p-2">
 								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Above Treeline</p>
