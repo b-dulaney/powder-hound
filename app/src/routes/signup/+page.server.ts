@@ -1,6 +1,8 @@
 import { PUBLIC_SITE_URL } from '$env/static/public';
 import { fail, redirect } from '@sveltejs/kit';
 
+export const prerender = false;
+
 export const actions = {
 	login: async (event) => {
 		const { supabase } = event.locals;
