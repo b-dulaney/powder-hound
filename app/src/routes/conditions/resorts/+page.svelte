@@ -17,6 +17,13 @@
 
 </script>
 
+<svelte:head>
+	<title>
+		PowderHound - Resort forecasts and lift/trail status
+	</title>
+    <meta name="description" content="Snow forecasts, snowpack info, and lift/trail status for Colorado's ski resorts">
+</svelte:head>
+
 <section class="mx-auto w-full lg:max-w-[90rem] md:px-4">
     <ResortsTable resortOverviews={filteredResorts} session={session} alerts={alerts} />
 </section>

@@ -9,6 +9,13 @@
 
 </script>
 
+<svelte:head>
+	<title>
+		PowderHound - Login
+	</title>
+	<meta name="description" content="Login to PowderHound get snowfall alerts for Colorado's premier ski destinations">
+</svelte:head>
+
 <div class="mt-10 flex h-full items-start justify-center px-4">
 	<Login action="login" supabase={supabase} form={form} />
 </div>
