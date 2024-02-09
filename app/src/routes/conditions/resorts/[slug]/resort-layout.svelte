@@ -12,7 +12,7 @@
 
 	const maxSnowfallNext72h = Math.max(...resortDetails.upcoming_snowfall_totals.map((d) => d.snowfall_total));
 
-	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12;
+	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12.5;
 </script>
 
 {#if !resortDetails}
@@ -80,7 +80,7 @@
 								tooltip={{ mode: "band" }}
 							  >
 								<Svg>
-								  <Axis placement="left" rule grid={{ style: "stroke-dasharray: 4", }} labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100 font-light", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+								  <Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100 font-light", dx: -12}} tickSize={0} format={(d) => `${d}''`}
 								  />
 								  <Axis
 									placement="bottom"
