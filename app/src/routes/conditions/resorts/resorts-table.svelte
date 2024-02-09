@@ -3,7 +3,7 @@
 	import type { ResortOverview, UserAlerts } from "$lib/supabase.types";
 	import { formatSnowfall } from "$lib/utils";
 	import type { Session } from "@supabase/supabase-js";
-    import { resortSearchInput, resortColumnSort, selectedMountain } from "./stores";
+    import { resortSearchInput, resortColumnSort, selectedMountain } from "../stores";
     import { getModalStore, getToastStore, type ModalSettings, type ToastSettings } from "@skeletonlabs/skeleton";
 	import { goto, invalidate, invalidateAll } from "$app/navigation";
     export let session: Session | null;
@@ -140,7 +140,8 @@
 			}) || [];
 
 	};
-
+    
+    sortLocations($resortColumnSort.name, $resortColumnSort.asc);
 
 </script>
 

@@ -14,9 +14,13 @@
 <section id="header-section">
 	<div class="mx-auto w-full lg:max-w-[90rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
 		<ol class="breadcrumb lg:text-lg">
-			<li class="crumb"><a class="anchor !text-surface-300" href="/conditions">Conditions</a></li>
+			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-			<li class="text-surface-300">{resortDetails.display_name}</li>
+			<li class="crumb !text-surface-300">Conditions</li>
+			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+			<li class="crumb !ml-0 md:!ml-4"><a class="anchor !text-surface-300" href="/conditions/resorts">Resorts</a></li>
+			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+			<li class="crumb text-surface-300">{resortDetails.display_name}</li>
 		</ol>
 
 		<div class="mt-4 flex flex-col">

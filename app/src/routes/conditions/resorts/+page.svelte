@@ -1,0 +1,22 @@
+<script lang="ts">
+    import type { PageData } from './$types';
+    import { resortSearchInput } from '../stores';
+	import ResortsTable from './resorts-table.svelte';
+    export let data: PageData;
+    const { resortOverviews } = data;
+    $: alerts = data.alerts ?? [];
+    $: session = data.session;
+    let filteredResorts = resortOverviews;
+
+    resortSearchInput.subscribe((value) => {
+        filteredResorts =
+            resortOverviews.filter((location) => {
+                return location?.display_name?.toLowerCase().includes(value.toLowerCase().trim());
+            }) || [];
+        });
+
+</script>
+
+<section class="mx-auto w-full lg:max-w-[90rem] md:px-4">
+    <ResortsTable resortOverviews={filteredResorts} session={session} alerts={alerts} />
+</section>

@@ -23,7 +23,7 @@
 				<a
 					class="btn variant-filled-primary bg-gradient-to-r"
 					data-sveltekit-preload-data="hover"
-					href="/conditions"
+					href="/conditions/resorts"
 				>
 					<div class="flex items-center gap-2">
 						<span>View Conditions</span>
