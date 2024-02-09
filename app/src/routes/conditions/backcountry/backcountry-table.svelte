@@ -4,7 +4,7 @@
 	import type { BackcountryOverview, UserAlerts } from "$lib/supabase.types";
 	import { formatSnowfall, avalancheDangerRatingsMap } from "$lib/utils";
 	import type { Session } from "@supabase/supabase-js";
-	import { backcountrySearchInput, backcountryColumnSort, selectedMountain } from "./stores";
+	import { backcountrySearchInput, backcountryColumnSort, selectedMountain } from "../stores";
 	import { getModalStore, getToastStore, type ModalSettings, type ToastSettings } from "@skeletonlabs/skeleton";
 	import { goto, invalidate } from "$app/navigation";
     export let session: Session | null;
@@ -136,7 +136,7 @@
         }
     }
 
-
+    sortLocations($backcountryColumnSort.name, $backcountryColumnSort.asc);
 
 </script>
 

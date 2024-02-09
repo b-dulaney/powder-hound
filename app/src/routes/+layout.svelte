@@ -90,7 +90,8 @@
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<div class="hidden md:flex items-center justify-between">
-					<a href="/conditions" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Conditions</a>
+					<a href="/conditions/resorts" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Resorts</a>
+					<a href="/conditions/backcountry" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Backcountry</a>
 					<a href="/alerts" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Alerts</a>
 				</div>
 				<div class="flex items-center justify-end">

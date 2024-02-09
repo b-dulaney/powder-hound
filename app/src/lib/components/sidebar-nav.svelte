@@ -13,8 +13,13 @@
     <nav class="list-nav">
         <ul>
             <li>
-                <a class="{classesActive('/conditions')}" href="/conditions" on:click={drawerClose}>
-                    <span class="flex-auto">View Conditions</span>
+                <a class="{classesActive('/conditions/resorts')}" href="/conditions/resorts" on:click={drawerClose}>
+                    <span class="flex-auto">Resorts</span>
+                </a>
+            </li>
+            <li>
+                <a class="{classesActive('/conditions/backcountry')}" href="/conditions/backcountry" on:click={drawerClose}>
+                    <span class="flex-auto">Backcountry</span>
                 </a>
             </li>
         </ul>
