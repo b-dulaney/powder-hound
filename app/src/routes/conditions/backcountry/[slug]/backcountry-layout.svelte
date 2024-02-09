@@ -8,6 +8,12 @@
 	import Card from "$lib/components/card.svelte";
     export let backcountryDetails: BackcountryDetail;
 
+	const maxSnowfallPastWeek = Math.max(...backcountryDetails.previous_snowfall_totals.map((d) => d.snowfall_total));
+	const maxSnowfallNext72h = Math.max(...backcountryDetails.upcoming_snowfall_totals.map((d) => d.snowfall_total));
+
+	const pastWeekYDomain = maxSnowfallPastWeek > 12 ? maxSnowfallPastWeek : 12;
+	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12;
+
 </script>
 
 <section id="avalanche-forecast">
@@ -80,13 +86,13 @@
 								x="date"
 								xScale={scaleBand().domain(backcountryDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
 								y="snowfall_total"
-								yDomain={[0, null]}
+								yDomain={[0, pastWeekYDomain]}
 								yNice
 								padding={{ left: 24, bottom: 36 }}
 								tooltip={{ mode: "band" }}
 							>
 								<Svg>
-								<Axis placement="left" rule grid={{ style: "stroke-dasharray: 4" }} labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={10} format={(d) => `${d}''`}
+								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={0} format={(d) => `${d}''`}
 								/>
 								<Axis
 									placement="bottom"
@@ -97,7 +103,7 @@
 									tickSize={0}
 									format={(d) => formatDate(d)}
 								/>
-								<Bars radius={1} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors opacity-90" />
+								<Bars radius={1} strokeWidth={2} class="fill-primary-500 stroke-primary-800 transition-colors" />
 								<Highlight area>
 									<svelte:fragment slot="area" let:area>
 									<RectClipPath
@@ -107,7 +113,7 @@
 										height={area.height}
 										spring
 									>
-										<Bars radius={1} strokeWidth={2} class="fill-primary-400 stroke-primary-300 opacity-100" />
+										<Bars radius={1} strokeWidth={2} class="fill-primary-400 stroke-primary-600" />
 									</RectClipPath>
 									</svelte:fragment>
 								</Highlight>
@@ -140,14 +146,14 @@
 								x="date"
 								xScale={scaleBand().domain(backcountryDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.4).paddingOuter(0.4)}
 								y="snowfall_total"
-								yDomain={[0, null]}
+								yDomain={[0, next72hYDomain]}
 								yNice
 								padding={{ left: 24, bottom: 36 }}
 								tooltip={{ mode: "band" }}
 							>
 							<Svg>
-								<Axis placement="left" rule grid={{ style: "stroke-dasharray: 4", }} labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={10} format={(d) => `${d}''`}
-								/>
+								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={0} format={(d) => `${d}''`}
+									/>
 								<Axis
 								placement="bottom"
 								labelProps={{
@@ -155,7 +161,7 @@
 								tickSize={0}
 								format={(d) => formatDate(d)}
 								/>
-								<Bars radius={1} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors opacity-90" />
+								<Bars radius={1} strokeWidth={2} class="fill-primary-500 stroke-primary-800 transition-colors" />
 								<Highlight area>
 									<svelte:fragment slot="area" let:area>
 									<RectClipPath
@@ -165,7 +171,7 @@
 										height={area.height}
 										spring
 									>
-										<Bars radius={1} strokeWidth={2} class="fill-primary-400 stroke-primary-300 opacity-100" />
+										<Bars radius={1} strokeWidth={2} class="fill-primary-400 stroke-primary-600" />
 									</RectClipPath>
 									</svelte:fragment>
 								</Highlight>

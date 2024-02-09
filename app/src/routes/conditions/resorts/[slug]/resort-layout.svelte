@@ -9,6 +9,10 @@
 	import Card from "$lib/components/card.svelte";
 
     export let resortDetails: ResortDetail;
+
+	const maxSnowfallNext72h = Math.max(...resortDetails.upcoming_snowfall_totals.map((d) => d.snowfall_total));
+
+	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12;
 </script>
 
 {#if !resortDetails}
@@ -70,7 +74,7 @@
 								x="date"
 								xScale={scaleBand().domain(resortDetails.upcoming_snowfall_totals.map((d) => d.date)).paddingInner(0.2).paddingOuter(0.3)}
 								y="snowfall_total"
-								yDomain={[0, null]}
+								yDomain={[0, next72hYDomain]}
 								yNice
 								padding={{ left: 24, bottom: 36 }}
 								tooltip={{ mode: "band" }}
@@ -84,7 +88,7 @@
 									tickSize={0}
 									format={(d) => formatDate(d)}
 								  />
-								  <Bars radius={1} strokeWidth={2} class="fill-primary-600 stroke-primary-400 transition-colors opacity-90" />
+								  <Bars radius={1} strokeWidth={2} class="fill-primary-500 stroke-primary-800 transition-colors" />
 								  <Highlight area>
 									  <svelte:fragment slot="area" let:area>
 									  <RectClipPath
@@ -94,7 +98,7 @@
 										  height={area.height}
 										  spring
 									  >
-										  <Bars radius={1} strokeWidth={2} class="fill-primary-400 stroke-primary-300 opacity-100" />
+										  <Bars radius={1} strokeWidth={2} class="fill-primary-400 stroke-primary-600" />
 									  </RectClipPath>
 									  </svelte:fragment>
 								  </Highlight>
