@@ -11,8 +11,8 @@
 	const maxSnowfallPastWeek = Math.max(...backcountryDetails.previous_snowfall_totals.map((d) => d.snowfall_total));
 	const maxSnowfallNext72h = Math.max(...backcountryDetails.upcoming_snowfall_totals.map((d) => d.snowfall_total));
 
-	const pastWeekYDomain = maxSnowfallPastWeek > 12 ? maxSnowfallPastWeek : 12;
-	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12;
+	const pastWeekYDomain = maxSnowfallPastWeek > 12 ? maxSnowfallPastWeek : 12.5;
+	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12.5;
 
 </script>
 
@@ -92,7 +92,7 @@
 								tooltip={{ mode: "band" }}
 							>
 								<Svg>
-								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={0} format={(d) => `${d}''`}
+								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -12}} tickSize={0} format={(d) => `${d}''`}
 								/>
 								<Axis
 									placement="bottom"
@@ -152,7 +152,7 @@
 								tooltip={{ mode: "band" }}
 							>
 							<Svg>
-								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -15}} tickSize={0} format={(d) => `${d}''`}
+								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -12}} tickSize={0} format={(d) => `${d}''`}
 									/>
 								<Axis
 								placement="bottom"
