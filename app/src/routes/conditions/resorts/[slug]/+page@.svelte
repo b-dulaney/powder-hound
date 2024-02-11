@@ -23,9 +23,7 @@
 		<ol class="breadcrumb lg:text-lg">
 			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-			<li class="crumb !text-surface-300">Conditions</li>
-			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-			<li class="crumb !ml-0 md:!ml-4"><a class="anchor !text-surface-300" href="/conditions/resorts">Resorts</a></li>
+			<li class="crumb !ml-0 md:!ml-4"><a class="anchor !text-surface-300" href="/conditions/resorts">Conditions</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 			<li class="crumb text-surface-300">{resortDetails.display_name}</li>
 		</ol>
