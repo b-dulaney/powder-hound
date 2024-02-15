@@ -3,7 +3,7 @@
     import { page } from '$app/stores';    
 </script>
 
-<section class="mx-auto w-full lg:max-w-[90rem] md:px-4 pt-4 lg:pt-8">
+<section class="mx-auto w-full lg:max-w-7xl md:px-4 pt-4 lg:pt-8">
 	<ol class="breadcrumb lg:text-lg px-4 md:px-0 pb-5">
 		<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 		<li class="crumb-separator" aria-hidden>&rsaquo;</li>

@@ -26,6 +26,12 @@ export type SnowfallTotal = {
 	snowfall_total: number;
 };
 
+export type HourlySnowfall = {
+	datetime: string;
+	snowfall: number;
+	weather_desc: string;
+};
+
 export type HourlyWeatherData = {
 	datetime: string;
 	temp: number;
@@ -101,6 +107,7 @@ export type Database = MergeDeep<
 						slug: string;
 						hourly_forecast: HourlyWeatherData[];
 						daily_weather_conditions: DailyWeatherCondition[];
+						next_24h_hourly_snowfall: HourlySnowfall[];
 						previous_snowfall_totals: SnowfallTotal[];
 						upcoming_snowfall_totals: SnowfallTotal[];
 						temperature_range: TemperatureRange[];
@@ -136,6 +143,7 @@ export type Database = MergeDeep<
 						lifts_url: string;
 						trails_url: string;
 						hourly_forecast: HourlyWeatherData[];
+						next_24h_hourly_snowfall: HourlySnowfall[];
 						daily_weather_conditions: DailyWeatherCondition[];
 						previous_snowfall_totals: SnowfallTotal[];
 						upcoming_snowfall_totals: SnowfallTotal[];

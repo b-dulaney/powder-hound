@@ -42,7 +42,6 @@
                   spring
                   fill={url}
                   track={{ class: "fill-surface-600" }}
-                  tweened={{ duration: 1000, easing: cubicInOut }}
                 >
                   <Text
                     value={`${open} / ${total}`}

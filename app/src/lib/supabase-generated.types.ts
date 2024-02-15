@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       avalanche_forecasts: {
@@ -406,18 +406,6 @@ export interface Database {
           }
         ]
       }
-      result_data: {
-        Row: {
-          json_agg: Json | null
-        }
-        Insert: {
-          json_agg?: Json | null
-        }
-        Update: {
-          json_agg?: Json | null
-        }
-        Relationships: []
-      }
       user_alerts: {
         Row: {
           created_at: string
@@ -559,6 +547,7 @@ export interface Database {
           issue_date: string | null
           location_type: string | null
           mountain_id: number | null
+          next_24h_hourly_snowfall: Json | null
           overall_danger_level: number | null
           previous_snowfall_totals: Json | null
           region: string | null
@@ -599,6 +588,7 @@ export interface Database {
           lifts_url: string | null
           location_type: string | null
           mountain_id: number | null
+          next_24h_hourly_snowfall: Json | null
           previous_snowfall_totals: Json | null
           region: string | null
           runs_open: number | null
@@ -705,6 +695,12 @@ export interface Database {
         }
         Returns: Json
       }
+      get_next_24h_hourly_snowfall: {
+        Args: {
+          id: number
+        }
+        Returns: Json
+      }
       get_overnight_alert_data: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -762,6 +758,10 @@ export interface Database {
         Returns: undefined
       }
       process_resort_web_elements: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      process_resort_web_elements_am: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

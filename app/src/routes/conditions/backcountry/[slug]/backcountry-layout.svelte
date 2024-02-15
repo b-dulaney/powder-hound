@@ -1,12 +1,20 @@
 <script lang="ts">
 	import type { BackcountryDetail } from "$lib/supabase.types";
-	import { formatDate } from "$lib/utils";
-	import { scaleBand } from "d3-scale";
+	import { formatDate, observeElement } from "$lib/utils";
+	import { scaleBand, scaleTime } from "d3-scale";
 	import dayjs from "dayjs";
-	import { Axis, Bars, Chart, Highlight, RectClipPath, Svg, Tooltip, TooltipItem } from "layerchart";
+	import { Area, Axis, Bars, Chart, ChartClipPath, Highlight, LinearGradient, RectClipPath, Svg, Tooltip, TooltipItem } from "layerchart";
 	import AvalancheDangerIcon from "$lib/components/avalanche-danger-icon.svelte";
 	import Card from "$lib/components/card.svelte";
+	import { cubicInOut } from "svelte/easing";
+	import { onMount } from "svelte";
     export let backcountryDetails: BackcountryDetail;
+
+	let showAccumulation = false;
+
+	onMount(async () => {
+		showAccumulation = await observeElement('hourlyAccumulationCard');
+	});
 
 	const maxSnowfallPastWeek = Math.max(...backcountryDetails.previous_snowfall_totals.map((d) => d.snowfall_total));
 	const maxSnowfallNext72h = Math.max(...backcountryDetails.upcoming_snowfall_totals.map((d) => d.snowfall_total));
@@ -14,10 +22,20 @@
 	const pastWeekYDomain = maxSnowfallPastWeek > 12 ? maxSnowfallPastWeek : 12.5;
 	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12.5;
 
+	const hourlyAccumulation = backcountryDetails.next_24h_hourly_snowfall.map((d, i) => {
+		return {
+			datetime: new Date(d.datetime),
+			accumulated_snowfall: (backcountryDetails.next_24h_hourly_snowfall
+				.slice(0, i + 1)
+				.reduce((acc, curr) => acc + curr.snowfall, 0))
+				.toFixed(1)
+		};
+	});
+
 </script>
 
 <section id="avalanche-forecast">
-	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pt-4">
+	<div class="mx-auto w-full max-w-6xl lg:max-w-7xl px-4 pt-4">
 		<div class="alert variant-ghost-primary">
 			<div class="flex flex-col">
 				<span class="flex justify-start items-center"><i class="fa-solid fa-circle-exclamation px-2"/><strong class="whitespace-nowrap">Backcountry Forecasts</strong></span>
@@ -62,7 +80,7 @@
 </section>
 
 <section id="recent-and-upcoming-snowfall">
-	<div class="mx-auto w-full max-w-6xl lg:max-w-[90rem] px-4 pt-4">
+	<div class="mx-auto w-full max-w-6xl lg:max-w-7xl px-4 pt-4">
 			<Card>
 				<svelte:fragment slot="header">Snow Report</svelte:fragment>
 				<svelte:fragment slot="body">
@@ -92,7 +110,7 @@
 								tooltip={{ mode: "band" }}
 							>
 								<Svg>
-									<Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dx: -6}} tickSize={0} format={(d) => `${d}"`}
+									<Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dx: -12}} tickSize={0} format={(d) => `${d}"`}
 										/>
 								<Axis
 									placement="bottom"
@@ -152,7 +170,7 @@
 								tooltip={{ mode: "band" }}
 							>
 							<Svg>
-								<Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg fill-surface-100 stroke-surface-100 stroke-width-0 font-semibold", dx: -6}} tickSize={0} format={(d) => `${d}"`}
+								<Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg fill-surface-100 stroke-surface-100 stroke-width-0 font-semibold", dx: -12}} tickSize={0} format={(d) => `${d}"`}
 									/>
 								<Axis
 								placement="bottom"
@@ -189,6 +207,50 @@
 				</div>
 				</svelte:fragment>
 			</Card>
+				<Card>
+					<svelte:fragment slot="header">Hourly Accumulation</svelte:fragment>
+					<svelte:fragment slot="body">
+						<div class="flex justify-center items-center w-full p-8">
+						<div class="h-[400px] w-[400px] md:w-full" id="hourlyAccumulationCard">
+						<Chart
+							ssr
+							data={hourlyAccumulation}
+							x="datetime"
+							xScale={scaleTime()}
+							y="accumulated_snowfall"
+							yDomain={[0, null]}
+							padding={{ left: 24, bottom: 36 }}
+							tooltip
+							>
+							<Svg>
+								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dx: -12}} tickSize={0} format={(d) => `${d}"`}/>
+								<Axis
+								  placement="bottom"
+								  format={(d) => dayjs(d).format("ha").slice(0, -1)}
+								  labelProps={{
+									class: "text-xs md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dy: 16}}
+									rule
+								/>
+								{#if showAccumulation}
+									<ChartClipPath
+									initialWidth={0}
+									tweened={{ width: { duration: 1000, easing: cubicInOut } }}
+									>
+								<LinearGradient class="from-secondary-500/90 to-secondary-500/10" vertical let:url>
+									<Area line={{ class: "stroke-2 stroke-secondary-500" }} fill={url} />
+								  </LinearGradient>
+										</ChartClipPath>
+								{/if}			
+							  </Svg>
+
+							  <Tooltip header={(d) => dayjs(d.datetime).format("ddd ha")} let:data>
+								<TooltipItem label="Accumulated snow" value={`${data.accumulated_snowfall}"`} />
+							  </Tooltip>
+							</Chart>
+						</div>
+					</div>
+					</svelte:fragment>
+				</Card>
 	</div>
 </section>
 

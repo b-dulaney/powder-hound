@@ -19,7 +19,7 @@
 </svelte:head>
 
 <section id="header-section">
-	<div class="mx-auto w-full lg:max-w-[90rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
+	<div class="mx-auto w-full lg:max-w-7xl px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
 		<ol class="breadcrumb lg:text-lg">
 			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
@@ -46,7 +46,7 @@
 <ResortLayout {resortDetails} />
 
 <section id="forecast-section">
-	<div class="mx-auto w-full lg:max-w-[90rem] px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
+	<div class="mx-auto w-full lg:max-w-7xl px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 			<Card>
 				<svelte:fragment slot="header">Daily Forecast</svelte:fragment>
@@ -192,7 +192,6 @@
 						</ul>
 					</svelte:fragment>
 				</Card>
-
 			</div>
 		</div>
 	</div>
