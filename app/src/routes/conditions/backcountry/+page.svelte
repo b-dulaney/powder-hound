@@ -24,6 +24,6 @@
     <meta name="description" content="Snow forecasts and avalanche conditions for Colorado's backcountry zones">
 </svelte:head>
 
-<section class="mx-auto w-full lg:max-w-[90rem] md:px-4">
+<section class="mx-auto w-full lg:max-w-7xl md:px-4">
     <BackcountryTable backcountryOverviews={filteredBackcountry} session={session} alerts={alerts ?? []} />
 </section>
