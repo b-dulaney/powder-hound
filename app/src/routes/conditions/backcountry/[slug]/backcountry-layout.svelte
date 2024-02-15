@@ -92,14 +92,14 @@
 								tooltip={{ mode: "band" }}
 							>
 								<Svg>
-								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -12}} tickSize={0} format={(d) => `${d}''`}
-								/>
+									<Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dx: -6}} tickSize={0} format={(d) => `${d}"`}
+										/>
 								<Axis
 									placement="bottom"
 									
 									labelProps={{rotate: 315,
 										textAnchor: "end",
-										class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dy: 20,}}
+										class: "text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dy: 12}}
 									tickSize={0}
 									format={(d) => formatDate(d)}
 								/>
@@ -152,12 +152,12 @@
 								tooltip={{ mode: "band" }}
 							>
 							<Svg>
-								<Axis placement="left" grid rule labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dx: -12}} tickSize={0} format={(d) => `${d}''`}
+								<Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg fill-surface-100 stroke-surface-100 stroke-width-0 font-semibold", dx: -6}} tickSize={0} format={(d) => `${d}"`}
 									/>
 								<Axis
 								placement="bottom"
 								labelProps={{
-									class: "text-sm md:text-lg tracking-widest fill-surface-50 stroke-surface-50", dy: 20,}}
+									class: "text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dy: 12}}
 								tickSize={0}
 								format={(d) => formatDate(d)}
 								/>

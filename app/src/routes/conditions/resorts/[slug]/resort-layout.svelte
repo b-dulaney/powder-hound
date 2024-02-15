@@ -80,11 +80,11 @@
 								tooltip={{ mode: "band" }}
 							  >
 								<Svg>
-								  <Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100 font-light", dx: -12}} tickSize={0} format={(d) => `${d}''`}
+								  <Axis placement="left" rule grid labelProps={{class: "text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dx: -6}} tickSize={0} format={(d) => `${d}"`}
 								  />
 								  <Axis
 									placement="bottom"
-									labelProps={{class: "text-sm md:text-lg tracking-widest fill-surface-100 stroke-surface-100", dy: 20,}}
+									labelProps={{class: "text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold", dy: 12,}}
 									tickSize={0}
 									format={(d) => formatDate(d)}
 								  />
