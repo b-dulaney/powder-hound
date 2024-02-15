@@ -28,7 +28,7 @@
 		</div>
 			<div class="card mt-4 w-full md:p-4 xl:p-6 ">
 				<div class="card-header">
-					<h2 class="h3">Avalanche Ratings</h2>
+					<h2 class="h3">Avalanche Danger</h2>
 					<p class="text-surface-400 py-2">Issued on: {backcountryDetails.issue_date}</p>
 				</div>
 				<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
@@ -37,17 +37,17 @@
 						<h3 class="h4 py-2">{date}
 						</h3>
 						<div class="flex flex-col w-full">
-							<div class="flex justify-between items-center border-b border-b-surface-400 w-full bg-surface-600 p-2">
+							<div class="flex justify-between items-center rounded-sm border-b border-b-surface-400 w-full bg-surface-600 p-2">
 								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Above Treeline</p>
 								<p class="flex-grow font-semibold text-sm md:text-base text-center">{above_treeline.level} - {above_treeline.rating}</p>
 								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={above_treeline.level} size='40px'/></span>
 							</div>
-							<div class="flex justify-between items-center border-b border-b-surface-400 w-full p-2">
+							<div class="flex justify-between items-center rounded-sm border-b border-b-surface-400 w-full p-2">
 								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Near Treeline</p>
 								<p class="flex-grow font-semibold text-sm md:text-base text-center">{near_treeline.level} - {near_treeline.rating}</p>
 								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={near_treeline.level} size='40px'/></span>
 							</div>
-							<div class="flex justify-between items-center gap-0 border-b border-b-surface-400 w-full bg-surface-600 p-2">
+							<div class="flex justify-between items-center rounded-sm gap-0 border-b border-b-surface-400 w-full bg-surface-600 p-2">
 								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Below Treeline</p>
 								<p class="flex-grow font-semibold text-sm md:text-base text-center">{below_treeline.level} - {below_treeline.rating}</p>
 								<span class="flex-shrink"><AvalancheDangerIcon dangerLevel={below_treeline.level} size='40px'/></span>
