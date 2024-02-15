@@ -23,9 +23,10 @@ Dev Preview: https://dev.powderhound.io
 
 ## Tech Stack
 
-SvelteKit, Supabase, Vite, Typescript, SkeletonUI, TailwindCSS, Vercel
+SvelteKit, Supabase, Vite, Typescript, SkeletonUI, Tailwind, Vercel
 
 ## How It Works
+
 - Weather data for each location is collected hourly from the CAIC point forecast [API](https://avalanche.state.co.us/weather/point-forecasts) via scheduled Supabase edge function
 - Resort conditions data and Avalanche forecasts are collected with a web scraper
   - Web scraping is done via SvelteKit API route (AWS lambda function) using [Puppeteer](https://pptr.dev/)
@@ -35,11 +36,15 @@ SvelteKit, Supabase, Vite, Typescript, SkeletonUI, TailwindCSS, Vercel
 
 This is pretty informal for now as I'm building this project out in my spare time. With that said, here's a list of things that I would like to include eventually:
 
+- More locations
+
 - Email/SMS OTP login
 
 - SMS alerts
 
 - Additional SSO providers
+
+- CDOT road conditions
 
 - Resort live feeds (lift cams, snow stakes, etc.)
 
