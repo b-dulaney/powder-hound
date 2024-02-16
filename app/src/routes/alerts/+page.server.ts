@@ -1,4 +1,4 @@
-import type { Profile, UserAlerts } from '$lib/supabase.types';
+import type { UserAlerts } from '$lib/supabase.types';
 import { error, redirect } from '@sveltejs/kit';
 
 export const load = async (event) => {
@@ -13,31 +13,20 @@ export const load = async (event) => {
 		refresh_token: session.refresh_token
 	});
 
-	const { data: profileData, error: profileError } = await supabase
-		.from('profile')
+	const { data: alertsData, error: alertsError } = await supabase
+		.from('user_alerts')
 		.select()
-		.returns<Profile[]>()
-		.maybeSingle();
+		.returns<UserAlerts[]>();
 
-	if (!profileData && !profileError) {
+	if (alertsError) {
+		error(500);
+	}
+
+	if (!alertsData.length) {
 		redirect(301, '/alerts/initial-setup');
 	}
 
-	if (profileData) {
-		const { data: alertsData, error: alertsError } = await supabase
-			.from('user_alerts')
-			.select()
-			.returns<UserAlerts[]>();
-
-		if (alertsError) {
-			error(500);
-		}
-
-		return {
-			userProfile: profileData,
-			alerts: alertsData.sort((a, b) => (a.display_name > b.display_name ? 1 : -1))
-		};
-	}
-
-	error(500);
+	return {
+		alerts: alertsData.sort((a, b) => (a.display_name > b.display_name ? 1 : -1))
+	};
 };
