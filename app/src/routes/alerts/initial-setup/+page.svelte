@@ -85,13 +85,13 @@
                     </Step>
                     <Step>
                         <svelte:fragment slot="header">Snowfall Alerts</svelte:fragment>
-                        <p class="max-w-xl">You'll receive two types of notifications based on the thresholds you set:</p>  
-                        <div class="flex flex-col gap-2 mt-4">
+                        <p class="max-w-xl">You'll receive two types of notifications based on the thresholds you set</p>  
+                        <div class="flex flex-col gap-4 mt-4">
                             <p class="max-w-xl">
-                                <strong class="text-secondary-400">Forecast Alerts</strong> - To help you plan ahead, we'll send these in the afternoon and report snowfall expected in the next 24 hours.
+                                <strong class="underline font-semibold">Forecast Alerts</strong> - to help you plan ahead, we'll send these in the afternoon and report snowfall expected in the next 24 hours.
                             </p>
                             <p class="max-w-xl">
-                                <strong class="text-secondary-400">Overnight Alerts</strong> - You'll get these early in the AM, confirming overnight or past 24 hour snowfall. They're the indicator of whether you should draft that sick day email to your boss.
+                                <strong class="underline font-semibold">Overnight Alerts</strong> - these confirm overnight or past 24 hour snowfall and are sent early in the AM, so you'll have plenty of time to call in sick.
                             </p>
                         </div>
                         <div class="flex flex-col gap-2 py-4">
