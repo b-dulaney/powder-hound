@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { UserAlerts } from '$lib/supabase.types';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 
@@ -17,7 +16,6 @@
     }
 
     export let data: PageData;
-    const { userProfile } = data;
     $: alerts = data.alerts;
 
     async function onThresholdChange(e: Event, id: number) {
@@ -52,7 +50,6 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ mountain_id: id, user_id: userProfile.user_id })
         });
 
         if(response.ok) {
