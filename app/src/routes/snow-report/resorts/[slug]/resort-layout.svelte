@@ -59,7 +59,7 @@
 						Updated at: {dayjs(resortDetails?.updated_at).format('h:mm A')}
 					</svelte:fragment>
 					<svelte:fragment slot="body">
-						<div class="grid grid-cols-2 items-center justify-center md:h-[90%] md:px-4 xl:p-6">
+						<div class="grid grid-cols-2 items-center justify-center md:h-[90%] p-4 xl:p-6">
 							{#if resortDetails?.snow_type}
 								<div class="col-span-2 flex flex-col items-center">
 									<p class="py-2 text-xl font-bold lg:text-2xl">{resortDetails?.snow_type}</p>
@@ -107,7 +107,7 @@
 								</div>
 							</div>
 							<div class="flex w-full items-center justify-center p-8">
-								<div class="h-[400px] w-[400px]">
+								<div class="h-[400px] w-[400px] md:w-[600px] lg:w-[400px]">
 									<Chart
 										ssr
 										data={resortDetails.upcoming_snowfall_totals}
