@@ -65,8 +65,13 @@
 
 <svelte:head>
 	<title>
-		PowderHound - Manage your alerts
+		PowderHound | Manage your alerts
 	</title>
+    <meta property="og:title" content="PowderHound | Manage your alerts" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://powderhound.io/alerts" />
+	<meta property="og:image" content='https://powderhound.io/og?title=Manage Your Alerts' />
+	<meta property="og:description" content="Get real-time snow reports, accurate weather predictions, and customized snowfall alerts for Colorado - all 100% free. You'll never miss another powder day." />
 </svelte:head>
 
 <section id="alerts">

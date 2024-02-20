@@ -67,9 +67,13 @@
 
 <svelte:head>
 	<title>
-		PowderHound - Settings
+		PowderHound | Settings
 	</title>
 	<meta name="description" content="Manage your PowderHound account and data">
+    <meta property="og:title" content="PowderHound | Settings" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://powderhound.io/settings" />
+	<meta property="og:image" content='https://powderhound.io/og?title=Settings' />
 </svelte:head>
 
 <section id="profile">
