@@ -13,6 +13,7 @@
 	<title>
 		PowderHound | Sign Up
 	</title>
+	<meta property="og:site_name" content="PowderHound" />
 	<meta name="description" content="Sign Up for PowderHound to get snowfall alerts for Colorado's premier ski destinations">
 	<meta property="og:title" content="PowderHound | Sign Up" />
 	<meta property="og:type" content="website" />

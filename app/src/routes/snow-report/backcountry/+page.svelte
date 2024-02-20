@@ -21,7 +21,8 @@
 	<title>
 		PowderHound | Backcountry Snow Reports and Avalanche Forecasts
 	</title>
-    <meta name="description" content="Get real-time snow reports, avalanche conditions, and accurate weather forecasts for Colorado's backcountry ski destinations | Stay informed with PowderHound">
+	<meta property="og:site_name" content="PowderHound" />
+	<meta name="description" content="Get real-time snow reports, avalanche conditions, and accurate weather forecasts for Colorado's backcountry ski destinations | Stay informed with PowderHound">
 	<meta property="og:title" content="PowderHound | Backcountry Snow Reports and Avalanche Forecasts" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://powderhound.io/snow-report/backcountry" />

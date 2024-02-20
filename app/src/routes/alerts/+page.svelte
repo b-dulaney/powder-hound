@@ -67,6 +67,7 @@
 	<title>
 		PowderHound | Manage your alerts
 	</title>
+    <meta property="og:site_name" content="PowderHound" />
     <meta property="og:title" content="PowderHound | Manage your alerts" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://powderhound.io/alerts" />
