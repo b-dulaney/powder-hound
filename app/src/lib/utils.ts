@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import type { Page } from 'puppeteer-core';
+import { readable } from 'svelte/store';
 
 export function convertWindDirection(input: string): string {
 	const degreeStr = input.split('/')[0];
@@ -128,5 +129,24 @@ export function observeElement(id: string): Promise<boolean> {
 			observer.disconnect();
 			resolve(false);
 		};
+	});
+}
+
+/**
+ * Creates a readable store that counts down from the time remaining until it reaches 0
+ */
+export function tooManyRequestsTimer(timeRemaining: number) {
+	return readable(0, (set) => {
+		const update = () => {
+			if (timeRemaining >= 0) {
+				set(timeRemaining--);
+			}
+		};
+
+		update();
+
+		const interval = setInterval(update, 1000);
+
+		return () => clearInterval(interval);
 	});
 }
