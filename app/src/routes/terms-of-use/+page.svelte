@@ -35,7 +35,7 @@
 </section>
 
 <section id="terms-of-use">
-    <div class="mx-auto w-full lg:max-w-7xl px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
+    <div class="mx-auto w-full lg:max-w-7xl px-4 pb-8 pt-4 lg:pt-8">
     <Card>
         <svelte:fragment slot="header-subtitle">Updated January 25th, 2024</svelte:fragment>
         <svelte:fragment slot="body">

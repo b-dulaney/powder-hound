@@ -58,7 +58,7 @@
 <ResortLayout {resortDetails} />
 
 <section id="forecast-section">
-	<div class="mx-auto w-full lg:max-w-7xl px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
+	<div class="mx-auto w-full lg:max-w-7xl px-4 pb-8 pt-4 lg:pt-8">
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 			<Card>
 				<svelte:fragment slot="header">Weather Forecast</svelte:fragment>

@@ -208,7 +208,9 @@
 				</div>
 				</svelte:fragment>
 			</Card>
+				
 			{#if backcountryDetails.snow_next_24h > 0}
+			<div class="py-4">
 				<Card>
 					<svelte:fragment slot="header">Hourly Accumulation</svelte:fragment>
 					<svelte:fragment slot="body">
@@ -253,6 +255,7 @@
 					</div>
 					</svelte:fragment>
 				</Card>
+			</div>
 			{/if}
 	</div>
 </section>

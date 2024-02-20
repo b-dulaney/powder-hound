@@ -129,7 +129,7 @@
 
 	<svelte:fragment slot="pageFooter">
 		<div
-			class="page-footer mt-8 border-t border-surface-500/10 text-xs dark:bg-surface-900 md:text-base"
+			class="page-footer border-t border-surface-500/10 text-xs dark:bg-surface-900 md:text-base"
 		>
 			<div class="mx-auto w-full max-w-6xl space-y-10 p-4 py-8">
 				<section class="flex flex-col items-center justify-between space-y-5 md:space-y-0">
