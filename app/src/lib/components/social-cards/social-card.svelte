@@ -32,7 +32,7 @@
 		background-color: #15171F;
 	}
 	.app-description {
-		@apply text-3xl h-20 max-w-4xl;
+		@apply text-4xl h-20 max-w-5xl;
 		color: #DFE0E2;
 		font-family: 'Open Sans';
 	}

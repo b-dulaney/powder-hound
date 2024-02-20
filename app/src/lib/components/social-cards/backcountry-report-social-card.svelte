@@ -22,17 +22,17 @@
                 <p class="avy-stat-value">
                     {dangerRating}
                     {#if avalancheDangerLevel === 0}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-considerable.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 28px" />
+                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-considerable.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
                 {:else if avalancheDangerLevel === 1}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-low.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 28px" />
+                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-low.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
                 {:else if avalancheDangerLevel === 2}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-moderate.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 28px" />
+                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-moderate.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
                 {:else if avalancheDangerLevel === 3}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-considerable.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 28px" />
+                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-considerable.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
                 {:else if avalancheDangerLevel === 4}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-high.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 28px" />
+                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-high.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
                 {:else if avalancheDangerLevel === 5}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-extreme.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 28px" />
+                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-extreme.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
                 {/if}
                 </p>
 			<p class="stat-label">Avalanche Danger</p>
@@ -72,7 +72,7 @@
 	}
 
 	.card-container {
-		@apply flex flex-col gap-2 justify-around items-start h-[622px] w-full p-8;
+		@apply flex flex-col gap-1 justify-around items-start h-[622px] w-full p-8;
 		background-color: #15171F;
 	}
 
@@ -91,18 +91,18 @@
 	.stat-label {
 		color: #DFE0E2;
 		font-family: 'Open Sans';
-        @apply text-xl;
+        @apply text-2xl;
 	}
 
     .avy-stat-value {
         color: #DFE0E2;
-        @apply text-2xl flex items-baseline;
+        @apply text-3xl flex items-baseline;
         font-family: 'Open Sans Bold';
     }
 
 	.stat-value {
 		color: #DFE0E2;
-		@apply text-2xl;
+		@apply text-3xl;
 		font-family: 'Open Sans Bold';
 	}
 
