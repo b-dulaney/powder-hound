@@ -16,26 +16,40 @@
 	<title>
 		PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast
 	</title>
-	<meta name="theme-color" content="#D4163C">
-	<meta name="twitter:card" content="summary_large_image">
+	<meta name="theme-color" content="#D4163C" />
+	<meta name="twitter:card" content="summary_large_image" />
 	<meta property="og:site_name" content="PowderHound" />
-	<meta name="description" content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`}>
-	<meta property="og:title" content="PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast" />
+	<meta
+		name="description"
+		content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`}
+	/>
+	<meta
+		property="og:title"
+		content="PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast"
+	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={$page.url.toString()} />
-	<meta property="og:image" content={`https://powderhound.io/og/backcountry?slug=${backcountryDetails.slug}`} />
-	<meta property="og:description" content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`} />
-	<meta property="og:image:type" content="image/png">
-	<meta property="og:image:width" content="1200">
-	<meta property="og:image:height" content="630">
+	<meta
+		property="og:image"
+		content={`https://powderhound.io/og/backcountry?slug=${backcountryDetails.slug}`}
+	/>
+	<meta
+		property="og:description"
+		content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`}
+	/>
+	<meta property="og:image:type" content="image/png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
 </svelte:head>
 
 <section id="header-section">
-	<div class="mx-auto w-full lg:max-w-7xl px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
+	<div class="mx-auto w-full px-4 pb-2 pt-4 md:pb-4 lg:max-w-7xl lg:pt-8">
 		<ol class="breadcrumb lg:text-lg">
 			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-			<li class="crumb !ml-0 md:!ml-4"><a class="anchor !text-surface-300" href="/snow-report/backcountry">Snow Report</a></li>
+			<li class="crumb !ml-0 md:!ml-4">
+				<a class="anchor !text-surface-300" href="/snow-report/backcountry">Snow Report</a>
+			</li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 			<li class="crumb text-surface-300">{backcountryDetails.display_name}</li>
 		</ol>
@@ -46,11 +60,11 @@
 				><p class="mr-2 mt-2 text-xl font-semibold text-surface-300">Region:</p>
 				<p class="mt-2 text-xl font-semibold">{backcountryDetails.region}</p></span
 			>
-				<div
-					class="variant-ghost-success badge mt-2 w-[100px] capitalize lg:mt-4 lg:w-[120px] lg:py-1 lg:text-lg lg:font-normal"
-				>
-					{backcountryDetails.location_type}
-				</div>
+			<div
+				class="variant-ghost-success badge mt-2 w-[100px] capitalize lg:mt-4 lg:w-[120px] lg:py-1 lg:text-lg lg:font-normal"
+			>
+				{backcountryDetails.location_type}
+			</div>
 		</div>
 	</div>
 </section>
@@ -58,13 +72,13 @@
 <BackcountryLayout {backcountryDetails} />
 
 <section id="forecast-section">
-	<div class="mx-auto w-full lg:max-w-7xl px-4 mb-10">
-		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+	<div class="mx-auto mb-10 w-full px-4 lg:max-w-7xl">
+		<div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
 			<Card>
 				<svelte:fragment slot="header">Daily Forecast</svelte:fragment>
 				<svelte:fragment slot="body">
 					<div class="flex h-full flex-col justify-evenly">
-						<div class="flex justify-between sm:w-2/3 sm:self-center py-4">
+						<div class="flex justify-between py-4 sm:w-2/3 sm:self-center">
 							<div class="flex flex-col p-4">
 								<p class="text-3xl font-bold">{backcountryDetails.current_temperature}°</p>
 								<p class="text-xl font-semibold">
@@ -99,7 +113,7 @@
 								{/if}
 							{/each}
 						</div>
-	
+
 						<Accordion class="pb-12 lg:hidden">
 							<AccordionItem>
 								<svelte:fragment slot="summary"
@@ -204,7 +218,6 @@
 						</ul>
 					</svelte:fragment>
 				</Card>
-
 			</div>
 		</div>
 	</div>
