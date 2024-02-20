@@ -340,7 +340,7 @@
                         <td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
                             >{row.base_depth}”</td>
                         <td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
-                            >{Math.round((row.runs_open / row.total_runs) * 100)}%</td>
+                            >{Math.floor((row.runs_open / row.total_runs) * 100)}%</td>
                         <td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
                         >{formatSnowfall(row.snow_past_48h)}"</td
                     >
