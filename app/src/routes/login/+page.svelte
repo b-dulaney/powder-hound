@@ -27,6 +27,6 @@
 	<meta property="og:description" content="PowderHound | Login to get snowfall alerts for Colorado's premier ski destinations" />
 </svelte:head>
 
-<div class="mt-10 flex h-full items-start justify-center px-4">
+<div class="my-10 flex h-full items-start justify-center px-4">
 	<Login action="login" supabase={supabase} form={form} />
 </div>

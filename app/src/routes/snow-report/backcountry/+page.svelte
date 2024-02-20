@@ -35,6 +35,6 @@
 	<meta property="og:description" content="Get real-time snow reports, avalanche conditions, and accurate weather forecasts for Colorado's backcountry ski destinations | Stay informed with PowderHound" />
 </svelte:head>
 
-<section class="mx-auto w-full lg:max-w-7xl md:px-4">
+<section class="mx-auto pb-8 w-full lg:max-w-7xl md:px-4">
     <BackcountryTable backcountryOverviews={filteredBackcountry} session={session} alerts={alerts ?? []} />
 </section>
