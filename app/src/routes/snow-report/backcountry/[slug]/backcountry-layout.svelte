@@ -145,7 +145,7 @@
 							<hr class="w-1/4 !border-slate-700 px-2" />
 						</div>
 						<div class="flex w-full items-center justify-center p-8">
-							<div class="h-[400px] w-[400px]">
+							<div class="h-[400px] w-[400px] md:w-[600px]">
 								<Chart
 									ssr
 									data={backcountryDetails.previous_snowfall_totals}
@@ -229,7 +229,7 @@
 							<hr class="w-1/4 !border-slate-700 px-2" />
 						</div>
 						<div class="flex w-full items-center justify-center p-8">
-							<div class="h-[400px] w-[400px]">
+							<div class="h-[400px] w-[400px] md:w-[600px]">
 								<Chart
 									ssr
 									data={backcountryDetails.upcoming_snowfall_totals}
