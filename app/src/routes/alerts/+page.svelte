@@ -71,6 +71,9 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://powderhound.io/alerts" />
 	<meta property="og:image" content='https://powderhound.io/og?title=Manage Your Alerts' />
+    <meta property="og:image:type" content="image/png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
 	<meta property="og:description" content="Get real-time snow reports, accurate weather predictions, and customized snowfall alerts for Colorado - all 100% free. You'll never miss another powder day." />
 </svelte:head>
 

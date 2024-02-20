@@ -21,6 +21,9 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={$page.url.toString()} />
 	<meta property="og:image" content={`https://powderhound.io/og/resorts?slug=${resortDetails.slug}`} />
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
 	<meta property="og:description" content={`Get real-time snow reports, mountain conditions, and accurate weather forecasts for ${resortDetails.display_name} | Stay informed with PowderHound`} />
 </svelte:head>
 
