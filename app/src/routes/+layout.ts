@@ -2,6 +2,10 @@ import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/publi
 import type { LayoutLoad } from './$types';
 import { createBrowserClient, isBrowser, parse } from '@supabase/ssr';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { dev } from '$app/environment';
+import { inject } from '@vercel/analytics';
+ 
+inject({ mode: dev ? 'development' : 'production' });
 
 export const load: LayoutLoad = async ({ fetch, data, depends }) => {
 	depends('supabase:auth');
