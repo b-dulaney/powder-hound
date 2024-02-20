@@ -1,5 +1,19 @@
 <script lang="ts">
-	import { AppBar, AppShell, Avatar, Drawer, ProgressBar, Toast, getDrawerStore, popup, storePopup, type DrawerSettings, type PopupSettings, Modal, type ModalComponent } from '@skeletonlabs/skeleton';
+	import {
+		AppBar,
+		AppShell,
+		Avatar,
+		Drawer,
+		ProgressBar,
+		Toast,
+		getDrawerStore,
+		popup,
+		storePopup,
+		type DrawerSettings,
+		type PopupSettings,
+		Modal,
+		type ModalComponent
+	} from '@skeletonlabs/skeleton';
 	import '../app.css';
 	import AlertModal from '$lib/components/alert-modal.svelte';
 
@@ -20,12 +34,12 @@
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	const modalRegiestry: Record<string, ModalComponent> = {
-		alertModal: { ref: AlertModal}
-	}
+		alertModal: { ref: AlertModal }
+	};
 
 	const drawerSettings: DrawerSettings = {
 		width: 'w-[280px] md:w-[480px]'
-	}
+	};
 	const drawerStore = getDrawerStore();
 
 	function drawerOpen(): void {
@@ -72,36 +86,56 @@
 	};
 </script>
 
-
-<Modal components={modalRegiestry}/>
+<Modal components={modalRegiestry} />
 <Toast />
 <Drawer>
-	<SidebarNav session={session} drawerClose={drawerClose} logout={logout} />
+	<SidebarNav {session} {drawerClose} {logout} />
 </Drawer>
 <AppShell>
 	<svelte:fragment slot="header">
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<button on:click={drawerOpen} type="button" aria-label="Menu" class="btn-icon !bg-transparent md:hidden"><i class="fa fa-solid fa-bars text-xl" /></button>
+				<button
+					on:click={drawerOpen}
+					type="button"
+					aria-label="Menu"
+					class="btn-icon !bg-transparent md:hidden"
+					><i class="fa fa-solid fa-bars text-xl" /></button
+				>
 				<a href="/" title="Go to Homepage" class="flex items-center">
-					<enhanced:img src="../public/new-logo-v2.png" alt="Powder Hound Logo" class="h-10 w-10 md:h-12 md:w-12" />
-					<p class="pl-1 md:pl-2 text-xl font-bold md:text-2xl">Powder<span class="gradient-heading">Hound</span></p>
+					<enhanced:img
+						src="../public/new-logo-v2.png"
+						alt="Powder Hound Logo"
+						class="h-10 w-10 md:h-12 md:w-12"
+					/>
+					<p class="pl-1 text-xl font-bold md:pl-2 md:text-2xl">
+						Powder<span class="gradient-heading">Hound</span>
+					</p>
 				</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<div class="hidden md:flex items-center justify-between">
-					<a href="/snow-report/resorts" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Resorts</a>
-					<a href="/snow-report/backcountry" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Backcountry</a>
-					<a href="/alerts" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Alerts</a>
+				<div class="hidden items-center justify-between md:flex">
+					<a
+						href="/snow-report/resorts"
+						class="btn btn-lg !bg-transparent"
+						data-sveltekit-preload-data>Resorts</a
+					>
+					<a
+						href="/snow-report/backcountry"
+						class="btn btn-lg !bg-transparent"
+						data-sveltekit-preload-data>Backcountry</a
+					>
+					<a href="/alerts" class="btn btn-lg !bg-transparent" data-sveltekit-preload-data>Alerts</a
+					>
 				</div>
 				<div class="flex items-center justify-end">
 					<button aria-label="Profile" type="button" class="btn-icon" use:popup={userDropdown}>
 						{#if session?.user?.user_metadata?.avatar_url}
 							<Avatar src={session.user.user_metadata.avatar_url} />
 						{:else if session?.user?.email}
-							<Avatar initials={session?.user?.email[0]} background="bg-secondary-500"/>
+							<Avatar initials={session?.user?.email[0]} background="bg-secondary-500" />
 						{:else}
-						<i class="fa-solid fa-circle-user text-3xl md:text-4xl" />
+							<i class="fa-solid fa-circle-user text-3xl md:text-4xl" />
 						{/if}
 					</button>
 				</div>
@@ -112,7 +146,7 @@
 							<button class="listbox-item" on:click={logout}>Logout</button>
 						</div>
 					{:else}
-						<div class="btn-group-vertical w-24 bg-surface-600 shadow-xl z-10">
+						<div class="btn-group-vertical z-10 w-24 bg-surface-600 shadow-xl">
 							<button class="listbox-item z-10" on:click={() => goto('/signup')}>Sign up</button>
 							<button class="listbox-item z-10" on:click={() => goto('/login')}>Login</button>
 						</div>
@@ -134,7 +168,11 @@
 			<div class="mx-auto w-full max-w-6xl space-y-10 p-4 py-8">
 				<section class="flex flex-col items-center justify-between space-y-5 md:space-y-0">
 					<div class="grid grid-cols-1 place-content-center place-items-center gap-2">
-						<enhanced:img src='../public/new-logo-v2.png' alt="Powder Hound Logo" class="h-10 w-10" />
+						<enhanced:img
+							src="../public/new-logo-v2.png"
+							alt="Powder Hound Logo"
+							class="h-10 w-10"
+						/>
 						<p class="text-sm opacity-80">PowderHound</p>
 						<span class="variant-soft badge">1.0.0</span>
 					</div>

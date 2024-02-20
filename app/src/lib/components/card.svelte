@@ -1,11 +1,11 @@
-<div class="card mt-4 md:px-4 md:py-2 w-full shadow-md">
-    <div class="card-header">
-        <h2 class="h3">
-            <slot name="header"></slot>
-        </h2>
-        <p class="text-surface-400 py-2">
-        <slot name="header-subtitle"></slot>
-        </p>
-    </div>
-    <slot name="body"></slot>
+<div class="card mt-4 w-full shadow-md md:px-4 md:py-2">
+	<div class="card-header">
+		<h2 class="h3">
+			<slot name="header" />
+		</h2>
+		<p class="py-2 text-surface-400">
+			<slot name="header-subtitle" />
+		</p>
+	</div>
+	<slot name="body" />
 </div>

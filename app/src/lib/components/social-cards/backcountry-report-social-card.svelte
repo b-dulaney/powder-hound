@@ -1,5 +1,5 @@
 <script>
-	import { avalancheDangerRatingsMap } from "$lib/utils";
+	import { avalancheDangerRatingsMap } from '$lib/utils';
 
 	export let mountainName = 'Berthoud Pass';
 	export let avalancheDangerLevel = 3;
@@ -8,33 +8,61 @@
 	export let snowNext24Hrs = 1;
 	export let snowNext72Hrs = 3;
 
-    const dangerRating = avalancheDangerRatingsMap[avalancheDangerLevel];
+	const dangerRating = avalancheDangerRatingsMap[avalancheDangerLevel];
 </script>
 
 <div class="card-container">
 	<div class="logo-container">
-		<img src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/logo-256px.png" alt="Powder Hound Logo" class="logo" />
+		<img
+			src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/logo-256px.png"
+			alt="Powder Hound Logo"
+			class="logo"
+		/>
 		<p class="app-title">Powder<span class="gradient-heading">Hound</span></p>
 	</div>
 	<h1 class="h1">{mountainName} Snow Report</h1>
 	<div class="stats-container">
 		<div class="stat">
-                <p class="avy-stat-value">
-                    {dangerRating}
-                    {#if avalancheDangerLevel === 0}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-considerable.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
-                {:else if avalancheDangerLevel === 1}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-low.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
-                {:else if avalancheDangerLevel === 2}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-moderate.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
-                {:else if avalancheDangerLevel === 3}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-considerable.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
-                {:else if avalancheDangerLevel === 4}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-high.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
-                {:else if avalancheDangerLevel === 5}
-                    <img src='https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-extreme.png' alt={`Avalanche danger: ${avalancheDangerLevel}`} style="height: 40px" />
-                {/if}
-                </p>
+			<p class="avy-stat-value">
+				{dangerRating}
+				{#if avalancheDangerLevel === 0}
+					<img
+						src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-considerable.png"
+						alt={`Avalanche danger: ${avalancheDangerLevel}`}
+						style="height: 40px"
+					/>
+				{:else if avalancheDangerLevel === 1}
+					<img
+						src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-low.png"
+						alt={`Avalanche danger: ${avalancheDangerLevel}`}
+						style="height: 40px"
+					/>
+				{:else if avalancheDangerLevel === 2}
+					<img
+						src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-moderate.png"
+						alt={`Avalanche danger: ${avalancheDangerLevel}`}
+						style="height: 40px"
+					/>
+				{:else if avalancheDangerLevel === 3}
+					<img
+						src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-considerable.png"
+						alt={`Avalanche danger: ${avalancheDangerLevel}`}
+						style="height: 40px"
+					/>
+				{:else if avalancheDangerLevel === 4}
+					<img
+						src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-high.png"
+						alt={`Avalanche danger: ${avalancheDangerLevel}`}
+						style="height: 40px"
+					/>
+				{:else if avalancheDangerLevel === 5}
+					<img
+						src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/avy-danger-extreme.png"
+						alt={`Avalanche danger: ${avalancheDangerLevel}`}
+						style="height: 40px"
+					/>
+				{/if}
+			</p>
 			<p class="stat-label">Avalanche Danger</p>
 		</div>
 		<div class="stat">
@@ -72,8 +100,8 @@
 	}
 
 	.card-container {
-		@apply flex flex-col gap-1 justify-around items-start h-[622px] w-full p-8;
-		background-color: #15171F;
+		@apply flex h-[622px] w-full flex-col items-start justify-around gap-1 p-8;
+		background-color: #15171f;
 	}
 
 	.logo-container {
@@ -81,7 +109,7 @@
 	}
 
 	.stats-container {
-		@apply flex gap-8 max-w-full justify-start h-20;
+		@apply flex h-20 max-w-full justify-start gap-8;
 	}
 
 	.stat {
@@ -89,19 +117,19 @@
 	}
 
 	.stat-label {
-		color: #DFE0E2;
+		color: #dfe0e2;
 		font-family: 'Open Sans';
-        @apply text-2xl;
+		@apply text-2xl;
 	}
 
-    .avy-stat-value {
-        color: #DFE0E2;
-        @apply text-3xl flex items-baseline;
-        font-family: 'Open Sans Bold';
-    }
+	.avy-stat-value {
+		color: #dfe0e2;
+		@apply flex items-baseline text-3xl;
+		font-family: 'Open Sans Bold';
+	}
 
 	.stat-value {
-		color: #DFE0E2;
+		color: #dfe0e2;
 		@apply text-3xl;
 		font-family: 'Open Sans Bold';
 	}
@@ -111,31 +139,30 @@
 	}
 
 	h1 {
-		@apply text-5xl w-full max-w-full;
+		@apply w-full max-w-full text-5xl;
 		font-family: 'Open Sans Bold';
-		color: #DFE0E2;
+		color: #dfe0e2;
 	}
 
 	.bottom-trim {
-		@apply flex w-full h-2;
-		background-color: #D4163C;
+		@apply flex h-2 w-full;
+		background-color: #d4163c;
 	}
 
 	.app-title {
 		@apply text-5xl;
-		color: #DFE0E2;
+		color: #dfe0e2;
 		font-family: 'Open Sans Bold';
 		font-weight: 800;
-	}
-	
-	.gradient-heading {
-		@apply text-5xl;
-		color: #D4163C;
-		font-family: 'Open Sans Bold';
-		font-weight: 800;
-		color: transparent; 
-		background-clip: text; 
-		background-image: linear-gradient(to bottom right,#E15C77, #D4163C);  
 	}
 
+	.gradient-heading {
+		@apply text-5xl;
+		color: #d4163c;
+		font-family: 'Open Sans Bold';
+		font-weight: 800;
+		color: transparent;
+		background-clip: text;
+		background-image: linear-gradient(to bottom right, #e15c77, #d4163c);
+	}
 </style>
