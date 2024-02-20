@@ -22,6 +22,9 @@
 	<meta property="og:url" content={$page.url.toString()} />
 	<meta property="og:image" content={`https://powderhound.io/og/backcountry?slug=${backcountryDetails.slug}`} />
 	<meta property="og:description" content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`} />
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
 </svelte:head>
 
 <section id="header-section">

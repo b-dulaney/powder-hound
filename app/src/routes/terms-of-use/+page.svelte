@@ -11,6 +11,9 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://powderhound.io/terms-of-use" />
 	<meta property="og:image" content='https://powderhound.io/og?title=Terms of Use' />
+    <meta property="og:image:type" content="image/png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
 	<meta property="og:description" content="View PowderHound's terms of use" />
 </svelte:head>
 
