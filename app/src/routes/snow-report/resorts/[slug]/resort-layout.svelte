@@ -59,7 +59,7 @@
 						Updated at: {dayjs(resortDetails?.updated_at).format('h:mm A')}
 					</svelte:fragment>
 					<svelte:fragment slot="body">
-						<div class="grid grid-cols-2 items-center justify-center md:h-[90%] p-4 xl:p-6">
+						<div class="grid grid-cols-2 items-center justify-center p-4 md:h-[90%] xl:p-6">
 							{#if resortDetails?.snow_type}
 								<div class="col-span-2 flex flex-col items-center">
 									<p class="py-2 text-xl font-bold lg:text-2xl">{resortDetails?.snow_type}</p>

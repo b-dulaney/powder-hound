@@ -31,7 +31,6 @@
 			},
 			body: JSON.stringify(alertToUpdate)
 		});
-		console.log(response);
 
 		if (response.ok) {
 			toastStore.trigger(updateSuccessfulToast);

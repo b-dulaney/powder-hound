@@ -5,7 +5,7 @@ export const load = async (event) => {
 	const session = await event.locals.getSession();
 	const { supabase } = event.locals;
 	if (!session || !session.user) {
-		return redirect(301, '/login');
+		redirect(301, '/login');
 	}
 
 	const { data: profileData, error: profileError } = await supabase

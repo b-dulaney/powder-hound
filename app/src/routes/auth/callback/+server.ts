@@ -7,6 +7,8 @@ export const GET = async (event) => {
 		locals: { supabase, getSession }
 	} = event;
 	const code = url.searchParams.get('code') as string;
+	const otp = url.searchParams.get('otp') as string;
+
 
 	if (code) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
@@ -22,12 +24,27 @@ export const GET = async (event) => {
 				.returns<UserAlerts[]>();
 
 			if (alertsData && alertsData.length === 0) {
-				return redirect(301, '/alerts/initial-setup');
+				redirect(301, '/alerts/initial-setup');
 			}
-			throw redirect(301, '/snow-report/resorts');
+			redirect(301, '/snow-report/resorts');
 		}
+	}
+	if (otp) {
+		const session = await getSession();
+		await supabase.auth.setSession({
+			access_token: session.access_token,
+			refresh_token: session.refresh_token
+		});
+		const { data: alertsData } = await supabase
+			.from('user_alerts')
+			.select()
+			.returns<UserAlerts[]>();
+		if (alertsData && alertsData.length === 0) {
+			redirect(301, '/alerts/initial-setup');
+		}
+		redirect(301, '/snow-report/resorts');
 	}
 
 	// return the user to an error page with instructions
-	throw redirect(303, '/auth/auth-code-error');
+	redirect(303, '/auth/auth-code-error');
 };

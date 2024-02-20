@@ -109,7 +109,6 @@ export function formatHeroNumber(num: number, digits: number) {
 }
 
 export function observeElement(id: string): Promise<boolean> {
-	console.log(id);
 	return new Promise((resolve) => {
 		const observer = new IntersectionObserver((entries) => {
 			const targetEntry = entries.find((entry) => entry.target.id === id);

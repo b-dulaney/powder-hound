@@ -5,7 +5,7 @@ export const load = async (event) => {
 	const { supabase } = event.locals;
 	const session = await event.locals.getSession();
 	if (!session) {
-		return redirect(301, '/login');
+		redirect(301, '/login');
 	}
 
 	await supabase.auth.setSession({
