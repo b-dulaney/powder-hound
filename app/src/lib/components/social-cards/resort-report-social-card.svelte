@@ -57,7 +57,7 @@
 		src: url('/src/lib/OpenSans-SemiBold.ttf');
 	}
 	.card-container {
-		@apply flex flex-col gap-2 justify-around items-start h-[622px] w-full p-8;
+		@apply flex flex-col gap-1 justify-around items-start h-[622px] w-full p-8;
 		background-color: #15171F;
 	}
 
@@ -76,12 +76,12 @@
 	.stat-label {
 		color: #DFE0E2;
 		font-family: 'Open Sans';
-		@apply text-xl;
+		@apply text-2xl;
 	}
 
 	.stat-value {
 		color: #DFE0E2;
-		@apply text-2xl;
+		@apply text-3xl;
 		font-family: 'Open Sans Bold';
 	}
 
