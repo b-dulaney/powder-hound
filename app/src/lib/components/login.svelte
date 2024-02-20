@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import { PUBLIC_SITE_URL, PUBLIC_VERCEL_ENV } from '$env/static/public';
 	import GithubIcon from '$lib/components/github-icon.svelte';
 	import GoogleIcon from '$lib/components/google-icon.svelte';
-	import { PUBLIC_SITE_URL, PUBLIC_VERCEL_ENV } from '$env/static/public';
-	import type { SupabaseClient } from '@supabase/supabase-js';
-	import { enhance } from '$app/forms';
-	import type { ActionData } from '../../routes/login/$types';
+	import { tooManyRequestsTimer } from '$lib/utils';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
+	import type { SupabaseClient } from '@supabase/supabase-js';
+	import type { ActionData } from '../../routes/login/$types';
 	
 	export let form: ActionData;
 	let formLoading = false;
@@ -13,6 +14,13 @@
 	export let supabase: SupabaseClient;
     export let action: 'login' | 'signup' = 'login';
     const actionText = action === 'login' ? 'Sign in' : 'Sign up';
+
+
+	let timer;
+	$: if(form?.tooManyRequests) {
+		timer = tooManyRequestsTimer(form?.timeRemaining);
+	}
+
 
 	async function signInWithGithub() {
 		await supabase.auth.signInWithOAuth({
@@ -37,8 +45,9 @@
 		});
 	}
 </script>
+
 	{#if !form?.success}
-		<div class="card max-w-sm p-4">
+		<div class="card max-w-sm p-4 mb-8">
 			<div class="card-header text-center">
 				<p class="text-xl font-semibold">{actionText} with</p>
 			</div>
@@ -99,6 +108,13 @@
 							formAction="?/login">
 								<ProgressRadial value={undefined} width="w-8"/>
 							</button>
+						{:else if form?.tooManyRequests && $timer && $timer > 0}
+							<button
+								type="submit"
+								class="variant-filled-primary btn btn-lg w-full rounded-md"
+								disabled>
+									Please wait {$timer} seconds
+							</button>
 						{:else}
 							<button
 								type="submit"
@@ -112,8 +128,8 @@
 			</form>
 			<p class="text-sm p-4 text-center">By registering you agree to PowderHound's <a class="anchor" href="/terms-of-use">Terms of Use</a> and acknowledge that you've read our <a class="anchor" href="/privacy-policy">Privacy Policy</a>.</p>
 		</div>
-	{:else}
-		<div class="card p-2 md:p-4 mx-4 mt-20">
+	{:else if form?.success}
+		<div class="card p-2 md:p-4 mx-4 mt-20 mb-8">
 			<div class="card-header text-center">
 				<p class="text-center text-3xl font-semibold">Check your email</p>
 			</div>
