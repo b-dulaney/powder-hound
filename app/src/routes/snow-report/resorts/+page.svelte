@@ -22,6 +22,11 @@
 		PowderHound | Resort Snow Reports and Mountain Conditions
 	</title>
     <meta name="description" content="Get real-time snow reports, mountain conditions, and accurate weather forecasts for Colorado's premier ski destinations | Stay informed with PowderHound">
+    <meta property="og:title" content="PowderHound | Resort Snow Reports and Mountain Conditions" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://powderhound.io/snow-report/resorts" />
+	<meta property="og:image" content={`https://powderhound.io/og/title=Snow Report - Resorts`} />
+	<meta property="og:description" content="Get real-time snow reports, mountain conditions, and accurate weather forecasts for Colorado's premier ski destinations | Stay informed with PowderHound" />
 </svelte:head>
 
 <section class="mx-auto w-full lg:max-w-7xl md:px-4">

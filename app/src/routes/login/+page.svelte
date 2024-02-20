@@ -11,9 +11,14 @@
 
 <svelte:head>
 	<title>
-		PowderHound - Login
+		PowderHound | Login
 	</title>
-	<meta name="description" content="Login to PowderHound get snowfall alerts for Colorado's premier ski destinations">
+	<meta name="description" content="Login to PowderHound to get snowfall alerts for Colorado's premier ski destinations">
+	<meta property="og:title" content="PowderHound | Login" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://powderhound.io/login" />
+	<meta property="og:image" content='https://powderhound.io/og?title=Login' />
+	<meta property="og:description" content="PowderHound | Login to get snowfall alerts for Colorado's premier ski destinations" />
 </svelte:head>
 
 <div class="mt-10 flex h-full items-start justify-center px-4">

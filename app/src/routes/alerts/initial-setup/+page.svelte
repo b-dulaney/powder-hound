@@ -59,7 +59,7 @@
 
 <svelte:head>
 	<title>
-		PowderHound - Set up your alerts
+    PowderHound | Set up your alerts
 	</title>
 </svelte:head>
 

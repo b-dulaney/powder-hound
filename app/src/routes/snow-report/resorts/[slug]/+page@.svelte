@@ -4,6 +4,7 @@
 	import { convertWindDirection, convertWindSpeed, weatherConditionsMap } from '$lib/utils';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
+	import { page } from '$app/stores';
 	import ResortLayout from './resort-layout.svelte';
 	import Card from '$lib/components/card.svelte';
 	export let data: PageData;
@@ -16,6 +17,11 @@
 		PowderHound | {resortDetails.display_name} Snow Report and Weather Forecast
 	</title>
     <meta name="description" content={`Get real-time snow reports, mountain conditions, and accurate weather forecasts for ${resortDetails.display_name} | Stay informed with PowderHound`}>
+	<meta property="og:title" content="PowderHound | {resortDetails.display_name} Snow Report and Avalanche Forecast" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={$page.url.toString()} />
+	<meta property="og:image" content={`https://powderhound.io/og/resorts?slug=${resortDetails.slug}`} />
+	<meta property="og:description" content={`Get real-time snow reports, mountain conditions, and accurate weather forecasts for ${resortDetails.display_name} | Stay informed with PowderHound`} />
 </svelte:head>
 
 <section id="header-section">

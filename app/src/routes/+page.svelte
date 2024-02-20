@@ -13,6 +13,11 @@
 		PowderHound | Snow Reports and Powder Alerts for Colorado
 	</title>
 	<meta name="description" content="Get real-time snow reports, accurate weather predictions, and customized snowfall alerts for Colorado - all 100% free. You'll never miss another powder day.">
+	<meta property="og:title" content="PowderHound | Snow Reports and Powder Alerts for Colorado" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://powderhound.io" />
+	<meta property="og:image" content='https://powderhound.io/og' />
+	<meta property="og:description" content="Get real-time snow reports, accurate weather predictions, and customized snowfall alerts for Colorado - all 100% free. You'll never miss another powder day." />
 </svelte:head>
 
 <Snow height="h-[600px]" zIndex="-z-10" />

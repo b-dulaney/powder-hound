@@ -4,9 +4,14 @@
 
 <svelte:head>
 	<title>
-		PowderHound - Privacy Policy
+		PowderHound | Privacy Policy
 	</title>
 	<meta name="description" content="View PowderHound's privacy policy">
+    <meta property="og:title" content="PowderHound | Privacy Policy" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://powderhound.io/privacy-policy" />
+	<meta property="og:image" content='https://powderhound.io/og?title=Privacy Policy' />
+	<meta property="og:description" content="View PowderHound's privacy policy" />
 </svelte:head>
 
 <section id="header-section">

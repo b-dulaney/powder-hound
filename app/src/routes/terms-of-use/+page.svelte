@@ -4,9 +4,14 @@
 
 <svelte:head>
 	<title>
-		PowderHound - Terms of Use
+		PowderHound | Terms of Use
 	</title>
 	<meta name="description" content="View PowderHound's terms of use">
+    <meta property="og:title" content="PowderHound | Terms of Use" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://powderhound.io/terms-of-use" />
+	<meta property="og:image" content='https://powderhound.io/og?title=Terms of Use' />
+	<meta property="og:description" content="View PowderHound's terms of use" />
 </svelte:head>
 
 <section id="header-section">

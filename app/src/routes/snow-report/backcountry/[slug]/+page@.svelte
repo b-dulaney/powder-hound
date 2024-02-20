@@ -3,6 +3,7 @@
 	import WeatherIcon from '$lib/components/weather-icon.svelte';
 	import { convertWindDirection, convertWindSpeed, weatherConditionsMap } from '$lib/utils';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import BackcountryLayout from './backcountry-layout.svelte';
 	import Card from '$lib/components/card.svelte';
@@ -16,6 +17,11 @@
 		PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast
 	</title>
     <meta name="description" content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`}>
+	<meta property="og:title" content="PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={$page.url.toString()} />
+	<meta property="og:image" content={`https://powderhound.io/og/backcountry?slug=${backcountryDetails.slug}`} />
+	<meta property="og:description" content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`} />
 </svelte:head>
 
 <section id="header-section">
