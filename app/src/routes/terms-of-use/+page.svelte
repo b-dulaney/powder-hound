@@ -6,6 +6,8 @@
 	<title>
 		PowderHound | Terms of Use
 	</title>
+    <meta name="theme-color" content="#D4163C">
+    <meta name="twitter:card" content="summary_large_image">
     <meta property="og:site_name" content="PowderHound" />
     <meta name="description" content="View PowderHound's terms of use">
     <meta property="og:title" content="PowderHound | Terms of Use" />
