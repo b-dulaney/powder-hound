@@ -16,7 +16,8 @@
 	<title>
 		PowderHound | {resortDetails.display_name} Snow Report and Weather Forecast
 	</title>
-    <meta name="description" content={`Get real-time snow reports, mountain conditions, and accurate weather forecasts for ${resortDetails.display_name} | Stay informed with PowderHound`}>
+	<meta property="og:site_name" content="PowderHound" />
+	<meta name="description" content={`Get real-time snow reports, mountain conditions, and accurate weather forecasts for ${resortDetails.display_name} | Stay informed with PowderHound`}>
 	<meta property="og:title" content="PowderHound | {resortDetails.display_name} Snow Report and Avalanche Forecast" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={$page.url.toString()} />

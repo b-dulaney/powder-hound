@@ -6,7 +6,8 @@
 	<title>
 		PowderHound | Terms of Use
 	</title>
-	<meta name="description" content="View PowderHound's terms of use">
+    <meta property="og:site_name" content="PowderHound" />
+    <meta name="description" content="View PowderHound's terms of use">
     <meta property="og:title" content="PowderHound | Terms of Use" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://powderhound.io/terms-of-use" />

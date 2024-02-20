@@ -13,6 +13,7 @@
 	<title>
 		PowderHound | Login
 	</title>
+	<meta property="og:site_name" content="PowderHound" />
 	<meta name="description" content="Login to PowderHound to get snowfall alerts for Colorado's premier ski destinations">
 	<meta property="og:title" content="PowderHound | Login" />
 	<meta property="og:type" content="website" />

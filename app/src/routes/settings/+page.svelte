@@ -69,7 +69,8 @@
 	<title>
 		PowderHound | Settings
 	</title>
-	<meta name="description" content="Manage your PowderHound account and data">
+    <meta property="og:site_name" content="PowderHound" />
+    <meta name="description" content="Manage your PowderHound account and data">
     <meta property="og:title" content="PowderHound | Settings" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://powderhound.io/settings" />

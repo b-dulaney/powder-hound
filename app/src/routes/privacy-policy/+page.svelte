@@ -6,7 +6,8 @@
 	<title>
 		PowderHound | Privacy Policy
 	</title>
-	<meta name="description" content="View PowderHound's privacy policy">
+    <meta property="og:site_name" content="PowderHound" />
+    <meta name="description" content="View PowderHound's privacy policy">
     <meta property="og:title" content="PowderHound | Privacy Policy" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://powderhound.io/privacy-policy" />
