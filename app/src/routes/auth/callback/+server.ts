@@ -24,7 +24,7 @@ export const GET = async (event) => {
 			if (alertsData && alertsData.length === 0) {
 				return redirect(301, '/alerts/initial-setup');
 			}
-			throw redirect(301, '/conditions/resorts');
+			throw redirect(301, '/snow-report/resorts');
 		}
 	}
 

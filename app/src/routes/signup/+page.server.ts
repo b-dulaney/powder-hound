@@ -63,6 +63,6 @@ export const load = async (event) => {
 	const session = await event.locals.getSession();
 
 	if (session) {
-		return redirect(301, '/conditions/resorts');
+		return redirect(301, '/snow-report/resorts');
 	}
 };

@@ -10,9 +10,9 @@
 
 <svelte:head>
 	<title>
-		PowderHound - Snow forecasts and powder alerts for Colorado
+		PowderHound | Snow Reports and Powder Alerts for Colorado
 	</title>
-	<meta name="description" content="Get the latest snow forecasts, powder alerts, and avalanche conditions for Colorado's ski resorts and backcountry.">
+	<meta name="description" content="Get real-time snow reports, accurate weather predictions, and customized snowfall alerts for Colorado - all 100% free. You'll never miss another powder day.">
 </svelte:head>
 
 <Snow height="h-[600px]" zIndex="-z-10" />
@@ -23,17 +23,17 @@
 			<enhanced:img src='../public/new-logo-v2.png' alt="Powder Hound Logo" class="z-0 h-36 w-36 lg:h-52 lg:w-52" />
 			<h1 class="h1 z-0 max-w-xl text-5xl">You'll never miss another powder day.</h1>
 			<p class="z-0 max-w-xl text-xl">
-				View current snow conditions, get accurate predictions, and receive customized snowfall alerts -
+				View the current snow report, get accurate predictions, and receive customized snowfall alerts -
 				all 100% free.
 			</p>
 			<div class="z-0 flex gap-4">
 				<a
 					class="btn variant-filled-primary bg-gradient-to-r"
 					data-sveltekit-preload-data="hover"
-					href="/conditions/resorts"
+					href="/snow-report/resorts"
 				>
 					<div class="flex items-center gap-2">
-						<span>View Conditions</span>
+						<span>View Snow Report</span>
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>

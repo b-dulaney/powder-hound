@@ -333,7 +333,7 @@
                         <td class="table-cell-fit"
                             ><a
                                 class="anchor text-primary-500-400-token xl:text-lg md:pl-2"
-                                href="/conditions/resorts/{row.slug}"
+                                href="/snow-report/resorts/{row.slug}"
                                 data-sveltekit-preload-data="hover">{row.display_name}</a
                             ></td
                         >

@@ -435,7 +435,7 @@ Deno.serve(async (req) => {
                                   <tbody>
                                     <tr>
                                       <td align="center" style="font-size:0px;padding:10px 0px 10px 0px;word-break:break-word;">
-                                        <div style="font-family:Open Sans,Roboto,Arial,sans-serif;font-size:14px;line-height:1.7;text-align:center;color:#1A1C26;"><a href="https://powderhound.io/conditions">View Conditions</a></div>
+                                        <div style="font-family:Open Sans,Roboto,Arial,sans-serif;font-size:14px;line-height:1.7;text-align:center;color:#1A1C26;"><a href="https://powderhound.io/snow-report">View Snow Report</a></div>
                                       </td>
                                     </tr>
                                   </tbody>

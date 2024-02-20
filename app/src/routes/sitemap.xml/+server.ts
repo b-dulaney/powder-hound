@@ -18,13 +18,13 @@ export async function GET() {
                     <priority>1.0</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts</loc>
+                    <loc>https://powderhound.io/snow-report/resorts</loc>
                     <lastmod>${dayjs().format('YYYY-MM-DD')}</lastmod>
                     <changefreq>hourly</changefreq>
                     <priority>0.8</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry</loc>
                     <lastmod>${dayjs().format('YYYY-MM-DD')}</lastmod>
                     <changefreq>hourly</changefreq>
                     <priority>0.7</priority>
@@ -42,187 +42,187 @@ export async function GET() {
                     <priority>0.5</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/wolf-creek-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/wolf-creek-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                     <url>
-                    <loc>https://powderhound.io/conditions/resorts/beaver-creek</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/beaver-creek</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/crested-butte</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/crested-butte</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/berthoud-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/berthoud-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/bear-lake</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/bear-lake</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/cottonwood-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/cottonwood-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/steamboat</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/steamboat</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/sunlight-mountain</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/sunlight-mountain</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/powderhorn</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/powderhorn</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/aspen-snowmass</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/aspen-snowmass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/cameron-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/cameron-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/vail</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/vail</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/aspen-mountain</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/aspen-mountain</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                     <url>
-                    <loc>https://powderhound.io/conditions/resorts/keystone</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/keystone</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/eldora</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/eldora</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/red-mountain-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/red-mountain-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/aspen-highlands</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/aspen-highlands</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/a-basin</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/a-basin</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/copper-mountain</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/copper-mountain</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/loveland-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/loveland-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/monarch</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/monarch</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/winter-park</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/winter-park</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/telluride</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/telluride</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/silverton-mountain</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/silverton-mountain</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/purgatory</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/purgatory</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/resorts/loveland</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/loveland</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/vail-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/vail-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/fremont-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/fremont-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/conditions/backcountry/farwell-mountain</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/farwell-mountain</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                     <url>
-                    <loc>https://powderhound.io/conditions/resorts/breckenridge</loc>
+                    <loc>https://powderhound.io/snow-report/resorts/breckenridge</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>
                 </url>
                     <url>
-                    <loc>https://powderhound.io/conditions/backcountry/lizard-head-pass</loc>
+                    <loc>https://powderhound.io/snow-report/backcountry/lizard-head-pass</loc>
                     <lastmod>2024-02-12</lastmod>
                     <changefreq>daily</changefreq>
                     <priority>0.4</priority>

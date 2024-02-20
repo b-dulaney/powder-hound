@@ -13,9 +13,9 @@
 
 <svelte:head>
 	<title>
-		PowderHound - {resortDetails.display_name} snow forecast, weather conditions, and lift/trail status
+		PowderHound | {resortDetails.display_name} Snow Report and Weather Forecast
 	</title>
-    <meta name="description" content={`Weekly snowfall, 72-hour forecast, and lift/trail info for ${resortDetails.display_name}`}>
+    <meta name="description" content={`Get real-time snow reports, mountain conditions, and accurate weather forecasts for ${resortDetails.display_name} | Stay informed with PowderHound`}>
 </svelte:head>
 
 <section id="header-section">
@@ -23,13 +23,13 @@
 		<ol class="breadcrumb lg:text-lg">
 			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-			<li class="crumb !ml-0 md:!ml-4"><a class="anchor !text-surface-300" href="/conditions/resorts">Conditions</a></li>
+			<li class="crumb !ml-0 md:!ml-4"><a class="anchor !text-surface-300" href="/snow-report/resorts">Snow Report</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 			<li class="crumb text-surface-300">{resortDetails.display_name}</li>
 		</ol>
 
 		<div class="mt-4 flex flex-col">
-			<h1 class="h1">{resortDetails.display_name}</h1>
+			<h1 class="h1">{resortDetails.display_name} Snow Report</h1>
 			<span class="flex items-center"
 				><p class="mr-2 mt-2 text-xl font-semibold text-surface-300">Region:</p>
 				<p class="mt-2 text-xl font-semibold">{resortDetails.region}</p></span
@@ -49,7 +49,7 @@
 	<div class="mx-auto w-full lg:max-w-7xl px-4 pb-2 pt-4 md:pb-4 lg:pt-8">
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 			<Card>
-				<svelte:fragment slot="header">Daily Forecast</svelte:fragment>
+				<svelte:fragment slot="header">Weather Forecast</svelte:fragment>
 				<svelte:fragment slot="body">
 					<div class="flex h-full flex-col justify-evenly">
 						<div class="flex justify-between sm:w-2/3 sm:self-center py-4">

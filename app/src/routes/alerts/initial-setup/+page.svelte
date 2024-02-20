@@ -52,7 +52,7 @@
         if (alertError) {
             console.error(alertError);
         }
-        goto('/conditions', {replaceState: true});
+        goto('/snow-report', {replaceState: true});
     }
 
 </script>

@@ -552,6 +552,7 @@ export type Database = {
           previous_snowfall_totals: Json | null
           region: string | null
           slug: string | null
+          snow_next_24h: number | null
           snow_next_72h: number | null
           snow_past_7d: number | null
           temperature_range: Json | null

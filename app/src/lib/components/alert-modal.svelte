@@ -2,7 +2,7 @@
 
 import { getModalStore } from '@skeletonlabs/skeleton';
 import type { SvelteComponent } from 'svelte';
-import { selectedMountain } from '../../routes/conditions/stores';
+import { selectedMountain } from '../../routes/snow-report/stores';
 
 const modalStore = getModalStore();
 let threshold_inches = 1;
