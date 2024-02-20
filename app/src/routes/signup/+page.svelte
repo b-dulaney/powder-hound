@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Login from '$lib/components/login.svelte';
 	import type { PageData } from '../$types';
-	import type { ActionData } from './$types';
+	import type { ActionData } from '../login/$types';
 
 	export let form: ActionData;
 	export let data: PageData;

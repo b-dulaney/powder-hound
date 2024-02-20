@@ -68,7 +68,7 @@
 	<title>PowderHound | Set up your alerts</title>
 </svelte:head>
 
-<div class="flex max-h-full w-full justify-center p-4">
+<div class="flex max-h-full w-full justify-center p-4 pb-8">
 	<div class="flex flex-col gap-4">
 		<h1 class="h1 text-center !text-3xl" bind:this={top}>Set up Alerts</h1>
 		<div class="card max-h-full w-full overflow-y-auto p-4">
