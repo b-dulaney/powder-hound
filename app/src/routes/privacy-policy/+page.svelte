@@ -6,6 +6,8 @@
 	<title>
 		PowderHound | Privacy Policy
 	</title>
+    <meta name="theme-color" content="#D4163C">
+    <meta name="twitter:card" content="summary_large_image">
     <meta property="og:site_name" content="PowderHound" />
     <meta name="description" content="View PowderHound's privacy policy">
     <meta property="og:title" content="PowderHound | Privacy Policy" />

@@ -16,6 +16,8 @@
 	<title>
 		PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast
 	</title>
+	<meta name="theme-color" content="#D4163C">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta property="og:site_name" content="PowderHound" />
 	<meta name="description" content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`}>
 	<meta property="og:title" content="PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast" />

@@ -14,6 +14,8 @@
 		PowderHound | Login
 	</title>
 	<meta property="og:site_name" content="PowderHound" />
+	<meta name="theme-color" content="#D4163C">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta name="description" content="Login to PowderHound to get snowfall alerts for Colorado's premier ski destinations">
 	<meta property="og:title" content="PowderHound | Login" />
 	<meta property="og:type" content="website" />

@@ -69,6 +69,8 @@
 	<title>
 		PowderHound | Settings
 	</title>
+    <meta name="theme-color" content="#D4163C">
+    <meta name="twitter:card" content="summary_large_image">
     <meta property="og:site_name" content="PowderHound" />
     <meta name="description" content="Manage your PowderHound account and data">
     <meta property="og:title" content="PowderHound | Settings" />
