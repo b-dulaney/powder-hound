@@ -9,16 +9,16 @@
 </script>
 
 <section class="p-4 space-y-4 overflow-y-auto pb-20">
-    <p class="font-bold pl-4 text-2xl">Conditions</p>
+    <p class="font-bold pl-4 text-2xl">Snow Report</p>
     <nav class="list-nav">
         <ul>
             <li>
-                <a class="{classesActive('/conditions/resorts')}" href="/conditions/resorts" on:click={drawerClose}>
+                <a class="{classesActive('/snow-report/resorts')}" href="/snow-report/resorts" on:click={drawerClose}>
                     <span class="flex-auto">Resorts</span>
                 </a>
             </li>
             <li>
-                <a class="{classesActive('/conditions/backcountry')}" href="/conditions/backcountry" on:click={drawerClose}>
+                <a class="{classesActive('/snow-report/backcountry')}" href="/snow-report/backcountry" on:click={drawerClose}>
                     <span class="flex-auto">Backcountry</span>
                 </a>
             </li>

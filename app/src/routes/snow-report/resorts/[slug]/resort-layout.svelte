@@ -31,6 +31,7 @@
 
 
 	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12.5;
+	const next24hYDomain = resortDetails.snow_next_24h > 6 ? resortDetails.snow_next_24h : 6.5;
 </script>
 
 {#if !resortDetails}
@@ -41,7 +42,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 			<Card>
 				<svelte:fragment slot="header">
-					Snow/Lift Conditions
+					Mountain Conditions
 				</svelte:fragment>
 				<svelte:fragment slot="header-subtitle">
 					Updated at: {dayjs(resortDetails?.updated_at).format('h:mm A')}
@@ -69,7 +70,7 @@
 				</svelte:fragment>
 			</Card>
 			<Card>
-				<svelte:fragment slot="header">Upcoming Snowfall</svelte:fragment>
+				<svelte:fragment slot="header">Snow Forecast</svelte:fragment>
 				<svelte:fragment slot="body">
 				<div class="flex flex-col h-5/6 items-center justify-evenly mt-6">
 					<div class="my-4 flex w-full flex-col items-center">
@@ -137,6 +138,7 @@
 				</div>
 			</svelte:fragment>
 			</Card>
+			{#if resortDetails.snow_next_24h > 0}
 			<div class="lg:col-span-2">
 				<Card>
 					<svelte:fragment slot="header">Hourly Accumulation</svelte:fragment>
@@ -149,7 +151,7 @@
 							x="datetime"
 							xScale={scaleTime()}
 							y="accumulated_snowfall"
-							yDomain={[0, null]}
+							yDomain={[0, next24hYDomain]}
 							padding={{ left: 24, bottom: 36 }}
 							tooltip
 							>
@@ -183,6 +185,7 @@
 					</svelte:fragment>
 				</Card>
 			</div>
+			{/if}
 		</div>
 	</div>
 </section>

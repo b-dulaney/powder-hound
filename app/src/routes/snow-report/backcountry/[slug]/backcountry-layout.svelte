@@ -21,6 +21,7 @@
 
 	const pastWeekYDomain = maxSnowfallPastWeek > 12 ? maxSnowfallPastWeek : 12.5;
 	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12.5;
+	const next24hYDomain = backcountryDetails.snow_next_24h > 6 ? backcountryDetails.snow_next_24h : 6.5;
 
 	const hourlyAccumulation = backcountryDetails.next_24h_hourly_snowfall.map((d, i) => {
 		return {
@@ -44,38 +45,38 @@
 					 before heading out.</p>
 			</div>
 		</div>
-			<div class="card mt-4 w-full md:p-4 xl:p-6 ">
-				<div class="card-header">
-					<h2 class="h3">Avalanche Danger</h2>
-					<p class="text-surface-400 py-2">Issued on: {backcountryDetails.issue_date}</p>
-				</div>
-				<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
-					{#each backcountryDetails.danger_levels as {date, above_treeline, near_treeline, below_treeline}}
-					<div id="avy-forecast-container" class="w-full">	
-						<h3 class="h4 py-2">{date}
-						</h3>
-						<div class="flex flex-col w-full">
-							<div class="flex justify-between items-center rounded-sm border-b border-b-surface-400 w-full bg-surface-600 p-2">
-								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Above Treeline</p>
-								<p class="flex-grow font-semibold text-sm md:text-base text-center">{above_treeline.level} - {above_treeline.rating}</p>
-								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={above_treeline.level} size='40px'/></span>
-							</div>
-							<div class="flex justify-between items-center rounded-sm border-b border-b-surface-400 w-full p-2">
-								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Near Treeline</p>
-								<p class="flex-grow font-semibold text-sm md:text-base text-center">{near_treeline.level} - {near_treeline.rating}</p>
-								<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={near_treeline.level} size='40px'/></span>
-							</div>
-							<div class="flex justify-between items-center rounded-sm gap-0 border-b border-b-surface-400 w-full bg-surface-600 p-2">
-								<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Below Treeline</p>
-								<p class="flex-grow font-semibold text-sm md:text-base text-center">{below_treeline.level} - {below_treeline.rating}</p>
-								<span class="flex-shrink"><AvalancheDangerIcon dangerLevel={below_treeline.level} size='40px'/></span>
+			<Card>
+				<svelte:fragment slot="header">Avalanche Danger</svelte:fragment>
+				<svelte:fragment slot="header-subtitle">Issued on: {backcountryDetails.issue_date}</svelte:fragment>
+				<svelte:fragment slot="body">
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
+						{#each backcountryDetails.danger_levels as {date, above_treeline, near_treeline, below_treeline}}
+						<div id="avy-forecast-container" class="w-full">	
+							<h3 class="h4 py-2">{date}
+							</h3>
+							<div class="flex flex-col w-full">
+								<div class="flex justify-between items-center rounded-sm border-b border-b-surface-400 w-full bg-surface-600 p-2">
+									<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Above Treeline</p>
+									<p class="flex-grow font-semibold text-sm md:text-base text-center">{above_treeline.level} - {above_treeline.rating}</p>
+									<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={above_treeline.level} size='40px'/></span>
+								</div>
+								<div class="flex justify-between items-center rounded-sm border-b border-b-surface-400 w-full p-2">
+									<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Near Treeline</p>
+									<p class="flex-grow font-semibold text-sm md:text-base text-center">{near_treeline.level} - {near_treeline.rating}</p>
+									<span class="flex items-center justify-end"><AvalancheDangerIcon dangerLevel={near_treeline.level} size='40px'/></span>
+								</div>
+								<div class="flex justify-between items-center rounded-sm gap-0 border-b border-b-surface-400 w-full bg-surface-600 p-2">
+									<p class="whitespace-nowrap text-sm md:text-base min-w-[105px]">Below Treeline</p>
+									<p class="flex-grow font-semibold text-sm md:text-base text-center">{below_treeline.level} - {below_treeline.rating}</p>
+									<span class="flex-shrink"><AvalancheDangerIcon dangerLevel={below_treeline.level} size='40px'/></span>
+								</div>
 							</div>
 						</div>
+						{/each}
 					</div>
-					{/each}
-				</div>
-				<p class="p-4">{@html backcountryDetails.avalanche_summary}</p>
-            </div>
+					<p class="p-4">{@html backcountryDetails.avalanche_summary}</p>
+				</svelte:fragment>
+            </Card>
         </div>
 </section>
 
@@ -207,6 +208,7 @@
 				</div>
 				</svelte:fragment>
 			</Card>
+			{#if backcountryDetails.snow_next_24h > 0}
 				<Card>
 					<svelte:fragment slot="header">Hourly Accumulation</svelte:fragment>
 					<svelte:fragment slot="body">
@@ -218,7 +220,7 @@
 							x="datetime"
 							xScale={scaleTime()}
 							y="accumulated_snowfall"
-							yDomain={[0, null]}
+							yDomain={[0, next24hYDomain]}
 							padding={{ left: 24, bottom: 36 }}
 							tooltip
 							>
@@ -251,6 +253,7 @@
 					</div>
 					</svelte:fragment>
 				</Card>
+			{/if}
 	</div>
 </section>
 

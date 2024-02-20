@@ -736,7 +736,7 @@
                                       "
                                     >
                                       <a
-                                        href="https://powderhound.io/conditions/resorts/a-basin"
+                                        href="https://powderhound.io/snow-report/resorts/a-basin"
                                         >A-Basin</a
                                       >
                                     </div>
@@ -922,7 +922,7 @@
                                       "
                                     >
                                       <a
-                                        href="https://powderhound.io/conditions/resorts/copper-mountain"
+                                        href="https://powderhound.io/snow-report/resorts/copper-mountain"
                                         >Copper Mountain</a
                                       >
                                     </div>
@@ -1108,7 +1108,7 @@
                                       "
                                     >
                                       <a
-                                        href="https://powderhound.io/conditions/resorts/winter-park"
+                                        href="https://powderhound.io/snow-report/resorts/winter-park"
                                         >Winter Park</a
                                       >
                                     </div>
@@ -1367,8 +1367,8 @@
                                       "
                                     >
                                       <a
-                                        href="https://powderhound.io/conditions"
-                                        >View Conditions</a
+                                        href="https://powderhound.io/snow-report"
+                                        >View Snow Report</a
                                       >
                                     </div>
                                   </td>

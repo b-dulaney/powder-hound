@@ -81,7 +81,7 @@
         <div class="w-full max-h-full flex justify-center">
             <div class="card mt-4 md:px-4 md:py-2 w-full overflow-y-auto">
                 {#if !alerts?.length}
-                    <p class="text-center">You don't have any alerts set up yet. Add one from the <a class="anchor" href="/conditions" data-sveltekit-preload-data>Conditions</a> page.</p>
+                    <p class="text-center">You don't have any alerts set up yet. Add one from the <a class="anchor" href="/snow-report" data-sveltekit-preload-data>Snow Report</a> page.</p>
                 {:else}
                 <div class="flex flex-col w-full p-4">
                 {#each alerts as { id, display_name,  threshold_inches } }

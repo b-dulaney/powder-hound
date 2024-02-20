@@ -13,9 +13,9 @@
 
 <svelte:head>
 	<title>
-		PowderHound - {backcountryDetails.display_name} snow forecast and avalanche conditions
+		PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast
 	</title>
-    <meta name="description" content={`Weekly snowfall, 72-hour forecast, and avalanche conditions for ${backcountryDetails.display_name}`}>
+    <meta name="description" content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`}>
 </svelte:head>
 
 <section id="header-section">
@@ -23,13 +23,13 @@
 		<ol class="breadcrumb lg:text-lg">
 			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-			<li class="crumb !ml-0 md:!ml-4"><a class="anchor !text-surface-300" href="/conditions/backcountry">Conditions</a></li>
+			<li class="crumb !ml-0 md:!ml-4"><a class="anchor !text-surface-300" href="/snow-report/backcountry">Snow Report</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 			<li class="crumb text-surface-300">{backcountryDetails.display_name}</li>
 		</ol>
 
 		<div class="mt-4 flex flex-col">
-			<h1 class="h1">{backcountryDetails.display_name}</h1>
+			<h1 class="h1">{backcountryDetails.display_name} Snow Report</h1>
 			<span class="flex items-center"
 				><p class="mr-2 mt-2 text-xl font-semibold text-surface-300">Region:</p>
 				<p class="mt-2 text-xl font-semibold">{backcountryDetails.region}</p></span

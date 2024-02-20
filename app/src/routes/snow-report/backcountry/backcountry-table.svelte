@@ -329,7 +329,7 @@
                             >
                             <a
                                 class="anchor text-primary-500-400-token xl:text-lg whitespace-nowrap md:pl-2"
-                                href="/conditions/backcountry/{row.slug}"
+                                href="/snow-report/backcountry/{row.slug}"
                                 data-sveltekit-preload-data="hover">{row.display_name}</a
                             >
                         </td
