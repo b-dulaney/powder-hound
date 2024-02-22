@@ -111,7 +111,7 @@
 				<Step>
 					<svelte:fragment slot="header">Snowfall Alerts</svelte:fragment>
 					<p class="max-w-xl">
-						You'll receive two types of notifications based on the thresholds you set
+						You'll receive two types of notifications based on the thresholds you select here.
 					</p>
 					<div class="mt-4 flex flex-col gap-4">
 						<p class="max-w-xl">
