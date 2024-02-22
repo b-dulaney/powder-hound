@@ -38,7 +38,7 @@ This is pretty informal for now as I'm building this project out in my spare tim
 
 - More locations
 
-- Email/SMS OTP login
+- SMS OTP login
 
 - SMS alerts
 

@@ -90,7 +90,7 @@
 		<div class="flex max-h-full w-full justify-center px-2">
 			<div class="card mt-4 w-full overflow-y-auto shadow-md md:px-4 md:py-2">
 				{#if !alerts?.length}
-					<p class="text-center">
+					<p class="text-center p-4">
 						You don't have any alerts set up yet. Add one from the <a
 							class="anchor"
 							href="/snow-report"

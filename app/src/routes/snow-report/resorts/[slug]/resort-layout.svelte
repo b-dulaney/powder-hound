@@ -107,7 +107,7 @@
 								</div>
 							</div>
 							<div class="flex w-full items-center justify-center p-8">
-								<div class="h-[400px] w-[400px] md:w-[600px] lg:w-[400px]">
+								<div class="h-[300px] w-[400px] md:w-[500px] lg:w-[400px]">
 									<Chart
 										ssr
 										data={resortDetails.upcoming_snowfall_totals}
@@ -145,10 +145,17 @@
 												tickSize={0}
 												format={(d) => formatDate(d)}
 											/>
+											<LinearGradient
+												class="from-primary-300/90 to-primary-500/70"
+												vertical
+												units="userSpaceOnUse"
+												let:url
+											>
 											<Bars
 												radius={1}
 												strokeWidth={2}
-												class="fill-primary-500 stroke-primary-800 transition-colors"
+												class="transition-colors stroke-primary-500/50"
+												fill={url}
 												initialY={400 - 16 * 2 - 2 - 24}
 												initialHeight={0}
 												tweened={{
@@ -156,6 +163,7 @@
 													easing: cubicInOut
 												}}
 											/>
+										</LinearGradient>
 											<Highlight area>
 												<svelte:fragment slot="area" let:area>
 													<RectClipPath
@@ -168,7 +176,7 @@
 														<Bars
 															radius={1}
 															strokeWidth={2}
-															class="fill-primary-400 stroke-primary-600"
+															class="fill-primary-400 stroke-primary-600/50"
 														/>
 													</RectClipPath>
 												</svelte:fragment>
