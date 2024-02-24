@@ -209,7 +209,7 @@
 						<div class="flex w-full flex-col p-4">
 							{#each alerts as { id, display_name, threshold_inches, paused }}
 								<div
-									class="flex w-full items-center justify-between gap-4 border-b border-b-surface-400 py-4 first:pt-0 last:border-b-0"
+									class="flex w-full items-center justify-between gap-4 border-b border-b-surface-600 py-4 first:pt-0 last:border-b-0"
 								>
 									{#if paused}
 										<p class="grow text-surface-400 md:text-xl">
