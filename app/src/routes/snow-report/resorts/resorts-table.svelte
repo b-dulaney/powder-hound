@@ -1,16 +1,15 @@
 <script lang="ts">
-	import WeatherIcon from '$lib/components/weather-icon.svelte';
 	import type { ResortOverview, UserAlerts } from '$lib/supabase.types';
-	import { formatSnowfall } from '$lib/utils';
-	import type { Session } from '@supabase/supabase-js';
-	import { resortSearchInput, resortColumnSort, selectedMountain } from '../stores';
+	import { addAlertFailedToast, addAlertSuccessfulToast, deleteAlertFailedToast, deleteAlertSuccessfulToast, formatSnowfall } from '$lib/utils';
 	import {
 		getModalStore,
 		getToastStore,
-		type ModalSettings,
-		type ToastSettings
+		type ModalSettings
 	} from '@skeletonlabs/skeleton';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import type { Session } from '@supabase/supabase-js';
+	import { resortColumnSort, resortSearchInput, selectedMountain } from '../stores';
+
+	import { goto, invalidate } from '$app/navigation';
 	export let session: Session | null;
 	export let resortOverviews: ResortOverview[];
 	export let alerts: UserAlerts[];
@@ -18,30 +17,6 @@
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
-
-	const addSuccessfulToast: ToastSettings = {
-		timeout: 2000,
-		message: 'Alert added successfully.',
-		background: 'variant-filled-secondary'
-	};
-
-	const deleteSuccessfulToast: ToastSettings = {
-		timeout: 2000,
-		message: 'Alert disabled successfully.',
-		background: 'variant-filled-tertiary'
-	};
-
-	const deleteFailedToast: ToastSettings = {
-		timeout: 3000,
-		message: 'Failed to disable alert. Please try again.',
-		background: 'variant-filled-error'
-	};
-
-	const addFailedToast: ToastSettings = {
-		timeout: 3000,
-		message: 'Failed to add alert. Please try again.',
-		background: 'variant-filled-error'
-	};
 
 	$: isFavorite = (mountain: ResortOverview) => mappedAlerts.includes(mountain.mountain_id);
 
@@ -61,10 +36,10 @@
 		});
 		if (response.ok) {
 			mappedAlerts = mappedAlerts.filter((id) => id !== mountain.mountain_id);
-			toastStore.trigger(deleteSuccessfulToast);
+			toastStore.trigger(deleteAlertSuccessfulToast);
 			invalidate('update:alerts');
 		} else {
-			toastStore.trigger(deleteFailedToast);
+			toastStore.trigger(deleteAlertFailedToast);
 		}
 	}
 
@@ -78,7 +53,7 @@
 				new Promise<boolean>((resolve) => {
 					const alertModal: ModalSettings = {
 						type: 'component',
-						title: 'Set Alert',
+						title: 'Add Alert',
 						component: 'alertModal',
 						meta: {
 							user_id: session?.user.id,
@@ -92,10 +67,10 @@
 				}).then(async (r: any) => {
 					if (r.success) {
 						mappedAlerts = [...mappedAlerts, mountain.mountain_id];
-						toastStore.trigger(addSuccessfulToast);
+						toastStore.trigger(addAlertSuccessfulToast);
 						invalidate('update:alerts');
 					} else if (r.error) {
-						toastStore.trigger(addFailedToast);
+						toastStore.trigger(addAlertFailedToast);
 					}
 				});
 			}
