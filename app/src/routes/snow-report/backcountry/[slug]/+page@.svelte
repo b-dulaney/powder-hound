@@ -1,15 +1,75 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import type { Session } from '@supabase/supabase-js';
+	import { page } from '$app/stores';
+	import Card from '$lib/components/card.svelte';
 	import WeatherForecastSlice from '$lib/components/weather-forecast-slice.svelte';
 	import WeatherIcon from '$lib/components/weather-icon.svelte';
-	import { convertWindDirection, convertWindSpeed, weatherConditionsMap } from '$lib/utils';
-	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
-	import { page } from '$app/stores';
+	import { addAlertFailedToast, addAlertSuccessfulToast, convertWindDirection, convertWindSpeed, deleteAlertFailedToast, deleteAlertSuccessfulToast, weatherConditionsMap } from '$lib/utils';
+	import { Accordion, AccordionItem, getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import { selectedMountain } from '../../stores';
 	import type { PageData } from './$types';
+
 	import BackcountryLayout from './backcountry-layout.svelte';
-	import Card from '$lib/components/card.svelte';
 	export let data: PageData;
 
 	const { backcountryDetails } = data;
+	$: session = data.session as Session | undefined;
+	$: existingAlert = data.existingAlert;
+	$: alertData = data.alertData;
+
+	const toastStore = getToastStore();
+	const modalStore = getModalStore();
+
+	async function deleteAlert() {
+		const alertId = alertData?.id;
+		if (!alertId) return;
+
+		const response = await fetch(`/api/alerts/${alertId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		if (response.ok) {
+			existingAlert = false;
+			alertData = undefined;
+			toastStore.trigger(deleteAlertSuccessfulToast);
+		} else {
+			toastStore.trigger(deleteAlertFailedToast);
+		}
+	}
+
+	async function addAlert() {
+		if (session) {
+				selectedMountain.set(backcountryDetails);
+				new Promise<boolean>((resolve) => {
+					const alertModal: ModalSettings = {
+						type: 'component',
+						title: 'Add Alert',
+						component: 'alertModal',
+						meta: {
+							user_id: session?.user.id,
+							email: session?.user.email
+						},
+						response: (r: any) => {
+							resolve(r);
+						}
+					};
+					modalStore.trigger(alertModal);
+				}).then(async (r: any) => {
+					if (r.success) {
+						existingAlert = true;
+						alertData = r.alertData;
+						toastStore.trigger(addAlertSuccessfulToast);
+					} else if (r.error) {
+						toastStore.trigger(addAlertFailedToast);
+					}
+				});
+			} else {
+			goto('/login');
+		}
+	};
 </script>
 
 <svelte:head>
@@ -60,11 +120,18 @@
 				><p class="mr-2 mt-2 text-xl font-semibold text-surface-300">Region:</p>
 				<p class="mt-2 text-xl font-semibold">{backcountryDetails.region}</p></span
 			>
-			<div
-				class="variant-ghost-success badge mt-2 w-[100px] capitalize lg:mt-4 lg:w-[120px] lg:py-1 lg:text-lg lg:font-normal"
-			>
-				{backcountryDetails.location_type}
-			</div>
+			{#if existingAlert === false}
+			<button type="button" on:click={addAlert} class="variant-ghost-secondary btn btn-sm md:btn-md mt-4 w-32">
+				<span>Add alert</span>
+				<i class="fa fa-bell"></i>
+			</button>
+			{/if}
+			{#if existingAlert === true}
+			<button type="button" on:click={deleteAlert} class="variant-ghost-error btn btn-sm md:btn-md mt-4 w-36">
+				<span>Remove alert</span>
+				<i class="fa fa-bell"></i>
+			</button>
+			{/if}
 		</div>
 	</div>
 </section>

@@ -3,10 +3,6 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
-	const { depends } = event;
-	depends('supabase:auth');
-	depends('update:alerts');
-
 	const session = await event.locals.getSession();
 	const { supabase } = event.locals;
 
