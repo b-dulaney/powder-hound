@@ -20,7 +20,11 @@ export const PUT = async (event: RequestEvent) => {
 
 	const { data: userAlerts, error } = await supabase
 		.from('user_alerts')
-		.update({ threshold_inches: threshold_inches, paused: paused })
+		.update({
+			threshold_inches: threshold_inches,
+			paused: paused,
+			updated_at: new Date().toISOString()
+		})
 		.eq('id', id)
 		.returns<UserAlerts[]>()
 		.select();

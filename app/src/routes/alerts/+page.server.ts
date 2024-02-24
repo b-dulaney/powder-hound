@@ -8,11 +8,6 @@ export const load = async (event) => {
 		redirect(301, '/login');
 	}
 
-	await supabase.auth.setSession({
-		access_token: session.access_token,
-		refresh_token: session.refresh_token
-	});
-
 	const { data: alertsData, error: alertsError } = await supabase
 		.from('user_alerts')
 		.select()
