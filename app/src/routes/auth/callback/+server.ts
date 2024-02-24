@@ -9,7 +9,6 @@ export const GET = async (event) => {
 	const code = url.searchParams.get('code') as string;
 	const otp = url.searchParams.get('otp') as string;
 
-
 	if (code) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
 		if (!error) {

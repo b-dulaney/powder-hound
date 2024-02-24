@@ -22,7 +22,7 @@
 
 	const alertThresholds: AlertThreshold[] = [];
 
-	const autoCompleteOptions: AutocompleteOption<string>[] = mountainData?.map((m) => ({
+	const autoCompleteOptions: AutocompleteOption<string>[] = (mountainData || []).map((m) => ({
 		label: m.display_name,
 		value: m.display_name
 	}));
@@ -41,8 +41,19 @@
 		});
 	}
 
+	function onInputChipRemove(e: CustomEvent<{event: MouseEvent, chipIndex: number, chipValue: string}>) {
+		inputChipList = inputChipList.filter((c) => c !== e.detail.chipValue);
+		alertThresholds.splice(
+			alertThresholds.findIndex((a) => a.name === e.detail.chipValue),
+			1
+		);
+	}
+
 	function onSnowfallSelect(e: Event, name: string) {
-		alertThresholds.find((a) => a.name === name).threshold = Number(e?.target?.value);
+		const alert = alertThresholds.find((a) => a.name === name);
+		if (alert) {
+			alert.threshold = Number((e?.target as HTMLInputElement)?.value ?? 0);
+		}
 	}
 
 	async function onComplete() {
@@ -89,6 +100,7 @@
 							class="max-w-sm md:max-w-xl"
 							bind:input={inputChip}
 							bind:value={inputChipList}
+							on:remove={onInputChipRemove}
 							name="chips"
 							chips="variant-filled-secondary"
 							placeholder="Search..."
@@ -111,19 +123,8 @@
 				<Step>
 					<svelte:fragment slot="header">Snowfall Alerts</svelte:fragment>
 					<p class="max-w-xl">
-						You'll receive two types of notifications based on the thresholds you select here.
+						Select the amount of snowfall that you'd like to receive alerts for at each location.
 					</p>
-					<div class="mt-4 flex flex-col gap-4">
-						<p class="max-w-xl">
-							<strong class="font-semibold underline">Forecast Alerts</strong> - to help you plan ahead,
-							we'll send these in the afternoon and report snowfall expected in the next 24 hours.
-						</p>
-						<p class="max-w-xl">
-							<strong class="font-semibold underline">Overnight Alerts</strong> - these confirm overnight
-							or past 24 hour snowfall and are sent early in the AM, so you'll have plenty of time to
-							call in sick.
-						</p>
-					</div>
 					<div class="flex flex-col gap-2 py-4">
 						{#if inputChipList.length > 0}
 							{#each inputChipList as chip (chip)}
@@ -153,10 +154,18 @@
 							No alerts configured. You can set them up at any time in the future.
 						</p>
 					{:else}
+					<div class="mt-4 flex flex-col gap-4">
+						<p class="max-w-xl">You'll receive two types of alerts for the locations and thresholds you selected.</p>
 						<p class="max-w-xl">
-							You'll receive forecast and overnight alerts for the following locations and
-							thresholds:
+							<strong class="font-semibold underline">Forecast Alerts</strong> - to help you plan ahead,
+							we'll send these in the afternoon and report snowfall expected in the next 24 hours.
 						</p>
+						<p class="max-w-xl">
+							<strong class="font-semibold underline">Overnight Alerts</strong> - these confirm overnight
+							or past 24 hour snowfall and are sent early in the AM, so you'll have plenty of time to
+							call in sick.
+						</p>
+					</div>
 						<div class="flex w-full flex-col gap-2 py-4">
 							{#each alertThresholds as alert (alert)}
 								<div class="flex w-full items-center justify-between gap-2">

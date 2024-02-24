@@ -38,7 +38,7 @@ export function convertWindSpeed(input: string): string {
 }
 
 export const formatSnowfall = (snowfall: number) => {
-	try{
+	try {
 		if (snowfall > 1) {
 			return Math.round(snowfall).toString();
 		}
