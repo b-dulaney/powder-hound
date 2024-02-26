@@ -11,6 +11,7 @@
 	} from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
 	import { backcountryColumnSort, backcountrySearchInput, selectedMountain } from '../stores';
+	import { page } from '$app/stores';
 	export let session: Session | null;
 	export let alerts: UserAlerts[];
 	export let backcountryOverviews: BackcountryOverview[];
@@ -110,7 +111,7 @@
 				});
 			}
 		} else {
-			goto('/login');
+			goto(`/login?redirect=${$page.url.pathname}`);;
 		}
 	};
 

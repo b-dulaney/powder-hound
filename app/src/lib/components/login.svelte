@@ -7,9 +7,12 @@
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import type { ActionData } from '../../routes/login/$types';
+	import { goto } from '$app/navigation';
 
 	export let form: ActionData;
+	export let redirectUrl: string | null;
 	let formLoading = false;
+	console.log(redirectUrl)
 
 	export let supabase: SupabaseClient;
 	export let action: 'login' | 'signup' = 'login';
@@ -24,7 +27,7 @@
 		await supabase.auth.signInWithOAuth({
 			provider: 'github',
 			options: {
-				redirectTo: `${PUBLIC_SITE_URL}/auth/callback`
+				redirectTo: redirectUrl ? `${PUBLIC_SITE_URL}/auth/callback?redirect=${redirectUrl}` : `${PUBLIC_SITE_URL}/auth/callback`
 			}
 		});
 	}
@@ -33,7 +36,7 @@
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: `${PUBLIC_SITE_URL}/auth/callback`,
+				redirectTo: redirectUrl ? `${PUBLIC_SITE_URL}/auth/callback?redirect=${redirectUrl}` : `${PUBLIC_SITE_URL}/auth/callback`,
 				queryParams: {
 					access_type: 'offline',
 					prompt: 'consent'
@@ -54,7 +57,10 @@
 				action="?/login"
 				use:enhance={() => {
 					formLoading = true;
-					return async ({ update }) => {
+					return async ({ update, result }) => {
+						if(result.type === 'redirect'){
+							goto(result.location);
+						}
 						formLoading = false;
 						update();
 					};
@@ -154,10 +160,13 @@
 					action="?/verifyOtp"
 					use:enhance={() => {
 						formLoading = true;
-						return async ({ update }) => {
-							formLoading = false;
-							update();
-						};
+						return async ({ update, result }) => {
+						if(result.type === 'redirect'){
+							goto(result.location);
+						}
+						formLoading = false;
+						update();
+					};
 					}}
 				>
 					<label class="label mb-4">
@@ -185,7 +194,7 @@
 							type="submit"
 							class="variant-filled-primary btn btn-lg w-full rounded-md"
 							disabled
-							formAction="?/verifyOtp"
+							formAction={`?/verifyOtp&redirect=${redirectUrl}`}
 						>
 							<ProgressRadial value={undefined} width="w-8" />
 						</button>
@@ -193,7 +202,7 @@
 						<button
 							type="submit"
 							class="variant-filled-primary btn btn-lg w-full rounded-md"
-							formAction="?/verifyOtp"
+							formAction={`?/verifyOtp&redirect=${redirectUrl}`}
 						>
 							Continue
 						</button>

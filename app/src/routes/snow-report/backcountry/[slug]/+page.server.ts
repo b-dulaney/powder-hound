@@ -16,7 +16,8 @@ export const load: PageServerLoad = async ({ params, locals}) => {
 
 		if (data) {
 			return {
-				backcountryDetails: data
+				backcountryDetails: data,
+				existingAlert: false
 			};
 		} else {
 			error(404, 'Location not found');

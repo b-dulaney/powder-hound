@@ -18,7 +18,7 @@
 	import AlertModal from '$lib/components/alert-modal.svelte';
 
 	import { afterNavigate, goto, invalidate, invalidateAll } from '$app/navigation';
-	import { navigating } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import SidebarNav from '$lib/components/sidebar-nav.svelte';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import { initializeStores } from '@skeletonlabs/skeleton';
@@ -148,7 +148,7 @@
 					{:else}
 						<div class="btn-group-vertical z-10 w-24 bg-surface-600 shadow-xl">
 							<button class="listbox-item z-10" on:click={() => goto('/signup')}>Sign up</button>
-							<button class="listbox-item z-10" on:click={() => goto('/login')}>Login</button>
+							<button class="listbox-item z-10" on:click={() => goto(`/login?redirect=${$page.url.pathname}`)}>Login</button>
 						</div>
 					{/if}
 				</span>
