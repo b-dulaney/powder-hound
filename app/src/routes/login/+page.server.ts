@@ -21,6 +21,8 @@ if (!building) {
 
 export const actions = {
 	login: async (event) => {
+		const redirectUrl = event.url.searchParams.get('redirect')
+		console.log('login redirectUrl', redirectUrl)
 		const ip = event.getClientAddress();
 		const rateLimitAttempt = await ratelimit.limit(ip);
 		if (!rateLimitAttempt.success) {
@@ -52,6 +54,8 @@ export const actions = {
 	verifyOtp: async (event) => {
 		const { supabase } = event.locals;
 		const data = await event.request.formData();
+		const redirectUrl = event.url.searchParams.get('redirect')
+		console.log('verifyOtp redirectUrl')
 		const email = data.get('email') as string;
 		const otp = data.get('otp') as string;
 
@@ -67,6 +71,9 @@ export const actions = {
 			return fail(500, { otp, email, error: error.message });
 		}
 
+		if(redirectUrl){
+			redirect(301, `/auth/callback?otp=true&redirect=${redirectUrl}`);
+		}
 		redirect(301, '/auth/callback?otp=true');
 	}
 };

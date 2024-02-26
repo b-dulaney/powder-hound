@@ -10,6 +10,7 @@
 	import { resortColumnSort, resortSearchInput, selectedMountain } from '../stores';
 
 	import { goto, invalidate } from '$app/navigation';
+	import { page } from '$app/stores';
 	export let session: Session | null;
 	export let resortOverviews: ResortOverview[];
 	export let alerts: UserAlerts[];
@@ -75,7 +76,7 @@
 				});
 			}
 		} else {
-			goto('/login');
+			goto(`/login?redirect=${$page.url.pathname}`);;
 		}
 	};
 

@@ -67,7 +67,7 @@
 					}
 				});
 			} else {
-			goto('/login');
+			goto(`/login?redirect=${$page.url.pathname}`);
 		}
 	};
 </script>
