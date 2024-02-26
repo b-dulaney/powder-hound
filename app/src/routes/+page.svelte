@@ -4,8 +4,6 @@
 	import LogoIcon from '../public/logo-icon.png';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	$: session = data.session;
-	const caicDataCount = data.caicDataCount;
 </script>
 
 <svelte:head>
@@ -56,11 +54,7 @@
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>
-				{#if !session}
-					<a class="variant-ghost-secondary btn" href="/signup">Get Alerts</a>
-				{:else}
-					<a class="variant-ghost-secondary btn" href="/alerts">Manage Alerts</a>
-				{/if}
+					<a class="variant-ghost-secondary btn" href="/alerts">Get Alerts</a>
 			</div>
 		</div>
 	</div>
@@ -200,8 +194,16 @@
 				class="w-20 border-t border-surface-500/50 lg:h-20 lg:w-1 lg:border-l lg:border-t-0"
 			></div>
 			<div class="space-y-1">
-				<span class="block text-8xl font-bold font-heading-token">{caicDataCount}</span>
-				<p class="block opacity-50">Hourly data points</p>
+				{#await data.streamed.caicDataCount}
+					<div class="placeholder animate-pulse"></div>
+					<p class="block opacity-50">Hourly data points</p>
+				{:then caicDataCount}
+					<span class="block text-8xl font-bold font-heading-token">{caicDataCount}</span>
+					<p class="block opacity-50">Hourly data points</p>
+				{:catch error}
+					<span class="block text-8xl font-bold font-heading-token">60K+</span>
+					<p class="block opacity-50">Hourly data points</p>
+				{/await}
 			</div>
 		</div>
 	</div>
