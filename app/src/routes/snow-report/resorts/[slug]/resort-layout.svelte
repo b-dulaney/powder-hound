@@ -146,7 +146,7 @@
 												format={(d) => formatDate(d)}
 											/>
 											<LinearGradient
-												class="from-primary-300/90 to-primary-500/70"
+												class="from-primary-500 to-primary-500/10"
 												vertical
 												units="userSpaceOnUse"
 												let:url
@@ -154,7 +154,7 @@
 												<Bars
 													radius={1}
 													strokeWidth={2}
-													class="stroke-primary-500/50 transition-colors"
+													class="stroke-primary-500/75 transition-colors"
 													fill={url}
 													initialY={400 - 16 * 2 - 2 - 24}
 													initialHeight={0}
@@ -176,7 +176,7 @@
 														<Bars
 															radius={1}
 															strokeWidth={2}
-															class="fill-primary-400 stroke-primary-600/50"
+															class="fill-primary-400 stroke-primary-400/50"
 														/>
 													</RectClipPath>
 												</svelte:fragment>
