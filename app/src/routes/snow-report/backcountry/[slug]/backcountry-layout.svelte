@@ -330,7 +330,7 @@
 			</svelte:fragment>
 		</Card>
 
-		{#if backcountryDetails.snow_next_24h > 0}
+		{#if backcountryDetails.snow_next_24h >= 1}
 			<div class="py-4">
 				<Card>
 					<svelte:fragment slot="header">Hourly Accumulation</svelte:fragment>
