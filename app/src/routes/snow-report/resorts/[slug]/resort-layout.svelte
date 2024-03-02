@@ -192,7 +192,7 @@
 						</div>
 					</svelte:fragment>
 				</Card>
-				{#if resortDetails.snow_next_24h > 0}
+				{#if resortDetails.snow_next_24h >= 1}
 					<div class="lg:col-span-2">
 						<Card>
 							<svelte:fragment slot="header">Hourly Accumulation</svelte:fragment>
