@@ -1,6 +1,3 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.5";
-import { Database } from "../database-generated.types.ts";
-
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")!;
 
 interface Alert {
@@ -12,6 +9,7 @@ interface Alert {
   snow_past_24h: number;
   backcountry_snow_past_24h: number;
   threshold_inches: number;
+  updated_at: string;
 }
 
 interface UserAlert {
@@ -20,11 +18,6 @@ interface UserAlert {
 }
 
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-
-const supabase = createClient<Database>(
-  Deno.env.get("SUPABASE_URL") ?? "",
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
-);
 
 function buildAlertsTable(alerts: Alert[]): string {
   let html = "";
@@ -69,7 +62,7 @@ function buildAlertsTable(alerts: Alert[]): string {
                               <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px 10px 25px;word-break:break-word;">
                                   <div style="font-family:Open Sans,Roboto,Arial,sans-serif;font-size:18px;line-height:1.7;text-align:center;color:#1A1C26;">${
-      alert.snow_overight ?? alert.snow_past_24h ??
+      alert.snow_overnight ?? alert.snow_past_24h ??
         alert.backcountry_snow_past_24h
     }"<br></div>
                                 </td>
