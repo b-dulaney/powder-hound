@@ -1,13 +1,13 @@
-import { CRON_SECRET, SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
+import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
 import { json, type RequestEvent } from '@sveltejs/kit';
 
 export const GET = async (event: RequestEvent) => {
 	const authHeader = event.request.headers.get('Authorization');
-	if (!CRON_SECRET || authHeader !== `Bearer ${CRON_SECRET}`) {
+	if (!process.env.CRON_SECRET || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
-	const cron = event.request.url.split('/')[3];
+	const cron = event.params.name;
 	console.log(cron);
 	if (!cron) return json({ error: 'Invalid cron' }, { status: 400 });
 	const { statusText, status } = await startScraper(cron);
