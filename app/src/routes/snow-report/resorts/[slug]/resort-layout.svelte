@@ -1,6 +1,7 @@
 <script lang="ts">
+	import Card from '$lib/components/card.svelte';
 	import type { ResortDetail } from '$lib/supabase.types';
-	import { formatDate, observeElement } from '$lib/utils';
+	import { formatDate, observeElement, timeFromNow } from '$lib/utils';
 	import { scaleBand, scaleTime } from 'd3-scale';
 	import dayjs from 'dayjs';
 	import {
@@ -12,16 +13,14 @@
 		Highlight,
 		LinearGradient,
 		RectClipPath,
-		Spline,
 		Svg,
 		Tooltip,
 		TooltipItem
 	} from 'layerchart';
+	import { onMount } from 'svelte';
+	import { cubicInOut } from 'svelte/easing';
 	import OpenArc from './open-arc.svelte';
 	import SnowDisplay from './snow-display.svelte';
-	import Card from '$lib/components/card.svelte';
-	import { cubicInOut } from 'svelte/easing';
-	import { onMount } from 'svelte';
 	export let resortDetails: ResortDetail;
 
 	let showAccumulation = false;
@@ -56,7 +55,7 @@
 				<Card>
 					<svelte:fragment slot="header">Mountain Conditions</svelte:fragment>
 					<svelte:fragment slot="header-subtitle">
-						Updated at: {dayjs(resortDetails?.updated_at).format('h:mm A')}
+						Last update: {timeFromNow(resortDetails.updated_at)}
 					</svelte:fragment>
 					<svelte:fragment slot="body">
 						<div class="grid grid-cols-2 items-center justify-center p-4 md:h-[90%] xl:p-6">

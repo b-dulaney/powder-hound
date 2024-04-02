@@ -2,6 +2,28 @@ import type { ToastSettings } from '@skeletonlabs/skeleton';
 import dayjs from 'dayjs';
 import type { Page } from 'puppeteer-core';
 import { readable } from 'svelte/store';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import UpdateLocale from 'dayjs/plugin/updateLocale';
+
+dayjs.extend(relativeTime);
+dayjs.extend(UpdateLocale);
+dayjs.updateLocale('en', {
+	relativeTime: {
+		future: 'in %s',
+		past: '%s ago',
+		s: 'A few seconds',
+		m: '1 minute',
+		mm: '%d minutes',
+		h: '1 hour',
+		hh: '%d hours',
+		d: '1 day',
+		dd: '%d days',
+		M: '1 month',
+		MM: '%d months',
+		y: '1 year',
+		yy: '%d years'
+	}
+});
 
 export function convertWindDirection(input: string): string {
 	const degreeStr = input.split('/')[0];
@@ -178,3 +200,7 @@ export const deleteAlertFailedToast: ToastSettings = {
 	message: 'Failed to delete alert. Please try again.',
 	background: 'variant-filled-error'
 };
+
+export function timeFromNow(date: string) {
+	return dayjs(date).fromNow();
+}

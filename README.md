@@ -28,9 +28,9 @@ SvelteKit, Supabase, Vite, Typescript, SkeletonUI, Tailwind, Vercel
 ## How It Works
 
 - Weather data for each location is collected hourly from the CAIC point forecast [API](https://avalanche.state.co.us/weather/point-forecasts) via scheduled Supabase edge function
-- Resort conditions data and Avalanche forecasts are collected with a web scraper
-  - Web scraping is done via SvelteKit API route (AWS lambda function) using [Puppeteer](https://pptr.dev/)
-- Cron jobs kick off email-alert edge functions at 4:30pm and 5:30am to send out forecast and overnight snowfall alerts when user-defined thresholds are met
+- Resort conditions data and Avalanche forecasts are collected on regular intervals via web scrapers
+  - See [PowderHound Go](https://github.com/b-dulaney/powder-hound-go) for details
+- Go email service kicks off at 4:30pm and 6:05am to send out forecast and overnight snowfall alerts when user-defined thresholds are met
 
 ## Roadmap
 
