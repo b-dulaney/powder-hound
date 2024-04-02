@@ -10,6 +10,23 @@ export type TemperatureRange = {
 	snowfall: number;
 };
 
+export type ScrapingStatus = {
+	id: number;
+	success: boolean;
+	error: string | null;
+	time: string;
+};
+
+export type ScrapingStatusData = {
+	display_name: string;
+	status: ScrapingStatus[];
+};
+
+export type DailyScrapingErrors = {
+	date: string;
+	error_count: number;
+};
+
 export type AlertThreshold = {
 	id: number;
 	name: string;
@@ -152,6 +169,20 @@ export type Database = MergeDeep<
 						temperature_range: TemperatureRange[];
 					};
 				};
+				web_scraper_overview: {
+					Row: {
+						highest_failure_display_name_24h: string;
+						highest_failure_total_rows_24h: number;
+						highest_failure_percentage_failed_24h: number;
+						highest_failure_display_name: string;
+						highest_failure_total_rows: number;
+						highest_failure_percentage_failed: number;
+						success_percentage_24h: number;
+						overall_success_percentage: number;
+						recent_scraping_status: ScrapingStatusData[];
+						errors_per_day: DailyScrapingErrors[];
+					};
+				};
 			};
 			Tables: {
 				profile: {
@@ -247,6 +278,15 @@ export type Database = MergeDeep<
 						updated_at?: string;
 					};
 				};
+				scraping_status: {
+					Row: {
+						id: number;
+						display_name: string;
+						success: boolean;
+						error: string | null;
+						time: string;
+					};
+				};
 			};
 		};
 	}
@@ -269,6 +309,7 @@ export type ResortOverview = Views<'resort_overview'>;
 export type ResortDetail = Views<'resort_detail'>;
 export type BackcountryOverview = Views<'backcountry_overview'>;
 export type BackcountryDetail = Views<'backcountry_detail'>;
+export type WebScraperOverview = Views<'web_scraper_overview'>;
 
 type TableTypes =
 	| AvalancheForecast
