@@ -1,4 +1,5 @@
 import type { ResortOverview, UserAlerts } from '$lib/supabase.types';
+import { handleInvalidAuthToken } from '$lib/utils';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -21,7 +22,13 @@ export const load: PageServerLoad = async (event) => {
 		.returns<ResortOverview[]>();
 
 	if (resortError) {
-		error(500, 'Error fetching conditions data');
+		console.error(`${resortError.code} - ${resortError.message}`);
+		if (resortError.code === 'PGRST301') {
+			await handleInvalidAuthToken(event);
+			return load(event);
+		} else {
+			error(500, 'Error fetching conditions data');
+		}
 	}
 
 	if (!session) {
@@ -36,7 +43,13 @@ export const load: PageServerLoad = async (event) => {
 		.returns<UserAlerts[]>();
 
 	if (alertsError) {
-		error(500, 'Error fetching profile data');
+		console.error(`${alertsError.code} - ${alertsError.message}`);
+		if (alertsError.code === 'PGRST301') {
+			await handleInvalidAuthToken(event);
+			return load(event);
+		} else {
+			error(500, 'Error fetching conditions data');
+		}
 	}
 
 	return {

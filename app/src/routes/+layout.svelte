@@ -54,6 +54,12 @@
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if(_session?.access_token !== session?.access_token){
+				invalidateAll();
+			}
+			if(event === 'SIGNED_OUT'){
+				invalidateAll();
+			}
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidateAll();
 			}

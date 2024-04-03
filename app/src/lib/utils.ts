@@ -4,6 +4,7 @@ import type { Page } from 'puppeteer-core';
 import { readable } from 'svelte/store';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import UpdateLocale from 'dayjs/plugin/updateLocale';
+import type { ServerLoadEvent } from '@sveltejs/kit';
 
 dayjs.extend(relativeTime);
 dayjs.extend(UpdateLocale);
@@ -203,4 +204,15 @@ export const deleteAlertFailedToast: ToastSettings = {
 
 export function timeFromNow(date: string) {
 	return dayjs(date).fromNow();
+}
+
+export async function handleInvalidAuthToken(event: ServerLoadEvent) {
+	const cookies = event.cookies.getAll();
+	cookies.forEach((cookie) => {
+		if (cookie.name.startsWith('sb-')) {
+			event.cookies.delete(cookie.name, { path: '/' });
+		}
+	});
+
+	await event.locals.supabase.auth.setSession({ access_token: '', refresh_token: '' });
 }

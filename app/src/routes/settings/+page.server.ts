@@ -1,7 +1,9 @@
 import type { Profile } from '$lib/supabase.types.js';
+import { handleInvalidAuthToken } from '$lib/utils';
 import { error, redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-export const load = async (event) => {
+export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.getSession();
 	const { supabase } = event.locals;
 	if (!session || !session.user) {
@@ -15,7 +17,12 @@ export const load = async (event) => {
 		.maybeSingle();
 
 	if (profileError) {
-		error(500, profileError.message);
+		if (profileError.code === 'PGRST301') {
+			await handleInvalidAuthToken(event);
+			return load(event);
+		} else {
+			error(500, 'Error fetching conditions data');
+		}
 	}
 
 	return {

@@ -1,6 +1,7 @@
 import type { BackcountryOverview, UserAlerts } from '$lib/supabase.types';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { handleInvalidAuthToken } from '$lib/utils';
 
 export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.getSession();
@@ -21,7 +22,13 @@ export const load: PageServerLoad = async (event) => {
 		.returns<BackcountryOverview[]>();
 
 	if (backcountryError) {
-		error(500, 'Error fetching backcountry conditions data');
+		console.error(`${backcountryError.code} - ${backcountryError.message}`);
+		if (backcountryError.code === 'PGRST301') {
+			await handleInvalidAuthToken(event);
+			return load(event);
+		} else {
+			error(500, 'Error fetching conditions data');
+		}
 	}
 
 	if (!session) {
@@ -38,7 +45,13 @@ export const load: PageServerLoad = async (event) => {
 		.returns<UserAlerts[]>();
 
 	if (alertsError) {
-		error(500, 'Error fetching profile data');
+		console.error(`${alertsError.code} - ${alertsError.message}`);
+		if (alertsError.code === 'PGRST301') {
+			await handleInvalidAuthToken(event);
+			return load(event);
+		} else {
+			error(500, 'Error fetching conditions data');
+		}
 	}
 
 	return {

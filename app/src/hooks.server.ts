@@ -28,8 +28,18 @@ export const handle: Handle = async ({ event, resolve }) => {
 	 */
 	event.locals.getSession = async () => {
 		const {
-			data: { session }
+			data: { session },
+			error
 		} = await event.locals.supabase.auth.getSession();
+		if (error) {
+			console.error('Error getting session:', error.message);
+			const cookies = event.cookies.getAll();
+			cookies.forEach((cookie) => {
+				if (cookie.name.startsWith('sb-')) {
+					event.cookies.delete(cookie.name, { path: '/' });
+				}
+			});
+		}
 		return session;
 	};
 
