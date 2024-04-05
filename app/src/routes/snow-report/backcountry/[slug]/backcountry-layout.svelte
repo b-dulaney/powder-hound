@@ -1,26 +1,26 @@
 <script lang="ts">
-	import type { BackcountryDetail } from '$lib/supabase.types';
-	import { formatDate, observeElement } from '$lib/utils';
-	import { scaleBand, scaleTime } from 'd3-scale';
+	import AvalancheDangerIcon from '$lib/components/avalanche-danger-icon.svelte';
+	import Card from '$lib/components/card.svelte';
+	import SnowForecastChart from '$lib/components/snow-forecast-chart.svelte';
+	import type { BackcountryDetail, StackedChartData } from '$lib/supabase.types';
+	import { observeElement } from '$lib/utils';
+	import { scaleTime } from 'd3-scale';
 	import dayjs from 'dayjs';
 	import {
 		Area,
 		Axis,
-		Bars,
 		Chart,
 		ChartClipPath,
-		Highlight,
 		LinearGradient,
-		RectClipPath,
 		Svg,
 		Tooltip,
 		TooltipItem
 	} from 'layerchart';
-	import AvalancheDangerIcon from '$lib/components/avalanche-danger-icon.svelte';
-	import Card from '$lib/components/card.svelte';
-	import { cubicInOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
+	import { cubicInOut } from 'svelte/easing';
 	export let backcountryDetails: BackcountryDetail;
+	export let snowfallChartForecastData: StackedChartData[];
+	export let snowfallChartHistoricalData: StackedChartData[];
 
 	let showAccumulation = false;
 
@@ -35,8 +35,8 @@
 		...backcountryDetails.upcoming_snowfall_totals.map((d) => d.snowfall_total)
 	);
 
-	const pastWeekYDomain = maxSnowfallPastWeek > 12 ? maxSnowfallPastWeek : 12.5;
-	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12.5;
+	const pastWeekYDomain = maxSnowfallPastWeek > 6 ? maxSnowfallPastWeek : 6.5;
+	const next72hYDomain = maxSnowfallNext72h > 6 ? maxSnowfallNext72h : 6.5;
 	const next24hYDomain =
 		backcountryDetails.snow_next_24h > 6 ? backcountryDetails.snow_next_24h : 6.5;
 
@@ -144,91 +144,7 @@
 							</p>
 							<hr class="w-1/4 !border-slate-700 px-2" />
 						</div>
-						<div class="flex w-full items-center justify-center p-8">
-							<div class="h-[300px] w-[400px] md:w-[500px]">
-								<Chart
-									ssr
-									data={backcountryDetails.previous_snowfall_totals}
-									x="date"
-									xScale={scaleBand()
-										.domain(backcountryDetails.upcoming_snowfall_totals.map((d) => d.date))
-										.paddingInner(0.2)
-										.paddingOuter(0.3)}
-									y="snowfall_total"
-									yDomain={[0, pastWeekYDomain]}
-									yNice
-									padding={{ left: 24, bottom: 36 }}
-									tooltip={{ mode: 'band' }}
-								>
-									<Svg>
-										<Axis
-											placement="left"
-											rule
-											grid
-											labelProps={{
-												class:
-													'text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold',
-												dx: -12
-											}}
-											tickSize={0}
-											format={(d) => `${d}"`}
-										/>
-										<Axis
-											placement="bottom"
-											labelProps={{
-												rotate: 315,
-												textAnchor: 'end',
-												class:
-													'text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold',
-												dy: 12
-											}}
-											tickSize={0}
-											format={(d) => formatDate(d)}
-										/>
-										<LinearGradient
-												class="from-primary-500 to-primary-500/10"
-												vertical
-												units="userSpaceOnUse"
-												let:url
-											>
-												<Bars
-													radius={1}
-													strokeWidth={2}
-													class="stroke-primary-500/75 transition-colors"
-													fill={url}
-													initialY={400 - 16 * 2 - 2 - 24}
-													initialHeight={0}
-													tweened={{
-														duration: 500,
-														easing: cubicInOut
-													}}
-												/>
-											</LinearGradient>
-											<Highlight area>
-												<svelte:fragment slot="area" let:area>
-													<RectClipPath
-														x={area.x}
-														y={area.y}
-														width={area.width}
-														height={area.height}
-														spring
-													>
-														<Bars
-															radius={1}
-															strokeWidth={2}
-															class="fill-primary-400 stroke-primary-400/50"
-														/>
-													</RectClipPath>
-												</svelte:fragment>
-											</Highlight>
-									</Svg>
-
-									<Tooltip header={(data) => dayjs(data.date).format('MMM DD YYYY')} let:data>
-										<TooltipItem label="Snowfall (in)" value={data.snowfall_total} />
-									</Tooltip>
-								</Chart>
-							</div>
-						</div>
+						<SnowForecastChart chartData={snowfallChartHistoricalData} yDomainMax={pastWeekYDomain} angleXAxis dimensions="h-[300px] w-[400px] md:w-[500px]" />
 					</div>
 
 					<div class="my-6 flex w-full flex-col items-center">
@@ -242,89 +158,7 @@
 							</p>
 							<hr class="w-1/4 !border-slate-700 px-2" />
 						</div>
-						<div class="flex w-full items-center justify-center p-8">
-							<div class="h-[300px] w-[400px] md:w-[500px]">
-								<Chart
-									ssr
-									data={backcountryDetails.upcoming_snowfall_totals}
-									x="date"
-									xScale={scaleBand()
-										.domain(backcountryDetails.upcoming_snowfall_totals.map((d) => d.date))
-										.paddingInner(0.4)
-										.paddingOuter(0.4)}
-									y="snowfall_total"
-									yDomain={[0, next72hYDomain]}
-									yNice
-									padding={{ left: 24, bottom: 36 }}
-									tooltip={{ mode: 'band' }}
-								>
-									<Svg>
-										<Axis
-											placement="left"
-											rule
-											grid
-											labelProps={{
-												class:
-													'text-sm md:text-lg fill-surface-100 stroke-surface-100 stroke-width-0 font-semibold',
-												dx: -12
-											}}
-											tickSize={0}
-											format={(d) => `${d}"`}
-										/>
-										<Axis
-											placement="bottom"
-											labelProps={{
-												class:
-													'text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold',
-												dy: 12
-											}}
-											tickSize={0}
-											format={(d) => formatDate(d)}
-										/>
-										<LinearGradient
-												class="from-primary-500 to-primary-500/10"
-												vertical
-												units="userSpaceOnUse"
-												let:url
-											>
-												<Bars
-													radius={1}
-													strokeWidth={2}
-													class="stroke-primary-500/75 transition-colors"
-													fill={url}
-													initialY={400 - 16 * 2 - 2 - 24}
-													initialHeight={0}
-													tweened={{
-														duration: 500,
-														easing: cubicInOut
-													}}
-												/>
-											</LinearGradient>
-											<Highlight area>
-												<svelte:fragment slot="area" let:area>
-													<RectClipPath
-														x={area.x}
-														y={area.y}
-														width={area.width}
-														height={area.height}
-														spring
-													>
-														<Bars
-															radius={1}
-															strokeWidth={2}
-															class="fill-primary-400 stroke-primary-400/50"
-														/>
-													</RectClipPath>
-												</svelte:fragment>
-											</Highlight>
-									</Svg>
-
-									<Tooltip header={(data) => dayjs(data.date).format('MMM DD YYYY')} let:data>
-										<TooltipItem label="Snowfall (in)" value={data.snowfall_total} />
-									</Tooltip>
-								</Chart>
-							</div>
-						</div>
+						<SnowForecastChart chartData={snowfallChartForecastData} yDomainMax={next72hYDomain} dimensions="h-[300px] w-[400px] md:w-[500px]" />
 					</div>
 				</div>
 			</svelte:fragment>

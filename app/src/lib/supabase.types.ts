@@ -43,6 +43,21 @@ export type SnowfallTotal = {
 	snowfall_total: number;
 };
 
+export type SnowfallForecast = {
+	day: string;
+	daytime_snowfall: number;
+	nighttime_snowfall: number;
+};
+
+export type StackedChartData = {
+	day: string;
+	daytimeSnowfall: number;
+	nighttimeSnowfall: number;
+	time: string;
+	keys: string[];
+	values: number[];
+};
+
 export type HourlySnowfall = {
 	datetime: string;
 	snowfall: number;
@@ -183,6 +198,26 @@ export type Database = MergeDeep<
 						errors_per_day: DailyScrapingErrors[];
 					};
 				};
+				mountain_snowfall_forecast: {
+					Row: {
+						mountain_id: number;
+						slug: string;
+						day: string;
+						daytime_snowfall: number;
+						nighttime_snowfall: number;
+						prev_night_snowfall: number;
+					};
+				};
+				mountain_snowfall_historical: {
+					Row: {
+						mountain_id: number;
+						slug: string;
+						day: string;
+						daytime_snowfall: number;
+						nighttime_snowfall: number;
+						prev_night_snowfall: number;
+					};
+				};
 			};
 			Tables: {
 				profile: {
@@ -310,6 +345,8 @@ export type ResortDetail = Views<'resort_detail'>;
 export type BackcountryOverview = Views<'backcountry_overview'>;
 export type BackcountryDetail = Views<'backcountry_detail'>;
 export type WebScraperOverview = Views<'web_scraper_overview'>;
+export type MountainSnowfallForecast = Views<'mountain_snowfall_forecast'>;
+export type MountainSnowfallHistorical = Views<'mountain_snowfall_historical'>;
 
 type TableTypes =
 	| AvalancheForecast

@@ -1,56 +1,72 @@
-import type { BackcountryDetail, UserAlerts } from '$lib/supabase.types';
+import type {
+	BackcountryDetail,
+	MountainSnowfallForecast,
+	MountainSnowfallHistorical,
+	UserAlerts
+} from '$lib/supabase.types';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { constructSnowfallChartData } from '$lib/utils';
 
-export const load: PageServerLoad = async ({ params, locals}) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
 	const { getSession, supabase } = locals;
 	const session = await getSession();
 
-	if(!session){
-		const { data } = await supabase
-			.from('backcountry_detail')
-			.select()
-			.eq('slug', params.slug)
-			.returns<BackcountryDetail[]>()
-			.single();
+	const { data: backcountryDetails } = await supabase
+		.from('backcountry_detail')
+		.select()
+		.eq('slug', params.slug)
+		.returns<BackcountryDetail[]>()
+		.single();
 
-		if (data) {
-			return {
-				backcountryDetails: data,
-				existingAlert: false
-			};
-		} else {
-			error(404, 'Location not found');
-		}
-	} else {
-		const { data } = await supabase
-			.from('backcountry_detail')
-			.select()
-			.eq('slug', params.slug)
-			.returns<BackcountryDetail[]>()
-			.single();
+	const { data: snowfallForecast } = await supabase
+		.from('mountain_snowfall_forecast')
+		.select()
+		.eq('slug', params.slug)
+		.returns<MountainSnowfallForecast[]>();
 
+	const { data: snowfallHistorical } = await supabase
+		.from('mountain_snowfall_historical')
+		.select()
+		.eq('slug', params.slug)
+		.returns<MountainSnowfallHistorical[]>();
+
+	const snowfallChartForecastData = snowfallForecast
+		? constructSnowfallChartData(snowfallForecast)
+		: [];
+
+	const snowfallChartHistoricalData = snowfallHistorical
+		? constructSnowfallChartData(snowfallHistorical)
+		: [];
+
+	if (!backcountryDetails) {
+		error(404, 'Location not found');
+	}
+
+	if (session) {
 		const { data: alertsData } = await supabase
 			.from('user_alerts')
 			.select()
 			.returns<UserAlerts[]>();
-	
-		if (data && alertsData && alertsData.length) {
-			const existingAlert = alertsData.find((alert) => alert.mountain_id === data.mountain_id)
-			return {
-				backcountryDetails: data,
-				alertData: existingAlert,
-				existingAlert: !!existingAlert,
-				session
-			};
-		} else if (data && alertsData && !alertsData.length){
-			return {
-				backcountryDetails: data,
-				existingAlert: false,
-				session
-			};
-		} else {
-			error(500, 'Something went wrong. Please try again.');
-		}
+
+		const existingAlert = alertsData?.find(
+			(alert) => alert.mountain_id === backcountryDetails.mountain_id
+		);
+
+		return {
+			backcountryDetails,
+			snowfallChartForecastData,
+			snowfallChartHistoricalData,
+			alertData: existingAlert,
+			existingAlert: !!existingAlert,
+			session
+		};
+	} else {
+		return {
+			backcountryDetails,
+			snowfallChartForecastData,
+			snowfallChartHistoricalData,
+			existingAlert: false
+		};
 	}
 };

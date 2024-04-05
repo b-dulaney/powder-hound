@@ -5,6 +5,7 @@ import { readable } from 'svelte/store';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import UpdateLocale from 'dayjs/plugin/updateLocale';
 import type { ServerLoadEvent } from '@sveltejs/kit';
+import type { MountainSnowfallForecast, StackedChartData } from './supabase.types';
 
 dayjs.extend(relativeTime);
 dayjs.extend(UpdateLocale);
@@ -215,4 +216,30 @@ export async function handleInvalidAuthToken(event: ServerLoadEvent) {
 	});
 
 	await event.locals.supabase.auth.setSession({ access_token: '', refresh_token: '' });
+}
+
+export function constructSnowfallChartData(
+	snowfallForecast: MountainSnowfallForecast[]
+): StackedChartData[] {
+	const stackedChartData: StackedChartData[] = [];
+	snowfallForecast.forEach((forecast, i) => {
+		forecast.nighttime_snowfall += snowfallForecast[i + 1]?.prev_night_snowfall || 0;
+		stackedChartData.push({
+			day: forecast.day,
+			daytimeSnowfall: forecast.daytime_snowfall,
+			nighttimeSnowfall: forecast.nighttime_snowfall,
+			time: 'daytime',
+			keys: [forecast.day, 'daytime_snowfall'],
+			values: [0, forecast.daytime_snowfall]
+		});
+		stackedChartData.push({
+			day: forecast.day,
+			daytimeSnowfall: forecast.daytime_snowfall,
+			nighttimeSnowfall: forecast.nighttime_snowfall,
+			time: 'nighttime',
+			keys: [forecast.day, 'nighttime_snowfall'],
+			values: [0, forecast.nighttime_snowfall]
+		});
+	});
+	return stackedChartData;
 }
