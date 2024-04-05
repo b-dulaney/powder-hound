@@ -1,55 +1,57 @@
-import type { ResortDetail, UserAlerts } from '$lib/supabase.types';
-import type { PageServerLoad } from './$types';
+import {
+	type MountainSnowfallForecast,
+	type ResortDetail,
+	type UserAlerts
+} from '$lib/supabase.types';
+import { constructSnowfallChartData } from '$lib/utils';
 import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
 	const { getSession, supabase } = locals;
 	const session = await getSession();
-	if(!session){
-		const { data } = await supabase
-			.from('resort_detail')
-			.select()
-			.eq('slug', params.slug)
-			.returns<ResortDetail[]>()
-			.single();
 
-		if (data) {
-			return {
-				resortDetails: data,
-				existingAlert: false
-			};
-		} else {
-			error(404, 'Location not found');
-		}
-	} else {
-		const { data } = await supabase
-			.from('resort_detail')
-			.select()
-			.eq('slug', params.slug)
-			.returns<ResortDetail[]>()
-			.single();
+	const { data: resortDetails } = await supabase
+		.from('resort_detail')
+		.select()
+		.eq('slug', params.slug)
+		.returns<ResortDetail[]>()
+		.single();
 
+	const { data: snowfallForecast } = await supabase
+		.from('mountain_snowfall_forecast')
+		.select()
+		.eq('slug', params.slug)
+		.returns<MountainSnowfallForecast[]>();
+
+	const snowfallChartData = snowfallForecast ? constructSnowfallChartData(snowfallForecast) : [];
+
+	if (!resortDetails) {
+		error(404, 'Location not found');
+	}
+
+	if (session) {
 		const { data: alertsData } = await supabase
 			.from('user_alerts')
 			.select()
 			.returns<UserAlerts[]>();
-	
-		if (data && alertsData && alertsData.length) {
-			const existingAlert = alertsData.find((alert) => alert.mountain_id === data.mountain_id)
-			return {
-				resortDetails: data,
-				alertData: existingAlert,
-				existingAlert: !!existingAlert,
-				session
-			};
-		} else if (data && alertsData && !alertsData.length){
-			return {
-				resortDetails: data,
-				existingAlert: false,
-				session
-			};
-		} else {
-			error(500, 'Something went wrong. Please try again.');
-		}
+
+		const existingAlert = alertsData?.find(
+			(alert) => alert.mountain_id === resortDetails.mountain_id
+		);
+
+		return {
+			resortDetails,
+			snowfallChartData,
+			alertData: existingAlert,
+			existingAlert: !!existingAlert,
+			session
+		};
+	} else {
+		return {
+			resortDetails,
+			snowfallChartData,
+			existingAlert: false
+		};
 	}
 };

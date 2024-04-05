@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import type { Session } from '@supabase/supabase-js';
 	import Card from '$lib/components/card.svelte';
 	import WeatherForecastSlice from '$lib/components/weather-forecast-slice.svelte';
 	import WeatherIcon from '$lib/components/weather-icon.svelte';
 	import { addAlertFailedToast, addAlertSuccessfulToast, convertWindDirection, convertWindSpeed, deleteAlertFailedToast, deleteAlertSuccessfulToast, weatherConditionsMap } from '$lib/utils';
 	import { Accordion, AccordionItem, getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import type { Session } from '@supabase/supabase-js';
 	import { selectedMountain } from '../../stores';
 	import type { PageData } from './$types';
 	import ResortLayout from './resort-layout.svelte';
 	export let data: PageData;
 
-	const { resortDetails } = data;
+	const { resortDetails, snowfallChartData } = data;
 	$: session = data.session as Session | undefined;
 	$: existingAlert = data.existingAlert;
 	$: alertData = data.alertData;
@@ -135,7 +135,7 @@
 	</div>
 </section>
 
-<ResortLayout {resortDetails} />
+<ResortLayout {resortDetails} {snowfallChartData} />
 
 <section id="forecast-section">
 	<div class="mx-auto w-full px-4 pb-8 pt-4 lg:max-w-7xl lg:pt-8">

@@ -1,27 +1,28 @@
 <script lang="ts">
+
 	import Card from '$lib/components/card.svelte';
-	import type { ResortDetail } from '$lib/supabase.types';
-	import { formatDate, observeElement, timeFromNow } from '$lib/utils';
-	import { scaleBand, scaleTime } from 'd3-scale';
+	import type { ResortDetail, StackedChartData } from '$lib/supabase.types';
+	import { observeElement, timeFromNow } from '$lib/utils';
+	import { scaleTime } from 'd3-scale';
 	import dayjs from 'dayjs';
 	import {
 		Area,
 		Axis,
-		Bars,
 		Chart,
 		ChartClipPath,
-		Highlight,
 		LinearGradient,
-		RectClipPath,
 		Svg,
 		Tooltip,
 		TooltipItem
 	} from 'layerchart';
 	import { onMount } from 'svelte';
 	import { cubicInOut } from 'svelte/easing';
+	import SnowForecastChart from '../../../../lib/components/snow-forecast-chart.svelte';
 	import OpenArc from './open-arc.svelte';
 	import SnowDisplay from './snow-display.svelte';
+
 	export let resortDetails: ResortDetail;
+	export let snowfallChartData: StackedChartData[];
 
 	let showAccumulation = false;
 
@@ -29,9 +30,6 @@
 		showAccumulation = await observeElement('hourlyAccumulationCard');
 	});
 
-	const maxSnowfallNext72h = Math.max(
-		...resortDetails.upcoming_snowfall_totals.map((d) => d.snowfall_total)
-	);
 	const hourlyAccumulation = resortDetails.next_24h_hourly_snowfall.map((d, i) => {
 		return {
 			datetime: new Date(d.datetime),
@@ -42,8 +40,8 @@
 		};
 	});
 
-	const next72hYDomain = maxSnowfallNext72h > 12 ? maxSnowfallNext72h : 12.5;
 	const next24hYDomain = resortDetails.snow_next_24h > 6 ? resortDetails.snow_next_24h : 6.5;
+	const next72hYDomain = resortDetails.snow_next_72h > 6 ? resortDetails.snow_next_72h : 6.5;
 </script>
 
 {#if !resortDetails}
@@ -58,7 +56,7 @@
 						Last update: {timeFromNow(resortDetails.updated_at)}
 					</svelte:fragment>
 					<svelte:fragment slot="body">
-						<div class="grid grid-cols-2 items-center justify-center p-4 md:h-[90%] xl:p-6">
+						<div class="grid grid-cols-2 items-center justify-center pt-4 p-6">
 							{#if resortDetails?.snow_type}
 								<div class="col-span-2 flex flex-col items-center">
 									<p class="py-2 text-xl font-bold lg:text-2xl">{resortDetails?.snow_type}</p>
@@ -74,7 +72,8 @@
 							{#if resortDetails?.snow_total !== null && resortDetails.snow_total >= 0}
 								<SnowDisplay value={resortDetails?.snow_total} type="Season Total" />
 							{/if}
-							<OpenArc
+							<div class="col-span-2 flex items-center">
+								<OpenArc
 								open={resortDetails?.lifts_open}
 								total={resortDetails?.total_lifts}
 								url={resortDetails.lifts_url}
@@ -86,18 +85,20 @@
 								url={resortDetails.trails_url}
 								type="Runs"
 							/>
+							</div>
+
 						</div>
 					</svelte:fragment>
 				</Card>
 				<Card>
 					<svelte:fragment slot="header">Snow Forecast</svelte:fragment>
 					<svelte:fragment slot="body">
-						<div class="mt-6 flex h-5/6 flex-col items-center justify-evenly">
-							<div class="my-4 flex w-full flex-col items-center">
-								<p class="py-2 text-xl">Next 72 Hours</p>
+						<div class="grid grid-cols-1 items-center justify-center pt-4 p-6">
+							<div class="my-2 flex w-full flex-col items-center">
+								<p class="py-2 text-lg">Next 72 Hours</p>
 								<div class="flex w-full items-center justify-center">
 									<hr class="w-1/4 !border-slate-700 px-2" />
-									<p class="px-6 text-xl font-bold">
+									<p class="px-6 text-lg font-bold">
 										{resortDetails.snow_next_72h < 1 && resortDetails.snow_next_72h > 0
 											? '< 1'
 											: resortDetails.snow_next_72h}"
@@ -105,89 +106,7 @@
 									<hr class="w-1/4 !border-slate-700 px-2" />
 								</div>
 							</div>
-							<div class="flex w-full items-center justify-center p-8">
-								<div class="h-[300px] w-[400px] md:w-[500px] lg:w-[400px]">
-									<Chart
-										ssr
-										data={resortDetails.upcoming_snowfall_totals}
-										x="date"
-										xScale={scaleBand()
-											.domain(resortDetails.upcoming_snowfall_totals.map((d) => d.date))
-											.paddingInner(0.2)
-											.paddingOuter(0.3)}
-										y="snowfall_total"
-										yDomain={[0, next72hYDomain]}
-										yNice
-										padding={{ left: 24, bottom: 36 }}
-										tooltip={{ mode: 'band' }}
-									>
-										<Svg>
-											<Axis
-												placement="left"
-												rule
-												grid
-												labelProps={{
-													class:
-														'text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold',
-													dx: -12
-												}}
-												tickSize={0}
-												format={(d) => `${d}"`}
-											/>
-											<Axis
-												placement="bottom"
-												labelProps={{
-													class:
-														'text-sm md:text-lg fill-surface-50 stroke-surface-50 stroke-width-0 font-semibold',
-													dy: 12
-												}}
-												tickSize={0}
-												format={(d) => formatDate(d)}
-											/>
-											<LinearGradient
-												class="from-primary-500 to-primary-500/10"
-												vertical
-												units="userSpaceOnUse"
-												let:url
-											>
-												<Bars
-													radius={1}
-													strokeWidth={2}
-													class="stroke-primary-500/75 transition-colors"
-													fill={url}
-													initialY={400 - 16 * 2 - 2 - 24}
-													initialHeight={0}
-													tweened={{
-														duration: 500,
-														easing: cubicInOut
-													}}
-												/>
-											</LinearGradient>
-											<Highlight area>
-												<svelte:fragment slot="area" let:area>
-													<RectClipPath
-														x={area.x}
-														y={area.y}
-														width={area.width}
-														height={area.height}
-														spring
-													>
-														<Bars
-															radius={1}
-															strokeWidth={2}
-															class="fill-primary-400 stroke-primary-400/50"
-														/>
-													</RectClipPath>
-												</svelte:fragment>
-											</Highlight>
-										</Svg>
-
-										<Tooltip header={(data) => dayjs(data.date).format('MMM DD YYYY')} let:data>
-											<TooltipItem label="Snowfall (in)" value={data.snowfall_total} />
-										</Tooltip>
-									</Chart>
-								</div>
-							</div>
+				<SnowForecastChart chartData={snowfallChartData} yDomainMax={next72hYDomain} dimensions="h-[300px] w-[400px] md:w-[600px] md:h-[400px] lg:w-[400px] lg:h-[300px]" />
 						</div>
 					</svelte:fragment>
 				</Card>

@@ -586,6 +586,26 @@ export type Database = {
           success_percentage_24h: number | null
         }
         Relationships: []
+      },
+      mountain_snowfall_forecast: {
+        Row: {
+          mountain_id: number
+          slug: string
+          day: string
+          daytime_snowfall: number
+          nighttime_snowfall: number
+          prev_night_snowfall: number
+        }
+      },
+      mountain_snowfall_historical: {
+        Row: {
+          mountain_id: number
+          slug: string
+          day: string
+          daytime_snowfall: number
+          nighttime_snowfall: number
+          prev_night_snowfall: number
+        }
       }
     }
     Functions: {

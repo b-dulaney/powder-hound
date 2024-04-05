@@ -13,7 +13,7 @@
 	import BackcountryLayout from './backcountry-layout.svelte';
 	export let data: PageData;
 
-	const { backcountryDetails } = data;
+	const { backcountryDetails, snowfallChartForecastData, snowfallChartHistoricalData } = data;
 	$: session = data.session as Session | undefined;
 	$: existingAlert = data.existingAlert;
 	$: alertData = data.alertData;
@@ -136,7 +136,7 @@
 	</div>
 </section>
 
-<BackcountryLayout {backcountryDetails} />
+<BackcountryLayout {backcountryDetails} {snowfallChartForecastData} {snowfallChartHistoricalData} />
 
 <section id="forecast-section">
 	<div class="mx-auto mb-10 w-full px-4 lg:max-w-7xl">

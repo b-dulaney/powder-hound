@@ -3,7 +3,7 @@
 		<h2 class="h3">
 			<slot name="header" />
 		</h2>
-		<p class="py-2 text-surface-400">
+		<p class="pt-2 text-surface-400">
 			<slot name="header-subtitle" />
 		</p>
 	</div>
