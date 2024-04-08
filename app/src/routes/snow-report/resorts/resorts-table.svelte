@@ -315,18 +315,18 @@
 							></td
 						>
 						<td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
-							>{row.base_depth}”</td
+							>{formatSnowfall(row.base_depth)}</td
 						>
 						<td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
 							>{Math.floor((row.runs_open / row.total_runs) * 100)}%</td
 						>
 						<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-							>{formatSnowfall(row.snow_past_48h)}"</td
+							>{formatSnowfall(row.snow_past_48h)}</td
 						>
-						<td class="text-center font-bold">{formatSnowfall(row.snow_past_24h)}"</td>
-						<td class="text-center font-bold">{formatSnowfall(row.snow_next_24h)}"</td>
+						<td class="text-center font-bold">{formatSnowfall(row.snow_past_24h)}</td>
+						<td class="text-center font-bold">{formatSnowfall(row.snow_next_24h)}</td>
 						<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-							>{formatSnowfall(row.snow_next_72h)}"</td
+							>{formatSnowfall(row.snow_next_72h)}</td
 						>
 						<td class="!px-0 text-center font-bold">
 							{#if isFavorite(row)}
