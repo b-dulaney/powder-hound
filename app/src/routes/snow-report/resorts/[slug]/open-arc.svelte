@@ -22,21 +22,19 @@
 	}
 </script>
 
-<div class="flex h-full w-full flex-col items-center gap-2 p-4">
-	<div class="h-[100px] w-full p-4">
+<div class="flex flex-col items-center pb-2">
+	<div class="h-[100px] w-full p-2">
 		<Chart ssr>
 			<Svg title="Number of open {type}">
 				<Group center>
 					<Group y={16}>
 						<LinearGradient stops={arcGradient} let:url>
 							<Arc
-								initialValue={0}
 								value={(open / total) * 100}
 								range={[-120, 120]}
-								outerRadius={60}
-								innerRadius={50}
+								outerRadius={55}
+								innerRadius={45}
 								cornerRadius={5}
-								spring
 								fill={url}
 								track={{ class: 'fill-surface-600' }}
 							>
@@ -44,7 +42,7 @@
 									value={`${open} / ${total}`}
 									textAnchor="middle"
 									verticalAnchor="middle"
-									class="fill-surface-100 text-xl"
+									class="fill-surface-100"
 								/>
 							</Arc>
 						</LinearGradient>

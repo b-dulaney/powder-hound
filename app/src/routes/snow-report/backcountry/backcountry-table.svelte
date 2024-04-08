@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation';
 	import AvalancheDangerIcon from '$lib/components/avalanche-danger-icon.svelte';
-	import WeatherIcon from '$lib/components/weather-icon.svelte';
+	import WeatherIcon from '$lib/components/weather/WeatherIcon.svelte';
 	import type { BackcountryOverview, UserAlerts } from '$lib/supabase.types';
 	import { addAlertFailedToast, addAlertSuccessfulToast, avalancheDangerRatingsMap, deleteAlertFailedToast, deleteAlertSuccessfulToast, formatSnowfall } from '$lib/utils';
 	import {

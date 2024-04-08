@@ -84,12 +84,15 @@ export const weatherConditionsMap: Record<string, string> = {
 	haze: 'Haze'
 };
 
-export const formatDate = (date: string) => {
+export const formatDate = (date: string, format: 'short' | 'long') => {
 	if (date === 'Today') {
-		return date;
+		return 'Today';
 	}
 	if (dayjs(date).isSame(dayjs(), 'day')) {
 		return 'Today';
+	}
+	if (format === 'short') {
+		return dayjs(date).format('M/D');
 	}
 
 	return dayjs(date).format('ddd DD');
