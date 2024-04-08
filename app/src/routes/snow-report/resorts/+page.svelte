@@ -10,7 +10,7 @@
 
 	resortSearchInput.subscribe((value) => {
 		filteredResorts =
-			resortOverviews.filter((location) => {
+			resortOverviews.filter((location: { display_name: string; }) => {
 				return location?.display_name?.toLowerCase().includes(value.toLowerCase().trim());
 			}) || [];
 	});

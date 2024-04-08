@@ -6,6 +6,7 @@ import {
 import { constructSnowfallChartData } from '$lib/utils';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import dayjs from 'dayjs';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
 	const { getSession, supabase } = locals;
@@ -23,6 +24,10 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		.select()
 		.eq('slug', params.slug)
 		.returns<MountainSnowfallForecast[]>();
+
+	const isResortClosed = resortDetails?.closing_date
+		? dayjs().isAfter(dayjs(resortDetails.closing_date))
+		: false;
 
 	const snowfallChartData = snowfallForecast ? constructSnowfallChartData(snowfallForecast) : [];
 
@@ -43,6 +48,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		return {
 			resortDetails,
 			snowfallChartData,
+			closed: isResortClosed,
 			alertData: existingAlert,
 			existingAlert: !!existingAlert,
 			session
@@ -51,6 +57,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		return {
 			resortDetails,
 			snowfallChartData,
+			closed: isResortClosed,
 			existingAlert: false
 		};
 	}

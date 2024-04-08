@@ -65,9 +65,9 @@ export function convertWindSpeed(input: string): string {
 export const formatSnowfall = (snowfall: number) => {
 	try {
 		if (snowfall > 1) {
-			return Math.round(snowfall).toString();
+			return `${Math.round(snowfall).toString()}"`;
 		}
-		return snowfall < 1 && snowfall > 0 ? '<1' : snowfall.toString();
+		return snowfall < 1 && snowfall > 0 ? '<1"' : `${snowfall.toString()}"`;
 	} catch (error) {
 		return '--';
 	}
@@ -84,12 +84,15 @@ export const weatherConditionsMap: Record<string, string> = {
 	haze: 'Haze'
 };
 
-export const formatDate = (date: string) => {
+export const formatDate = (date: string, format: 'short' | 'long') => {
 	if (date === 'Today') {
-		return date;
+		return 'Today';
 	}
 	if (dayjs(date).isSame(dayjs(), 'day')) {
 		return 'Today';
+	}
+	if (format === 'short') {
+		return dayjs(date).format('M/D');
 	}
 
 	return dayjs(date).format('ddd DD');
