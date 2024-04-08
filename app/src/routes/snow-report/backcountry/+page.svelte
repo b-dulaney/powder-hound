@@ -10,7 +10,7 @@
 
 	backcountrySearchInput.subscribe((value) => {
 		filteredBackcountry =
-			backcountryOverviews.filter((location) => {
+			backcountryOverviews.filter((location: { display_name: string; }) => {
 				return location?.display_name?.toLowerCase().includes(value.toLowerCase().trim());
 			}) || [];
 	});

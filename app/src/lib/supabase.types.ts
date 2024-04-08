@@ -96,6 +96,7 @@ export type Database = MergeDeep<
 						display_name: string;
 						slug: string;
 						location_type: string;
+						closing_date: string | null;
 						current_temp: number;
 						current_weather: string;
 						base_depth: number;
@@ -153,6 +154,7 @@ export type Database = MergeDeep<
 				};
 				resort_detail: {
 					Row: {
+						closing_date: string | null;
 						current_temp: number;
 						current_weather: string;
 						display_name: string;

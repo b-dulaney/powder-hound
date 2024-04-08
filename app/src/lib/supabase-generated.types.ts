@@ -514,6 +514,7 @@ export type Database = {
 			};
 			resort_detail: {
 				Row: {
+					closing_date: string | null;
 					base_depth: number | null;
 					current_temp: number | null;
 					current_weather: string | null;

@@ -65,9 +65,9 @@ export function convertWindSpeed(input: string): string {
 export const formatSnowfall = (snowfall: number) => {
 	try {
 		if (snowfall > 1) {
-			return Math.round(snowfall).toString();
+			return `${Math.round(snowfall).toString()}"`;
 		}
-		return snowfall < 1 && snowfall > 0 ? '<1' : snowfall.toString();
+		return snowfall < 1 && snowfall > 0 ? '<1"' : `${snowfall.toString()}"`;
 	} catch (error) {
 		return '--';
 	}

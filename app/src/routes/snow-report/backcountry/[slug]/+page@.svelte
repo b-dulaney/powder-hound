@@ -51,7 +51,7 @@
 
 <div class="mx-auto w-full px-6 pb-2 pt-4 lg:px-0 md:pb-4 lg:max-w-5xl lg:pt-8">
 	<section id="header-section">
-		<SnowReportHeader details={backcountryDetails} snowReportHref="/snow-report/backcountry" />
+		<SnowReportHeader details={backcountryDetails} isResort={false} closed={false} snowReportHref="/snow-report/backcountry" />
 		<div class="pt-4 pb-2">
 			<AddRemoveAlertButton alertData={alertData} existingAlert={existingAlert} details={backcountryDetails} session={session} />
 		</div>

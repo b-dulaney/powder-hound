@@ -11,7 +11,7 @@
 	import ResortConditionsCard from './ResortConditionsCard.svelte';
 	export let data: PageData;
 
-	const { resortDetails, snowfallChartData } = data;
+	const { resortDetails, snowfallChartData, closed } = data;
 	$: session = data.session as Session | undefined;
 	$: existingAlert = data.existingAlert;
 	$: alertData = data.alertData;
@@ -49,7 +49,7 @@
 
 <div class="mx-auto w-full px-6 pb-2 pt-4 lg:px-0 md:pb-4 lg:max-w-5xl lg:pt-8">
 	<section id="header-section">
-		<SnowReportHeader details={resortDetails} snowReportHref="/snow-report/resorts" />
+		<SnowReportHeader details={resortDetails} snowReportHref="/snow-report/resorts" isResort closed={closed} />
 		<div class="pt-4 pb-2">
 			<AddRemoveAlertButton alertData={alertData} existingAlert={existingAlert} details={resortDetails} session={session} />
 		</div>
@@ -70,7 +70,7 @@
 	<section id="mountain-and-weather-conditions">
 		<div class="grid grid-cols-1 gap-6 lg:grid-cols-2 p-6 lg:px-0">
 			<div class="lg:col-span-2">
-				<ResortConditionsCard {resortDetails} />
+				<ResortConditionsCard {resortDetails} closed={closed} />
 			</div>
 			<WeatherForecastCard details={resortDetails} />
 			

@@ -327,15 +327,15 @@
 						>
 						<td
 							class="hidden !align-middle font-bold lg:table-cell-fit lg:table-cell lg:text-center"
-							>{formatSnowfall(row.snow_past_7d)}"</td
+							>{formatSnowfall(row.snow_past_7d)}</td
 						>
-						<td class="text-center !align-middle font-bold">{formatSnowfall(row.snow_past_24h)}"</td
+						<td class="text-center !align-middle font-bold">{formatSnowfall(row.snow_past_24h)}</td
 						>
-						<td class="text-center !align-middle font-bold">{formatSnowfall(row.snow_next_24h)}"</td
+						<td class="text-center !align-middle font-bold">{formatSnowfall(row.snow_next_24h)}</td
 						>
 						<td
 							class="hidden !align-middle font-bold md:table-cell-fit md:table-cell md:text-center"
-							>{formatSnowfall(row.snow_next_72h)}"</td
+							>{formatSnowfall(row.snow_next_72h)}</td
 						>
 						<td class="!px-0 text-center !align-middle font-bold">
 							{#if isFavorite(row)}

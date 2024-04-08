@@ -6,6 +6,7 @@
   import OpenArc from './open-arc.svelte';
   import SnowDisplay from './snow-display.svelte';
   export let resortDetails: ResortDetail;
+  export let closed: boolean = false;
 
 </script>
 
@@ -28,11 +29,11 @@
 				/>
 			</div>
 			<div class="grid grid-cols-2 ml-2 gap-x-4">
-					<SnowDisplay value={resortDetails.base_depth} type="Base Depth" />
-					<SnowDisplay value={resortDetails.snow_past_24h} type="Last 24 Hours" />
-					<SnowDisplay value={resortDetails.snow_past_48h} type="Last 48 Hours" />
+					<SnowDisplay value={resortDetails.base_depth} type="Base Depth" closed={closed} />
+					<SnowDisplay value={resortDetails.snow_past_24h} type="Last 24 Hours" closed={closed} />
+					<SnowDisplay value={resortDetails.snow_past_48h} type="Last 48 Hours" closed={closed} />
 					{#if resortDetails?.snow_past_week !== null && resortDetails?.snow_past_week >= 0}
-						<SnowDisplay value={resortDetails?.snow_past_week} type="Last 7 Days" />
+						<SnowDisplay value={resortDetails?.snow_past_week} type="Last 7 Days" closed={closed} />
 					{/if}
 					{#if resortDetails?.snow_total !== null && resortDetails.snow_total >= 0}
 						<SnowDisplay value={resortDetails?.snow_total} type="Season Total" />
@@ -42,7 +43,7 @@
 						<div class="text-start text-surface-200">
 							<p>Snowpack</p>
 							<p class="text-2xl text-start font-bold">
-								{resortDetails.snow_type}
+								{closed ? "--" : resortDetails.snow_type}
 							</p>
 						</div>
 					</div>
