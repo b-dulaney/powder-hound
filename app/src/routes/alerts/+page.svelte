@@ -8,6 +8,7 @@
 	} from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	import type { UserAlerts } from '$lib/supabase.types';
 
 	const toastStore = getToastStore();
 	const modalStore = getModalStore();
@@ -36,6 +37,7 @@
 	};
 
 	export let data: PageData;
+	let alerts: UserAlerts[] = [];
 	$: alerts = data.alerts;
 
 	async function onThresholdChange(e: Event, id: number) {
@@ -188,7 +190,7 @@
 </svelte:head>
 
 <section id="alerts">
-	<div class="mx-auto w-full pb-8 pt-4 md:px-4 lg:max-w-7xl lg:pt-8">
+	<div class="mx-auto w-full pb-8 pt-4 md:px-4 lg:max-w-5xl lg:pt-8">
 		<ol class="breadcrumb px-4 pb-5 md:px-0 lg:text-lg">
 			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>

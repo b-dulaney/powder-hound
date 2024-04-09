@@ -30,6 +30,6 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	return {
-		alerts: alertsData.sort((a, b) => (a.display_name > b.display_name ? 1 : -1))
+		alerts: alertsData.sort((a, b) => (a.display_name > b.display_name ? 1 : -1)) as UserAlerts[]
 	};
 };
