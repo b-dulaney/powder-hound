@@ -50,11 +50,29 @@
 	<svelte:fragment slot="panel">
 		<div class="p-4">
 		{#if tabSet === 0 && snowfallHistoricalChartData !== null}
-			<SnowForecastChart shortDates chartData={snowfallHistoricalChartData} yDomainMax={pastWeekYDomain} />
+			{#if snowPastWeek && snowPastWeek > 0}
+				<SnowForecastChart shortDates chartData={snowfallHistoricalChartData} yDomainMax={pastWeekYDomain} />
+			{:else}
+				<div class="flex flex-col items-center justify-center h-[150px]">
+					<p class="md:text-xl text-surface-300">No snowfall recorded 🌵</p>
+				</div>
+			{/if}
 		{:else if tabSet === 1}
-			<HourlyAccumulationChart {hourlySnowfall} {snowNext24H} />
+			{#if snowNext24H > 0}
+				<HourlyAccumulationChart {hourlySnowfall} {snowNext24H} />
+			{:else}
+				<div class="flex flex-col items-center justify-center h-[150px]">
+					<p class="md:text-xl text-surface-300">No snowfall predicted 🔮</p>
+				</div>
+			{/if}
 		{:else if tabSet === 2}
-			<SnowForecastChart chartData={snowfallChartData} yDomainMax={next72hYDomain} />
+			{#if snowNext72H > 0}
+				<SnowForecastChart chartData={snowfallChartData} yDomainMax={next72hYDomain} />
+			{:else}
+				<div class="flex flex-col items-center justify-center h-[150px]">
+					<p class="md:text-xl text-surface-300">No snowfall predicted 🔮</p>
+				</div>
+			{/if}
 		{/if}
 	</div>
 	</svelte:fragment>
