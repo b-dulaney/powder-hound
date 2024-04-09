@@ -32,13 +32,13 @@
 	/>
 	<meta
 		property="og:title"
-		content="PowderHound | {backcountryDetails.display_name} Snow Report and Avalanche Forecast"
+		content="PowderHound | {backcountryDetails.display_name} Snow Report"
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={$page.url.toString()} />
 	<meta
 		property="og:image"
-		content={`https://powderhound.io/og/backcountry?slug=${backcountryDetails.slug}`}
+		content={`https://powderhound.io/og?title=${backcountryDetails.display_name} Snow Report`}
 	/>
 	<meta
 		property="og:description"
