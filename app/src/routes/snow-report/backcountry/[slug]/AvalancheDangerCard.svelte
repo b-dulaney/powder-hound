@@ -4,6 +4,8 @@
   	import type { BackcountryDetail, StackedChartData } from '$lib/supabase.types';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	export let backcountryDetails: BackcountryDetail;
+
+	console.log(backcountryDetails.avalanche_summary)
 </script>
 
 		<Card showFooter>
@@ -54,10 +56,10 @@
 						</div>
 					{/each}
 				</div>
-                <Accordion class="py-4 px-2">
+                <Accordion class="py-4 px-2" regionPanel='space-y-0'>
                     <AccordionItem>
                         <svelte:fragment slot="summary">Report Summary</svelte:fragment>
-                        <svelte:fragment slot="content">{@html backcountryDetails.avalanche_summary}</svelte:fragment>
+                        <svelte:fragment slot="content"><p>{@html backcountryDetails.avalanche_summary}</p></svelte:fragment>
                     </AccordionItem>
                 </Accordion>
 			</svelte:fragment>
