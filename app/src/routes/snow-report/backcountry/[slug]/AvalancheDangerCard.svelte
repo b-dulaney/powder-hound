@@ -5,7 +5,6 @@
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	export let backcountryDetails: BackcountryDetail;
 
-	console.log(backcountryDetails.avalanche_summary)
 </script>
 
 		<Card showFooter>

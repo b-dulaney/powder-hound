@@ -12,7 +12,6 @@
 	export let form: ActionData;
 	export let redirectUrl: string | null;
 	let formLoading = false;
-	console.log(redirectUrl)
 
 	export let supabase: SupabaseClient;
 	export let action: 'login' | 'signup' = 'login';
