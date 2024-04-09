@@ -33,5 +33,5 @@
 </svelte:head>
 
 <div class="my-10 flex h-full items-start justify-center px-4">
-	<Login action="login" {supabase} {form} {redirectUrl}/>
+	<Login action="login" {supabase} {form} {redirectUrl} />
 </div>

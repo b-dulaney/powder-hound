@@ -54,7 +54,7 @@
 						<i class="fa-solid fa-chevron-right" style="color: variant-filled-primary;"></i>
 					</div>
 				</a>
-					<a class="variant-ghost-secondary btn" href="/alerts">Get Alerts</a>
+				<a class="variant-ghost-secondary btn" href="/alerts">Get Alerts</a>
 			</div>
 		</div>
 	</div>

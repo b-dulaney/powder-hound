@@ -3,12 +3,15 @@
 	import AvalancheDangerIcon from '$lib/components/avalanche-danger-icon.svelte';
 	import WeatherIcon from '$lib/components/weather/WeatherIcon.svelte';
 	import type { BackcountryOverview, UserAlerts } from '$lib/supabase.types';
-	import { addAlertFailedToast, addAlertSuccessfulToast, avalancheDangerRatingsMap, deleteAlertFailedToast, deleteAlertSuccessfulToast, formatSnowfall } from '$lib/utils';
 	import {
-		getModalStore,
-		getToastStore,
-		type ModalSettings
-	} from '@skeletonlabs/skeleton';
+		addAlertFailedToast,
+		addAlertSuccessfulToast,
+		avalancheDangerRatingsMap,
+		deleteAlertFailedToast,
+		deleteAlertSuccessfulToast,
+		formatSnowfall
+	} from '$lib/utils';
+	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
 	import { backcountryColumnSort, backcountrySearchInput, selectedMountain } from '../stores';
 	import { page } from '$app/stores';
@@ -111,7 +114,7 @@
 				});
 			}
 		} else {
-			goto(`/login?redirect=${$page.url.pathname}`);;
+			goto(`/login?redirect=${$page.url.pathname}`);
 		}
 	};
 
@@ -329,10 +332,8 @@
 							class="hidden !align-middle font-bold lg:table-cell-fit lg:table-cell lg:text-center"
 							>{formatSnowfall(row.snow_past_7d)}</td
 						>
-						<td class="text-center !align-middle font-bold">{formatSnowfall(row.snow_past_24h)}</td
-						>
-						<td class="text-center !align-middle font-bold">{formatSnowfall(row.snow_next_24h)}</td
-						>
+						<td class="text-center !align-middle font-bold">{formatSnowfall(row.snow_past_24h)}</td>
+						<td class="text-center !align-middle font-bold">{formatSnowfall(row.snow_next_24h)}</td>
 						<td
 							class="hidden !align-middle font-bold md:table-cell-fit md:table-cell md:text-center"
 							>{formatSnowfall(row.snow_next_72h)}</td

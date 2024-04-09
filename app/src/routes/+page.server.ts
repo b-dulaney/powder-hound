@@ -4,10 +4,10 @@ export async function load(event) {
 	const { supabase } = event.locals;
 
 	async function getCaicDataCount(): Promise<number> {
-					const { count } = await supabase
-						.from('caic_data')
-						.select('*', { count: 'estimated', head: true });
-					return count ?? 60000;
+		const { count } = await supabase
+			.from('caic_data')
+			.select('*', { count: 'estimated', head: true });
+		return count ?? 60000;
 	}
 
 	async function getHeroCount() {

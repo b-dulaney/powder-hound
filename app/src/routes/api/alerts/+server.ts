@@ -76,4 +76,4 @@ export const PUT = async (event: RequestEvent) => {
 	}
 
 	return new Response(JSON.stringify({ status: 200, success: true, body: userAlerts }));
-}
+};

@@ -16,7 +16,6 @@
 	$: session = data.session as Session | undefined;
 	$: existingAlert = data.existingAlert;
 	$: alertData = data.alertData;
-
 </script>
 
 <svelte:head>
@@ -30,10 +29,7 @@
 		name="description"
 		content={`Get real-time snow reports, avalanche conditions, and accurate weather forecasts for ${backcountryDetails.display_name} | Stay informed with PowderHound`}
 	/>
-	<meta
-		property="og:title"
-		content="PowderHound | {backcountryDetails.display_name} Snow Report"
-	/>
+	<meta property="og:title" content="PowderHound | {backcountryDetails.display_name} Snow Report" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={$page.url.toString()} />
 	<meta
@@ -49,39 +45,47 @@
 	<meta property="og:image:height" content="630" />
 </svelte:head>
 
-<div class="mx-auto w-full px-6 pb-2 pt-4 lg:px-0 md:pb-4 lg:max-w-5xl lg:pt-8">
+<div class="mx-auto w-full px-6 pb-2 pt-4 md:pb-4 lg:max-w-5xl lg:px-0 lg:pt-8">
 	<section id="header-section">
-		<SnowReportHeader details={backcountryDetails} isResort={false} closed={false} snowReportHref="/snow-report/backcountry" />
-		<div class="pt-4 pb-2">
-			<AddRemoveAlertButton alertData={alertData} existingAlert={existingAlert} details={backcountryDetails} session={session} />
+		<SnowReportHeader
+			details={backcountryDetails}
+			isResort={false}
+			closed={false}
+			snowReportHref="/snow-report/backcountry"
+		/>
+		<div class="pb-2 pt-4">
+			<AddRemoveAlertButton {alertData} {existingAlert} details={backcountryDetails} {session} />
 		</div>
 	</section>
 </div>
 
 <div class="mx-auto max-w-5xl p-2 lg:px-0">
-	<BackcountryWarningAlert forecastUrl={backcountryDetails.forecast_url} displayName={backcountryDetails.display_name} />
+	<BackcountryWarningAlert
+		forecastUrl={backcountryDetails.forecast_url}
+		displayName={backcountryDetails.display_name}
+	/>
 </div>
 
 <div class="mx-auto w-full max-w-5xl pt-4 lg:pt-6">
 	<section id="recent-and-upcoming-snowfall">
-		<SnowForecastTabs 
-			snowNext24H={backcountryDetails.snow_next_24h} 
-			snowNext72H={backcountryDetails.snow_next_72h} 
-			snowfallChartData={snowfallChartForecastData} 
+		<SnowForecastTabs
+			snowNext24H={backcountryDetails.snow_next_24h}
+			snowNext72H={backcountryDetails.snow_next_72h}
+			snowfallChartData={snowfallChartForecastData}
 			hourlySnowfall={backcountryDetails.next_24h_hourly_snowfall}
 			snowPastWeek={backcountryDetails.snow_past_7d}
-			snowfallHistoricalChartData={snowfallChartHistoricalData} 
+			snowfallHistoricalChartData={snowfallChartHistoricalData}
 		/>
 	</section>
 
 	<section id="avalanche-and-weather-conditions">
-		<div class="grid grid-cols-1 gap-6 lg:grid-cols-2 p-6 lg:px-0">
+		<div class="grid grid-cols-1 gap-6 p-6 lg:grid-cols-2 lg:px-0">
 			<div class="lg:col-span-2">
 				<AvalancheDangerCard {backcountryDetails} />
 			</div>
 			<WeatherForecastCard details={backcountryDetails} />
 			<div class="hidden lg:block">
-				<HourlyWeatherCard details={backcountryDetails}/>
+				<HourlyWeatherCard details={backcountryDetails} />
 			</div>
 		</div>
 	</section>

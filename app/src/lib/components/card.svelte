@@ -4,9 +4,9 @@
 	export let showHeader: boolean = true;
 </script>
 
-<div class="card w-full shadow-md !rounded-lg !bg-surface-900 border border-surface-500">
+<div class="card w-full !rounded-lg border border-surface-500 !bg-surface-900 shadow-md">
 	{#if showHeader}
-		<div class="p-5 bg-surface-800 border-b border-b-surface-500 rounded-t-lg">
+		<div class="rounded-t-lg border-b border-b-surface-500 bg-surface-800 p-5">
 			<h2 class="h3">
 				<slot name="header" />
 			</h2>
@@ -19,7 +19,7 @@
 	{/if}
 	<slot name="body" />
 	{#if showFooter}
-		<div class="p-5 bg-surface-900 border-t border-t-surface-500 rounded-b-lg">
+		<div class="rounded-b-lg border-t border-t-surface-500 bg-surface-900 p-5">
 			<p class="text-surface-300">
 				<slot name="footer" />
 			</p>

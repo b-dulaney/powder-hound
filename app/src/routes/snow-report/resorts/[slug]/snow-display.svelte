@@ -10,9 +10,9 @@
 		| 'Season Total';
 </script>
 
-<div class="flex flex-col h-full justify-center p-2">
-		<p class="text-start text-surface-200">{type}</p>
-		<p class="text-2xl text-start font-bold">
-			{closed ? "--" : `${value}"`}
-		</p>
+<div class="flex h-full flex-col justify-center p-2">
+	<p class="text-start text-surface-200">{type}</p>
+	<p class="text-start text-2xl font-bold">
+		{closed ? '--' : `${value}"`}
+	</p>
 </div>
