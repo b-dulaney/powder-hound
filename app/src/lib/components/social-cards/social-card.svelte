@@ -35,7 +35,7 @@
 		src: url('/src/lib/OpenSans-SemiBold.ttf');
 	}
 	.card-container {
-		@apply flex h-[622px] w-full flex-col items-start justify-center gap-2 p-8;
+		@apply flex h-[622px] w-full flex-col items-start justify-center gap-2 p-8 px-16;
 		background-color: #15171f;
 	}
 	.app-description {

@@ -30,13 +30,13 @@
 	/>
 	<meta
 		property="og:title"
-		content="PowderHound | {resortDetails.display_name} Snow Report and Avalanche Forecast"
+		content="PowderHound | {resortDetails.display_name} Snow Report"
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={$page.url.toString()} />
 	<meta
 		property="og:image"
-		content={`https://powderhound.io/og/resorts?slug=${resortDetails.slug}`}
+		content={`https://powderhound.io/og?title=${resortDetails.display_name} Snow Report`}
 	/>
 	<meta property="og:image:type" content="image/png" />
 	<meta property="og:image:width" content="1200" />
