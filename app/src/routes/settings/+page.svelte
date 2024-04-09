@@ -79,7 +79,7 @@
 </svelte:head>
 
 <section id="profile">
-	<div class="mx-auto w-full pb-8 pt-4 md:px-4 lg:max-w-7xl lg:pt-8">
+	<div class="mx-auto w-full pb-8 pt-4 md:px-4 lg:max-w-5xl lg:pt-8">
 		<ol class="breadcrumb px-4 pb-5 md:px-0 lg:text-lg">
 			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
@@ -87,9 +87,9 @@
 		</ol>
 		<h1 class="h1 text-center !text-3xl">Settings</h1>
 		<div class="flex max-h-full w-full justify-center p-4 md:px-0">
-			<Card>
+			<Card showHeader={false}>
 				<svelte:fragment slot="body">
-					<div class="flex w-full flex-col px-4 pb-4">
+					<div class="flex w-full flex-col p-4">
 						<h4 class="h4">Profile Info</h4>
 						<hr class="mb-4 mt-1 w-full opacity-80" />
 						<div class="flex w-full flex-col gap-4 pb-8">
