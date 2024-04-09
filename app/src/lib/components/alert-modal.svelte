@@ -27,7 +27,7 @@
 
 		if (response.ok) {
 			const { body } = await response.json();
-			const alertData = body[0]
+			const alertData = body[0];
 			if ($modalStore[0].response) $modalStore[0].response({ success: true, alertData });
 			parent.onClose();
 		} else {

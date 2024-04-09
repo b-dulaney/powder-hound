@@ -9,7 +9,7 @@ export const GET = async (event) => {
 	const code = url.searchParams.get('code') as string;
 	const otp = url.searchParams.get('otp') as string;
 	const redirectUrl = url.searchParams.get('redirect') as string;
-	console.log('redirect url in auth callback', redirectUrl)	
+	console.log('redirect url in auth callback', redirectUrl);
 
 	if (code) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
@@ -27,8 +27,8 @@ export const GET = async (event) => {
 			if (alertsData && alertsData.length === 0) {
 				redirect(301, '/alerts/initial-setup');
 			}
-			if(redirectUrl){
-				redirect(301, redirectUrl)
+			if (redirectUrl) {
+				redirect(301, redirectUrl);
 			}
 			redirect(301, '/snow-report/resorts');
 		}
@@ -43,13 +43,13 @@ export const GET = async (event) => {
 			.from('user_alerts')
 			.select()
 			.returns<UserAlerts[]>();
-			
+
 		if (alertsData && alertsData.length === 0) {
 			redirect(301, '/alerts/initial-setup');
 		}
 
-		if(redirectUrl){
-			redirect(301, redirectUrl)
+		if (redirectUrl) {
+			redirect(301, redirectUrl);
 		}
 		redirect(301, '/snow-report/resorts');
 	}

@@ -86,9 +86,10 @@
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
 					<p>
-						Your use of PowderHound is also governed by our <a href='/privacy-policy' class="anchor">Privacy Policy</a>. By using the app, you
-						consent to the collection, use, and disclosure of your information as described in the
-						Privacy Policy.
+						Your use of PowderHound is also governed by our <a href="/privacy-policy" class="anchor"
+							>Privacy Policy</a
+						>. By using the app, you consent to the collection, use, and disclosure of your
+						information as described in the Privacy Policy.
 					</p>
 					<div class="flex flex-col">
 						<h2 class="h4">Cookies and Analytics</h2>

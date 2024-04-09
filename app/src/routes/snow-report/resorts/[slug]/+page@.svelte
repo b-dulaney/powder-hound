@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import { page } from '$app/stores';
 	import AddRemoveAlertButton from '$lib/components/snow-report/AddRemoveAlertButton.svelte';
 	import HourlyWeatherCard from '$lib/components/weather/HourlyWeatherCard.svelte';
@@ -28,10 +27,7 @@
 		name="description"
 		content={`Get real-time snow reports, mountain conditions, and accurate weather forecasts for ${resortDetails.display_name} | Stay informed with PowderHound`}
 	/>
-	<meta
-		property="og:title"
-		content="PowderHound | {resortDetails.display_name} Snow Report"
-	/>
+	<meta property="og:title" content="PowderHound | {resortDetails.display_name} Snow Report" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={$page.url.toString()} />
 	<meta
@@ -47,35 +43,40 @@
 	/>
 </svelte:head>
 
-<div class="mx-auto w-full px-6 pb-2 pt-4 lg:px-0 md:pb-4 lg:max-w-5xl lg:pt-8">
+<div class="mx-auto w-full px-6 pb-2 pt-4 md:pb-4 lg:max-w-5xl lg:px-0 lg:pt-8">
 	<section id="header-section">
-		<SnowReportHeader details={resortDetails} snowReportHref="/snow-report/resorts" isResort closed={closed} />
-		<div class="pt-4 pb-2">
-			<AddRemoveAlertButton alertData={alertData} existingAlert={existingAlert} details={resortDetails} session={session} />
+		<SnowReportHeader
+			details={resortDetails}
+			snowReportHref="/snow-report/resorts"
+			isResort
+			{closed}
+		/>
+		<div class="pb-2 pt-4">
+			<AddRemoveAlertButton {alertData} {existingAlert} details={resortDetails} {session} />
 		</div>
 	</section>
 </div>
 
 <div class="mx-auto w-full max-w-5xl pt-4 lg:pt-6">
 	<section id="upcoming-snowfall">
-			<SnowForecastTabs 
-				snowNext24H={resortDetails.snow_next_24h} 
-				snowNext72H={resortDetails.snow_next_72h} 
-				{snowfallChartData} 
-				hourlySnowfall={resortDetails.next_24h_hourly_snowfall}
-				snowPastWeek={null} 
-				snowfallHistoricalChartData={null}
-				/>
+		<SnowForecastTabs
+			snowNext24H={resortDetails.snow_next_24h}
+			snowNext72H={resortDetails.snow_next_72h}
+			{snowfallChartData}
+			hourlySnowfall={resortDetails.next_24h_hourly_snowfall}
+			snowPastWeek={null}
+			snowfallHistoricalChartData={null}
+		/>
 	</section>
 	<section id="mountain-and-weather-conditions">
-		<div class="grid grid-cols-1 gap-6 lg:grid-cols-2 p-6 lg:px-0">
+		<div class="grid grid-cols-1 gap-6 p-6 lg:grid-cols-2 lg:px-0">
 			<div class="lg:col-span-2">
-				<ResortConditionsCard {resortDetails} closed={closed} />
+				<ResortConditionsCard {resortDetails} {closed} />
 			</div>
 			<WeatherForecastCard details={resortDetails} />
-			
+
 			<div class="hidden lg:block">
-				<HourlyWeatherCard details={resortDetails}/>
+				<HourlyWeatherCard details={resortDetails} />
 			</div>
 		</div>
 	</section>

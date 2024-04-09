@@ -1,11 +1,9 @@
 <script lang="ts">
-  
-  
-  import Card from '$lib/components/card.svelte';
-  import type { BackcountryDetail, ResortDetail } from '$lib/supabase.types';
-  import HourlyForecastList from '$lib/components/weather/HourlyForecastList.svelte';
+	import Card from '$lib/components/card.svelte';
+	import type { BackcountryDetail, ResortDetail } from '$lib/supabase.types';
+	import HourlyForecastList from '$lib/components/weather/HourlyForecastList.svelte';
 
-  export let details: ResortDetail|BackcountryDetail;
+	export let details: ResortDetail | BackcountryDetail;
 </script>
 
 <Card>
@@ -16,4 +14,3 @@
 		</div>
 	</svelte:fragment>
 </Card>
-

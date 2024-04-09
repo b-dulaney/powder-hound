@@ -1,11 +1,13 @@
 <script lang="ts">
 	import type { ResortOverview, UserAlerts } from '$lib/supabase.types';
-	import { addAlertFailedToast, addAlertSuccessfulToast, deleteAlertFailedToast, deleteAlertSuccessfulToast, formatSnowfall } from '$lib/utils';
 	import {
-		getModalStore,
-		getToastStore,
-		type ModalSettings
-	} from '@skeletonlabs/skeleton';
+		addAlertFailedToast,
+		addAlertSuccessfulToast,
+		deleteAlertFailedToast,
+		deleteAlertSuccessfulToast,
+		formatSnowfall
+	} from '$lib/utils';
+	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
 	import { resortColumnSort, resortSearchInput, selectedMountain } from '../stores';
 
@@ -76,7 +78,7 @@
 				});
 			}
 		} else {
-			goto(`/login?redirect=${$page.url.pathname}`);;
+			goto(`/login?redirect=${$page.url.pathname}`);
 		}
 	};
 

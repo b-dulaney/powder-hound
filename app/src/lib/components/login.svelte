@@ -26,7 +26,9 @@
 		await supabase.auth.signInWithOAuth({
 			provider: 'github',
 			options: {
-				redirectTo: redirectUrl ? `${PUBLIC_SITE_URL}/auth/callback?redirect=${redirectUrl}` : `${PUBLIC_SITE_URL}/auth/callback`
+				redirectTo: redirectUrl
+					? `${PUBLIC_SITE_URL}/auth/callback?redirect=${redirectUrl}`
+					: `${PUBLIC_SITE_URL}/auth/callback`
 			}
 		});
 	}
@@ -35,7 +37,9 @@
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: redirectUrl ? `${PUBLIC_SITE_URL}/auth/callback?redirect=${redirectUrl}` : `${PUBLIC_SITE_URL}/auth/callback`,
+				redirectTo: redirectUrl
+					? `${PUBLIC_SITE_URL}/auth/callback?redirect=${redirectUrl}`
+					: `${PUBLIC_SITE_URL}/auth/callback`,
 				queryParams: {
 					access_type: 'offline',
 					prompt: 'consent'
@@ -57,7 +61,7 @@
 				use:enhance={() => {
 					formLoading = true;
 					return async ({ update, result }) => {
-						if(result.type === 'redirect'){
+						if (result.type === 'redirect') {
 							goto(result.location);
 						}
 						formLoading = false;
@@ -160,12 +164,12 @@
 					use:enhance={() => {
 						formLoading = true;
 						return async ({ update, result }) => {
-						if(result.type === 'redirect'){
-							goto(result.location);
-						}
-						formLoading = false;
-						update();
-					};
+							if (result.type === 'redirect') {
+								goto(result.location);
+							}
+							formLoading = false;
+							update();
+						};
 					}}
 				>
 					<label class="label mb-4">

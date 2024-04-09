@@ -54,10 +54,10 @@
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange((event, _session) => {
-			if(_session?.access_token !== session?.access_token){
+			if (_session?.access_token !== session?.access_token) {
 				invalidateAll();
 			}
-			if(event === 'SIGNED_OUT'){
+			if (event === 'SIGNED_OUT') {
 				invalidateAll();
 			}
 			if (_session?.expires_at !== session?.expires_at) {
@@ -154,7 +154,10 @@
 					{:else}
 						<div class="btn-group-vertical z-10 w-24 bg-surface-600 shadow-xl">
 							<button class="listbox-item z-10" on:click={() => goto('/signup')}>Sign up</button>
-							<button class="listbox-item z-10" on:click={() => goto(`/login?redirect=${$page.url.pathname}`)}>Login</button>
+							<button
+								class="listbox-item z-10"
+								on:click={() => goto(`/login?redirect=${$page.url.pathname}`)}>Login</button
+							>
 						</div>
 					{/if}
 				</span>
