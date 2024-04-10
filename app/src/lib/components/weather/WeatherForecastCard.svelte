@@ -12,8 +12,8 @@
 <Card>
 	<svelte:fragment slot="header">Weather Forecast</svelte:fragment>
 	<svelte:fragment slot="body">
-		<div class="flex h-full flex-col lg:justify-evenly">
-			<div class="flex justify-between py-4 sm:w-2/3 sm:self-center">
+		<div class="flex h-full w-full flex-col md:justify-evenly">
+			<div class="flex justify-between p-4 sm:p-6">
 				<div class="flex flex-col p-4">
 					<p class="text-3xl font-bold">{details.current_temp}°</p>
 					<p class="text-xl font-semibold">
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			<div
-				class="flex w-full items-center justify-between px-4 py-2 md:self-center md:py-6 xl:w-11/12"
+				class="flex w-full items-center justify-between p-4 sm:p-6"
 			>
 				{#each details.temperature_range as { date, low_temp, high_temp, snowfall }, i (i)}
 					<WeatherForecastSlice
@@ -49,7 +49,7 @@
 				{/each}
 			</div>
 
-			<Accordion class="py-4 lg:hidden">
+			<Accordion class="py-4 md:hidden">
 				<AccordionItem>
 					<svelte:fragment slot="summary"
 						><p class="!rounded-none text-center">View Hourly Forecast</p></svelte:fragment
