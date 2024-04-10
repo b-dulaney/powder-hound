@@ -69,13 +69,13 @@
 		/>
 	</section>
 	<section id="mountain-and-weather-conditions">
-		<div class="grid grid-cols-1 gap-6 p-6 lg:grid-cols-2 lg:px-0">
-			<div class="lg:col-span-2">
+		<div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:px-0">
+			<div class="md:col-span-2">
 				<ResortConditionsCard {resortDetails} {closed} />
 			</div>
 			<WeatherForecastCard details={resortDetails} />
 
-			<div class="hidden lg:block">
+			<div class="hidden md:block">
 				<HourlyWeatherCard details={resortDetails} />
 			</div>
 		</div>
