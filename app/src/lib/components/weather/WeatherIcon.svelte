@@ -15,6 +15,11 @@
 		ptlycldy: isDaytime ? 'fa-cloud-sun' : 'fa-cloud-moon',
 		cloudy: isDaytime ? 'fa-cloud' : 'fa-cloud-moon',
 		snow: 'fa-snowflake',
+		snowshwr: 'fa-snowflake',
+		rain: isDaytime ? 'fa-cloud-rain' : 'fa-cloud-moon-rain',
+		rainshwr: isDaytime ? 'fa-cloud-rain' : 'fa-cloud-moon-rain',
+		rainsnow: isDaytime ? 'fa-cloud-showers-heavy' : 'fa-cloud-moon-rain',
+		frzrain: isDaytime ? 'fa-cloud-showers-heavy' : 'fa-cloud-moon-rain',
 		clear: isDaytime ? 'fa-sun' : 'fa-moon'
 	};
 </script>
