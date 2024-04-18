@@ -1,4 +1,6 @@
-![Logo](https://powderhound-static-images.s3.us-east-2.amazonaws.com/logo-256px.png)
+<picture>
+  <img alt="PowderHound Logo" src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/logo-256px.png" width="150px">
+</picture>
 
 # PowderHound
 
@@ -16,21 +18,26 @@ Dev Preview: https://dev.powderhound.io
 
 ## Features
 
-- Hourly weather forecasts for nearly 30 ski locations across Colorado
+- Hourly weather forecasts for more than 30 ski locations across Colorado
 - Terrain conditions for resorts (base depth, lifts open, etc.)
 - Avalanche info for backcountry locations
 - Email alerts for snowfall thresholds at your favorite locations
 
+![A-Basin Snow Report Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/2c5134b5-3b52-4088-8f0e-127d76fc23a2)
+
+![Snowfall Alert Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/dc23ceaf-39f9-477d-b214-8d6c6568c8dc)
+
+
 ## Tech Stack
 
-SvelteKit, Supabase, Vite, Typescript, SkeletonUI, Tailwind, Vercel
+SvelteKit, Go, Supabase, TypeScript, SkeletonUI, TailwindCSS, Vercel
 
 ## How It Works
 
 - Weather data for each location is collected hourly from the CAIC point forecast [API](https://avalanche.state.co.us/weather/point-forecasts) via scheduled Supabase edge function
-- Resort conditions data and Avalanche forecasts are collected on regular intervals via web scrapers
+- Resort terrain data and avalanche forecasts are collected on regular intervals via web scrapers
   - See [PowderHound Go](https://github.com/b-dulaney/powder-hound-go) for details
-- Go email service kicks off at 4:30pm and 6:05am to send out forecast and overnight snowfall alerts when user-defined thresholds are met
+- Emails are sent with [Resend](https://resend.com/overview)
 
 ## Roadmap
 
