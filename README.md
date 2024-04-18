@@ -23,7 +23,7 @@ Dev Preview: https://dev.powderhound.io
 - Avalanche info for backcountry locations
 - Email alerts for snowfall thresholds at your favorite locations
 
-![A-Basin Snow Report Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/2c5134b5-3b52-4088-8f0e-127d76fc23a2)
+![A-Basin Snow Report Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/36e01461-2c40-41e1-a957-7810ecd706ca)
 
 ![Snowfall Alert Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/dc23ceaf-39f9-477d-b214-8d6c6568c8dc)
 
@@ -36,25 +36,23 @@ SvelteKit, Go, Supabase, TypeScript, SkeletonUI, TailwindCSS, Vercel
 
 - Weather data for each location is collected hourly from the CAIC point forecast [API](https://avalanche.state.co.us/weather/point-forecasts) via scheduled Supabase edge function
 - Resort terrain data and avalanche forecasts are collected on regular intervals via web scrapers
+  - Terrain reports vary from resort to resort, but you'll always have the lift and run status, previous 24 hour snowfall, previous 48 hour snowfall, and base depth at a minimum
   - See [PowderHound Go](https://github.com/b-dulaney/powder-hound-go) for details
 - Emails are sent with [Resend](https://resend.com/overview)
+  - Forecast alert emails are sent at 4:30pm MT when snowfall over the next 24 hours is predicted to hit your threshold
+  - Overnight alert emails are sent at 6:00am MT when recent snowfall hits your threshold (this can be overnight or previous 24 hour snowfall depending on how the resort reports it)
 
 ## Roadmap
 
 This is pretty informal for now as I'm building this project out in my spare time. With that said, here's a list of things that I would like to include eventually:
 
 - More locations
-
 - SMS OTP login
-
 - SMS alerts
-
 - Additional SSO providers
-
 - CDOT road conditions
-
+- PWA functionality and notifications
 - Resort live feeds (lift cams, snow stakes, etc.)
-
 - User-uploaded reports (think along the lines of AllTrails reviews - conditions reports, images, links to CAIC observations, etc)
 
 ## Feedback
