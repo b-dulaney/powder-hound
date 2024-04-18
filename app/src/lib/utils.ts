@@ -81,7 +81,12 @@ export const weatherConditionsMap: Record<string, string> = {
 	mslycldy: 'Mostly Cloudy',
 	cloudy: 'Cloudy',
 	fog: 'Fog',
-	haze: 'Haze'
+	haze: 'Haze',
+	rain: 'Rain',
+	rainshwr: 'Rain Showers',
+	snowshwr: 'Snow Showers',
+	frzrain: 'Freezing Rain',
+	rainsnow: 'Rain/Snow Mix'
 };
 
 export const formatDate = (date: string, format: 'short' | 'long') => {
