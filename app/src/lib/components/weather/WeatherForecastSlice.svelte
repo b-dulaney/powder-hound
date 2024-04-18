@@ -7,7 +7,7 @@
 	export let date: string;
 </script>
 
-<div class="flex min-w-[35px] flex-col items-center">
+<div class="mx-auto flex min-w-[35px] flex-col items-center">
 	<p class="pl-1">{high_temp}&deg;</p>
 	<p class="pl-1">{low_temp}&deg;</p>
 	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== 'Today'} />
