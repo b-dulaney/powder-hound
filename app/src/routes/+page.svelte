@@ -3,6 +3,7 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import LogoIcon from '../public/logo-icon.png';
 	import type { PageData } from './$types';
+	import Card from '$lib/components/card.svelte';
 	export let data: PageData;
 </script>
 
@@ -62,64 +63,64 @@
 
 <section id="forecasts" class="built-for-gradient bg-surface-100-800-token">
 	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
-		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
+		<div
+			class="grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 md:items-center md:gap-10 lg:items-start"
+		>
 			<div class="space-y-4">
 				<h2 class="h2">Built for Colorado</h2>
 				<p>
 					Powder Hound sources weather data directly from the
-					<a class="anchor" target="_blank" rel="no-referrer" href="https://avalanche.state.co.us/"
+					<a class="anchor" rel="external" href="https://avalanche.state.co.us/"
 						>Colorado Avalanche Information Center</a
 					>
 					(CAIC) in combination with NOAA
 					<a
 						class="anchor"
-						target="_blank"
-						rel="no-referrer"
+						rel="external"
 						href="https://www.ncei.noaa.gov/products/weather-climate-models/global-forecast"
 					>
 						GFS</a
 					>
 					and
-					<a
-						class="anchor"
-						target="_blank"
-						rel="no-referrer"
-						href="https://rapidrefresh.noaa.gov/hrrr/"
-					>
-						HRRR</a
-					> forecasts to provide the most accurate snowfall predictions for Colorado's premier ski destinations.
+					<a class="anchor" rel="external" href="https://rapidrefresh.noaa.gov/hrrr/"> HRRR</a> forecasts
+					to provide the most accurate snowfall predictions for Colorado's premier ski destinations.
 				</p>
 				<hr class="opacity-60" />
 				<p class="pb-2">
 					Weather forecasts are available up to 72 hours in advance and are updated hourly. For
 					in-bounds locations, PowderHound provides information on snowpack, lift status, open
-					terrain, and more.
+					terrain, and more. For backcountry locations, we provide avalanche info and historical
+					snowfall data.
 				</p>
 			</div>
-			<div class="card">
-				<section class="p-4">
-					<h3 class="h3">CAIC Point Forecasts</h3>
-					<p class="pt-1">
-						Broken down into hourly data points for any location in the state, these high-res
-						forecasts provide accurate snow and weather predictions that are tailored to Colorado.
-						For those interested in learning more about the underlying models and methods, check out
-						the CAIC's
-						<a
-							class="anchor"
-							rel="no-referrer"
-							target="_blank"
-							href="https://avalanche.state.co.us/weather/forecast-models/about">about</a
-						>
-						page.
-					</p>
-				</section>
-				<footer class="card-footer mt-2 flex justify-center">
-					<enhanced:img
-						src="../public/WRFExample.png"
-						alt="CAIC forecast graph"
-						class="w-[350px] rounded-lg"
-					/>
-				</footer>
+			<div class="max-w-lg">
+				<Card showHeader>
+					<svelte:fragment slot="header">CAIC Point Forecasts</svelte:fragment>
+					<svelte:fragment slot="body">
+						<div class="p-6">
+							<enhanced:img
+								src="../public/WRFExample.png"
+								alt="CAIC forecast graph"
+								class="mx-auto mb-2 h-[160px] w-full rounded-lg object-cover lg:float-right lg:ml-2 lg:h-[175px] lg:w-auto"
+							/>
+							<p class="">
+								These high-res forecasts are the not-so-secret sauce behind our alerts and
+								predictions. They provide accurate snow and weather data, specially tailored to
+								Colorado's mountain ranges and microclimates.
+								<br />
+								<br />
+								For those interested in learning more about the underlying models and methods, check
+								out the CAIC's
+								<a
+									class="anchor"
+									rel="external"
+									href="https://avalanche.state.co.us/weather/forecast-models/about">about</a
+								>
+								page.
+							</p>
+						</div>
+					</svelte:fragment>
+				</Card>
 			</div>
 		</div>
 	</div>
@@ -127,7 +128,7 @@
 
 <section id="alerts" class="bg-surface-50-900-token">
 	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
-		<div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-10">
+		<div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-10 lg:items-start">
 			<div class="space-y-4 md:order-last">
 				<h2 class="h2">Tailored Alerts</h2>
 				<p>
@@ -152,7 +153,7 @@
 
 <section id="passes" class="passes-gradient bg-surface-100-800-token">
 	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
-		<div class="grid grid-cols-1 items-start gap-10 md:grid-cols-2">
+		<div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center lg:items-start">
 			<div class="space-y-4">
 				<h2 class="h2">Know Before You Go</h2>
 				<p>
@@ -178,20 +179,20 @@
 
 <section id="stats" class="stats-gradient bg-surface-100-800-token">
 	<div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-24">
-		<div class="flex flex-col items-center justify-center gap-10 lg:flex-row">
+		<div class="flex flex-col items-center justify-center gap-10 md:flex-row">
 			<div class="space-y-1">
 				<span class="block text-8xl font-bold font-heading-token">30+</span>
 				<p class="block pl-1 opacity-50">Total locations</p>
 			</div>
 			<div
-				class="w-20 border-t border-surface-500/50 lg:h-20 lg:w-1 lg:border-l lg:border-t-0"
+				class="w-20 border-t border-surface-500/50 md:h-20 md:w-1 md:border-l md:border-t-0"
 			></div>
 			<div class="space-y-1">
 				<span class="block text-8xl font-bold font-heading-token">10+</span>
 				<p class="block pl-1 opacity-50">Backcountry zones</p>
 			</div>
 			<div
-				class="w-20 border-t border-surface-500/50 lg:h-20 lg:w-1 lg:border-l lg:border-t-0"
+				class="w-20 border-t border-surface-500/50 md:h-20 md:w-1 md:border-l md:border-t-0"
 			></div>
 			<div class="space-y-1">
 				{#await data.streamed.caicDataCount}
