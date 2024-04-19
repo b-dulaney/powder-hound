@@ -25,7 +25,7 @@ Dev Preview: https://dev.powderhound.io
 
 ![A-Basin Snow Report Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/36e01461-2c40-41e1-a957-7810ecd706ca)
 
-![Snowfall Alert Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/dc23ceaf-39f9-477d-b214-8d6c6568c8dc)
+![Snowfall Alert Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/4781a9c1-b4c4-4bad-ae2e-c69642732588)
 
 
 ## Tech Stack
