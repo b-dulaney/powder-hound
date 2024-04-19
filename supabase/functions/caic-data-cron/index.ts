@@ -8,7 +8,7 @@ interface MountainRow {
 }
 
 const API_URL =
-  "https://looper.avalanche.state.co.us/weather/ptfcst/wrf/current";
+  "https://looper.avalanche.state.co.us/weather/ptfcst/wrfhr/current";
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const supabase = createClient<Database>(
