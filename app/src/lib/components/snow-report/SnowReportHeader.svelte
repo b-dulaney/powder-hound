@@ -16,19 +16,19 @@
 	<li class="crumb text-surface-300">{details.display_name}</li>
 </ol>
 
-<div class="mt-4 flex flex-col">
-	<h1 class="h1">{details.display_name} Snow Report</h1>
+<div class="mt-4 flex flex-col sm:gap-2">
+	<h1 class="h2">{details.display_name} Snow Report</h1>
 	<span class="flex items-center">
-		<p class="mr-2 mt-2 text-xl">Region -</p>
-		<p class="mt-2 text-xl">{details.region}</p>
+		<p class="mr-2 text-base">Region -</p>
+		<p class="text-base">{details.region}</p>
 	</span>
 	{#if isResort}
 		<span class="flex items-center">
-			<p class="mr-2 mt-2 text-xl">Status:</p>
+			<p class="mr-2 text-base">Status:</p>
 			{#if closed}
-				<p class="mt-2 text-xl font-semibold text-primary-400">Closed</p>
+				<p class="text-base font-semibold text-primary-400">Closed</p>
 			{:else}
-				<p class="mt-2 text-xl font-semibold text-emerald-400">Open</p>
+				<p class="text-base font-semibold text-emerald-400">Open</p>
 			{/if}
 		</span>
 	{/if}
