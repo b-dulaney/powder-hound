@@ -95,11 +95,8 @@ export type Database = MergeDeep<
 						mountain_id: number;
 						display_name: string;
 						slug: string;
-						location_type: string;
 						closing_date: string | null;
 						closed: boolean;
-						current_temp: number;
-						current_weather: string;
 						base_depth: number;
 						runs_open: number;
 						total_runs: number;
@@ -281,21 +278,6 @@ export type Database = MergeDeep<
 						updated_at: string;
 					};
 				};
-				resort_web_elements: {
-					Row: {
-						mountain_id: number;
-						conditions_url: string;
-						trail_report_url: string | null;
-						base_depth_el: string;
-						lifts_open_el: string | null;
-						runs_open_el: string | null;
-						snow_past_24h_el: string;
-						snow_past_48h_el: string;
-						snow_past_week_el: string | null;
-						snow_total_el: string | null;
-						snow_type_el: string | null;
-					};
-				};
 				avalanche_forecasts: {
 					Row: {
 						mountain_id: number;
@@ -342,7 +324,6 @@ export type Profile = Tables<'profile'>;
 export type UserAlerts = Tables<'user_alerts'>;
 export type AvalancheForecast = Tables<'avalanche_forecasts'>;
 export type ResortConditions = Tables<'resort_conditions'>;
-export type ResortWebElements = Tables<'resort_web_elements'>;
 export type ResortOverview = Views<'resort_overview'>;
 export type ResortDetail = Views<'resort_detail'>;
 export type BackcountryOverview = Views<'backcountry_overview'>;
@@ -351,14 +332,7 @@ export type WebScraperOverview = Views<'web_scraper_overview'>;
 export type MountainSnowfallForecast = Views<'mountain_snowfall_forecast'>;
 export type MountainSnowfallHistorical = Views<'mountain_snowfall_historical'>;
 
-type TableTypes =
-	| AvalancheForecast
-	| Mountain
-	| CaicData
-	| ResortConditions
-	| ResortWebElements
-	| Profile
-	| UserAlerts;
+type TableTypes = AvalancheForecast | Mountain | CaicData | ResortConditions | Profile | UserAlerts;
 
 export type DbResult<T extends TableTypes> = {
 	data: T[] | null;

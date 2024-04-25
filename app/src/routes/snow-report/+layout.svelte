@@ -1,18 +1,10 @@
 <script lang="ts">
 	import { TabGroup, TabAnchor } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
+	import BreadcrumbHeader from '$lib/components/BreadcrumbHeader.svelte';
 </script>
 
-<section class="mx-auto w-full pt-4 md:px-4 lg:max-w-6xl lg:pt-8">
-	<ol class="breadcrumb px-4 pb-5 md:px-0 lg:text-lg">
-		<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
-		<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-		<li class="text-surface-300">Snow Report</li>
-	</ol>
-	<div class="flex justify-center lg:mb-4">
-		<h1 class="h2">Snow Report</h1>
-	</div>
-</section>
+<BreadcrumbHeader title="Snow Report" maxWidth="6xl" />
 
 <div class="mx-auto flex w-full max-w-lg justify-center pb-8 pt-2">
 	<TabGroup justify="justify-center" class="w-full">
@@ -38,4 +30,5 @@
 		</TabAnchor>
 	</TabGroup>
 </div>
+
 <slot />

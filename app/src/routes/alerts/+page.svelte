@@ -9,6 +9,9 @@
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
 	import type { UserAlerts } from '$lib/supabase.types';
+	import Card from '$lib/components/card.svelte';
+	import BreadcrumbHeader from '$lib/components/BreadcrumbHeader.svelte';
+	import SectionContainer from '$lib/components/SectionContainer.svelte';
 
 	const toastStore = getToastStore();
 	const modalStore = getModalStore();
@@ -188,37 +191,25 @@
 	/>
 </svelte:head>
 
-<section id="alerts">
-	<div class="mx-auto w-full pb-8 pt-4 md:px-4 lg:max-w-5xl lg:pt-8">
-		<ol class="breadcrumb px-4 pb-5 md:px-0 lg:text-lg">
-			<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
-			<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-			<li class="text-surface-300">Alerts</li>
-		</ol>
+<BreadcrumbHeader title="Alerts" />
 
-		<h1 class="h1 mb-4 text-center !text-3xl">Alerts</h1>
-		{#if alerts.length}
-			<!-- <div class="flex w-full justify-end px-4">
-				<button type="button" class="variant-ghost-secondary btn btn-sm w-28 md:btn-md">
-					<span>Add alerts</span>
-					<i class="fa fa-bell"></i>
-				</button>
-			</div> -->
-
-			<div class="flex max-h-full w-full justify-center px-2">
-				<div class="card mt-4 w-full overflow-y-auto shadow-md md:px-4 md:py-2">
-					<div class="flex w-full flex-col p-4">
+<SectionContainer id="alerts">
+	{#if alerts.length}
+		<div class="flex max-h-full w-full justify-center">
+			<Card showHeader={false}>
+				<svelte:fragment slot="body">
+					<div class="flex w-full flex-col p-4 md:p-6">
 						{#each alerts as { id, display_name, threshold_inches, paused }}
 							<div
 								class="flex w-full items-center justify-between gap-4 border-b border-b-surface-600 py-4 first:pt-0 last:border-b-0"
 							>
 								{#if paused}
-									<p class="grow text-surface-400 md:text-xl">
+									<p class="grow text-surface-400 md:text-lg">
 										<i class="fa fa-pause pl-1"></i>
 										{display_name}
 									</p>
 								{:else}
-									<p class="grow md:text-xl">
+									<p class="grow md:text-lg">
 										{display_name}
 									</p>
 								{/if}
@@ -238,6 +229,7 @@
 								<div class="flex shrink justify-end md:hidden">
 									<button
 										class="btn btn-icon !bg-transparent"
+										aria-label="Alert Options"
 										use:popup={{
 											event: 'click',
 											target: `alertMenuDropdown-${id}`,
@@ -268,18 +260,18 @@
 								<div class="hidden justify-end gap-4 md:flex md:shrink">
 									{#if paused}
 										<button
-											class="variant-filled-surface btn btn-sm"
+											class="variant-outline-surface btn btn-sm"
 											on:click={() => handlePause(id)}
 										>
 											<span>Resume</span>
 											<i
 												class="fa fa-play
-											"
+												"
 											/>
 										</button>
 									{:else}
 										<button
-											class="variant-filled-surface btn btn-sm"
+											class="variant-outline-surface btn btn-sm"
 											on:click={() => handlePause(id)}
 										>
 											<span>Pause</span>
@@ -299,58 +291,58 @@
 							</div>
 						{/each}
 					</div>
-				</div>
-			</div>
+				</svelte:fragment>
+			</Card>
+		</div>
 
-			<div class="flex w-full justify-center gap-2 px-2 pt-8">
-				{#if !alerts?.every((a) => a.paused)}
-					<button
-						type="button"
-						on:click={handlePauseAll}
-						class="variant-filled-surface btn btn-sm w-32 md:btn-md"
-					>
-						<span>Pause all</span>
-						<i class="fa fa-pause"></i>
-					</button>
-				{/if}
-				{#if alerts?.every((a) => a.paused)}
-					<button
-						type="button"
-						on:click={handleResumeAll}
-						class="variant-filled-surface btn btn-sm w-32"
-					>
-						<span>Resume all</span>
-						<i class="fa fa-play"></i>
-					</button>
-				{/if}
+		<div class="flex w-full justify-center gap-2 px-2 pt-8">
+			{#if !alerts?.every((a) => a.paused)}
 				<button
 					type="button"
-					on:click={() => modalStore.trigger(deleteAllModal)}
-					class="variant-ghost-primary btn btn-sm w-32 md:btn-md"
+					on:click={handlePauseAll}
+					class="variant-outline-surface btn btn-sm w-32 md:btn-md"
 				>
-					<span>Delete all</span>
-					<i class="fa fa-trash"></i>
+					<span>Pause all</span>
+					<i class="fa fa-pause"></i>
 				</button>
-			</div>
-		{:else}
-			<div class="flex w-full flex-col items-center justify-center gap-8 px-2 pt-8">
-				<div class="alert variant-ghost-surface max-w-sm p-4 md:max-w-lg">
-					<span>
-						<i class="fa fa-info-circle mx-1"></i>
-						You don't have any alerts set up yet. You can add some here or from the
-						<a class="anchor" href="/snow-report" data-sveltekit-preload-data>Snow Report</a> page for
-						your favorite mountains.
-					</span>
-				</div>
+			{/if}
+			{#if alerts?.every((a) => a.paused)}
 				<button
 					type="button"
-					on:click={() => goto('/alerts/initial-setup')}
-					class="variant-ghost-secondary btn btn-md w-32"
+					on:click={handleResumeAll}
+					class="variant-outline-surface btn btn-sm w-32"
 				>
-					<span>Add alerts</span>
-					<i class="fa fa-bell"></i>
+					<span>Resume all</span>
+					<i class="fa fa-play"></i>
 				</button>
+			{/if}
+			<button
+				type="button"
+				on:click={() => modalStore.trigger(deleteAllModal)}
+				class="variant-ghost-primary btn btn-sm w-32 md:btn-md"
+			>
+				<span>Delete all</span>
+				<i class="fa fa-trash"></i>
+			</button>
+		</div>
+	{:else}
+		<div class="flex w-full flex-col items-center justify-center gap-8 px-2 pt-8">
+			<div class="alert variant-ghost-surface max-w-sm p-4 md:max-w-lg">
+				<span>
+					<i class="fa fa-info-circle mx-1"></i>
+					You don't have any alerts set up yet. You can add some here or from the
+					<a class="anchor" href="/snow-report" data-sveltekit-preload-data>Snow Report</a> page for
+					your favorite mountains.
+				</span>
 			</div>
-		{/if}
-	</div>
-</section>
+			<button
+				type="button"
+				on:click={() => goto('/alerts/initial-setup')}
+				class="variant-ghost-secondary btn btn-md w-32"
+			>
+				<span>Add alerts</span>
+				<i class="fa fa-bell"></i>
+			</button>
+		</div>
+	{/if}
+</SectionContainer>
