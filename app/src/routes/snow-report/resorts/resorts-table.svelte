@@ -1,4 +1,9 @@
 <script lang="ts">
+	import { goto, invalidate } from '$app/navigation';
+	import { page } from '$app/stores';
+	import FilterDropdown from '$lib/components/datatable/FilterDropdown.svelte';
+	import Search from '$lib/components/datatable/Search.svelte';
+	import ThSort from '$lib/components/datatable/ThSort.svelte';
 	import type { ResortOverview, UserAlerts } from '$lib/supabase.types';
 	import {
 		addAlertFailedToast,
@@ -9,13 +14,20 @@
 	} from '$lib/utils';
 	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
-	import { resortColumnSort, resortSearchInput, selectedMountain } from '../stores';
-
-	import { goto, invalidate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { DataHandler, type State } from '@vincjo/datatables/remote';
+	import { selectedMountain } from '../stores';
+	import { reload } from './api';
 	export let session: Session | null;
 	export let resortOverviews: ResortOverview[];
 	export let alerts: UserAlerts[];
+	let showClosed = false;
+
+	const handler = new DataHandler<ResortOverview>(resortOverviews);
+	const rows = handler.getRows();
+	handler.sortAsc('display_name');
+	handler.filter('false', 'closed');
+	handler.onChange((state: State) => reload(state));
+
 	$: mappedAlerts = alerts.map((alert) => alert.mountain_id);
 
 	const modalStore = getModalStore();
@@ -82,232 +94,70 @@
 		}
 	};
 
-	const updateColumnSort = (sortBy: string) => {
-		if ($resortColumnSort.name === sortBy) {
-			$resortColumnSort.asc = !$resortColumnSort.asc;
-		} else if (sortBy === 'location') {
-			$resortColumnSort.name = sortBy;
-			$resortColumnSort.asc = true;
-		} else {
-			$resortColumnSort.name = sortBy;
-			$resortColumnSort.asc = false;
-		}
-		sortLocations($resortColumnSort.name, $resortColumnSort.asc);
+	const handleClickShowClosed = () => {
+		showClosed = !showClosed;
+		handler.clearFilters();
+		handler.invalidate();
 	};
-
-	const sortLocations = (sortBy: string, asc: boolean) => {
-		const sortOrder = asc ? 1 : -1;
-
-		resortOverviews =
-			resortOverviews.sort((a, b) => {
-				switch (sortBy) {
-					case 'location':
-						return a.display_name > b.display_name ? sortOrder : -sortOrder;
-					case 'baseDepth':
-						return (a.base_depth - b.base_depth) * sortOrder;
-					case 'runsOpen':
-						return (a.runs_open / a.total_runs - b.runs_open / b.total_runs) * sortOrder;
-					case 'last48hours':
-						return (a.snow_past_48h - b.snow_past_48h) * sortOrder;
-					case 'last24hours':
-						return (a.snow_past_24h - b.snow_past_24h) * sortOrder;
-					case 'next24hours':
-						return (a.snow_next_24h - b.snow_next_24h) * sortOrder;
-					case 'next72hours':
-						return (a.snow_next_72h - b.snow_next_72h) * sortOrder;
-
-					default:
-						return a.display_name > b.display_name ? sortOrder : -sortOrder;
-				}
-			}) || [];
-	};
-
-	sortLocations($resortColumnSort.name, $resortColumnSort.asc);
 </script>
 
-<div class="flex w-full items-center justify-center py-4">
-	<div
-		class="input-group input-group-divider w-3/4 grid-cols-[auto_1fr_auto] sm:w-2/3 lg:w-1/2 2xl:w-1/3"
-	>
-		<div class="input-group-shim"><i class="fa-solid fa-magnifying-glass"></i></div>
-		<input
-			type="search"
-			autocomplete="off"
-			placeholder="Search..."
-			bind:value={$resortSearchInput}
-		/>
-	</div>
-</div>
-
-<div class="table-container">
-	<table class="table">
-		<caption class="sr-only"
-			>Snow and weather conditions for CO resorts and backcountry areas, column headers with buttons
-			are sortable. Switch between categories with the tabs above.</caption
-		>
-		<thead class="w-full">
-			<tr>
-				<th
-					class="table-cell-fit"
-					aria-sort={$resortColumnSort.name === 'location'
-						? $resortColumnSort.asc
-							? 'ascending'
-							: 'descending'
-						: 'none'}
-				>
-					<button class="group md:pl-1" on:click={() => updateColumnSort('location')}>
-						Location
-						<span class="pl-1" aria-hidden={$resortColumnSort.name !== 'location'}>
-							{#if $resortColumnSort.name === 'location' && $resortColumnSort.asc}
-								<i class="fa-solid fa-sort-up"></i>
-							{:else if $resortColumnSort.name === 'location' && !$resortColumnSort.asc}
-								<i class="fa-solid fa-sort-down"></i>
-							{:else}
-								<i class="fa-solid fa-sort opacity-25"></i>
-							{/if}
-						</span>
-					</button>
-				</th>
-				<th
-					class="hidden lg:table-cell-fit lg:table-cell lg:text-center"
-					aria-sort={$resortColumnSort.name === 'baseDepth'
-						? $resortColumnSort.asc
-							? 'ascending'
-							: 'descending'
-						: 'none'}
-				>
-					<button class="group" on:click={() => updateColumnSort('baseDepth')}>
-						Base Depth
-						<span class="pl-1" aria-hidden={$resortColumnSort.name !== 'baseDepth'}>
-							{#if $resortColumnSort.name === 'baseDepth' && $resortColumnSort.asc}
-								<i class="fa-solid fa-sort-up"></i>
-							{:else if $resortColumnSort.name === 'baseDepth' && !$resortColumnSort.asc}
-								<i class="fa-solid fa-sort-down"></i>
-							{:else}
-								<i class="fa-solid fa-sort opacity-25"></i>
-							{/if}
-						</span>
-					</button>
-				</th>
-				<th
-					class="hidden lg:table-cell-fit lg:table-cell lg:text-center"
-					aria-sort={$resortColumnSort.name === 'runsOpen'
-						? $resortColumnSort.asc
-							? 'ascending'
-							: 'descending'
-						: 'none'}
-				>
-					<button class="group" on:click={() => updateColumnSort('runsOpen')}>
-						Runs Open
-						<span class="pl-1" aria-hidden={$resortColumnSort.name !== 'runsOpen'}>
-							{#if $resortColumnSort.name === 'runsOpen' && $resortColumnSort.asc}
-								<i class="fa-solid fa-sort-up"></i>
-							{:else if $resortColumnSort.name === 'runsOpen' && !$resortColumnSort.asc}
-								<i class="fa-solid fa-sort-down"></i>
-							{:else}
-								<i class="fa-solid fa-sort opacity-25"></i>
-							{/if}
-						</span>
-					</button>
-				</th>
-				<th
-					class="hidden md:table-cell-fit md:table-cell md:text-center"
-					aria-sort={$resortColumnSort.name === 'last48hours'
-						? $resortColumnSort.asc
-							? 'ascending'
-							: 'descending'
-						: 'none'}
-				>
-					<button class="group" on:click={() => updateColumnSort('last48hours')}>
-						Last 48H
-						<span class="pl-1" aria-hidden={$resortColumnSort.name !== 'last48hours'}>
-							{#if $resortColumnSort.name === 'last48hours' && $resortColumnSort.asc}
-								<i class="fa-solid fa-sort-up"></i>
-							{:else if $resortColumnSort.name === 'last48hours' && !$resortColumnSort.asc}
-								<i class="fa-solid fa-sort-down"></i>
-							{:else}
-								<i class="fa-solid fa-sort opacity-25"></i>
-							{/if}
-						</span>
-					</button>
-				</th>
-				<th
-					class="table-cell-fit !px-1 text-center"
-					aria-sort={$resortColumnSort.name === 'last24hours'
-						? $resortColumnSort.asc
-							? 'ascending'
-							: 'descending'
-						: 'none'}
-				>
-					<button class="group" on:click={() => updateColumnSort('last24hours')}>
-						Last 24H
-						<span class="pl-1" aria-hidden={$resortColumnSort.name !== 'last24hours'}>
-							{#if $resortColumnSort.name === 'last24hours' && $resortColumnSort.asc}
-								<i class="fa-solid fa-sort-up"></i>
-							{:else if $resortColumnSort.name === 'last24hours' && !$resortColumnSort.asc}
-								<i class="fa-solid fa-sort-down"></i>
-							{:else}
-								<i class="fa-solid fa-sort opacity-25"></i>
-							{/if}
-						</span>
-					</button>
-				</th>
-				<th
-					class="table-cell-fit !pl-2 !pr-0 text-center"
-					aria-sort={$resortColumnSort.name === 'next24hours'
-						? $resortColumnSort.asc
-							? 'ascending'
-							: 'descending'
-						: 'none'}
-				>
-					<button class="group" on:click={() => updateColumnSort('next24hours')}>
-						Next 24H
-						<span class="pl-1" aria-hidden={$resortColumnSort.name !== 'next24hours'}>
-							{#if $resortColumnSort.name === 'next24hours' && $resortColumnSort.asc}
-								<i class="fa-solid fa-sort-up"></i>
-							{:else if $resortColumnSort.name === 'next24hours' && !$resortColumnSort.asc}
-								<i class="fa-solid fa-sort-down"></i>
-							{:else}
-								<i class="fa-solid fa-sort opacity-25"></i>
-							{/if}
-						</span>
-					</button>
-				</th>
-				<th
-					class="hidden md:table-cell-fit md:table-cell md:text-center"
-					aria-sort={$resortColumnSort.name === 'next72hours'
-						? $resortColumnSort.asc
-							? 'ascending'
-							: 'descending'
-						: 'none'}
-				>
-					<button class="group" on:click={() => updateColumnSort('next72hours')}>
-						Next 72H
-						<span class="pl-1" aria-hidden={$resortColumnSort.name !== 'next72hours'}>
-							{#if $resortColumnSort.name === 'next72hours' && $resortColumnSort.asc}
-								<i class="fa-solid fa-sort-up"></i>
-							{:else if $resortColumnSort.name === 'next72hours' && !$resortColumnSort.asc}
-								<i class="fa-solid fa-sort-down"></i>
-							{:else}
-								<i class="fa-solid fa-sort opacity-25"></i>
-							{/if}
-						</span>
-					</button>
-				</th>
-				<th class="!px-0 sm:table-cell-fit" aria-hidden></th>
-			</tr>
-		</thead>
-		<tbody>
-			{#if resortOverviews.length === 0}
+<div class="space-y-4">
+	<header class="flex justify-between px-2">
+		<Search {handler} />
+		<FilterDropdown bind:showClosed {handler} />
+	</header>
+	<div class="table-container">
+		<table class="table">
+			<caption class="sr-only"
+				>Snow and weather conditions for CO ski resorts. Column headers are sortable. Switch between
+				categories with the tabs above.</caption
+			>
+			<thead class="w-full">
 				<tr>
-					<td colspan="8">
-						<div class="m-4 flex justify-center">
-							<h3 class="h3">No results found</h3>
-						</div>
-					</td>
+					<ThSort {handler} orderBy="display_name" classes="table-cell-fit">Location</ThSort>
+					<ThSort {handler} orderBy="snow_past_24h" classes="table-cell-fit" center
+						><span class="sm:before:content-['Last_']">24h</span></ThSort
+					>
+					<ThSort
+						{handler}
+						orderBy="snow_next_24h"
+						classes="hidden md:table-cell-fit md:table-cell"
+						center>Next 24h</ThSort
+					>
+					<ThSort
+						{handler}
+						orderBy="snow_next_72h"
+						classes="hidden md:table-cell-fit md:table-cell"
+						center>Next 72h</ThSort
+					>
+					<ThSort {handler} orderBy="base_depth" classes="table-cell-fit" center
+						><span class="sm:after:content-['_Depth']">Base</span></ThSort
+					>
+					<ThSort
+						{handler}
+						orderBy="runs_open"
+						classes="hidden lg:table-cell-fit lg:table-cell"
+						center>Runs Open</ThSort
+					>
+					<th class="table-cell-fit"></th>
 				</tr>
-			{:else}
-				{#each resortOverviews as row, i}
+			</thead>
+			<tbody>
+				{#if !$rows.length}
+					<tr class="w-full text-center">
+						<td class="table-cell w-full" colspan="7">
+							<div class="flex w-full flex-col items-center justify-center gap-4">
+								<p class="text-base">No results found</p>
+								{#if showClosed === false}
+									<button class="variant-ghost-primary btn btn-sm" on:click={handleClickShowClosed}
+										>Show Closed Resorts
+									</button>
+								{/if}
+							</div>
+						</td>
+					</tr>
+				{/if}
+				{#each $rows as row}
 					<tr>
 						<td class="table-cell-fit"
 							><a
@@ -316,21 +166,19 @@
 								data-sveltekit-preload-data="hover">{row.display_name}</a
 							></td
 						>
-						<td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
-							>{formatSnowfall(row.base_depth)}</td
+						<td class="table-cell-fit text-center font-bold">{formatSnowfall(row.snow_past_24h)}</td
 						>
-						<td class="hidden font-bold lg:table-cell-fit lg:table-cell lg:text-center"
-							>{Math.floor((row.runs_open / row.total_runs) * 100)}%</td
+						<td class="hidden text-center font-bold md:table-cell-fit md:table-cell"
+							>{formatSnowfall(row.snow_next_24h)}</td
 						>
-						<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
-							>{formatSnowfall(row.snow_past_48h)}</td
-						>
-						<td class="text-center font-bold">{formatSnowfall(row.snow_past_24h)}</td>
-						<td class="text-center font-bold">{formatSnowfall(row.snow_next_24h)}</td>
-						<td class="hidden font-bold md:table-cell-fit md:table-cell md:text-center"
+						<td class="hidden text-center font-bold md:table-cell-fit md:table-cell"
 							>{formatSnowfall(row.snow_next_72h)}</td
 						>
-						<td class="!px-0 text-center font-bold">
+						<td class="table-cell-fit text-center font-bold">{formatSnowfall(row.base_depth)}</td>
+						<td class="hidden text-center font-bold lg:table-cell-fit lg:table-cell"
+							>{row.runs_open} / {row.total_runs}</td
+						>
+						<td class="table-cell-fit !px-0 sm:text-center">
 							{#if isFavorite(row)}
 								<button
 									type="button"
@@ -355,7 +203,7 @@
 						</td>
 					</tr>
 				{/each}
-			{/if}
-		</tbody>
-	</table>
+			</tbody>
+		</table>
+	</div>
 </div>

@@ -1,19 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { backcountrySearchInput } from '../stores';
 	import BackcountryTable from './backcountry-table.svelte';
 	export let data: PageData;
 	const { backcountryOverviews } = data;
 	$: alerts = data.alerts ?? [];
 	$: session = data.session;
-	let filteredBackcountry = backcountryOverviews;
-
-	backcountrySearchInput.subscribe((value) => {
-		filteredBackcountry =
-			backcountryOverviews.filter((location: { display_name: string }) => {
-				return location?.display_name?.toLowerCase().includes(value.toLowerCase().trim());
-			}) || [];
-	});
 </script>
 
 <svelte:head>
@@ -41,6 +32,6 @@
 	/>
 </svelte:head>
 
-<section class="mx-auto w-full pb-8 md:px-4 lg:max-w-7xl">
-	<BackcountryTable backcountryOverviews={filteredBackcountry} {session} alerts={alerts ?? []} />
+<section class="mx-auto w-full pb-8 md:px-4 lg:max-w-6xl">
+	<BackcountryTable {backcountryOverviews} {session} alerts={alerts ?? []} />
 </section>

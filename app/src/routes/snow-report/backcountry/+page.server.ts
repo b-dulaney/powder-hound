@@ -1,11 +1,13 @@
 import type { BackcountryOverview, UserAlerts } from '$lib/supabase.types';
+import { handleInvalidAuthToken } from '$lib/utils';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { handleInvalidAuthToken } from '$lib/utils';
+import type { PostgrestError } from '@supabase/supabase-js';
 
 export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.getSession();
 	const { supabase } = event.locals;
+	const { fetch } = event;
 
 	const accessToken = session?.access_token;
 	const refreshToken = session?.refresh_token;
@@ -16,10 +18,15 @@ export const load: PageServerLoad = async (event) => {
 		});
 	}
 
-	const { data: backcountryData, error: backcountryError } = await supabase
-		.from('backcountry_overview')
-		.select()
-		.returns<BackcountryOverview[]>();
+	const backcountryResponse = await fetch(
+		`/api/snow-report?view=backcountry_overview&sort=display_name&order=asc`
+	);
+
+	const {
+		data: backcountryData,
+		error: backcountryError
+	}: { data: BackcountryOverview[] | null; error: PostgrestError | null } =
+		await backcountryResponse.json();
 
 	if (backcountryError) {
 		console.error(`${backcountryError.code} - ${backcountryError.message}`);
@@ -33,9 +40,7 @@ export const load: PageServerLoad = async (event) => {
 
 	if (!session) {
 		return {
-			backcountryOverviews: backcountryData.sort((a, b) =>
-				a.display_name > b.display_name ? 1 : -1
-			)
+			backcountryOverviews: backcountryData
 		};
 	}
 
