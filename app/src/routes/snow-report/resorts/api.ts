@@ -1,7 +1,6 @@
 import type { State } from '@vincjo/datatables/remote';
 
 export const reload = async (state: State) => {
-	console.log(state);
 	const response = await fetch(`/api/snow-report?view=resort_overview${getParams(state)}`);
 	const { data } = await response.json();
 	return data;

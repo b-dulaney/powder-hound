@@ -3,7 +3,6 @@ import { json, type RequestEvent } from '@sveltejs/kit';
 export const GET = async (event: RequestEvent) => {
 	const { supabase } = event.locals;
 	const params = event.url.searchParams;
-	console.log(params);
 
 	const q = params.get('q');
 	const sort = params.get('sort');
