@@ -154,7 +154,9 @@
 								<span class="sm:p-2"
 									><AvalancheDangerIcon dangerLevel={row.overall_danger_level} size="40px" /></span
 								>
-								<span class="hidden sm:inline">Considerable</span>
+								<span class="hidden sm:inline"
+									>{avalancheDangerRatingsMap[row.overall_danger_level]}</span
+								>
 							</div></td
 						>
 						<td class="hidden text-center !align-middle font-bold md:table-cell-fit md:table-cell"
