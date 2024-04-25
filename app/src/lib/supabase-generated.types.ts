@@ -564,6 +564,8 @@ export type Database = {
 					snow_past_48h: number | null;
 					total_lifts: number | null;
 					total_runs: number | null;
+					closing_date: string | null;
+					closed: boolean;
 				};
 				Relationships: [];
 			};

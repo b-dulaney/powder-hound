@@ -97,6 +97,7 @@ export type Database = MergeDeep<
 						slug: string;
 						location_type: string;
 						closing_date: string | null;
+						closed: boolean;
 						current_temp: number;
 						current_weather: string;
 						base_depth: number;
