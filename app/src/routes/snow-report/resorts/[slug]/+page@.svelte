@@ -43,7 +43,7 @@
 	/>
 </svelte:head>
 
-<div class="mx-auto w-full px-6 pb-2 pt-4 md:pb-4 lg:max-w-6xl lg:px-0 lg:pt-8">
+<div class="mx-auto w-full px-6 py-2 md:pb-4 lg:max-w-6xl lg:px-0 lg:pt-8">
 	<section id="header-section">
 		<SnowReportHeader
 			details={resortDetails}
@@ -51,13 +51,13 @@
 			isResort
 			{closed}
 		/>
-		<div class="pb-2 pt-4">
+		<div class="py-2">
 			<AddRemoveAlertButton {alertData} {existingAlert} details={resortDetails} {session} />
 		</div>
 	</section>
 </div>
 
-<div class="mx-auto w-full max-w-6xl pt-4 lg:pt-6">
+<div class="mx-auto w-full max-w-6xl lg:pt-6">
 	<section id="upcoming-snowfall">
 		<SnowForecastTabs
 			snowNext24H={resortDetails.snow_next_24h}

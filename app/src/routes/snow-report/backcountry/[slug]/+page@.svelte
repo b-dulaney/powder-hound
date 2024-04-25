@@ -45,7 +45,7 @@
 	<meta property="og:image:height" content="630" />
 </svelte:head>
 
-<div class="mx-auto w-full px-6 pb-2 pt-4 md:pb-4 lg:max-w-5xl lg:px-0 lg:pt-8">
+<div class="mx-auto w-full px-6 py-2 md:pb-4 lg:max-w-5xl lg:px-0 lg:pt-8">
 	<section id="header-section">
 		<SnowReportHeader
 			details={backcountryDetails}
@@ -53,7 +53,7 @@
 			closed={false}
 			snowReportHref="/snow-report/backcountry"
 		/>
-		<div class="pb-2 pt-4">
+		<div class="py-2">
 			<AddRemoveAlertButton {alertData} {existingAlert} details={backcountryDetails} {session} />
 		</div>
 	</section>
@@ -66,7 +66,7 @@
 	/>
 </div>
 
-<div class="mx-auto w-full max-w-5xl pt-4 lg:pt-6">
+<div class="mx-auto w-full max-w-5xl lg:pt-6">
 	<section id="recent-and-upcoming-snowfall">
 		<SnowForecastTabs
 			snowNext24H={backcountryDetails.snow_next_24h}
