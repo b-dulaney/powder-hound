@@ -45,7 +45,7 @@
 	<meta property="og:image:height" content="630" />
 </svelte:head>
 
-<div class="mx-auto w-full px-6 py-2 md:pb-4 lg:max-w-5xl lg:px-0 lg:pt-8">
+<div class="mx-auto w-full px-4 py-2 md:pb-4 lg:max-w-5xl lg:px-0 lg:pt-8">
 	<section id="header-section">
 		<SnowReportHeader
 			details={backcountryDetails}
@@ -59,7 +59,7 @@
 	</section>
 </div>
 
-<div class="mx-auto max-w-5xl p-2 lg:px-0">
+<div class="mx-auto max-w-5xl px-4 py-2 lg:px-0">
 	<BackcountryWarningAlert
 		forecastUrl={backcountryDetails.forecast_url}
 		displayName={backcountryDetails.display_name}
@@ -79,7 +79,7 @@
 	</section>
 
 	<section id="avalanche-and-weather-conditions">
-		<div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:px-0">
+		<div class="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:px-0">
 			<div class="md:col-span-2">
 				<AvalancheDangerCard {backcountryDetails} />
 			</div>

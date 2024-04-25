@@ -90,14 +90,14 @@ export const weatherConditionsMap: Record<string, string> = {
 };
 
 export const formatDate = (date: string, format: 'short' | 'long') => {
+	if (format === 'short') {
+		return dayjs(date).format('M/D');
+	}
 	if (date === 'Today') {
 		return 'Today';
 	}
 	if (dayjs(date).isSame(dayjs(), 'day')) {
 		return 'Today';
-	}
-	if (format === 'short') {
-		return dayjs(date).format('M/D');
 	}
 
 	return dayjs(date).format('ddd DD');

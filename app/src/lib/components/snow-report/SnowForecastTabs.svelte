@@ -70,7 +70,7 @@
 	</Tab>
 
 	<svelte:fragment slot="panel">
-		<div class="p-4">
+		<div class="px-4 pb-4">
 			{#if tabSet === 0 && snowfallHistoricalChartData !== null}
 				{#if snowPastWeek && snowPastWeek > 0}
 					<SnowForecastChart

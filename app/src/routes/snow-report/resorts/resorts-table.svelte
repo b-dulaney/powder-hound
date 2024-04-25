@@ -115,6 +115,15 @@
 			<thead class="w-full">
 				<tr>
 					<ThSort {handler} orderBy="display_name" classes="table-cell-fit">Location</ThSort>
+					<ThSort {handler} orderBy="base_depth" classes="table-cell-fit" center
+						><span class="sm:after:content-['_Depth']">Base</span></ThSort
+					>
+					<ThSort
+						{handler}
+						orderBy="runs_open"
+						classes="hidden lg:table-cell-fit lg:table-cell"
+						center>Runs Open</ThSort
+					>
 					<ThSort {handler} orderBy="snow_past_24h" classes="table-cell-fit" center
 						><span class="sm:before:content-['Last_']">24h</span></ThSort
 					>
@@ -130,15 +139,7 @@
 						classes="hidden md:table-cell-fit md:table-cell"
 						center>Next 72h</ThSort
 					>
-					<ThSort {handler} orderBy="base_depth" classes="table-cell-fit" center
-						><span class="sm:after:content-['_Depth']">Base</span></ThSort
-					>
-					<ThSort
-						{handler}
-						orderBy="runs_open"
-						classes="hidden lg:table-cell-fit lg:table-cell"
-						center>Runs Open</ThSort
-					>
+
 					<th class="table-cell-fit"></th>
 				</tr>
 			</thead>
@@ -166,6 +167,10 @@
 								data-sveltekit-preload-data="hover">{row.display_name}</a
 							></td
 						>
+						<td class="table-cell-fit text-center font-bold">{formatSnowfall(row.base_depth)}</td>
+						<td class="hidden text-center font-bold lg:table-cell-fit lg:table-cell"
+							>{row.runs_open} / {row.total_runs}</td
+						>
 						<td class="table-cell-fit text-center font-bold">{formatSnowfall(row.snow_past_24h)}</td
 						>
 						<td class="hidden text-center font-bold md:table-cell-fit md:table-cell"
@@ -174,10 +179,7 @@
 						<td class="hidden text-center font-bold md:table-cell-fit md:table-cell"
 							>{formatSnowfall(row.snow_next_72h)}</td
 						>
-						<td class="table-cell-fit text-center font-bold">{formatSnowfall(row.base_depth)}</td>
-						<td class="hidden text-center font-bold lg:table-cell-fit lg:table-cell"
-							>{row.runs_open} / {row.total_runs}</td
-						>
+
 						<td class="table-cell-fit !px-0 sm:text-center">
 							{#if isFavorite(row)}
 								<button

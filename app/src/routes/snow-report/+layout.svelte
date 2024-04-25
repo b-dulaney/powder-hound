@@ -14,7 +14,7 @@
 	</div>
 </section>
 
-<div class="mx-auto flex w-full max-w-xl justify-center pb-8 pt-2">
+<div class="mx-auto flex w-full max-w-lg justify-center pb-8 pt-2">
 	<TabGroup justify="justify-center" class="w-full">
 		<TabAnchor
 			role="tab"

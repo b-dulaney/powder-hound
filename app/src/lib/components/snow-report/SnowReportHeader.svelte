@@ -6,7 +6,7 @@
 	export let closed: boolean;
 </script>
 
-<ol class="breadcrumb lg:text-lg">
+<ol class="breadcrumb">
 	<li class="crumb"><a class="anchor !text-surface-300" href="/">Home</a></li>
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
 	<li class="crumb !ml-0 md:!ml-4">

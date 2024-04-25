@@ -43,7 +43,7 @@
 	/>
 </svelte:head>
 
-<div class="mx-auto w-full px-6 py-2 md:pb-4 lg:max-w-6xl lg:px-0 lg:pt-8">
+<div class="mx-auto w-full px-4 py-2 md:pb-4 lg:max-w-6xl lg:px-0 lg:pt-8">
 	<section id="header-section">
 		<SnowReportHeader
 			details={resortDetails}
@@ -69,7 +69,7 @@
 		/>
 	</section>
 	<section id="mountain-and-weather-conditions">
-		<div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:px-0">
+		<div class="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:px-0">
 			<div class="md:col-span-2">
 				<ResortConditionsCard {resortDetails} {closed} />
 			</div>
