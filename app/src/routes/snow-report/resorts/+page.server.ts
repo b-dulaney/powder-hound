@@ -2,10 +2,12 @@ import type { ResortOverview, UserAlerts } from '$lib/supabase.types';
 import { handleInvalidAuthToken } from '$lib/utils';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import type { PostgrestError } from '@supabase/supabase-js';
 
 export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.getSession();
 	const { supabase } = event.locals;
+	const { fetch } = event;
 
 	const accessToken = session?.access_token;
 	const refreshToken = session?.refresh_token;
@@ -16,10 +18,14 @@ export const load: PageServerLoad = async (event) => {
 		});
 	}
 
-	const { data: resortData, error: resortError } = await supabase
-		.from('resort_overview')
-		.select()
-		.returns<ResortOverview[]>();
+	const resortResponse = await fetch(
+		`/api/snow-report?view=resort_overview&sort=display_name&order=asc&closed=false`
+	);
+
+	const {
+		data: resortData,
+		error: resortError
+	}: { data: ResortOverview[] | null; error: PostgrestError | null } = await resortResponse.json();
 
 	if (resortError) {
 		console.error(`${resortError.code} - ${resortError.message}`);
@@ -29,12 +35,6 @@ export const load: PageServerLoad = async (event) => {
 		} else {
 			error(500, 'Error fetching conditions data');
 		}
-	}
-
-	if (!session) {
-		return {
-			resortOverviews: resortData.sort((a, b) => (a.display_name > b.display_name ? 1 : -1))
-		};
 	}
 
 	const { data: alertsData, error: alertsError } = await supabase

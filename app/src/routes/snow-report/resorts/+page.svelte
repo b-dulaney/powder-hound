@@ -1,19 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { resortSearchInput } from '../stores';
 	import ResortsTable from './resorts-table.svelte';
 	export let data: PageData;
 	const { resortOverviews } = data;
 	$: alerts = data.alerts ?? [];
 	$: session = data.session;
-	let filteredResorts = resortOverviews;
-
-	resortSearchInput.subscribe((value) => {
-		filteredResorts =
-			resortOverviews.filter((location: { display_name: string }) => {
-				return location?.display_name?.toLowerCase().includes(value.toLowerCase().trim());
-			}) || [];
-	});
 </script>
 
 <svelte:head>
@@ -38,6 +29,6 @@
 	/>
 </svelte:head>
 
-<section class="mx-auto w-full pb-8 md:px-4 lg:max-w-7xl">
-	<ResortsTable resortOverviews={filteredResorts} {session} {alerts} />
+<section class="mx-auto w-full pb-8 md:px-4 lg:max-w-6xl">
+	<ResortsTable {resortOverviews} {session} {alerts} />
 </section>
