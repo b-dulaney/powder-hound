@@ -139,7 +139,6 @@
 						classes="hidden md:table-cell-fit md:table-cell"
 						center>Next 72h</ThSort
 					>
-
 					<th class="table-cell-fit"></th>
 				</tr>
 			</thead>
@@ -179,7 +178,6 @@
 						<td class="hidden text-center font-bold md:table-cell-fit md:table-cell"
 							>{formatSnowfall(row.snow_next_72h)}</td
 						>
-
 						<td class="table-cell-fit !px-0 sm:text-center">
 							{#if isFavorite(row)}
 								<button
