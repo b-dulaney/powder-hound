@@ -166,12 +166,23 @@
 								data-sveltekit-preload-data="hover">{row.display_name}</a
 							></td
 						>
-						<td class="table-cell-fit text-center font-bold">{formatSnowfall(row.base_depth)}</td>
-						<td class="hidden text-center font-bold lg:table-cell-fit lg:table-cell"
-							>{row.runs_open} / {row.total_runs}</td
+						<td class="table-cell-fit text-center font-bold"
+							>{row.closed ? '--' : formatSnowfall(row.base_depth)}</td
 						>
-						<td class="table-cell-fit text-center font-bold">{formatSnowfall(row.snow_past_24h)}</td
-						>
+						<td class="hidden text-center lg:table-cell-fit lg:table-cell">
+							{#if row.closed}
+								<span>Resort Closed</span>
+							{:else}
+								<span class="font-bold">{row.runs_open} / {row.total_runs}</span>
+							{/if}
+						</td>
+						<td class="table-cell-fit text-center font-bold">
+							{#if row.closed}
+								<span>--</span>
+							{:else}
+								{formatSnowfall(row.snow_past_24h)}
+							{/if}
+						</td>
 						<td class="hidden text-center font-bold md:table-cell-fit md:table-cell"
 							>{formatSnowfall(row.snow_next_24h)}</td
 						>
