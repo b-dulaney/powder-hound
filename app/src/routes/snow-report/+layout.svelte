@@ -4,7 +4,7 @@
 	import BreadcrumbHeader from '$lib/components/BreadcrumbHeader.svelte';
 </script>
 
-<BreadcrumbHeader title="Snow Report" />
+<BreadcrumbHeader title="Snow Report" maxWidth="6xl" />
 
 <div class="mx-auto flex w-full max-w-lg justify-center pb-8 pt-2">
 	<TabGroup justify="justify-center" class="w-full">
