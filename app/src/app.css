@@ -2,54 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-:root [data-theme='crimson'] {
-	--theme-rounded-base: 6px;
-	--theme-rounded-container: 8px;
-}
-
 html,
 body {
-	@apply h-full overflow-hidden;
+	@apply h-full;
 }
 
-h1 {
-	@apply font-bold;
+body {
+	@apply bg-surface-100;
 }
 
-h2 {
-	@apply font-semibold;
+.dark body {
+	@apply bg-surface-900;
 }
 
-.built-for-gradient {
-	background-image: radial-gradient(
-			at 0% 0%,
-			rgba(var(--color-primary-500) / 0.17) 0px,
-			transparent 50%
-		),
-		radial-gradient(at 100% 100%, rgba(var(--color-secondary-500) / 0.24) 0px, transparent 50%);
+.hero-gradient {
+	@apply absolute top-0 -z-20 h-full w-full bg-gradient-to-b from-tertiary-300 to-primary-500;
+	-webkit-mask-image: radial-gradient(rgba(0, 0, 0, 0.75), transparent 95%);
+	mask-image: radial-gradient(rgba(0, 0, 0, 0.75), transparent 95%);
 }
 
-.alerts-gradient {
-	background-image: radial-gradient(
-		at 0% 0%,
-		rgba(var(--color-primary-600) / 0.5) 0px,
-		transparent 50%
-	);
-}
-
-.passes-gradient {
-	background-image: radial-gradient(
-			at 0% 0%,
-			rgba(var(--color-primary-500) / 0.33) 0px,
-			transparent 50%
-		),
-		radial-gradient(at 100% 0%, rgba(var(--color-secondary-500) / 0.33) 0px, transparent 50%);
-}
-
-.gradient-heading {
-	@apply box-decoration-clone bg-clip-text text-transparent;
-	/* Direction */
-	@apply bg-gradient-to-br;
-	/* Color Stops */
-	@apply from-primary-400 to-primary-500;
+.dark .hero-gradient {
+	@apply absolute top-0 -z-20 h-full w-full bg-gradient-to-br from-primary-900/50 to-surface-900;
+	mask-image: none;
+	-webkit-mask-mage: none;
 }
