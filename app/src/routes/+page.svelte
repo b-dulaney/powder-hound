@@ -1,7 +1,6 @@
 <script lang="ts">
 	import PineTreeSolid from '$lib/components/icons/PineTreeSolid.svelte';
 	import SkiLiftSolid from '$lib/components/icons/SkiLiftSolid.svelte';
-	import Login from '$lib/components/login.svelte';
 	import Snow from '$lib/components/snow.svelte';
 	import { A, Avatar, Button, Heading, P, Span } from 'flowbite-svelte';
 	import { FeatureDefault, FeatureItem, HeroHeader, Section } from 'flowbite-svelte-blocks';
@@ -42,8 +41,8 @@
 
 <header class="relative py-8 xl:pt-16" id="hero">
 	<div class="hero-gradient" />
-	<div class="mx-auto flex max-w-screen-xl items-center justify-center lg:justify-between">
-		<div class="flex flex-col items-center space-y-6 px-4 lg:items-start lg:p-8">
+	<div class="mx-auto flex max-w-screen-xl items-center justify-center">
+		<div class="flex flex-col items-center space-y-6 px-4 lg:p-8">
 			<a
 				href="/"
 				class="hidden items-center justify-between rounded-full bg-surface-100 px-1 py-1 pr-4 text-sm hover:bg-surface-200 dark:bg-surface-700 lg:inline-flex"
@@ -59,13 +58,11 @@
 			<enhanced:img src="../public/logo.png" class="h-36 w-36 lg:hidden" alt="PowderHound Logo" />
 
 			<h1
-				class="h1 max-w-2xl text-center text-5xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white lg:text-start xl:text-6xl"
+				class="h1 max-w-2xl text-center text-5xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white xl:text-6xl"
 			>
 				You'll never miss another powder day
 			</h1>
-			<p
-				class="max-w-xl text-center text-xl font-semibold text-gray-900 dark:text-white lg:text-start"
-			>
+			<p class="max-w-xl text-center text-xl font-semibold text-gray-900 dark:text-white">
 				View the current snow report, get accurate predictions, and receive customized snowfall
 				alerts - all 100% free.
 			</p>
@@ -83,9 +80,6 @@
 					<span>Sign Up</span>
 				</Button>
 			</div>
-		</div>
-		<div class="hidden items-center justify-center p-4 lg:flex">
-			<Login />
 		</div>
 	</div>
 </header>

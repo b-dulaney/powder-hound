@@ -80,61 +80,65 @@
 <Modal components={modalRegiestry} />
 <Toast />
 
-<Navbar let:NavContainer fluid class="bg-surface-50 dark:bg-surface-900">
-	<NavContainer class="max-w-screen-xl">
-		<div class="flex items-center gap-2">
-			<SidebarNav {session} {logout} />
-			<NavBrand href="/">
-				<enhanced:img
-					src="../public/logo.png"
-					alt="Powder Hound Logo"
-					class="hidden h-10 w-10 sm:inline-block md:h-14 md:w-14"
-				/>
-				<p class="pl-1 text-xl font-bold text-gray-900 dark:text-white md:pl-2 md:text-2xl">
-					PowderHound
-				</p>
-			</NavBrand>
-		</div>
-		<NavUl {activeUrl} ulClass="flex lg:text-lg justify-between my-0 font-semibold gap-4">
-			<NavLi href="/">Home</NavLi>
-			<NavLi href="/snow-report/resorts">Resorts</NavLi>
-			<NavLi href="/snow-report/backcountry">Backcountry</NavLi>
-			<NavLi href="/alerts">Alerts</NavLi>
-		</NavUl>
-		<div class="flex items-center justify-end gap-4 md:gap-8">
-			<DarkMode size="lg" btnClass="focus:ring-2 rounded-lg" />
-			{#if session?.user?.user_metadata?.avatar_url}
-				<Avatar
-					class="cursor-pointer"
-					id="avatar-menu"
-					src={session.user.user_metadata.avatar_url}
-				/>
-			{:else if session?.user?.email}
-				<Avatar class="cursor-pointer capitalize" id="avatar-menu" initials
-					>{session.user.email[0]}</Avatar
-				>
+<div class="flex min-h-screen flex-col">
+	<Navbar let:NavContainer fluid class="bg-surface-50 dark:bg-surface-900">
+		<NavContainer class="max-w-screen-xl">
+			<div class="flex items-center gap-2">
+				<SidebarNav {session} {logout} />
+				<NavBrand href="/">
+					<enhanced:img
+						src="../public/logo.png"
+						alt="Powder Hound Logo"
+						class="hidden h-10 w-10 sm:inline-block md:h-14 md:w-14"
+					/>
+					<p class="pl-1 text-xl font-bold text-gray-900 dark:text-white md:pl-2 md:text-2xl">
+						PowderHound
+					</p>
+				</NavBrand>
+			</div>
+			<NavUl {activeUrl} ulClass="flex lg:text-lg justify-between my-0 font-semibold gap-4">
+				<NavLi href="/">Home</NavLi>
+				<NavLi href="/snow-report/resorts">Resorts</NavLi>
+				<NavLi href="/snow-report/backcountry">Backcountry</NavLi>
+				<NavLi href="/alerts">Alerts</NavLi>
+			</NavUl>
+			<div class="flex items-center justify-end gap-4 md:gap-8">
+				<DarkMode size="lg" btnClass="focus:ring-2 rounded-lg" />
+				{#if session?.user?.user_metadata?.avatar_url}
+					<Avatar
+						class="cursor-pointer"
+						id="avatar-menu"
+						src={session.user.user_metadata.avatar_url}
+					/>
+				{:else if session?.user?.email}
+					<Avatar class="cursor-pointer capitalize" id="avatar-menu" initials
+						>{session.user.email[0]}</Avatar
+					>
+				{:else}
+					<Avatar class="cursor-pointer" id="avatar-menu" />
+				{/if}
+			</div>
+			{#if session}
+				<Dropdown placement="bottom" triggeredBy="#avatar-menu">
+					<DropdownItem href="/settings">Settings</DropdownItem>
+					<DropdownDivider />
+					<DropdownItem on:click={logout}>Sign out</DropdownItem>
+				</Dropdown>
 			{:else}
-				<Avatar class="cursor-pointer" id="avatar-menu" />
+				<Dropdown placement="bottom" triggeredBy="#avatar-menu">
+					<DropdownItem href="/signup">Sign up</DropdownItem>
+					<DropdownItem href="/login">Login</DropdownItem>
+				</Dropdown>
 			{/if}
-		</div>
-		{#if session}
-			<Dropdown placement="bottom" triggeredBy="#avatar-menu">
-				<DropdownItem href="/settings">Settings</DropdownItem>
-				<DropdownDivider />
-				<DropdownItem on:click={logout}>Sign out</DropdownItem>
-			</Dropdown>
-		{:else}
-			<Dropdown placement="bottom" triggeredBy="#avatar-menu">
-				<DropdownItem href="/signup">Sign up</DropdownItem>
-				<DropdownItem href="/login">Login</DropdownItem>
-			</Dropdown>
-		{/if}
-	</NavContainer>
-</Navbar>
-{#if $navigating}
-	<ProgressBar height="h-1" meter="bg-primary-500" />
-{/if}
+		</NavContainer>
+	</Navbar>
+	{#if $navigating}
+		<ProgressBar height="h-1" meter="bg-primary-500" />
+	{/if}
 
-<slot />
+	<main class="flex grow flex-col">
+		<slot />
+	</main>
 
-<Footer />
+	<Footer />
+</div>
