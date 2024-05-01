@@ -6,6 +6,7 @@ const config = {
 		'./src/**/*.{html,js,svelte,ts}',
 		'./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}',
 		'./node_modules/flowbite-svelte-icons/**/*.{html,js,svelte,ts}',
+		'./node_modules/flowbite-svelte-blocks/**/*.{html,js,svelte,ts}',
 		'./node_modules/layerchart/**/*.{svelte,js}'
 	],
 	theme: {
@@ -20,17 +21,17 @@ const config = {
 			},
 			colors: {
 				primary: {
-					50: '#F8F0FE',
-					100: '#EEDDFD',
-					200: '#DCBBFC',
-					300: '#CB99FA',
-					400: '#BA77F9',
-					500: '#A855F7',
-					600: '#8815F4',
-					700: '#6609BE',
-					800: '#44067F',
-					900: '#22033F',
-					950: '#120222'
+					50: '#F4EDF8',
+					100: '#EBDEF2',
+					200: '#D7BEE5',
+					300: '#C39DD7',
+					400: '#AD79C9',
+					500: '#9A59BC',
+					600: '#8745AB',
+					700: '#763C95',
+					800: '#62327C',
+					900: '#4E2862',
+					950: '#422254'
 				},
 				surface: {
 					50: '#f9fafb',
