@@ -1,9 +1,12 @@
 <script lang="ts">
 	import type { DataHandler } from '@vincjo/datatables/remote';
+	import { Span } from 'flowbite-svelte';
+	import CaretUpSolid from 'flowbite-svelte-icons/CaretUpSolid.svelte';
+	import CaretDownSolid from 'flowbite-svelte-icons/CaretDownSolid.svelte';
 
 	export let handler: DataHandler;
 	export let orderBy: string;
-	export let classes: string;
+	export let classes: string = '';
 	export let center: boolean = false;
 
 	const sorted = handler.getSort();
@@ -20,47 +23,33 @@
 		}
 		handler.invalidate();
 	};
+
+	$: sortAscClass =
+		$sorted.orderBy === orderBy && $sorted.direction === 'asc'
+			? `fill-gray-600 dark:fill-gray-100`
+			: 'fill-gray-300 dark:fill-gray-400';
+	$: sortDescClass =
+		$sorted.orderBy === orderBy && $sorted.direction === 'desc'
+			? `fill-gray-600 dark:fill-gray-100`
+			: 'fill-gray-300 dark:fill-gray-400';
 </script>
 
 <th
 	on:click={update}
 	class:active={$sorted?.orderBy === orderBy}
-	class={`cursor-pointer select-none ${classes}`}
+	class={`cursor-pointer select-none px-6 py-3 ${classes}`}
 >
 	<div class="flex h-full w-full items-center justify-start" class:center>
 		<slot />
-		<span class:asc={$sorted?.direction === 'asc'} class:desc={$sorted?.direction === 'desc'} />
+		<Span class="ml-1 inline-flex flex-col">
+			<CaretUpSolid class={`-mb-1 h-[10px] w-[10px] ${sortAscClass}`} />
+			<CaretDownSolid class={`h-[10px] w-[10px] ${sortDescClass}`} />
+		</Span>
 	</div>
 </th>
 
 <style>
 	div.center {
 		justify-content: center;
-	}
-	th span {
-		padding-left: 8px;
-	}
-	th span:before,
-	th span:after {
-		border: 4px solid transparent;
-		content: '';
-		display: block;
-		height: 0;
-		width: 0;
-	}
-	th span:before {
-		border-bottom-color: #7a7a7a;
-		margin-top: 2px;
-	}
-	th span:after {
-		border-top-color: #7a7a7a;
-		margin-top: 2px;
-	}
-	th.active span.asc:before {
-		border-bottom-color: #e0e0e0;
-	}
-
-	th.active span.desc:after {
-		border-top-color: #e0e0e0;
 	}
 </style>

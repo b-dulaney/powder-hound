@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { DataHandler } from '@vincjo/datatables/remote';
+	import { Input } from 'flowbite-svelte';
+	import SearchOutline from 'flowbite-svelte-icons/SearchOutline.svelte';
 	export let handler: DataHandler;
 	let value: string;
 	let timeout: any;
@@ -13,7 +15,8 @@
 	};
 </script>
 
-<div class="input-group input-group-divider w-[55%] max-w-sm grid-cols-[auto_1fr_auto]">
-	<div class="input-group-shim"><i class="fa-solid fa-magnifying-glass"></i></div>
-	<input type="search" autocomplete="off" placeholder="Search..." bind:value on:input={search} />
+<div class="w-[55%] max-w-sm pb-2 pt-6">
+	<Input type="search" autocomplete="off" placeholder="Search..." bind:value on:input={search}>
+		<SearchOutline slot="left" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+	</Input>
 </div>

@@ -1,34 +1,17 @@
 <script lang="ts">
 	import { TabGroup, TabAnchor } from '@skeletonlabs/skeleton';
+
+	import { Tabs, TabItem } from 'flowbite-svelte';
+
 	import { page } from '$app/stores';
 	import BreadcrumbHeader from '$lib/components/BreadcrumbHeader.svelte';
+	import NavTabs from './NavTabs.svelte';
 </script>
 
-<BreadcrumbHeader title="Snow Report" maxWidth="6xl" />
+<BreadcrumbHeader title="Snow Report" />
 
-<div class="mx-auto flex w-full max-w-lg justify-center pb-8 pt-2">
-	<TabGroup justify="justify-center" class="w-full">
-		<TabAnchor
-			role="tab"
-			selected={$page.url.pathname === '/snow-report/resorts'}
-			name="Ski Resorts"
-			class="w-1/2 md:text-xl"
-			href="/snow-report/resorts"
-			data-sveltekit-preload-data-hover
-		>
-			Ski Resorts
-		</TabAnchor>
-		<TabAnchor
-			role="tab"
-			selected={$page.url.pathname === '/snow-report/backcountry'}
-			name="Backcountry"
-			class="w-1/2 md:text-xl"
-			href="/snow-report/backcountry"
-			data-sveltekit-preload-data-hover
-		>
-			Backcountry
-		</TabAnchor>
-	</TabGroup>
+<div class="mx-auto flex w-full max-w-xs flex-col pt-4 sm:max-w-xl">
+	<NavTabs currentPath={$page.url.pathname} />
 </div>
 
 <slot />

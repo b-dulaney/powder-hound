@@ -29,6 +29,6 @@
 	/>
 </svelte:head>
 
-<section class="mx-auto w-full pb-8 md:px-4 lg:max-w-6xl">
+<section class="mx-auto w-full pb-8 md:px-4 lg:max-w-screen-xl">
 	<ResortsTable {resortOverviews} {session} {alerts} />
 </section>
