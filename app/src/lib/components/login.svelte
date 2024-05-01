@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { PUBLIC_SITE_URL, PUBLIC_VERCEL_ENV } from '$env/static/public';
-	import GithubIcon from '$lib/components/github-icon.svelte';
-	import GoogleIcon from '$lib/components/google-icon.svelte';
-	import { tooManyRequestsTimer } from '$lib/utils';
-	import { ProgressRadial } from '@skeletonlabs/skeleton';
-	import type { SupabaseClient } from '@supabase/supabase-js';
-	import type { ActionData } from '../../routes/login/$types';
 	import { goto } from '$app/navigation';
+	import { PUBLIC_SITE_URL, PUBLIC_VERCEL_ENV } from '$env/static/public';
+	import { tooManyRequestsTimer } from '$lib/utils';
+	import type { SupabaseClient } from '@supabase/supabase-js';
+	import { A, Button, Card, Helper, Input, Label, P, Span, Spinner } from 'flowbite-svelte';
+	import GithubSolid from 'flowbite-svelte-icons/GithubSolid.svelte';
+	import GoogleSolid from 'flowbite-svelte-icons/GoogleSolid.svelte';
+	import type { ActionData } from '../../routes/login/$types';
 
 	export let form: ActionData;
-	export let redirectUrl: string | null;
+	export let redirectUrl: string = '';
 	let formLoading = false;
 
 	export let supabase: SupabaseClient;
@@ -51,12 +51,10 @@
 
 <div class="flex flex-col gap-8">
 	{#if !form?.success && !form?.error}
-		<div class="card max-w-sm p-4">
-			<div class="card-header text-center">
-				<p class="text-xl font-semibold">{actionText} with</p>
-			</div>
+		<Card>
 			<form
 				method="POST"
+				class="flex flex-col space-y-6"
 				action="?/login"
 				use:enhance={() => {
 					formLoading = true;
@@ -69,154 +67,108 @@
 					};
 				}}
 			>
-				<div class="mb-4 flex flex-col gap-2 p-4">
+				<h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">
+					{actionText} with
+				</h3>
+
+				<div class="flex flex-col gap-2">
 					{#if PUBLIC_VERCEL_ENV !== 'production'}
-						<button
-							type="button"
-							class="btn btn-lg rounded-md bg-red-500 text-white"
-							title="Sign in with Google"
-							on:click={signInWithGoogle}
-						>
-							<span><GoogleIcon /></span>
-							<span>Google</span>
-						</button>
+						<Button color="light" title="Sign in with Google" on:click={signInWithGoogle}>
+							<GoogleSolid class="me-2 h-5 w-5" />
+							Google
+						</Button>
 					{/if}
 					<!-- <button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Microsoft</button>
 					<button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Facebook</button> -->
-					<button
-						type="button"
-						class="btn btn-lg rounded-md bg-neutral-900 text-white"
-						title="Sign in with Github"
-						on:click={signInWithGithub}
-					>
-						<span><GithubIcon /></span>
-						<span>Github</span>
-					</button>
-					<div class="flex items-center justify-center p-2">
-						<hr class="w-1/4 px-4" />
-						<span class="px-4">Or</span>
-						<hr class="w-1/4 px-4" />
-					</div>
-					<p class="mb-2 text-center text-xl font-semibold">Continue with email</p>
-					<div>
-						<label class="label mb-4">
-							<span>Email</span>
-							<input
-								class="input !rounded-md"
-								type="email"
-								name="email"
-								required
-								autocomplete="email"
-								placeholder="Email"
-							/>
-						</label>
-						{#if formLoading}
-							<button
-								type="submit"
-								class="variant-filled-primary btn btn-lg w-full rounded-md"
-								disabled
-								formAction="?/login"
-							>
-								<ProgressRadial value={undefined} width="w-8" />
-							</button>
-						{:else if form?.tooManyRequests && $timer && $timer > 0}
-							<button
-								type="submit"
-								class="variant-filled-primary btn btn-lg w-full rounded-md"
-								disabled
-							>
-								Please wait {$timer} seconds
-							</button>
-						{:else}
-							<button
-								type="submit"
-								class="variant-filled-primary btn btn-lg w-full rounded-md"
-								formAction="?/login"
-							>
-								{actionText}
-							</button>
-						{/if}
-					</div>
+					<Button color="light" title="Sign in with Github" on:click={signInWithGithub}>
+						<GithubSolid class="me-2 h-5 w-5" />
+						Github
+					</Button>
 				</div>
+
+				<div class="flex items-center justify-center p-2">
+					<hr class="w-1/4 px-4" />
+					<Span class="px-4">Or</Span>
+					<hr class="w-1/4 px-4" />
+				</div>
+				<h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">Continue with</h3>
+				<Label class="space-y-2">
+					<Span>Email</Span>
+					<Input type="email" name="email" required autocomplete="email" placeholder="Email" />
+				</Label>
+				{#if formLoading}
+					<Button type="submit" disabled formAction="?/login">
+						<Spinner class="me-3" size="4" color="white" />Loading ...
+					</Button>
+				{:else if form?.tooManyRequests && $timer && $timer > 0}
+					<Button type="submit" disabled>
+						Please wait {$timer} seconds
+					</Button>
+				{:else}
+					<Button type="submit" class="w-full" formAction="?/login">
+						{actionText}
+					</Button>
+				{/if}
 			</form>
-			<p class="p-4 text-center text-sm">
-				By registering you agree to PowderHound's <a class="anchor" href="/terms-of-use"
-					>Terms of Use</a
-				>
+			<P class="p-4 text-center text-sm">
+				By registering you agree to PowderHound's <A href="/terms-of-use">Terms of Use</A>
 				and acknowledge that you've read our
-				<a class="anchor" href="/privacy-policy">Privacy Policy</a>.
-			</p>
-		</div>
+				<A href="/privacy-policy">Privacy Policy</A>.
+			</P>
+		</Card>
 	{:else}
-		<div class="card max-w-sm p-4">
-			<div class="card-header text-center">
-				<p class="text-center text-2xl font-semibold">Check your email</p>
-			</div>
-			<div class="mb-4 flex max-w-sm flex-col items-center justify-between gap-8 p-4">
-				<p class="text-center text-lg">
-					We've sent a one-time code to <span class="font-semibold text-primary-400"
-						>{form?.email}</span
+		<Card>
+			<form
+				class="flex flex-col space-y-6"
+				method="POST"
+				action="?/verifyOtp"
+				use:enhance={() => {
+					formLoading = true;
+					return async ({ update, result }) => {
+						if (result.type === 'redirect') {
+							goto(result.location);
+						}
+						formLoading = false;
+						update();
+					};
+				}}
+			>
+				<h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">
+					Check your email
+				</h3>
+				<P class="text-center">
+					We've sent a one-time code to <Span
+						class="font-semibold text-primary-700 dark:text-primary-400">{form?.email}</Span
 					>. Enter the code below to sign in.
-				</p>
-				<form
-					method="POST"
-					action="?/verifyOtp"
-					use:enhance={() => {
-						formLoading = true;
-						return async ({ update, result }) => {
-							if (result.type === 'redirect') {
-								goto(result.location);
-							}
-							formLoading = false;
-							update();
-						};
-					}}
-				>
-					<label class="label mb-4">
-						<span>OTP Code</span>
-						<input
-							class="input !rounded-md"
-							type="text"
-							name="otp"
-							maxlength="6"
-							required
-							value={form?.otp ?? ''}
-							inputmode="numeric"
-							autocomplete="one-time-code"
-							placeholder="012345"
-						/>
-					</label>
-					<input aria-hidden class="hidden" type="hidden" name="email" value={form?.email} />
-					{#if form?.error === 'Invalid OTP'}
-						<p class="pb-4 pt-2">
-							<span class="px-2 text-primary-500">*</span>Invalid OTP code
-						</p>
-					{/if}
-					{#if formLoading}
-						<button
-							type="submit"
-							class="variant-filled-primary btn btn-lg w-full rounded-md"
-							disabled
-							formAction={`?/verifyOtp&redirect=${redirectUrl}`}
+				</P>
+				<Label class="space-y-2" color={form?.error ? 'red' : 'gray'}>
+					<Span class="text-inherit">OTP Code</Span>
+					<Input
+						type="text"
+						name="otp"
+						maxlength="6"
+						required
+						value={form?.otp ?? ''}
+						inputmode="numeric"
+						autocomplete="one-time-code"
+						placeholder="012345"
+						color={form?.error ? 'red' : 'base'}
+					/>
+					{#if form?.error === 'Token has expired or is invalid'}
+						<Helper class="mt-2" color="red"
+							><span class="font-medium">Invalid or expired OTP code</span></Helper
 						>
-							<ProgressRadial value={undefined} width="w-8" />
-						</button>
-					{:else}
-						<button
-							type="submit"
-							class="variant-filled-primary btn btn-lg w-full rounded-md"
-							formAction={`?/verifyOtp&redirect=${redirectUrl}`}
-						>
-							Continue
-						</button>
 					{/if}
-				</form>
-			</div>
-		</div>
-	{/if}
-	{#if form?.error && form?.error !== 'Invalid OTP'}
-		<div class="alert variant-ghost-primary max-w-sm p-4">
-			<p class="w-full text-center">{form?.error}</p>
-		</div>
+				</Label>
+				<input aria-hidden class="hidden" type="hidden" name="email" value={form?.email} />
+				{#if formLoading}
+					<Button type="submit" disabled formAction={`?/verifyOtp&redirect=${redirectUrl}`}>
+						<Spinner class="me-3" size="4" color="white" />Loading ...
+					</Button>
+				{:else}
+					<Button type="submit" formAction={`?/verifyOtp&redirect=${redirectUrl}`}>Continue</Button>
+				{/if}
+			</form>
+		</Card>
 	{/if}
 </div>

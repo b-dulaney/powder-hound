@@ -30,6 +30,6 @@
 	/>
 </svelte:head>
 
-<div class="my-8 flex h-full items-start justify-center px-4">
+<div class="flex min-h-[700px] grow flex-col items-center justify-center px-4 py-6 sm:py-10">
 	<Login action="signup" {supabase} {form} />
 </div>
