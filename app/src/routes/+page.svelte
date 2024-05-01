@@ -41,7 +41,7 @@
 
 <header class="relative py-8 xl:pt-16" id="hero">
 	<div class="hero-gradient" />
-	<div class="mx-auto flex max-w-screen-xl items-center justify-center">
+	<div class="mx-auto flex max-w-screen-2xl items-center justify-center">
 		<div class="flex flex-col items-center space-y-6 px-4 lg:p-8">
 			<a
 				href="/"
@@ -86,7 +86,7 @@
 
 <Section name="feature" sectionClass="bg-surface-50 dark:bg-surface-900 py-8">
 	<HeroHeader
-		class="mx-auto mb-8 max-w-screen-xl py-0 sm:py-0 lg:mb-16"
+		class="mx-auto mb-8 max-w-screen-2xl py-0 sm:py-0 lg:mb-16"
 		h2Class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white lg:text-center"
 		pClass="text-gray-500 sm:text-xl max-w-2xl dark:text-gray-400 lg:text-center lg:mx-auto"
 	>
@@ -162,7 +162,7 @@
 
 <section id="contentwithimg" class="relative bg-surface-100 py-6 dark:bg-surface-800 sm:py-10">
 	<div
-		class="mx-auto max-w-screen-xl items-center gap-8 px-4 py-8 md:grid md:grid-cols-2 lg:px-6 lg:py-16"
+		class="mx-auto max-w-screen-2xl items-center gap-8 px-4 py-8 md:grid md:grid-cols-2 lg:px-6 lg:py-16"
 	>
 		<div class="font-light text-gray-500 dark:text-gray-400 sm:text-lg">
 			<Heading tag="h2" class="mb-4">Powered by data you can trust</Heading>
@@ -197,7 +197,7 @@
 </section>
 
 <section id="alerts" class="bg-surface-100 dark:bg-gray-800">
-	<div class="mx-auto w-full max-w-screen-xl px-4 py-8 lg:py-24">
+	<div class="mx-auto w-full max-w-screen-2xl px-4 py-8 lg:py-24">
 		<div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-10 lg:items-start">
 			<div class="space-y-4 md:order-last">
 				<Heading tag="h2">Tailored Notifications</Heading>
@@ -236,7 +236,7 @@
 </section>
 
 <section id="know-before-you-go" class="bg-surface-50 dark:bg-surface-900">
-	<div class="mx-auto w-full max-w-screen-xl px-4 py-16 md:py-24">
+	<div class="mx-auto w-full max-w-screen-2xl px-4 py-16 md:py-24">
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center lg:items-start">
 			<div class="space-y-4">
 				<Heading tag="h2">Know Before You Go</Heading>
@@ -272,7 +272,7 @@
 </section>
 
 <section id="stats" class="bg-surface-50 dark:bg-surface-900">
-	<div class="mx-auto w-full max-w-screen-xl px-4 py-16 md:py-24">
+	<div class="mx-auto w-full max-w-screen-2xl px-4 py-16 md:py-24">
 		<div class="flex flex-col items-center justify-center gap-10 md:flex-row">
 			<div class="space-y-1">
 				<span class="block text-8xl font-bold text-surface-900 dark:text-white">30+</span>

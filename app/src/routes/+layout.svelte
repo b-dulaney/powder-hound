@@ -86,7 +86,7 @@
 		fluid
 		class="border-b border-b-gray-200 bg-surface-50 dark:border-b-gray-700 dark:bg-surface-900"
 	>
-		<NavContainer class="max-w-screen-xl">
+		<NavContainer class="max-w-screen-2xl">
 			<div class="flex items-center gap-2">
 				<SidebarNav {session} {logout} />
 				<NavBrand href="/">
