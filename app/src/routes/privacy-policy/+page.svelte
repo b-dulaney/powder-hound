@@ -23,7 +23,7 @@
 <BreadcrumbHeader title="Privacy Policy" />
 
 <div class="flex w-full items-center justify-center">
-	<enhanced:img src="../../public/new-logo-v2.png" alt="Powder Hound Logo" class="h-36 w-36" />
+	<enhanced:img src="../../public/logo.png" alt="Powder Hound Logo" class="h-36 w-36" />
 </div>
 
 <SectionContainer id="privacy-policy">
