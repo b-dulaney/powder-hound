@@ -139,7 +139,7 @@
 			<ThSort {handler} orderBy="snow_next_72h" classes="hidden md:px-3 py-4 md:table-cell" center
 				>Next 72h</ThSort
 			>
-			<TableHeadCell></TableHeadCell>
+			<TableHeadCell aria-hidden></TableHeadCell>
 		</TableHead>
 		<TableBody>
 			{#if !$rows.length}
