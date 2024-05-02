@@ -6,7 +6,7 @@
 	export let details: ResortDetail | BackcountryDetail;
 </script>
 
-<ul class="list">
+<ul class="md:px-2 lg:px-4">
 	{#each details.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
 		<li class="!rounded-md">
 			<div class="grid w-full grid-cols-6 items-center gap-3 py-2">
@@ -40,6 +40,6 @@
 				</Span>
 			</div>
 		</li>
-		<hr class="mt-1 opacity-60 last:hidden" aria-hidden />
+		<hr class="mt-1 opacity-60 last:hidden dark:opacity-20" aria-hidden />
 	{/each}
 </ul>

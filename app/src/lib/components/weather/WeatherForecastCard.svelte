@@ -5,7 +5,7 @@
 	import WeatherIcon from '$lib/components/weather/WeatherIcon.svelte';
 	import type { BackcountryDetail, ResortDetail } from '$lib/supabase.types';
 	import { weatherConditionsMap } from '$lib/utils';
-	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+	import { Accordion, AccordionItem, Span } from 'flowbite-svelte';
 	import { P } from 'flowbite-svelte';
 	export let details: ResortDetail | BackcountryDetail;
 </script>
@@ -48,14 +48,10 @@
 				{/each}
 			</div>
 
-			<Accordion class="py-4 md:hidden">
-				<AccordionItem>
-					<svelte:fragment slot="summary"
-						><p class="!rounded-none text-center">View Hourly Forecast</p></svelte:fragment
-					>
-					<svelte:fragment slot="content">
-						<HourlyForecastList {details} />
-					</svelte:fragment>
+			<Accordion flush class="px-6 py-2 md:hidden">
+				<AccordionItem borderBottomClass="border-0">
+					<Span slot="header">View Hourly Forecast</Span>
+					<HourlyForecastList {details} />
 				</AccordionItem>
 			</Accordion>
 		</div>
