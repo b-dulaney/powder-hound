@@ -25,8 +25,8 @@
 				}, 0)
 			: 0;
 
-	const next72hYDomain = maxYValue > 6.5 ? maxYValue : 6.5;
-	const pastWeekYDomain = maxYValueHistorical > 6.6 ? maxYValueHistorical : 6.5;
+	const next72hYDomain = maxYValue > 6 ? maxYValue : 6;
+	const pastWeekYDomain = maxYValueHistorical > 6 ? maxYValueHistorical : 6;
 </script>
 
 <Tabs
