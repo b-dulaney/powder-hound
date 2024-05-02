@@ -26,12 +26,12 @@
 
 	$: sortAscClass =
 		$sorted.orderBy === orderBy && $sorted.direction === 'asc'
-			? `fill-gray-600 dark:fill-gray-100`
-			: 'fill-gray-300 dark:fill-gray-400';
+			? `fill-surface-600 dark:fill-surface-100`
+			: 'fill-surface-300 dark:fill-surface-400';
 	$: sortDescClass =
 		$sorted.orderBy === orderBy && $sorted.direction === 'desc'
-			? `fill-gray-600 dark:fill-gray-100`
-			: 'fill-gray-300 dark:fill-gray-400';
+			? `fill-surface-600 dark:fill-surface-100`
+			: 'fill-surface-300 dark:fill-surface-400';
 </script>
 
 <th
@@ -42,8 +42,8 @@
 	<div class="flex h-full w-full items-center justify-start" class:center>
 		<slot />
 		<Span class="ml-1 inline-flex flex-col">
-			<CaretUpSolid class={`-mb-1 h-[10px] w-[10px] ${sortAscClass}`} />
-			<CaretDownSolid class={`h-[10px] w-[10px] ${sortDescClass}`} />
+			<CaretUpSolid class={`-mb-1 h-[10px] w-[10px] lg:h-[12px] lg:w-[12px] ${sortAscClass}`} />
+			<CaretDownSolid class={`h-[10px] w-[10px] lg:h-[12px] lg:w-[12px] ${sortDescClass}`} />
 		</Span>
 	</div>
 </th>

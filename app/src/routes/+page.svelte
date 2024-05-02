@@ -41,7 +41,7 @@
 
 <header class="relative py-8 xl:pt-16" id="hero">
 	<div class="hero-gradient" />
-	<div class="mx-auto flex max-w-screen-2xl items-center justify-center">
+	<div class="mx-auto flex max-w-screen-xl items-center justify-center">
 		<div class="flex flex-col items-center space-y-6 px-4 lg:p-8">
 			<a
 				href="/"
@@ -53,16 +53,16 @@
 				<Span class="text-sm font-medium"
 					>PowderHound is in beta. Read more about the roadmap here!</Span
 				>
-				<AngleRightOutline class="ms-2 h-5 w-5 text-gray-500 dark:text-white" />
+				<AngleRightOutline class="ms-2 h-5 w-5 text-surface-500 dark:text-white" />
 			</a>
 			<enhanced:img src="../public/logo.png" class="h-36 w-36 lg:hidden" alt="PowderHound Logo" />
 
 			<h1
-				class="h1 max-w-2xl text-center text-5xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white xl:text-6xl"
+				class="h1 max-w-2xl text-center text-5xl font-extrabold leading-none tracking-tight text-surface-900 dark:text-white xl:text-6xl"
 			>
 				You'll never miss another powder day
 			</h1>
-			<p class="max-w-xl text-center text-xl font-semibold text-gray-900 dark:text-white">
+			<p class="max-w-xl text-center text-xl font-semibold text-surface-900 dark:text-white">
 				View the current snow report, get accurate predictions, and receive customized snowfall
 				alerts - all 100% free.
 			</p>
@@ -74,7 +74,7 @@
 				<Button
 					href="/signup"
 					color="alternative"
-					class="dark:border-gray-700 dark:bg-gray-700 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-600"
+					class="dark:border-surface-700 dark:bg-surface-700 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-600"
 				>
 					<EnvelopeSolid class="me-2 h-5 w-5" />
 					<span>Sign Up</span>
@@ -86,9 +86,9 @@
 
 <Section name="feature" sectionClass="bg-surface-50 dark:bg-surface-900 py-8">
 	<HeroHeader
-		class="mx-auto mb-8 max-w-screen-2xl py-0 sm:py-0 lg:mb-16"
-		h2Class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white lg:text-center"
-		pClass="text-gray-500 sm:text-xl max-w-2xl dark:text-gray-400 lg:text-center lg:mx-auto"
+		class="mx-auto mb-8 max-w-screen-xl py-0 sm:py-0 lg:mb-16"
+		h2Class="mb-4 text-4xl tracking-tight font-extrabold text-surface-900 dark:text-white lg:text-center"
+		pClass="text-surface-500 sm:text-xl max-w-2xl dark:text-surface-400 lg:text-center lg:mx-auto"
 	>
 		<svelte:fragment slot="h2">Designed for riders like you</svelte:fragment>
 		<svelte:fragment slot="paragraph"
@@ -97,7 +97,7 @@
 		>
 	</HeroHeader>
 	<FeatureDefault divClass="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
-		<FeatureItem pClass="text-gray-500 dark:text-gray-400 max-w-md">
+		<FeatureItem pClass="text-surface-500 dark:text-surface-400 max-w-md">
 			<svelte:fragment slot="icon"
 				><BellSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
 			>
@@ -107,7 +107,7 @@
 				always ready for epic powder days.</svelte:fragment
 			>
 		</FeatureItem>
-		<FeatureItem pClass="text-gray-500 dark:text-gray-400 max-w-md">
+		<FeatureItem pClass="text-surface-500 dark:text-surface-400 max-w-md">
 			<svelte:fragment slot="icon"
 				><SkiLiftSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
 			>
@@ -117,7 +117,7 @@
 				mountains - updated hourly.</svelte:fragment
 			>
 		</FeatureItem>
-		<FeatureItem pClass="text-gray-500 dark:text-gray-400 max-w-md">
+		<FeatureItem pClass="text-surface-500 dark:text-surface-400 max-w-md">
 			<svelte:fragment slot="icon"
 				><PineTreeSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
 			>
@@ -127,7 +127,7 @@
 				for all of the western US.</svelte:fragment
 			>
 		</FeatureItem>
-		<FeatureItem pClass="text-gray-500 dark:text-gray-400 max-w-md">
+		<FeatureItem pClass="text-surface-500 dark:text-surface-400 max-w-md">
 			<svelte:fragment slot="icon"
 				><i class="fa fa-solid fa-cloud text-primary-600 dark:text-primary-300" /></svelte:fragment
 			>
@@ -137,7 +137,7 @@
 				properties show you how each day will unfold.
 			</svelte:fragment>
 		</FeatureItem>
-		<FeatureItem pClass="text-gray-500 dark:text-gray-400 max-w-md">
+		<FeatureItem pClass="text-surface-500 dark:text-surface-400 max-w-md">
 			<svelte:fragment slot="icon"
 				><ReceiptSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
 			>
@@ -147,7 +147,7 @@
 				has you covered no matter where you ride.</svelte:fragment
 			>
 		</FeatureItem>
-		<FeatureItem pClass="text-gray-500 dark:text-gray-400 max-w-md">
+		<FeatureItem pClass="text-surface-500 dark:text-surface-400 max-w-md">
 			<svelte:fragment slot="icon"
 				><UsersGroupSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
 			>
@@ -160,11 +160,11 @@
 	</FeatureDefault>
 </Section>
 
-<section id="contentwithimg" class="relative bg-surface-100 py-6 dark:bg-surface-800 sm:py-10">
+<section id="contentwithimg" class="relative bg-surface-100 py-6 dark:bg-surface-950 sm:py-10">
 	<div
-		class="mx-auto max-w-screen-2xl items-center gap-8 px-4 py-8 md:grid md:grid-cols-2 lg:px-6 lg:py-16"
+		class="mx-auto max-w-screen-xl items-center gap-8 px-4 py-8 md:grid md:grid-cols-2 lg:px-6 lg:py-16"
 	>
-		<div class="font-light text-gray-500 dark:text-gray-400 sm:text-lg">
+		<div class="font-light text-surface-500 dark:text-surface-400 sm:text-lg">
 			<Heading tag="h2" class="mb-4">Powered by data you can trust</Heading>
 			<P class="mb-4">
 				PowderHound is built on top of high-resolution weather data from the
@@ -196,8 +196,8 @@
 	</div>
 </section>
 
-<section id="alerts" class="bg-surface-100 dark:bg-gray-800">
-	<div class="mx-auto w-full max-w-screen-2xl px-4 py-8 lg:py-24">
+<section id="alerts" class="bg-surface-100 dark:bg-surface-950">
+	<div class="mx-auto w-full max-w-screen-xl px-6 py-8 lg:py-24">
 		<div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-10 lg:items-start">
 			<div class="space-y-4 md:order-last">
 				<Heading tag="h2">Tailored Notifications</Heading>
@@ -211,14 +211,14 @@
 				<Avatar
 					src={LogoIcon}
 					dot={{ placement: 'bottom-right', color: 'green' }}
-					class="bg-surace-50 dark:bg-surface-800 lg:h-20 lg:w-20"
+					class="bg-surace-50 dark:bg-surface-950 lg:h-20 lg:w-20"
 				/>
 				<div class="flex w-full max-w-[350px] flex-col gap-1">
 					<div class="flex items-center space-x-2">
-						<span class="text-sm font-semibold text-gray-900 dark:text-white md:text-lg"
+						<span class="text-sm font-semibold text-surface-900 dark:text-white md:text-lg"
 							>PowderHound</span
 						>
-						<span class="text-sm font-normal text-gray-500 dark:text-gray-400 md:text-base"
+						<span class="text-sm font-normal text-surface-500 dark:text-surface-400 md:text-base"
 							>6:05am</span
 						>
 					</div>
@@ -236,8 +236,8 @@
 </section>
 
 <section id="know-before-you-go" class="bg-surface-50 dark:bg-surface-900">
-	<div class="mx-auto w-full max-w-screen-2xl px-4 py-16 md:py-24">
-		<div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center lg:items-start">
+	<div class="mx-auto w-full max-w-screen-xl px-4 py-16 md:py-24">
+		<div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
 			<div class="space-y-4">
 				<Heading tag="h2">Know Before You Go</Heading>
 				<P>
@@ -245,25 +245,25 @@
 					PowderHound can help you make informed decisions about your next trip beyond the ropes.
 				</P>
 			</div>
-			<div class="relative flex">
+			<div class="relative flex max-w-full items-center justify-center">
 				<img
 					src="src/public/avy-danger-low.png"
-					class="relative z-10 -mr-[130px] w-48 lg:-mr-[110px]"
+					class="relative z-10 -mr-[120px] w-48"
 					alt="Avalanche danger low icon"
 				/>
 				<img
 					src="src/public/avy-danger-moderate.png"
-					class="relative z-20 -mr-[130px] w-48 lg:-mr-[110px]"
+					class="relative z-20 -mr-[100px] w-48"
 					alt="Avalanche danger moderate icon"
 				/>
 				<img
 					src="src/public/avy-danger-considerable.png"
-					class="relative z-30 -mr-[130px] w-48 lg:-mr-[110px]"
+					class="relative z-30 -mr-[100px] w-48"
 					alt="Avalanche danger considerable icon"
 				/>
 				<img
 					src="src/public/avy-danger-high.png"
-					class="relative z-40 -mr-[130px] w-48 lg:-mr-[110px]"
+					class="relative z-40 mr-[20px] w-48"
 					alt="Avalanche danger high icon"
 				/>
 			</div>
@@ -272,7 +272,7 @@
 </section>
 
 <section id="stats" class="bg-surface-50 dark:bg-surface-900">
-	<div class="mx-auto w-full max-w-screen-2xl px-4 py-16 md:py-24">
+	<div class="mx-auto w-full max-w-screen-xl px-4 py-16 md:py-24">
 		<div class="flex flex-col items-center justify-center gap-10 md:flex-row">
 			<div class="space-y-1">
 				<span class="block text-8xl font-bold text-surface-900 dark:text-white">30+</span>

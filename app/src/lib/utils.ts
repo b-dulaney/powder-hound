@@ -236,17 +236,7 @@ export function constructSnowfallChartData(
 			day: forecast.day,
 			daytimeSnowfall: forecast.daytime_snowfall,
 			nighttimeSnowfall: forecast.nighttime_snowfall,
-			time: 'daytime',
-			keys: [forecast.day, 'daytime_snowfall'],
-			values: [0, forecast.daytime_snowfall]
-		});
-		stackedChartData.push({
-			day: forecast.day,
-			daytimeSnowfall: forecast.daytime_snowfall,
-			nighttimeSnowfall: forecast.nighttime_snowfall,
-			time: 'nighttime',
-			keys: [forecast.day, 'nighttime_snowfall'],
-			values: [0, forecast.nighttime_snowfall]
+			values: [forecast.daytime_snowfall, forecast.nighttime_snowfall]
 		});
 	});
 	return stackedChartData;

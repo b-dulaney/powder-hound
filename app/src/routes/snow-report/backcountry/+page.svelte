@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Heading } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import BackcountryTable from './backcountry-table.svelte';
 	export let data: PageData;
@@ -32,6 +33,12 @@
 	/>
 </svelte:head>
 
-<section class="mx-auto w-full pb-8 md:px-4 lg:max-w-screen-2xl">
+<Heading
+	tag="h1"
+	class="py-4 text-center text-2xl font-bold tracking-tight text-surface-900 dark:text-white sm:py-8 sm:text-4xl sm:font-extrabold"
+	>Backcountry Snow Report
+</Heading>
+
+<section class="mx-auto w-full max-w-screen-2xl pb-10 sm:pb-16 md:px-4">
 	<BackcountryTable {backcountryOverviews} {session} alerts={alerts ?? []} />
 </section>

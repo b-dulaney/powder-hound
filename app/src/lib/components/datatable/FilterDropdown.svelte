@@ -15,9 +15,14 @@
 	};
 </script>
 
-<aside class="flex place-items-center pb-2 pt-6 text-gray-900 dark:text-gray-300">
+<aside class="flex place-items-center pb-2 pt-6 text-surface-900 dark:text-surface-300">
 	Show
-	<Select class="ml-2" bind:value={showClosed} on:change={setFilter} placeholder="">
+	<Select
+		class="ml-2 dark:bg-surface-800"
+		bind:value={showClosed}
+		on:change={setFilter}
+		placeholder=""
+	>
 		<option value={false}>Open</option>
 		<option value={true}>All</option>
 	</Select>

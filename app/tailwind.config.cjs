@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import forms from '@tailwindcss/forms';
-``;
 const config = {
 	darkMode: 'class',
 	content: [
@@ -62,7 +62,12 @@ const config = {
 			}
 		}
 	},
-	plugins: [forms, require('flowbite/plugin')]
+	plugins: [
+		forms,
+		require('flowbite/plugin')({
+			charts: true
+		})
+	]
 };
 
 export default config;

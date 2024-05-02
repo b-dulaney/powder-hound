@@ -53,8 +53,6 @@ export type StackedChartData = {
 	day: string;
 	daytimeSnowfall: number;
 	nighttimeSnowfall: number;
-	time: string;
-	keys: string[];
 	values: number[];
 };
 

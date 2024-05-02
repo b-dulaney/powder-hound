@@ -44,9 +44,9 @@
 		<Svg>
 			<Axis
 				placement="left"
-				grid={{ style: 'stroke: rgba(var(--color-surface-500))' }}
+				grid={{ style: 'stroke: rgba(var(--color-surface-300))' }}
 				labelProps={{
-					class: 'text-sm md:text-lg fill-surface-400 font-semibold',
+					class: 'text-sm md:text-lg fill-surface-900 dark:fill-surface-300 font-medium',
 					dx: -10,
 					style: 'stroke-width: 0'
 				}}
@@ -57,14 +57,14 @@
 				placement="bottom"
 				format={(d) => dayjs(d).format('ha').slice(0, -1)}
 				labelProps={{
-					class: 'text-xs md:text-lg fill-surface-400 font-semibold',
+					class: 'text-xs md:text-lg fill-surface-900 dark:fill-surface-300 font-medium',
 					dy: 16,
 					style: 'stroke-width: 0'
 				}}
 			/>
 			<ChartClipPath initialWidth={0} tweened={{ width: { duration: 400, easing: cubicInOut } }}>
-				<LinearGradient class="from-secondary-500/90 to-secondary-500/10" vertical let:url>
-					<Area line={{ class: 'stroke-2 stroke-secondary-500' }} fill={url} />
+				<LinearGradient class="from-primary-500/80 to-primary-500/60" vertical let:url>
+					<Area line={{ class: 'stroke-2 stroke-primary-800' }} fill={url} />
 				</LinearGradient>
 			</ChartClipPath>
 		</Svg>
@@ -74,11 +74,9 @@
 		</Tooltip>
 	</Chart>
 </div>
-<div class="flex w-full items-center justify-center gap-4 text-surface-400">
+<div class="flex w-full items-center justify-center gap-4 text-surface-500 dark:text-surface-300">
 	<span class="inline-flex items-center"
-		><div
-			class="mx-2 h-4 w-4 rounded border-2 border-solid border-secondary-500 bg-secondary-500/20"
-		/>
-		 Snow Accumulation</span
+		><div class="mx-2 h-4 w-4 rounded border-2 border-solid border-primary-500 bg-primary-500/20" />
+		Snow Accumulation</span
 	>
 </div>

@@ -6,6 +6,7 @@
 	import type { BackcountryDetail, ResortDetail } from '$lib/supabase.types';
 	import { weatherConditionsMap } from '$lib/utils';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+	import { P } from 'flowbite-svelte';
 	export let details: ResortDetail | BackcountryDetail;
 </script>
 
@@ -15,27 +16,25 @@
 		<div class="flex h-full w-full flex-col md:justify-evenly">
 			<div class="flex justify-between p-4 sm:p-6">
 				<div class="flex flex-col p-4">
-					<p class="text-3xl font-bold">{details.current_temp}°</p>
-					<p class="text-xl font-semibold">
+					<P class="text-3xl font-bold">{details.current_temp}°</P>
+					<P class="text-xl font-semibold">
 						{weatherConditionsMap[details.current_weather]}
-					</p>
+					</P>
 					<div class="flex">
-						<p>
+						<P>
 							High {details.temperature_range[1].high_temp}&deg;
-						</p>
-						<p class=" mx-2">&middot;</p>
-						<p>
+						</P>
+						<P class=" mx-2">&middot;</P>
+						<P>
 							Low {details.temperature_range[1].low_temp}&deg;
-						</p>
+						</P>
 					</div>
 				</div>
 				<div class="flex flex-col items-center justify-center p-8">
 					<WeatherIcon weatherDesc={details.current_weather} size="large" />
 				</div>
 			</div>
-			<div
-				class="flex w-full items-center justify-between p-4 sm:p-6"
-			>
+			<div class="flex w-full items-center justify-between p-4 sm:p-6">
 				{#each details.temperature_range as { date, low_temp, high_temp, snowfall }, i (i)}
 					<WeatherForecastSlice
 						{high_temp}

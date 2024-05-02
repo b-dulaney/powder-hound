@@ -1,4 +1,4 @@
-<div class="w-full bg-surface-50 p-6 dark:bg-surface-800">
+<div class="w-full bg-surface-50 p-6 dark:bg-surface-900">
 	<div class="mx-auto max-w-screen-2xl">
 		<div class="md:flex md:justify-between">
 			<div class="mb-6 md:mb-0">
@@ -11,10 +11,10 @@
 			</div>
 			<div class="grid grid-cols-2 gap-8 sm:gap-6">
 				<div>
-					<h2 class="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+					<h2 class="mb-6 text-sm font-semibold uppercase text-surface-900 dark:text-white">
 						Resources
 					</h2>
-					<ul class="text-gray-600 dark:text-gray-400">
+					<ul class="text-surface-600 dark:text-surface-400">
 						<li class="mb-4">
 							<a href="https://avalanche.state.co.us/" class="hover:underline">CAIC</a>
 						</li>
@@ -24,8 +24,10 @@
 					</ul>
 				</div>
 				<div>
-					<h2 class="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">Legal</h2>
-					<ul class="text-gray-600 dark:text-gray-400">
+					<h2 class="mb-6 text-sm font-semibold uppercase text-surface-900 dark:text-white">
+						Legal
+					</h2>
+					<ul class="text-surface-600 dark:text-surface-400">
 						<li class="mb-4">
 							<a href="/privacy-policy" class="hover:underline">Privacy Policy</a>
 						</li>
@@ -36,8 +38,8 @@
 				</div>
 			</div>
 		</div>
-		<hr class="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8" />
-		<span class="inline-flex items-center gap-2 py-2 text-gray-600 dark:text-gray-400">
+		<hr class="my-6 border-surface-200 dark:border-surface-700 sm:mx-auto lg:my-8" />
+		<span class="inline-flex items-center gap-2 py-2 text-surface-600 dark:text-surface-400">
 			<svg
 				class="h-6 w-6"
 				aria-hidden="true"

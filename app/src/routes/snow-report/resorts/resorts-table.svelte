@@ -20,6 +20,7 @@
 	import {
 		A,
 		Button,
+		Card,
 		Span,
 		Table,
 		TableBody,
@@ -117,12 +118,12 @@
 		<Search {handler} />
 		<FilterDropdown bind:showClosed {handler} />
 	</header>
-	<Table shadow>
+	<Table>
 		<caption class="sr-only"
 			>Snow and weather conditions for CO ski resorts. Column headers are sortable. Switch between
 			categories with the tabs above.</caption
 		>
-		<TableHead>
+		<TableHead class="dark:bg-surface-900">
 			<ThSort {handler} orderBy="display_name">Location</ThSort>
 			<ThSort {handler} orderBy="base_depth" center
 				><span class="sm:after:content-['_Depth']">Base</span></ThSort
@@ -143,7 +144,7 @@
 		</TableHead>
 		<TableBody>
 			{#if !$rows.length}
-				<TableBodyRow class="w-full text-center">
+				<TableBodyRow class="w-full text-center dark:bg-surface-900">
 					<TableBodyCell class="w-full" colspan="7">
 						<div class="flex w-full flex-col items-center justify-center gap-4">
 							<p class="text-base">No results found</p>
@@ -157,7 +158,9 @@
 				</TableBodyRow>
 			{/if}
 			{#each $rows as row}
-				<TableBodyRow>
+				<TableBodyRow
+					class="border-b dark:border-b-surface-800 dark:odd:bg-surface-950 dark:even:bg-surface-900"
+				>
 					<TableBodyCell class="px-3 py-4"
 						><A
 							class="dark:text-primary-300 md:pl-2 xl:text-lg"

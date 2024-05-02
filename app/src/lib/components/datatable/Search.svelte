@@ -16,7 +16,14 @@
 </script>
 
 <div class="w-[55%] max-w-sm pb-2 pt-6">
-	<Input type="search" autocomplete="off" placeholder="Search..." bind:value on:input={search}>
-		<SearchOutline slot="left" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+	<Input
+		type="search"
+		class="dark:bg-surface-800 dark:text-surface-50"
+		autocomplete="off"
+		placeholder="Search..."
+		bind:value
+		on:input={search}
+	>
+		<SearchOutline slot="left" class="h-5 w-5 text-surface-500 dark:text-surface-400" />
 	</Input>
 </div>

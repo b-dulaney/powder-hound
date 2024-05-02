@@ -4,7 +4,7 @@
 	import { PUBLIC_SITE_URL, PUBLIC_VERCEL_ENV } from '$env/static/public';
 	import { tooManyRequestsTimer } from '$lib/utils';
 	import type { SupabaseClient } from '@supabase/supabase-js';
-	import { A, Button, Card, Helper, Input, Label, P, Span, Spinner } from 'flowbite-svelte';
+	import { A, Alert, Button, Card, Helper, Input, Label, P, Span, Spinner } from 'flowbite-svelte';
 	import GithubSolid from 'flowbite-svelte-icons/GithubSolid.svelte';
 	import GoogleSolid from 'flowbite-svelte-icons/GoogleSolid.svelte';
 	import type { ActionData } from '../../routes/login/$types';
@@ -49,9 +49,9 @@
 	}
 </script>
 
-<div class="flex flex-col gap-8">
+<div class="flex flex-col items-center gap-8">
 	{#if !form?.success && !form?.error}
-		<Card>
+		<Card class="dark:border-surface-700 dark:bg-surface-800">
 			<form
 				method="POST"
 				class="flex flex-col space-y-6"
@@ -67,20 +67,30 @@
 					};
 				}}
 			>
-				<h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">
+				<h3 class="text-center text-xl font-medium text-surface-900 dark:text-white">
 					{actionText} with
 				</h3>
 
 				<div class="flex flex-col gap-2">
 					{#if PUBLIC_VERCEL_ENV !== 'production'}
-						<Button color="light" title="Sign in with Google" on:click={signInWithGoogle}>
+						<Button
+							color="light"
+							class="dark:!bg-surface-800 dark:hover:!bg-surface-700"
+							title="Sign in with Google"
+							on:click={signInWithGoogle}
+						>
 							<GoogleSolid class="me-2 h-5 w-5" />
 							Google
 						</Button>
 					{/if}
 					<!-- <button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Microsoft</button>
 					<button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Facebook</button> -->
-					<Button color="light" title="Sign in with Github" on:click={signInWithGithub}>
+					<Button
+						class="dark:!bg-surface-800 dark:hover:!bg-surface-700"
+						color="light"
+						title="Sign in with Github"
+						on:click={signInWithGithub}
+					>
 						<GithubSolid class="me-2 h-5 w-5" />
 						Github
 					</Button>
@@ -91,10 +101,19 @@
 					<Span class="px-4">Or</Span>
 					<hr class="w-1/4 px-4" />
 				</div>
-				<h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">Continue with</h3>
+				<h3 class="text-center text-xl font-medium text-surface-900 dark:text-white">
+					Continue with
+				</h3>
 				<Label class="space-y-2">
 					<Span>Email</Span>
-					<Input type="email" name="email" required autocomplete="email" placeholder="Email" />
+					<Input
+						class="dark:bg-surface-700"
+						type="email"
+						name="email"
+						required
+						autocomplete="email"
+						placeholder="Email"
+					/>
 				</Label>
 				{#if formLoading}
 					<Button type="submit" disabled formAction="?/login">
@@ -133,7 +152,7 @@
 					};
 				}}
 			>
-				<h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">
+				<h3 class="text-center text-xl font-medium text-surface-900 dark:text-white">
 					Check your email
 				</h3>
 				<P class="text-center">
@@ -170,5 +189,11 @@
 				{/if}
 			</form>
 		</Card>
+	{/if}
+	{#if form?.error && form.error !== 'Token has expired or is invalid'}
+		<Alert color="red" class="dark:bg-surface-800">
+			<span class="font-semibold">Whoops! </span>
+			Something went wrong. Please try again.
+		</Alert>
 	{/if}
 </div>

@@ -18,6 +18,7 @@
 	import { DataHandler, type State } from '@vincjo/datatables/remote';
 	import {
 		A,
+		Span,
 		Table,
 		TableBody,
 		TableBodyCell,
@@ -102,33 +103,33 @@
 	<header class="flex justify-between px-2">
 		<Search {handler} />
 	</header>
-	<Table shadow>
+	<Table>
 		<caption class="sr-only"
 			>Snow and weather conditions for CO backcountry areas. Column headers are sortable. Switch
 			between categories with the tabs above.</caption
 		>
-		<TableHead>
-			<ThSort {handler} orderBy="display_name">Location</ThSort>
+		<TableHead class="dark:bg-surface-900">
+			<ThSort {handler} orderBy="display_name"><Span class="font-bold">Location</Span></ThSort>
 			<ThSort {handler} orderBy="overall_danger_level" center>
-				<span class="sm:before:content-['Avalanche_']">Danger</span>
+				<Span class="font-bold lg:before:content-['Avalanche_']">Danger</Span>
 			</ThSort>
-			<ThSort {handler} orderBy="snow_past_7d" classes="hidden  md:table-cell" center
-				>Last Week</ThSort
+			<ThSort {handler} orderBy="snow_past_7d" classes="hidden md:px-3 py-4 md:table-cell" center
+				><Span class="font-bold">Last Week</Span></ThSort
 			>
 			<ThSort {handler} orderBy="snow_past_24h" center
-				><span class="sm:before:content-['Last_']">24h</span></ThSort
+				><Span class="font-bold sm:before:content-['Last_']">24h</Span></ThSort
 			>
-			<ThSort {handler} orderBy="snow_next_24h" classes="hidden  md:table-cell" center
-				>Next 24h</ThSort
+			<ThSort {handler} orderBy="snow_next_24h" classes="hidden md:px-3 py-4 md:table-cell" center
+				><Span class="font-bold">Next 24h</Span></ThSort
 			>
-			<ThSort {handler} orderBy="snow_next_72h" classes="hidden  lg:table-cell" center
-				>Next 72h</ThSort
+			<ThSort {handler} orderBy="snow_next_72h" classes="hidden lg:px-3 py-4 lg:table-cell" center
+				><Span class="font-bold">Next 72h</Span></ThSort
 			>
 			<TableHeadCell class="px-4 py-4" aria-hidden></TableHeadCell>
 		</TableHead>
 		<TableBody>
 			{#if !$rows.length}
-				<TableBodyRow class="w-full text-center">
+				<TableBodyRow class="w-full text-center dark:bg-surface-800">
 					<TableBodyCell class="w-full" colspan="7">
 						<div class="flex w-full flex-col items-center justify-center gap-4">
 							<p class="text-base">No results found</p>
@@ -137,7 +138,9 @@
 				</TableBodyRow>
 			{/if}
 			{#each $rows as row}
-				<TableBodyRow>
+				<TableBodyRow
+					class="border-b dark:border-b-surface-800 dark:odd:bg-surface-950 dark:even:bg-surface-900"
+				>
 					<TableBodyCell class="px-1 py-4 sm:px-3">
 						<A
 							class="dark:text-primary-300 sm:pl-2 xl:text-lg"

@@ -28,9 +28,9 @@
 	// Component variables
 	let hidden = true;
 	let activeClass =
-		'flex items-center transition duration-75 p-2 text-base font-normal text-primary-900 bg-primary-100 dark:bg-primary-500 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-gray-700';
+		'flex items-center transition duration-75 p-2 text-base font-normal text-primary-900 bg-primary-100 dark:bg-primary-500 rounded-lg dark:text-white hover:bg-primary-100 dark:hover:bg-surface-700';
 	let nonActiveClass =
-		'flex items-center transition duration-75 p-2 text-base font-normal  rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700';
+		'flex items-center transition duration-75 p-2 text-base font-normal  rounded-lg dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700';
 	let transitionParams = {
 		x: -320,
 		duration: 200,
@@ -50,7 +50,7 @@
 	data-drawer-toggle="sidebar"
 	aria-controls="sidebar"
 	type="button"
-	class="dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 inline-flex items-center rounded-lg p-2 text-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden"
+	class="inline-flex items-center rounded-lg p-2 text-sm hover:bg-surface-100 focus:outline-none focus:ring-2 focus:ring-surface-200 dark:text-surface-400 dark:hover:bg-surface-700 dark:focus:ring-surface-600 md:hidden"
 >
 	<span class="sr-only">Open sidebar</span>
 	<svg
@@ -67,13 +67,20 @@
 		></path>
 	</svg>
 </button>
-<Drawer transitionType="fly" {transitionParams} bind:hidden id="sidebar">
+<Drawer
+	bgColor="bg-surface-900"
+	divClass="overflow-y-auto z-50 p-4 bg-white dark:bg-surface-800"
+	transitionType="fly"
+	{transitionParams}
+	bind:hidden
+	id="sidebar"
+>
 	<div class="flex items-center">
-		<h5 id="drawer-label" class="dark:text-gray-400 text-base font-semibold uppercase">Menu</h5>
-		<CloseButton on:click={() => (hidden = true)} class="dark:text-gray-400" />
+		<h5 id="drawer-label" class="text-base font-semibold uppercase dark:text-surface-400">Menu</h5>
+		<CloseButton on:click={() => (hidden = true)} class="dark:text-surface-400" />
 	</div>
 	<Sidebar {activeUrl} {activeClass} {nonActiveClass}>
-		<SidebarWrapper divClass="overflow-y-auto py-4 px-3 rounded dark:bg-gray-800">
+		<SidebarWrapper divClass="overflow-y-auto py-4 px-3 rounded dark:bg-surface-800">
 			<SidebarGroup>
 				<SidebarItem label="Home" href="/">
 					<svelte:fragment slot="icon">

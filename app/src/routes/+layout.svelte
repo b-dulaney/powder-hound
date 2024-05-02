@@ -4,6 +4,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import SidebarNav from '$lib/components/SidebarNav.svelte';
 	import AlertModal from '$lib/components/alert-modal.svelte';
+	import ChevronDownOutline from 'flowbite-svelte-icons/ChevronDownOutline.svelte';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import {
 		Modal,
@@ -81,11 +82,7 @@
 <Toast />
 
 <div class="flex min-h-screen flex-col">
-	<Navbar
-		let:NavContainer
-		fluid
-		class="border-b border-b-gray-200 bg-surface-50 dark:border-b-gray-700 dark:bg-surface-900"
-	>
+	<Navbar let:NavContainer fluid class="bg-surface-50  text-surface-900 dark:bg-surface-900">
 		<NavContainer class="max-w-screen-2xl">
 			<div class="flex items-center gap-2">
 				<SidebarNav {session} {logout} />
@@ -95,18 +92,31 @@
 						alt="Powder Hound Logo"
 						class="hidden h-10 w-10 sm:inline-block md:h-14 md:w-14"
 					/>
-					<p class="pl-1 text-xl font-bold text-gray-900 dark:text-white md:pl-2 md:text-2xl">
+					<p class="pl-1 text-xl font-bold text-surface-900 dark:text-white md:pl-2 md:text-2xl">
 						PowderHound
 					</p>
 				</NavBrand>
 			</div>
-			<NavUl {activeUrl} ulClass="flex lg:text-lg justify-between my-0 font-semibold gap-4">
-				<NavLi href="/">Home</NavLi>
-				<NavLi href="/snow-report/resorts">Resorts</NavLi>
-				<NavLi href="/snow-report/backcountry">Backcountry</NavLi>
-				<NavLi href="/alerts">Alerts</NavLi>
-			</NavUl>
 			<div class="flex items-center justify-end gap-4 md:gap-8">
+				<NavUl {activeUrl} ulClass="flex lg:text-lg justify-between my-0 font-semibold gap-4">
+					<NavLi class="text-surface-700 dark:text-surface-300" href="/">Home</NavLi>
+					<NavLi class="cursor-pointer text-surface-700 dark:text-surface-300">
+						Snow Report<ChevronDownOutline
+							class="ms-2 inline h-6 w-6 text-primary-800 dark:text-white"
+						/>
+					</NavLi>
+					<Dropdown class="z-20 w-44 rounded-lg bg-surface-50 dark:bg-surface-800">
+						<DropdownItem
+							class="hover:bg-surface-100 dark:hover:bg-surface-700"
+							href="/snow-report/resorts">Resorts</DropdownItem
+						>
+						<DropdownItem
+							class="hover:bg-surface-100 dark:hover:bg-surface-700"
+							href="/snow-report/backcountry">Backcountry</DropdownItem
+						>
+					</Dropdown>
+					<NavLi class="text-surface-700 dark:text-surface-300" href="/alerts">Alerts</NavLi>
+				</NavUl>
 				<DarkMode size="lg" btnClass="focus:ring-2 rounded-lg" />
 				{#if session?.user?.user_metadata?.avatar_url}
 					<Avatar
@@ -129,9 +139,17 @@
 					<DropdownItem on:click={logout}>Sign out</DropdownItem>
 				</Dropdown>
 			{:else}
-				<Dropdown placement="bottom" triggeredBy="#avatar-menu">
-					<DropdownItem href="/signup">Sign up</DropdownItem>
-					<DropdownItem href="/login">Login</DropdownItem>
+				<Dropdown
+					class="rounded-lg bg-surface-50 dark:bg-surface-800"
+					placement="bottom"
+					triggeredBy="#avatar-menu"
+				>
+					<DropdownItem class="hover:bg-surface-100 dark:hover:bg-surface-700" href="/signup"
+						>Sign up</DropdownItem
+					>
+					<DropdownItem class="hover:bg-surface-100 dark:hover:bg-surface-700" href="/login"
+						>Login</DropdownItem
+					>
 				</Dropdown>
 			{/if}
 		</NavContainer>

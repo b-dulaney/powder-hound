@@ -1,134 +1,144 @@
 <script lang="ts">
 	import type { StackedChartData } from '$lib/supabase.types';
 	import { formatDate } from '$lib/utils';
-	import { scaleBand, scaleOrdinal } from 'd3-scale';
-	import dayjs from 'dayjs';
-	import {
-		Axis,
-		Bars,
-		Chart,
-		Highlight,
-		RectClipPath,
-		Svg,
-		Tooltip,
-		TooltipItem
-	} from 'layerchart';
-	import { cubicInOut } from 'svelte/easing';
+	import { Chart } from 'flowbite-svelte';
 	export let chartData: StackedChartData[];
 	export let yDomainMax: number;
-	export let shortDates: boolean = false;
-	import { onMount } from 'svelte';
-	let padding = 0.2;
-	let windowWidth: number;
+	export let dateFormat: 'long' | 'short' = 'short';
 
-	onMount(() => {
-		windowWidth = window.innerWidth;
-
-		window.addEventListener('resize', () => {
-			windowWidth = window.innerWidth;
-		});
-	});
-
-	$: padding = windowWidth > 640 ? 0.6 : 0.2;
+	const options = {
+		series: [
+			{
+				name: 'Day',
+				color: '#3b82f6',
+				data: chartData.map((d) => d.daytimeSnowfall)
+			},
+			{
+				name: 'Night',
+				data: chartData.map((d) => d.nighttimeSnowfall),
+				color: '#8b5cf6'
+			}
+		],
+		chart: {
+			sparkline: {
+				enabled: false
+			},
+			type: 'bar',
+			width: '100%',
+			height: 300,
+			toolbar: {
+				show: false
+			}
+		},
+		responsive: [
+			{
+				breakpoint: 1024,
+				options: {
+					plotOptions: {
+						bar: {
+							columnWidth: '33%'
+						}
+					}
+				}
+			},
+			{
+				breakpoint: 768,
+				options: {
+					plotOptions: {
+						bar: {
+							columnWidth: '75%'
+						}
+					}
+				}
+			},
+			{
+				breakpoint: 640,
+				options: {
+					plotOptions: {
+						bar: {
+							columnWidth: '100%'
+						}
+					}
+				}
+			},
+			{
+				breakpoint: 476,
+				options: {
+					plotOptions: {
+						bar: {
+							columnWidth: '100%'
+						}
+					}
+				}
+			}
+		],
+		fill: {
+			opacity: 1
+		},
+		plotOptions: {
+			bar: {
+				horizontal: false,
+				columnWidth: '33%',
+				borderRadiusApplication: 'end',
+				borderRadius: 6,
+				dataLabels: {
+					position: 'top'
+				}
+			}
+		},
+		legend: {
+			show: true,
+			position: 'bottom'
+		},
+		dataLabels: {
+			enabled: false
+		},
+		tooltip: {
+			shared: true,
+			intersect: false,
+			style: {
+				fontFamily: 'Inter, sans-serif',
+				cssClass: 'text-xs font-normal bg-surface-60 dark:bg-surface-800'
+			}
+		},
+		xaxis: {
+			labels: {
+				show: true,
+				style: {
+					fontFamily: 'Inter, sans-serif',
+					cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+				},
+				formatter: function (value: string) {
+					return formatDate(value, dateFormat);
+				}
+			},
+			categories: chartData.map((d) => d.day),
+			axisTicks: {
+				show: false
+			},
+			axisBorder: {
+				show: false
+			}
+		},
+		yaxis: {
+			tickAmount: 4,
+			min: 0,
+			max: yDomainMax,
+			labels: {
+				show: true,
+				style: {
+					fontFamily: 'Inter, sans-serif',
+					cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+				},
+				formatter: (value: any) => {
+					return `${value.toFixed(1)}"`;
+				}
+			}
+		},
+		grid: {
+			show: true
+		}
+	};
 </script>
 
-<div class="flex h-[300px] w-full items-center justify-center">
-	<Chart
-		ssr
-		data={chartData}
-		x="day"
-		xScale={scaleBand().padding(padding)}
-		y="values"
-		yDomain={[0, yDomainMax]}
-		yNice
-		r={(d) => d.keys[1]}
-		rDomain={['daytime_snowfall', 'nighttime_snowfall']}
-		rRange={['rgba(var(--color-primary-700))', 'rgba(var(--color-secondary-700))']}
-		rScale={scaleOrdinal()}
-		padding={{ left: 24, bottom: 36 }}
-		tooltip={{ mode: 'band' }}
-	>
-		<Svg>
-			<Axis
-				placement="left"
-				grid={{ style: 'stroke: rgba(var(--color-surface-500))' }}
-				labelProps={{
-					class: 'text-sm md:text-lg fill-surface-400 font-semibold',
-					dx: -10,
-					style: 'stroke-width: 0'
-				}}
-				tickSize={0}
-				format={(d) => `${d}"`}
-			/>
-			{#if shortDates}
-				<Axis
-					placement="bottom"
-					labelProps={{
-						class: 'text-sm md:text-lg fill-surface-400 font-semibold',
-						style: 'stroke-width: 0',
-						dy: 12
-					}}
-					tickSize={0}
-					format={(d) => formatDate(d, 'short')}
-				/>
-			{:else}
-				<Axis
-					placement="bottom"
-					labelProps={{
-						class: 'text-sm md:text-lg fill-surface-400 font-semibold',
-						dy: 12,
-						style: 'stroke-width: 0'
-					}}
-					tickSize={0}
-					format={(d) => formatDate(d, 'long')}
-				/>
-			{/if}
-			<Bars
-				initialY={350 - 24 * 2 - 2 - 36}
-				initialHeight={0}
-				radius={2}
-				strokeWidth={2}
-				groupBy="time"
-				class="odd:stroke-primary-500 even:stroke-secondary-500"
-				style="fill-opacity: 0.6; stroke-opacity: 1"
-				tweened={{
-					y: { duration: 500, easing: cubicInOut },
-					height: { duration: 500, easing: cubicInOut }
-				}}
-			/>
-			<Highlight area>
-				<svelte:fragment slot="area" let:area>
-					<RectClipPath x={area.x} y={area.y} width={area.width} height={area.height} spring>
-						<Bars
-							radius={2}
-							groupBy="time"
-							strokeWidth={2}
-							class="odd:fill-primary-500 odd:stroke-primary-400 even:fill-secondary-500 even:stroke-secondary-400"
-						/>
-					</RectClipPath>
-				</svelte:fragment>
-			</Highlight>
-		</Svg>
-
-		<Tooltip header={(data) => dayjs(data.day).format('ddd, MMM DD')} let:data>
-			<TooltipItem label="Day" value={`${Math.round(data.daytimeSnowfall * 10) / 10}"`} />
-			<TooltipItem label="Night" value={`${Math.round(data.nighttimeSnowfall * 10) / 10}"`} />
-			<TooltipItem
-				label="Total"
-				value={`${Math.round((data.daytimeSnowfall + data.nighttimeSnowfall) * 10) / 10}"`}
-			/>
-		</Tooltip>
-	</Chart>
-</div>
-<div class="flex w-full items-center justify-center gap-4 text-surface-400">
-	<span class="inline-flex items-center"
-		><div class="mx-2 h-4 w-4 rounded border-2 border-solid border-primary-500 bg-primary-500/60" />
-		 Day</span
-	>
-	<span class="inline-flex items-center"
-		><div
-			class="mx-2 h-4 w-4 rounded border-2 border-solid border-secondary-500 bg-secondary-500/60"
-		/>
-		 Night</span
-	>
-</div>
+<Chart {options} />

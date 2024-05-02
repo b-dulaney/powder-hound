@@ -1,35 +1,23 @@
 <script lang="ts">
+	import { A, Alert, P } from 'flowbite-svelte';
+
 	export let forecastUrl: string;
 	export let displayName: string;
 </script>
 
-<div class="alert variant-ghost-primary">
-	<div class="flex flex-col">
+<Alert color="red" class="!w-auto dark:bg-red-900/30">
+	<div class="flex flex-col gap-1">
 		<span class="flex items-baseline justify-start"
-			><i class="fa-solid fa-circle-exclamation px-2" /><strong class="whitespace-nowrap"
+			><i class="fa-solid fa-circle-exclamation mr-2" /><strong class="whitespace-nowrap"
 				>Backcountry Forecasts</strong
 			></span
 		>
-		<p>
+		<P size="sm" class="text-inherit dark:text-inherit">
 			These forecasts are for use by experienced backcountry riders. This summary is not a
 			replacement for the detailed CAIC report. Read the full
-			<a target="_blank" rel="noopener" class="anchor !text-surface-50" href={forecastUrl}
-				>{displayName} report</a
+			<A class="text-inherit underline dark:text-inherit" href={forecastUrl}>{displayName} report</A
 			>
 			before heading out.
-		</p>
+		</P>
 	</div>
-</div>
-
-<style>
-	p :global(a) {
-		--tw-text-opacity: 1;
-		color: rgb(var(--color-primary-500) / var(--tw-text-opacity));
-		text-decoration-line: underline;
-	}
-	p :global(a:hover) {
-		--tw-brightness: brightness(1.1);
-		filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale)
-			var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-	}
-</style>
+</Alert>
