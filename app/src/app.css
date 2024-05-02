@@ -12,7 +12,7 @@ body {
 }
 
 .dark body {
-	@apply bg-surface-900;
+	@apply bg-surface-950;
 }
 
 .hero-gradient {
