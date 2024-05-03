@@ -6,7 +6,7 @@
 
 	const baseClass = 'w-full inline-flex items-center justify-center px-4 pb-2 group rounded-b-none';
 	const activeClass =
-		'text-primary-600 border-primary-600 dark:text-primary-500 dark:border-primary-500 border-b-4';
+		'text-surface-700 border-surface-700 dark:text-surface-500 dark:border-surface-500 border-b-4';
 	const nonActiveClass =
 		'border-transparent hover:text-surface-600 hover:border-surface-300 hover:border-b-4 dark:hover:text-surface-300 dark:hover:border-surface-300 border-surface-400 dark:border-surface-700';
 </script>

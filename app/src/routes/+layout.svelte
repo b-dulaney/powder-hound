@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { afterNavigate, invalidateAll } from '$app/navigation';
+	import { afterNavigate, beforeNavigate, invalidateAll } from '$app/navigation';
 	import { navigating, page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
 	import SidebarNav from '$lib/components/SidebarNav.svelte';
 	import AlertModal from '$lib/components/alert-modal.svelte';
-	import ChevronDownOutline from 'flowbite-svelte-icons/ChevronDownOutline.svelte';
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import {
 		Modal,
-		ProgressBar,
 		Toast,
 		initializeStores,
 		storePopup,
@@ -24,17 +22,31 @@
 		NavBrand,
 		NavLi,
 		NavUl,
-		Navbar
+		Navbar,
+		Progressbar,
+		Spinner
 	} from 'flowbite-svelte';
+	import ChevronDownOutline from 'flowbite-svelte-icons/ChevronDownOutline.svelte';
 	import { onMount } from 'svelte';
+	import { fade, fly } from 'svelte/transition';
 	import '../app.css';
 	import type { PageData } from './$types';
+	import Breadcrumbs from './Breadcrumbs.svelte';
+	import { cubicOut, cubicIn, sineOut } from 'svelte/easing';
 
 	export let data: PageData;
 
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 	$: activeUrl = $page.url.pathname;
+
+	afterNavigate((params: AfterNavigate) => {
+		const isNewPage = params.from?.url.pathname !== params.to?.url.pathname;
+		const elemPage = document.querySelector('#page');
+		if (isNewPage && elemPage !== null) {
+			elemPage.scrollTop = 0;
+		}
+	});
 
 	initializeStores();
 
@@ -64,14 +76,6 @@
 		};
 	});
 
-	afterNavigate((params: AfterNavigate) => {
-		const isNewPage = params.from?.url.pathname !== params.to?.url.pathname;
-		const elemPage = document.querySelector('#page');
-		if (isNewPage && elemPage !== null) {
-			elemPage.scrollTop = 0;
-		}
-	});
-
 	const logout = async () => {
 		await supabase.auth.signOut();
 		invalidateAll();
@@ -81,6 +85,20 @@
 <Modal components={modalRegiestry} />
 <Toast />
 
+<!-- Loading indicator for navigation on all pages -->
+<div class="sticky top-0 mx-auto w-full">
+	{#if $navigating}
+		<Progressbar
+			progress={100}
+			animate
+			precision={2}
+			tweenDuration={1000}
+			easing={sineOut}
+			size="h-1"
+			class="z-50"
+		/>
+	{/if}
+</div>
 <div class="flex min-h-screen flex-col">
 	<Navbar let:NavContainer fluid class="bg-surface-50  text-surface-900 dark:bg-surface-900">
 		<NavContainer class="max-w-screen-2xl">
@@ -154,12 +172,18 @@
 			{/if}
 		</NavContainer>
 	</Navbar>
-	{#if $navigating}
-		<ProgressBar height="h-1" meter="bg-primary-500" />
-	{/if}
+
+	<Breadcrumbs />
 
 	<main class="flex grow flex-col">
-		<slot />
+		{#key data.pathname}
+			<div
+				in:fade={{ easing: cubicOut, duration: 300, delay: 400 }}
+				out:fade={{ easing: cubicIn, duration: 300 }}
+			>
+				<slot />
+			</div>
+		{/key}
 	</main>
 
 	<Footer />

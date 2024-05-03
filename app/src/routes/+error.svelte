@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Section, Page404 } from 'flowbite-svelte-blocks';
+	import { Section } from 'flowbite-svelte-blocks';
 	import { Button, Heading, P } from 'flowbite-svelte';
 </script>
 

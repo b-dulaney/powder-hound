@@ -1,6 +1,4 @@
 <script lang="ts">
-	import BreadcrumbHeader from '../../lib/components/BreadcrumbHeader.svelte';
-
 	import type { PageData } from './$types';
 	import { invalidateAll } from '$app/navigation';
 	import Card from '$lib/components/card.svelte';
@@ -80,8 +78,6 @@
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 </svelte:head>
-
-<BreadcrumbHeader title="Settings" />
 
 <SectionContainer id="settings">
 	<div class="flex w-full items-center justify-center">

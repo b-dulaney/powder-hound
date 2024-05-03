@@ -76,11 +76,18 @@
 	id="sidebar"
 >
 	<div class="flex items-center">
-		<h5 id="drawer-label" class="text-base font-semibold uppercase dark:text-surface-400">Menu</h5>
-		<CloseButton on:click={() => (hidden = true)} class="dark:text-surface-400" />
+		<h5
+			id="drawer-label"
+			class="text-base font-semibold uppercase text-surface-700 dark:text-surface-400"
+		>
+			Menu
+		</h5>
+		<CloseButton on:click={() => (hidden = true)} class="text-surface-700 dark:text-surface-400" />
 	</div>
 	<Sidebar {activeUrl} {activeClass} {nonActiveClass}>
-		<SidebarWrapper divClass="overflow-y-auto py-4 px-3 rounded dark:bg-surface-800">
+		<SidebarWrapper
+			divClass="overflow-y-auto py-4 px-3 rounded text-surface-700 dark:bg-surface-800"
+		>
 			<SidebarGroup>
 				<SidebarItem label="Home" href="/">
 					<svelte:fragment slot="icon">

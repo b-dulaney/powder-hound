@@ -1,5 +1,4 @@
 <script lang="ts">
-	import BreadcrumbHeader from '$lib/components/BreadcrumbHeader.svelte';
 	import SectionContainer from '$lib/components/SectionContainer.svelte';
 	import Card from '$lib/components/card.svelte';
 </script>
@@ -20,7 +19,6 @@
 	<meta property="og:description" content="View PowderHound's terms of use" />
 </svelte:head>
 
-<BreadcrumbHeader title="Terms of Use" />
 <div class="flex w-full items-center justify-center">
 	<enhanced:img src="../../public/logo.png" alt="Powder Hound Logo" class="h-36 w-36" />
 </div>

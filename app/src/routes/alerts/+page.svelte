@@ -10,7 +10,6 @@
 	import { goto } from '$app/navigation';
 	import type { UserAlerts } from '$lib/supabase.types';
 	import Card from '$lib/components/card.svelte';
-	import BreadcrumbHeader from '$lib/components/BreadcrumbHeader.svelte';
 	import SectionContainer from '$lib/components/SectionContainer.svelte';
 
 	const toastStore = getToastStore();
@@ -191,8 +190,6 @@
 	/>
 </svelte:head>
 
-<BreadcrumbHeader title="Alerts" />
-
 <SectionContainer id="alerts">
 	{#if alerts.length}
 		<div class="flex max-h-full w-full justify-center">
@@ -300,7 +297,7 @@
 				<button
 					type="button"
 					on:click={handlePauseAll}
-					class="variant-outline-surface btn btn-sm w-32 md:btn-md"
+					class="variant-outline-surface btn btn-sm md:btn-md w-32"
 				>
 					<span>Pause all</span>
 					<i class="fa fa-pause"></i>
@@ -319,7 +316,7 @@
 			<button
 				type="button"
 				on:click={() => modalStore.trigger(deleteAllModal)}
-				class="variant-ghost-primary btn btn-sm w-32 md:btn-md"
+				class="variant-ghost-primary btn btn-sm md:btn-md w-32"
 			>
 				<span>Delete all</span>
 				<i class="fa fa-trash"></i>

@@ -1,22 +1,10 @@
 <script lang="ts">
 	import type { BackcountryDetail, ResortDetail } from '$lib/supabase.types';
-	import { Breadcrumb, BreadcrumbItem, Heading, Span, P } from 'flowbite-svelte';
+	import { Heading, P, Span } from 'flowbite-svelte';
 	export let details: ResortDetail | BackcountryDetail;
-	export let snowReportHref: string;
 	export let isResort: boolean;
 	export let closed: boolean;
 </script>
-
-<Breadcrumb
-	aria-label="Navigation breadcrumbs"
-	solid
-	class="rounded-none border-x-0 border-t-0 border-surface-300 bg-surface-50 dark:border-surface-700 dark:bg-surface-900"
-	olClass="inline-flex items-center space-x-1 mx-auto w-full max-w-screen-2xl"
->
-	<BreadcrumbItem href="/" home>Home</BreadcrumbItem>
-	<BreadcrumbItem href={snowReportHref}>Snow Report</BreadcrumbItem>
-	<BreadcrumbItem>{details.display_name}</BreadcrumbItem>
-</Breadcrumb>
 
 <div class="mx-auto flex w-full max-w-screen-2xl flex-col p-2 md:gap-1 lg:py-6">
 	<Heading

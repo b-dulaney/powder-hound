@@ -47,12 +47,7 @@
 
 <div class="mx-auto w-full">
 	<section id="header-section">
-		<SnowReportHeader
-			details={backcountryDetails}
-			isResort={false}
-			closed={false}
-			snowReportHref="/snow-report/backcountry"
-		/>
+		<SnowReportHeader details={backcountryDetails} isResort={false} closed={false} />
 		<!-- <div class="py-2">
 			<AddRemoveAlertButton {alertData} {existingAlert} details={backcountryDetails} {session} />
 		</div> -->
