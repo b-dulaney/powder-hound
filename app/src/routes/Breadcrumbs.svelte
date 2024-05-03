@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import NavTabs from '$lib/components/snow-report/NavTabs.svelte';
 	import { Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
@@ -9,10 +8,7 @@
 	$: path = $page.url.pathname;
 	$: pages = path.split('/');
 
-	let isLoading = false;
-	beforeNavigate(() => (isLoading = true));
-	afterNavigate(() => (isLoading = false));
-
+	$: console.log(pages);
 	function buildHref(index: number) {
 		return pages.slice(0, index + 1).join('/');
 	}
@@ -33,7 +29,7 @@
 			class="rounded-none border-0 border-surface-300 bg-surface-50 dark:border-surface-700 dark:bg-surface-900"
 			olClass="inline-flex items-center space-x-1 mx-auto w-full max-w-screen-2xl"
 		>
-			{#each pages as page, i}
+			{#each pages as page, i (page)}
 				{#if !page}
 					<BreadcrumbItem
 						linkClass="ms-1 text-sm font-medium text-surface-700 hover:text-surface-900 md:ms-2 dark:text-surface-400 dark:hover:text-white"
