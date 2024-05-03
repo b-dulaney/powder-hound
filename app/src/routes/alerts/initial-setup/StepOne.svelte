@@ -86,7 +86,10 @@
 	</div>
 	<div class="inline-flex w-full justify-start gap-3 px-4 pt-6 md:px-6">
 		<Span class="text-sm font-normal">{selectedMountains.length} selected</Span>
-		<button class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+		<button
+			on:click={() => (selectedMountains = [])}
+			class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+		>
 			Clear all
 		</button>
 	</div>
