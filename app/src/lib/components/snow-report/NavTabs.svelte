@@ -4,11 +4,12 @@
 
 	export let currentPath: string;
 
-	const baseClass = 'w-full inline-flex items-center justify-center px-4 pb-2 group rounded-b-none';
+	const baseClass =
+		'w-full inline-flex items-center rounded-t-xl justify-center px-4 py-2 group rounded-b-none';
 	const activeClass =
-		'text-surface-700 border-surface-700 dark:text-surface-500 dark:border-surface-500 border-b-4';
+		'text-surface-900 border-surface-900 dark:text-surface-50 dark:border-surface-50 border-b-2';
 	const nonActiveClass =
-		'border-transparent hover:text-surface-600 hover:border-surface-300 hover:border-b-4 dark:hover:text-surface-300 dark:hover:border-surface-300 border-surface-400 dark:border-surface-700';
+		'border-transparent text-surface-500 dark:text-surface-400 dark:hover:bg-surface-800 hover:bg-surface-100 hover:text-surface-700 hover:border-surface-500 hover:border-b-2 dark:hover:text-surface-400 dark:hover:border-surface-400 border-surface-400 dark:border-surface-700';
 </script>
 
 <div class="w-full">
