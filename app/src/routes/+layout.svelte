@@ -86,7 +86,7 @@
 <Toast />
 
 <!-- Loading indicator for navigation on all pages -->
-<div class="sticky top-0 mx-auto w-full">
+<div class="absolute top-0 z-50 mx-auto w-full">
 	{#if $navigating}
 		<Progressbar
 			progress={100}

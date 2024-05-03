@@ -37,9 +37,9 @@
 	<meta property="og:image:height" content="630" />
 </svelte:head>
 
-<Snow />
-
 <header class="relative py-8 xl:pt-16" id="hero">
+	<Snow />
+
 	<div class="hero-gradient" />
 	<div class="mx-auto flex max-w-screen-xl items-center justify-center">
 		<div class="flex flex-col items-center space-y-6 px-4 lg:p-8">
