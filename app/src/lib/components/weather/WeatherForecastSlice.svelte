@@ -12,7 +12,7 @@
 	<P class="pl-1">{high_temp}&deg;</P>
 	<P class="pl-1">{low_temp}&deg;</P>
 	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== 'Today'} />
-	<P class="mt-2 text-xs text-surface-400 dark:text-surface-300 sm:text-sm">
+	<P class="mt-2 text-xs text-surface-500 dark:text-surface-300 sm:text-sm">
 		{formatDate(date, 'long')}
 	</P>
 </div>

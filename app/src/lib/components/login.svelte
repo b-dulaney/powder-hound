@@ -51,7 +51,7 @@
 
 <div class="flex flex-col items-center gap-8">
 	{#if !form?.success && !form?.error}
-		<Card class="dark:border-surface-700 dark:bg-surface-800">
+		<Card>
 			<form
 				method="POST"
 				class="flex flex-col space-y-6"
@@ -73,24 +73,14 @@
 
 				<div class="flex flex-col gap-2">
 					{#if PUBLIC_VERCEL_ENV !== 'production'}
-						<Button
-							color="light"
-							class="dark:!bg-surface-800 dark:hover:!bg-surface-700"
-							title="Sign in with Google"
-							on:click={signInWithGoogle}
-						>
+						<Button color="light" title="Sign in with Google" on:click={signInWithGoogle}>
 							<GoogleSolid class="me-2 h-5 w-5" />
 							Google
 						</Button>
 					{/if}
 					<!-- <button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Microsoft</button>
 					<button class="btn btn-lg variant-outline-primary rounded-md">Sign in with Facebook</button> -->
-					<Button
-						class="dark:!bg-surface-800 dark:hover:!bg-surface-700"
-						color="light"
-						title="Sign in with Github"
-						on:click={signInWithGithub}
-					>
+					<Button color="light" title="Sign in with Github" on:click={signInWithGithub}>
 						<GithubSolid class="me-2 h-5 w-5" />
 						Github
 					</Button>
@@ -107,9 +97,9 @@
 				<Label class="space-y-2">
 					<Span>Email</Span>
 					<Input
-						class="dark:bg-surface-700"
 						type="email"
 						name="email"
+						class="dark:bg-surface-700"
 						required
 						autocomplete="email"
 						placeholder="Email"
@@ -129,7 +119,7 @@
 					</Button>
 				{/if}
 			</form>
-			<P class="p-4 text-center text-sm">
+			<P class="p-4 text-center text-sm text-surface-600 dark:text-surface-200">
 				By registering you agree to PowderHound's <A href="/terms-of-use">Terms of Use</A>
 				and acknowledge that you've read our
 				<A href="/privacy-policy">Privacy Policy</A>.

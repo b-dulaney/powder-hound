@@ -169,8 +169,8 @@
 	<main class="flex grow flex-col">
 		{#key data.pathname}
 			<div
-				in:fade={{ easing: cubicOut, duration: 300, delay: 400 }}
-				out:fade={{ easing: cubicIn, duration: 300 }}
+				in:fade={{ easing: cubicOut, duration: 200, delay: 300 }}
+				out:fade={{ easing: cubicIn, duration: 200 }}
 			>
 				<slot />
 			</div>

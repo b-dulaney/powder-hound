@@ -24,5 +24,5 @@
 	};
 </script>
 
-<i class="{textStyle} fa-solid text-surface-700 dark:text-surface-200 {weatherIcons[weatherDesc]}"
+<i class="{textStyle} fa-solid text-surface-600 dark:text-surface-100 {weatherIcons[weatherDesc]}"
 ></i>
