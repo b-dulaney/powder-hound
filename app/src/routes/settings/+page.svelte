@@ -8,6 +8,8 @@
 	import dayjs from 'dayjs';
 	import type { ModalSettings, ToastSettings } from '@skeletonlabs/skeleton';
 	import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
+	import PageHeading from '$lib/components/PageHeading.svelte';
+	import { Button, Heading, Input, Label, P, Span } from 'flowbite-svelte';
 	let loading = false;
 
 	const modalStore = getModalStore();
@@ -79,57 +81,61 @@
 	<meta property="og:image:height" content="630" />
 </svelte:head>
 
+<PageHeading title="Settings" />
+
 <SectionContainer id="settings">
 	<div class="flex w-full items-center justify-center">
 		<Card showHeader={false}>
 			<svelte:fragment slot="body">
 				<div class="flex w-full flex-col p-4 md:p-6">
-					<h2 class="h4">Profile Info</h2>
+					<Heading tag="h2" class="text-lg font-semibold sm:text-2xl">Profile Info</Heading>
 					<hr class="mb-4 mt-1 w-full opacity-80" />
 					<div class="flex w-full flex-col gap-4 pb-8">
 						<input id="userId" name="userId" value={profile?.user_id} hidden aria-hidden readonly />
-						<label for="email" class="label max-w-sm">
-							<span>Email</span>
-							<input
+						<Label class="space-y-1">
+							<Span>Email</Span>
+							<Input
 								type="email"
 								id="email"
 								name="email"
-								class="input"
+								class="max-w-sm dark:bg-surface-800"
 								value={profile?.email}
 								readonly
 							/>
-						</label>
-						<label for="createdAt" class="label max-w-sm">
-							<span>Account created</span>
-							<input
+						</Label>
+						<Label class="space-y-1">
+							<Span>Account created</Span>
+							<Input
 								type="text"
 								id="createdAt"
 								name="createdAt"
-								class="input"
+								class="max-w-sm dark:bg-surface-800"
 								value={dayjs(profile?.created_at).format('MMMM D, YYYY')}
 								readonly
 							/>
-						</label>
+						</Label>
 					</div>
-					<h2 class="h4">Manage Data</h2>
+					<Heading tag="h2" class="text-lg font-semibold sm:text-2xl">Manage Data</Heading>
 					<hr class="mb-4 mt-1 w-full opacity-80" />
 					<div class="flex flex-col gap-2">
-						<p class="py-2 text-sm">
+						<P class="py-2 text-sm">
 							Unsubscribe from all PowderHound email alerts. You will still be able to receive email
 							login links.
-						</p>
-						<button
-							class="variant-filled-surface btn btn-sm w-[180px] !text-primary-400"
+						</P>
+						<Button
 							on:click={handleUnsubscribe}
-							disabled={loading}>Unsubscribe from alerts</button
+							color="dark"
+							class="max-w-[200px] font-semibold"
+							disabled={loading}>Unsubscribe from alerts</Button
 						>
-						<p class="py-2 text-sm">
+						<P class="py-2 text-sm">
 							Delete your account and all associated data. This action cannot be undone.
-						</p>
-						<button
-							class="variant-ghost-primary btn btn-sm w-[150px]"
+						</P>
+						<Button
 							on:click={handleDeleteAccount}
-							disabled={loading}>Delete account</button
+							color="none"
+							class="max-w-[200px] border border-red-700 bg-red-300 font-semibold text-red-900 hover:bg-red-400 dark:bg-red-400 dark:text-red-950 dark:hover:bg-red-500"
+							disabled={loading}>Delete account</Button
 						>
 					</div>
 				</div>
