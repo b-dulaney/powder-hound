@@ -16,6 +16,7 @@ export const load = async (event) => {
 	const { data: alertsData, error: alertsError } = await supabase
 		.from('user_alerts')
 		.select()
+		.eq('user_id', session.user.id)
 		.returns<UserAlerts[]>();
 
 	const { data: mountainData, error: mountainError } = await supabase

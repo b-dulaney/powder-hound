@@ -13,6 +13,7 @@ export const load: PageServerLoad = async (event) => {
 	const { data: alertsData, error: alertsError } = await supabase
 		.from('user_alerts')
 		.select()
+		.eq('user_id', session.user.id)
 		.returns<UserAlerts[]>();
 
 	if (alertsError) {
