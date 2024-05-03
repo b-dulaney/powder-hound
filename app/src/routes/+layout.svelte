@@ -100,7 +100,7 @@
 	{/if}
 </div>
 <div class="flex min-h-screen flex-col">
-	<Navbar let:NavContainer fluid class="bg-surface-50  text-surface-900 dark:bg-surface-900">
+	<Navbar let:NavContainer fluid class="bg-surface-50">
 		<NavContainer class="max-w-screen-2xl">
 			<div class="flex items-center gap-2">
 				<SidebarNav {session} {logout} />
@@ -117,37 +117,36 @@
 			</div>
 			<div class="flex items-center justify-end gap-4 md:gap-8">
 				<NavUl {activeUrl} ulClass="flex lg:text-lg justify-between my-0 font-semibold gap-4">
-					<NavLi class="text-surface-700 dark:text-surface-300" href="/">Home</NavLi>
-					<NavLi class="cursor-pointer text-surface-700 dark:text-surface-300">
+					<NavLi href="/">Home</NavLi>
+					<NavLi class="cursor-pointer ">
 						Snow Report<ChevronDownOutline
-							class="ms-2 inline h-6 w-6 text-primary-800 dark:text-white"
+							class="ms-2 inline h-6 w-6 text-primary-800 dark:text-surface-100"
 						/>
 					</NavLi>
-					<Dropdown class="z-20 w-44 rounded-lg bg-surface-50 dark:bg-surface-800">
-						<DropdownItem
-							class="hover:bg-surface-100 dark:hover:bg-surface-700"
-							href="/snow-report/resorts">Resorts</DropdownItem
-						>
-						<DropdownItem
-							class="hover:bg-surface-100 dark:hover:bg-surface-700"
-							href="/snow-report/backcountry">Backcountry</DropdownItem
-						>
+					<Dropdown class="z-20 w-44 rounded-lg ">
+						<DropdownItem href="/snow-report/resorts">Resorts</DropdownItem>
+						<DropdownItem href="/snow-report/backcountry">Backcountry</DropdownItem>
 					</Dropdown>
-					<NavLi class="text-surface-700 dark:text-surface-300" href="/alerts">Alerts</NavLi>
+					<NavLi href="/alerts">Alerts</NavLi>
 				</NavUl>
-				<DarkMode size="lg" btnClass="focus:ring-2 rounded-lg" />
+				<DarkMode
+					size="lg"
+					btnClass="focus:ring-2 rounded-lg text-surface-600 dark:text-surface-400"
+				/>
 				{#if session?.user?.user_metadata?.avatar_url}
 					<Avatar
-						class="cursor-pointer"
+						class="cursor-pointer ring-primary-300 hover:ring-2"
 						id="avatar-menu"
 						src={session.user.user_metadata.avatar_url}
 					/>
 				{:else if session?.user?.email}
-					<Avatar class="cursor-pointer capitalize" id="avatar-menu" initials
-						>{session.user.email[0]}</Avatar
+					<Avatar
+						class="cursor-pointer capitalize ring-primary-300 hover:ring-2"
+						id="avatar-menu"
+						initials>{session.user.email[0]}</Avatar
 					>
 				{:else}
-					<Avatar class="cursor-pointer" id="avatar-menu" />
+					<Avatar class="cursor-pointer ring-primary-300 hover:ring-2" id="avatar-menu" />
 				{/if}
 			</div>
 			{#if session}
@@ -157,17 +156,9 @@
 					<DropdownItem on:click={logout}>Sign out</DropdownItem>
 				</Dropdown>
 			{:else}
-				<Dropdown
-					class="rounded-lg bg-surface-50 dark:bg-surface-800"
-					placement="bottom"
-					triggeredBy="#avatar-menu"
-				>
-					<DropdownItem class="hover:bg-surface-100 dark:hover:bg-surface-700" href="/signup"
-						>Sign up</DropdownItem
-					>
-					<DropdownItem class="hover:bg-surface-100 dark:hover:bg-surface-700" href="/login"
-						>Login</DropdownItem
-					>
+				<Dropdown placement="bottom" triggeredBy="#avatar-menu">
+					<DropdownItem href="/sign-up">Sign up</DropdownItem>
+					<DropdownItem href="/login">Login</DropdownItem>
 				</Dropdown>
 			{/if}
 		</NavContainer>

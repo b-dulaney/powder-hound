@@ -45,7 +45,7 @@
 		<div class="flex flex-col items-center space-y-6 px-4 lg:p-8">
 			<a
 				href="/"
-				class="hidden items-center justify-between rounded-full bg-surface-100 px-1 py-1 pr-4 text-sm hover:bg-surface-200 dark:bg-surface-700 lg:inline-flex"
+				class="hidden items-center justify-between rounded-full bg-surface-50 px-1 py-1 pr-4 text-sm hover:bg-surface-100 dark:bg-surface-700 dark:hover:bg-surface-600 lg:inline-flex"
 			>
 				<Span class="z-10 mr-3 rounded-full bg-primary-500 px-4 py-1.5 text-xs text-surface-50"
 					>New</Span
@@ -72,7 +72,7 @@
 					<AngleRightOutline class="ms-2 h-5 w-5" />
 				</Button>
 				<Button
-					href="/signup"
+					href="/sign-up"
 					color="alternative"
 					class="dark:border-surface-700 dark:bg-surface-700 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-600"
 				>

@@ -115,7 +115,7 @@
 							<SignIn class=" h-6 w-6 " />
 						</svelte:fragment>
 					</SidebarItem>
-					<SidebarItem label="Sign Up" href="/signup">
+					<SidebarItem label="Sign Up" href="/sign-up">
 						<svelte:fragment slot="icon">
 							<UserSolid class=" h-6 w-6 " />
 						</svelte:fragment>

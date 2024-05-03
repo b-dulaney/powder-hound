@@ -19,7 +19,7 @@
 	/>
 	<meta property="og:title" content="PowderHound | Sign Up" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://powderhound.io/signup" />
+	<meta property="og:url" content="https://powderhound.io/sign-up" />
 	<meta property="og:image" content="https://powderhound.io/og?title=Sign Up" />
 	<meta property="og:image:type" content="image/png" />
 	<meta property="og:image:width" content="1200" />
