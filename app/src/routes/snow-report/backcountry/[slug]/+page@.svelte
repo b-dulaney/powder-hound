@@ -54,7 +54,7 @@
 	</section>
 </div>
 
-<div class="mx-auto w-full max-w-screen-2xl p-2 lg:px-0">
+<div class="mx-auto w-full max-w-screen-2xl p-2">
 	<div class="flex w-full items-center justify-start">
 		<BackcountryWarningAlert
 			forecastUrl={backcountryDetails.forecast_url}
