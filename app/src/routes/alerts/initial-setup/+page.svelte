@@ -1,15 +1,20 @@
 <script lang="ts">
-	import {
-		Stepper,
-		Step,
-		InputChip,
-		Autocomplete,
-		type AutocompleteOption
-	} from '@skeletonlabs/skeleton';
-	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	import PageHeading from '$lib/components/PageHeading.svelte';
+	import { type AutocompleteOption } from '@skeletonlabs/skeleton';
+	import { StepIndicator } from 'flowbite-svelte';
+	import type { PageData } from './$types';
+
+	import SectionContainer from '$lib/components/SectionContainer.svelte';
+	import StepOne from './StepOne.svelte';
 	export let data: PageData;
-	const { supabase, mountainData, userId, email } = data;
+	const { mountainData, supabase } = data;
+
+	const steps = ['Step 1', 'Step 2', 'Step 3'];
+	const stepHeadings = ['Select Location(s)', 'Snowfall Alerts', 'Review'];
+
+	let currentStep = 1;
+
 	let inputChip = '';
 	let inputChipList: string[] = [];
 	let top: HTMLHeadingElement;
@@ -81,106 +86,104 @@
 	<title>PowderHound | Set up your alerts</title>
 </svelte:head>
 
-<div class="flex max-h-full w-full justify-center p-4 pb-8">
-	<div class="flex flex-col gap-4">
-		<h1 class="h1 text-center !text-3xl" bind:this={top}>Set up Alerts</h1>
-		<div class="card max-h-full w-full overflow-y-auto p-4">
-			<Stepper
-				on:complete={onComplete}
-				on:step={scrollToTop}
-				on:next={scrollToTop}
-				on:back={scrollToTop}
-			>
-				<Step>
-					<svelte:fragment slot="header">Favorite Locations</svelte:fragment>
-					<p class="max-w-xl">
-						Select the locations that we'll send you snowfall alerts for. You can add more at any
-						time.
-					</p>
-					<div class="mt-4 flex flex-col items-center gap-2">
-						<InputChip
-							class="max-w-sm md:max-w-xl"
-							bind:input={inputChip}
-							bind:value={inputChipList}
-							on:remove={onInputChipRemove}
-							name="chips"
-							chips="variant-filled-secondary"
-							placeholder="Search..."
-							allowUpperCase
-						/>
+<div bind:this={top} />
+<PageHeading title="Set up Alerts" />
 
-						<div
-							class="card variant-ghost-surface max-h-56 w-full max-w-sm overflow-y-auto p-4 md:max-w-xl"
-							tabindex="-1"
+<StepIndicator glow {currentStep} class="mx-auto max-w-screen-md px-4" {steps} size="h-1.5" />
+
+<SectionContainer id="alert-setup">
+	{#if currentStep === 1 && mountainData}
+		<StepOne on:nextStep={() => (currentStep += 1)} {mountainData}></StepOne>
+	{/if}
+</SectionContainer>
+
+<!-- <Stepper on:complete={onComplete} on:step={scrollToTop} on:next={scrollToTop} on:back={scrollToTop}>
+	<Step>
+		<svelte:fragment slot="header">Select Location(s)</svelte:fragment>
+		<p class="max-w-xl">
+			Select the locations that we'll send you snowfall alerts for. You can add more at any time.
+		</p>
+		<div class="mt-4 flex flex-col items-center gap-2">
+			<InputChip
+				class="max-w-sm md:max-w-xl"
+				bind:input={inputChip}
+				bind:value={inputChipList}
+				on:remove={onInputChipRemove}
+				name="chips"
+				chips="variant-filled-secondary"
+				placeholder="Search..."
+				allowUpperCase
+			/>
+
+			<div
+				class="card variant-ghost-surface max-h-56 w-full max-w-sm overflow-y-auto p-4 md:max-w-xl"
+				tabindex="-1"
+			>
+				<Autocomplete
+					bind:input={inputChip}
+					options={autoCompleteOptions}
+					denylist={inputChipList}
+					on:selection={onInputChipSelect}
+				/>
+			</div>
+		</div></Step
+	>
+	<Step>
+		<svelte:fragment slot="header">Snowfall Alerts</svelte:fragment>
+		<p class="max-w-xl">
+			Select the amount of snowfall that you'd like to receive alerts for at each location.
+		</p>
+		<div class="flex flex-col gap-2 py-4">
+			{#if inputChipList.length > 0}
+				{#each inputChipList as chip (chip)}
+					<div class="flex items-center justify-between gap-2">
+						<p class="flex-auto font-semibold">{chip}</p>
+						<select
+							class="select w-1/2 text-center md:w-1/3"
+							on:change={(e) => onSnowfallSelect(e, chip)}
+							value={alertThresholds.find((v) => v.name === chip)?.threshold}
 						>
-							<Autocomplete
-								bind:input={inputChip}
-								options={autoCompleteOptions}
-								denylist={inputChipList}
-								on:selection={onInputChipSelect}
-							/>
-						</div>
-					</div></Step
-				>
-				<Step>
-					<svelte:fragment slot="header">Snowfall Alerts</svelte:fragment>
-					<p class="max-w-xl">
-						Select the amount of snowfall that you'd like to receive alerts for at each location.
-					</p>
-					<div class="flex flex-col gap-2 py-4">
-						{#if inputChipList.length > 0}
-							{#each inputChipList as chip (chip)}
-								<div class="flex items-center justify-between gap-2">
-									<p class="flex-auto font-semibold">{chip}</p>
-									<select
-										class="select w-1/2 text-center md:w-1/3"
-										on:change={(e) => onSnowfallSelect(e, chip)}
-										value={alertThresholds.find((v) => v.name === chip)?.threshold}
-									>
-										<option value={1}>1+ inch</option>
-										<option value={3}>3+ inches</option>
-										<option value={6}>6+ inches</option>
-										<option value={12}>12+ inches</option>
-									</select>
-								</div>
-							{/each}
-						{:else}
-							<p class="py-4 text-center text-surface-400">No favorites selected.</p>
-						{/if}
+							<option value={1}>1+ inch</option>
+							<option value={3}>3+ inches</option>
+							<option value={6}>6+ inches</option>
+							<option value={12}>12+ inches</option>
+						</select>
 					</div>
-				</Step>
-				<Step class="max-w">
-					<svelte:fragment slot="header">Review Alerts</svelte:fragment>
-					{#if !alertThresholds.length}
-						<p class="max-w-xl py-4 text-center text-surface-400">
-							No alerts configured. You can set them up at any time in the future.
-						</p>
-					{:else}
-						<div class="mt-4 flex flex-col gap-4">
-							<p class="max-w-xl">
-								You'll receive two types of alerts for the locations and thresholds you selected.
-							</p>
-							<p class="max-w-xl">
-								<strong class="font-semibold underline">Forecast Alerts</strong> - to help you plan ahead,
-								we'll send these in the afternoon and report snowfall expected in the next 24 hours.
-							</p>
-							<p class="max-w-xl">
-								<strong class="font-semibold underline">Overnight Alerts</strong> - these confirm overnight
-								or past 24 hour snowfall and are sent early in the AM, so you'll have plenty of time
-								to call in sick.
-							</p>
-						</div>
-						<div class="flex w-full flex-col gap-2 py-4">
-							{#each alertThresholds as alert (alert)}
-								<div class="flex w-full items-center justify-between gap-2">
-									<p class="flex-auto font-semibold">{alert.name}</p>
-									<p>{alert.threshold}+ inches</p>
-								</div>
-							{/each}
-						</div>
-					{/if}
-				</Step>
-			</Stepper>
+				{/each}
+			{:else}
+				<p class="py-4 text-center text-surface-400">No favorites selected.</p>
+			{/if}
 		</div>
-	</div>
-</div>
+	</Step>
+	<Step class="max-w">
+		<svelte:fragment slot="header">Review Alerts</svelte:fragment>
+		{#if !alertThresholds.length}
+			<p class="max-w-xl py-4 text-center text-surface-400">
+				No alerts configured. You can set them up at any time in the future.
+			</p>
+		{:else}
+			<div class="mt-4 flex flex-col gap-4">
+				<p class="max-w-xl">
+					You'll receive two types of alerts for the locations and thresholds you selected.
+				</p>
+				<p class="max-w-xl">
+					<strong class="font-semibold underline">Forecast Alerts</strong> - to help you plan ahead,
+					we'll send these in the afternoon and report snowfall expected in the next 24 hours.
+				</p>
+				<p class="max-w-xl">
+					<strong class="font-semibold underline">Overnight Alerts</strong> - these confirm overnight
+					or past 24 hour snowfall and are sent early in the AM, so you'll have plenty of time to call
+					in sick.
+				</p>
+			</div>
+			<div class="flex w-full flex-col gap-2 py-4">
+				{#each alertThresholds as alert (alert)}
+					<div class="flex w-full items-center justify-between gap-2">
+						<p class="flex-auto font-semibold">{alert.name}</p>
+						<p>{alert.threshold}+ inches</p>
+					</div>
+				{/each}
+			</div>
+		{/if}
+	</Step>
+</Stepper> -->

@@ -21,7 +21,7 @@ export const load = async (event) => {
 
 	const { data: mountainData, error: mountainError } = await supabase
 		.from('mountains')
-		.select('mountain_id, display_name')
+		.select('mountain_id, display_name, location_type')
 		.order('display_name', { ascending: true });
 
 	if (alertsData && alertsData.length === 0) {
