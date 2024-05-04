@@ -1,5 +1,6 @@
 import type { UserAlerts } from '$lib/supabase.types';
 import { error, redirect } from '@sveltejs/kit';
+import type { MountainPreview } from './types.js';
 
 export const load = async (event) => {
 	const { supabase } = event.locals;
@@ -22,7 +23,8 @@ export const load = async (event) => {
 	const { data: mountainData, error: mountainError } = await supabase
 		.from('mountains')
 		.select('mountain_id, display_name, location_type')
-		.order('display_name', { ascending: true });
+		.order('display_name', { ascending: true })
+		.returns<MountainPreview[]>();
 
 	if (alertsData && alertsData.length === 0) {
 		return {

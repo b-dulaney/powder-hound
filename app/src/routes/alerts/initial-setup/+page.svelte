@@ -1,73 +1,80 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import PageHeading from '$lib/components/PageHeading.svelte';
-	import { type AutocompleteOption } from '@skeletonlabs/skeleton';
-	import { StepIndicator } from 'flowbite-svelte';
-	import type { PageData } from './$types';
-
 	import SectionContainer from '$lib/components/SectionContainer.svelte';
+	import { StepIndicator } from 'flowbite-svelte';
+	import { fly } from 'svelte/transition';
+	import type { PageData } from './$types';
 	import StepOne from './StepOne.svelte';
+	import StepThree from './StepThree.svelte';
+	import StepTwo from './StepTwo.svelte';
+	import type { AlertThreshold } from './types';
+
+	// Props
 	export let data: PageData;
-	const { mountainData, supabase } = data;
 
+	// Page variables
+	const { mountainData, supabase, session } = data;
 	const steps = ['Step 1', 'Step 2', 'Step 3'];
-	const stepHeadings = ['Select Location(s)', 'Snowfall Alerts', 'Review'];
-
+	let prevNavigation = false;
 	let currentStep = 1;
-
-	let inputChip = '';
-	let inputChipList: string[] = [];
+	let selectedMountainIDs: number[] = [];
+	let alertThresholds: AlertThreshold[] = [];
 	let top: HTMLHeadingElement;
 
-	interface AlertThreshold {
-		mountain_id: number;
-		name: string;
-		threshold: number;
+	// Page state
+	$: selectedMountains = mountainData?.filter((d) => selectedMountainIDs.includes(d.mountain_id));
+	$: {
+		if (selectedMountains) {
+			console.log(selectedMountains);
+			selectedMountains.forEach((m) => {
+				// If the mountain is not already in alertThresholds, add it
+				if (!alertThresholds.find((threshold) => threshold.mountain_id === m.mountain_id)) {
+					alertThresholds.push({
+						mountain_id: m.mountain_id,
+						location_type: m.location_type,
+						name: m.display_name,
+						threshold: 1
+					});
+				}
+			});
+
+			// Remove any mountains from alertThresholds that are no longer selected
+			alertThresholds = alertThresholds.filter((threshold) =>
+				selectedMountains.find((mountain) => mountain.mountain_id === threshold.mountain_id)
+			);
+		}
 	}
 
-	const alertThresholds: AlertThreshold[] = [];
+	// Handlers and functions
+	function handleStepOneNext(event: CustomEvent<number[]>) {
+		prevNavigation = false;
+		selectedMountainIDs = event.detail;
+		currentStep += 1;
+		scrollToTop();
+	}
 
-	const autoCompleteOptions: AutocompleteOption<string>[] = (mountainData || []).map((m) => ({
-		label: m.display_name,
-		value: m.display_name
-	}));
+	function handleStepTwoNext() {
+		prevNavigation = false;
+		currentStep += 1;
+		scrollToTop();
+	}
+
+	function handlePrevStep() {
+		prevNavigation = true;
+		currentStep -= 1;
+		scrollToTop();
+	}
 
 	function scrollToTop() {
 		top.scrollIntoView();
 	}
 
-	function onInputChipSelect(e: CustomEvent<AutocompleteOption<string>>) {
-		inputChipList = [...inputChipList, e.detail.label];
-		const mountain = mountainData?.find((m) => m.display_name === e.detail.label);
-		alertThresholds.push({
-			mountain_id: mountain?.mountain_id!,
-			name: mountain?.display_name!,
-			threshold: 1
-		});
-	}
-
-	function onInputChipRemove(
-		e: CustomEvent<{ event: MouseEvent; chipIndex: number; chipValue: string }>
-	) {
-		inputChipList = inputChipList.filter((c) => c !== e.detail.chipValue);
-		alertThresholds.splice(
-			alertThresholds.findIndex((a) => a.name === e.detail.chipValue),
-			1
-		);
-	}
-
-	function onSnowfallSelect(e: Event, name: string) {
-		const alert = alertThresholds.find((a) => a.name === name);
-		if (alert) {
-			alert.threshold = Number((e?.target as HTMLInputElement)?.value ?? 0);
-		}
-	}
-
-	async function onComplete() {
+	async function handleComplete() {
 		const { error: alertError } = await supabase.from('user_alerts').insert(
 			alertThresholds.map((a) => ({
-				user_id: userId,
-				email,
+				user_id: session?.user.id,
+				email: session?.user.email,
 				display_name: a.name,
 				mountain_id: a.mountain_id,
 				threshold_inches: a.threshold,
@@ -78,7 +85,7 @@
 		if (alertError) {
 			console.error(alertError);
 		}
-		goto('/snow-report', { replaceState: true });
+		goto('/snow-report/resorts', { replaceState: true });
 	}
 </script>
 
@@ -86,104 +93,25 @@
 	<title>PowderHound | Set up your alerts</title>
 </svelte:head>
 
-<div bind:this={top} />
+<div class="absolute top-0" bind:this={top} />
 <PageHeading title="Set up Alerts" />
 
-<StepIndicator glow {currentStep} class="mx-auto max-w-screen-md px-4" {steps} size="h-1.5" />
+<StepIndicator {currentStep} class="mx-auto max-w-screen-md px-4" {steps} size="h-1.5" />
 
 <SectionContainer id="alert-setup">
 	{#if currentStep === 1 && mountainData}
-		<StepOne on:nextStep={() => (currentStep += 1)} {mountainData}></StepOne>
+		<div in:fly={{ duration: 500, x: prevNavigation ? -300 : 300 }}>
+			<StepOne on:nextStep={handleStepOneNext} {mountainData} {selectedMountainIDs} />
+		</div>
+	{/if}
+	{#if currentStep === 2 && alertThresholds}
+		<div in:fly={{ duration: 500, x: prevNavigation ? -300 : 300 }}>
+			<StepTwo {alertThresholds} on:nextStep={handleStepTwoNext} on:prevStep={handlePrevStep} />
+		</div>
+	{/if}
+	{#if currentStep === 3 && alertThresholds}
+		<div in:fly={{ duration: 500, x: prevNavigation ? -300 : 300 }}>
+			<StepThree {alertThresholds} on:complete={handleComplete} on:prevStep={handlePrevStep} />
+		</div>
 	{/if}
 </SectionContainer>
-
-<!-- <Stepper on:complete={onComplete} on:step={scrollToTop} on:next={scrollToTop} on:back={scrollToTop}>
-	<Step>
-		<svelte:fragment slot="header">Select Location(s)</svelte:fragment>
-		<p class="max-w-xl">
-			Select the locations that we'll send you snowfall alerts for. You can add more at any time.
-		</p>
-		<div class="mt-4 flex flex-col items-center gap-2">
-			<InputChip
-				class="max-w-sm md:max-w-xl"
-				bind:input={inputChip}
-				bind:value={inputChipList}
-				on:remove={onInputChipRemove}
-				name="chips"
-				chips="variant-filled-secondary"
-				placeholder="Search..."
-				allowUpperCase
-			/>
-
-			<div
-				class="card variant-ghost-surface max-h-56 w-full max-w-sm overflow-y-auto p-4 md:max-w-xl"
-				tabindex="-1"
-			>
-				<Autocomplete
-					bind:input={inputChip}
-					options={autoCompleteOptions}
-					denylist={inputChipList}
-					on:selection={onInputChipSelect}
-				/>
-			</div>
-		</div></Step
-	>
-	<Step>
-		<svelte:fragment slot="header">Snowfall Alerts</svelte:fragment>
-		<p class="max-w-xl">
-			Select the amount of snowfall that you'd like to receive alerts for at each location.
-		</p>
-		<div class="flex flex-col gap-2 py-4">
-			{#if inputChipList.length > 0}
-				{#each inputChipList as chip (chip)}
-					<div class="flex items-center justify-between gap-2">
-						<p class="flex-auto font-semibold">{chip}</p>
-						<select
-							class="select w-1/2 text-center md:w-1/3"
-							on:change={(e) => onSnowfallSelect(e, chip)}
-							value={alertThresholds.find((v) => v.name === chip)?.threshold}
-						>
-							<option value={1}>1+ inch</option>
-							<option value={3}>3+ inches</option>
-							<option value={6}>6+ inches</option>
-							<option value={12}>12+ inches</option>
-						</select>
-					</div>
-				{/each}
-			{:else}
-				<p class="py-4 text-center text-surface-400">No favorites selected.</p>
-			{/if}
-		</div>
-	</Step>
-	<Step class="max-w">
-		<svelte:fragment slot="header">Review Alerts</svelte:fragment>
-		{#if !alertThresholds.length}
-			<p class="max-w-xl py-4 text-center text-surface-400">
-				No alerts configured. You can set them up at any time in the future.
-			</p>
-		{:else}
-			<div class="mt-4 flex flex-col gap-4">
-				<p class="max-w-xl">
-					You'll receive two types of alerts for the locations and thresholds you selected.
-				</p>
-				<p class="max-w-xl">
-					<strong class="font-semibold underline">Forecast Alerts</strong> - to help you plan ahead,
-					we'll send these in the afternoon and report snowfall expected in the next 24 hours.
-				</p>
-				<p class="max-w-xl">
-					<strong class="font-semibold underline">Overnight Alerts</strong> - these confirm overnight
-					or past 24 hour snowfall and are sent early in the AM, so you'll have plenty of time to call
-					in sick.
-				</p>
-			</div>
-			<div class="flex w-full flex-col gap-2 py-4">
-				{#each alertThresholds as alert (alert)}
-					<div class="flex w-full items-center justify-between gap-2">
-						<p class="flex-auto font-semibold">{alert.name}</p>
-						<p>{alert.threshold}+ inches</p>
-					</div>
-				{/each}
-			</div>
-		{/if}
-	</Step>
-</Stepper> -->
