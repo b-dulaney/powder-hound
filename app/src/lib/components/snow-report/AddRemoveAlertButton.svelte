@@ -2,23 +2,38 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { BackcountryDetail, ResortDetail, UserAlerts } from '$lib/supabase.types';
-	import {
-		addAlertFailedToast,
-		addAlertSuccessfulToast,
-		deleteAlertFailedToast,
-		deleteAlertSuccessfulToast
-	} from '$lib/utils';
-	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
+	import { type ToastSettings, addToast } from '$lib/components/toasts';
 	import { selectedMountain } from '../../../routes/snow-report/stores';
+
+	// Props
 	export let existingAlert: boolean;
 	export let session: Session | undefined;
 	export let details: BackcountryDetail | ResortDetail;
 	export let alertData: UserAlerts | undefined;
 
-	const toastStore = getToastStore();
+	// Component variables
 	const modalStore = getModalStore();
+	const updateSuccessToast: ToastSettings = {
+		type: 'success',
+		message: 'Alert(s) updated successfully.',
+		timeout: 3000
+	};
 
+	const failureToast: ToastSettings = {
+		type: 'error',
+		message: 'Action failed. Please try again.',
+		timeout: 5000
+	};
+
+	const deleteSuccessToast: ToastSettings = {
+		type: 'delete',
+		message: 'Alert deleted successfully.',
+		timeout: 3000
+	};
+
+	// Handlers and functions
 	async function deleteAlert() {
 		const alertId = alertData?.id;
 		if (!alertId) return;
@@ -31,9 +46,9 @@
 		});
 		if (response.ok) {
 			existingAlert = false;
-			toastStore.trigger(deleteAlertSuccessfulToast);
+			addToast(deleteSuccessToast);
 		} else {
-			toastStore.trigger(deleteAlertFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -58,9 +73,9 @@
 				if (r.success) {
 					existingAlert = true;
 					alertData = r.alertData;
-					toastStore.trigger(addAlertSuccessfulToast);
+					addToast(updateSuccessToast);
 				} else if (r.error) {
-					toastStore.trigger(addAlertFailedToast);
+					addToast(failureToast);
 				}
 			});
 		} else {
@@ -73,7 +88,7 @@
 	<button
 		type="button"
 		on:click={addAlert}
-		class="variant-ghost-secondary btn btn-sm w-32 md:btn-md"
+		class="variant-ghost-secondary btn btn-sm md:btn-md w-32"
 	>
 		<span>Add alert</span>
 		<i class="fa fa-bell"></i>
@@ -83,7 +98,7 @@
 	<button
 		type="button"
 		on:click={deleteAlert}
-		class="variant-ghost-error btn btn-sm w-36 md:btn-md"
+		class="variant-ghost-error btn btn-sm md:btn-md w-36"
 	>
 		<span>Remove alert</span>
 		<i class="fa fa-bell"></i>

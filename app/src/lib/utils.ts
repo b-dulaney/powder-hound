@@ -1,4 +1,3 @@
-import type { ToastSettings } from '@skeletonlabs/skeleton';
 import dayjs from 'dayjs';
 import type { Page } from 'puppeteer-core';
 import { readable } from 'svelte/store';
@@ -186,30 +185,6 @@ export function tooManyRequestsTimer(timeRemaining: number) {
 		return () => clearInterval(interval);
 	});
 }
-
-export const addAlertSuccessfulToast: ToastSettings = {
-	timeout: 2000,
-	message: 'Alert added successfully.',
-	background: 'variant-filled-secondary'
-};
-
-export const addAlertFailedToast: ToastSettings = {
-	timeout: 3000,
-	message: 'Failed to add alert. Please try again.',
-	background: 'variant-filled-error'
-};
-
-export const deleteAlertSuccessfulToast: ToastSettings = {
-	timeout: 2000,
-	message: 'Alert deleted successfully.',
-	background: 'variant-filled-tertiary'
-};
-
-export const deleteAlertFailedToast: ToastSettings = {
-	timeout: 3000,
-	message: 'Failed to delete alert. Please try again.',
-	background: 'variant-filled-error'
-};
 
 export function timeFromNow(date: string) {
 	return dayjs(date).fromNow();

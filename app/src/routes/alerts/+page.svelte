@@ -3,13 +3,9 @@
 	import PageHeading from '$lib/components/PageHeading.svelte';
 	import SectionContainer from '$lib/components/SectionContainer.svelte';
 	import Card from '$lib/components/card.svelte';
+	import { type ToastSettings } from '$lib/components/toasts';
+	import { addToast } from '$lib/components/toasts/toastStore';
 	import type { UserAlerts } from '$lib/supabase.types';
-	import {
-		getModalStore,
-		getToastStore,
-		type ModalSettings,
-		type ToastSettings
-	} from '@skeletonlabs/skeleton';
 	import { Alert, Button, Dropdown, DropdownItem, P, Select } from 'flowbite-svelte';
 	import CirclePlusOutline from 'flowbite-svelte-icons/CirclePlusOutline.svelte';
 	import DotsVerticalOutline from 'flowbite-svelte-icons/DotsVerticalOutline.svelte';
@@ -22,36 +18,34 @@
 	import { fade, fly } from 'svelte/transition';
 	import type { PageData } from './$types';
 
-	const toastStore = getToastStore();
-	const modalStore = getModalStore();
-	const updateSuccessfulToast: ToastSettings = {
-		timeout: 3000,
-		message: 'Alerts updated successfully',
-		background: 'variant-filled-secondary'
-	};
-
-	const updateFailedToast: ToastSettings = {
-		timeout: 3000,
-		message: 'Failed to update alerts. Please try again.',
-		background: 'variant-filled-error'
-	};
-
-	const deleteAllModal: ModalSettings = {
-		type: 'confirm',
-		title: '<h3 class="h3 text-primary-500">Delete All Alerts</h3>',
-		buttonTextConfirm: 'Delete Alerts',
-		body: 'If you want a break from our emails, you can pause your alerts instead. Are you sure you want to delete all of your alerts?',
-		response: async (r: boolean) => {
-			if (r) {
-				await handleDeleteAll();
-			}
-		}
-	};
-
+	// Props
 	export let data: PageData;
+
+	// Page variables
 	let alerts: UserAlerts[] = [];
+
+	const updateSuccessToast: ToastSettings = {
+		type: 'success',
+		message: 'Alert(s) updated successfully.',
+		timeout: 3000
+	};
+
+	const failureToast: ToastSettings = {
+		type: 'error',
+		message: 'Action failed. Please try again.',
+		timeout: 5000
+	};
+
+	const deleteSuccessToast: ToastSettings = {
+		type: 'delete',
+		message: 'Alert deleted successfully.',
+		timeout: 3000
+	};
+
+	// Page state
 	$: alerts = data.alerts;
 
+	// Handlers and functions
 	async function onThresholdChange(e: Event, id: number) {
 		const { value } = e.target as HTMLSelectElement;
 		const alertToUpdate = alerts?.find((a) => a.id === id);
@@ -67,9 +61,9 @@
 		});
 
 		if (response.ok) {
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(updateSuccessToast);
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -87,9 +81,9 @@
 
 		if (response.ok) {
 			alerts = newAlerts;
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(deleteSuccessToast);
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -107,10 +101,10 @@
 		});
 
 		if (response.ok) {
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(updateSuccessToast);
 			alerts = [...alerts];
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -127,10 +121,10 @@
 		});
 
 		if (response.ok) {
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(updateSuccessToast);
 			alerts = [...pausedAlerts];
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -147,10 +141,10 @@
 		});
 
 		if (response.ok) {
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(updateSuccessToast);
 			alerts = [...resumedAlerts];
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -175,9 +169,9 @@
 
 		if (failedRequests.length === 0) {
 			alerts = [];
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(deleteSuccessToast);
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 </script>
@@ -217,8 +211,10 @@
 								class="grid w-full grid-cols-2 items-center gap-4 border-b border-b-surface-600 py-4 first:pt-0 last:border-b-0 last:pb-0"
 							>
 								{#if paused}
-									<P class="text-surface-500 dark:text-surface-500 md:text-lg">
-										<i class="fa fa-pause pl-1"></i>
+									<P
+										class="inline-flex items-center text-surface-500 dark:text-surface-500 md:text-lg"
+									>
+										<PauseSolid class="mr-2 h-5 w-5" />
 										{display_name}
 									</P>
 								{:else}
@@ -276,13 +272,13 @@
 
 									<div class="hidden justify-end gap-6 md:flex">
 										{#if paused}
-											<Button size="sm" on:click={() => handlePause(id)}>
+											<Button size="sm" color="light" on:click={() => handlePause(id)}>
 												<PlaySolid class="mr-2 h-5 w-5" />
 												Resume
 											</Button>
 										{:else}
 											<Button size="sm" color="light" on:click={() => handlePause(id)}>
-												<PauseSolid class="mr-1 h-5 w-5 text-surface-600 dark:text-white" />
+												<PauseSolid class="mr-1 h-5 w-5 " />
 												Pause
 											</Button>
 										{/if}

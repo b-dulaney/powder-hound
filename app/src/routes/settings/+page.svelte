@@ -6,25 +6,25 @@
 	export let data: PageData;
 	const { profile } = data;
 	import dayjs from 'dayjs';
-	import type { ModalSettings, ToastSettings } from '@skeletonlabs/skeleton';
-	import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
+	import type { ModalSettings } from '@skeletonlabs/skeleton';
+	import { getModalStore } from '@skeletonlabs/skeleton';
 	import PageHeading from '$lib/components/PageHeading.svelte';
 	import { Button, Heading, Input, Label, P, Span } from 'flowbite-svelte';
+	import { addToast, type ToastSettings } from '$lib/components/toasts';
 	let loading = false;
 
 	const modalStore = getModalStore();
-	const toastStore = getToastStore();
 
 	const unsubscribeSuccessfulToast: ToastSettings = {
 		timeout: 3000,
-		message: 'Successfully unsubscribed from email alerts',
-		background: 'variant-filled-secondary'
+		message: 'Successfully unsubscribed.',
+		type: 'success'
 	};
 
 	const unsubscribeFailedToast: ToastSettings = {
-		timeout: 3000,
-		message: 'There was an error unsubscribing from email alerts. Please try again.',
-		background: 'variant-filled-error'
+		timeout: 5000,
+		message: 'Failed to unsubscribe from email alerts. Please try again.',
+		type: 'error'
 	};
 
 	const deleteAccountModal: ModalSettings = {
@@ -59,9 +59,9 @@
 		const data = await response.json();
 		loading = false;
 		if (data?.success) {
-			toastStore.trigger(unsubscribeSuccessfulToast);
+			addToast(unsubscribeSuccessfulToast);
 		} else {
-			toastStore.trigger(unsubscribeFailedToast);
+			addToast(unsubscribeFailedToast);
 		}
 	}
 </script>

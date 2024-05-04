@@ -5,13 +5,7 @@
 	import Search from '$lib/components/datatable/Search.svelte';
 	import ThSort from '$lib/components/datatable/ThSort.svelte';
 	import type { ResortOverview, UserAlerts } from '$lib/supabase.types';
-	import {
-		addAlertFailedToast,
-		addAlertSuccessfulToast,
-		deleteAlertFailedToast,
-		deleteAlertSuccessfulToast,
-		formatSnowfall
-	} from '$lib/utils';
+	import { formatSnowfall } from '$lib/utils';
 	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
 	import { DataHandler, type State } from '@vincjo/datatables/remote';
@@ -29,21 +23,44 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
+	import { addToast, type ToastSettings } from '$lib/components/toasts';
+
+	// Props
 	export let session: Session | null;
 	export let resortOverviews: ResortOverview[];
 	export let alerts: UserAlerts[];
-	let showClosed = false;
 
+	// Component variables
 	const handler = new DataHandler<ResortOverview>(resortOverviews);
 	const rows = handler.getRows();
+	const modalStore = getModalStore();
+
+	let showClosed = false;
+	const updateSuccessToast: ToastSettings = {
+		type: 'success',
+		message: 'Alert(s) updated successfully.',
+		timeout: 3000
+	};
+
+	const failureToast: ToastSettings = {
+		type: 'error',
+		message: 'Action failed. Please try again.',
+		timeout: 5000
+	};
+
+	const deleteSuccessToast: ToastSettings = {
+		type: 'delete',
+		message: 'Alert deleted successfully.',
+		timeout: 3000
+	};
+
+	// Component state
+	$: mappedAlerts = alerts.map((alert) => alert.mountain_id);
+
+	// Handlers and functions
 	handler.sortAsc('display_name');
 	handler.filter('false', 'closed');
 	handler.onChange((state: State) => reload(state));
-
-	$: mappedAlerts = alerts.map((alert) => alert.mountain_id);
-
-	const modalStore = getModalStore();
-	const toastStore = getToastStore();
 
 	$: isFavorite = (mountain: ResortOverview) => mappedAlerts.includes(mountain.mountain_id);
 
@@ -63,10 +80,10 @@
 		});
 		if (response.ok) {
 			mappedAlerts = mappedAlerts.filter((id) => id !== mountain.mountain_id);
-			toastStore.trigger(deleteAlertSuccessfulToast);
+			addToast(deleteSuccessToast);
 			invalidate('update:alerts');
 		} else {
-			toastStore.trigger(deleteAlertFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -94,10 +111,10 @@
 				}).then(async (r: any) => {
 					if (r.success) {
 						mappedAlerts = [...mappedAlerts, mountain.mountain_id];
-						toastStore.trigger(addAlertSuccessfulToast);
+						addToast(updateSuccessToast);
 						invalidate('update:alerts');
 					} else if (r.error) {
-						toastStore.trigger(addAlertFailedToast);
+						addToast(failureToast);
 					}
 				});
 			}
