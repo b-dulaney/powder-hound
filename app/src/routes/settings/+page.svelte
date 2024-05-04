@@ -1,19 +1,20 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import { invalidateAll } from '$app/navigation';
-	import Card from '$lib/components/card.svelte';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import SectionContainer from '$lib/components/SectionContainer.svelte';
+	import Card from '$lib/components/card.svelte';
+	import type { PageData } from './$types';
+
+	import PageHeading from '$lib/components/PageHeading.svelte';
+	import { addToast, type ToastSettings } from '$lib/components/toasts';
+	import dayjs from 'dayjs';
+	import { Button, Heading, Input, Label, Modal, P, Span } from 'flowbite-svelte';
+	import ExclamationCircleOutline from 'flowbite-svelte-icons/ExclamationCircleOutline.svelte';
+
 	export let data: PageData;
 	const { profile } = data;
-	import dayjs from 'dayjs';
-	import type { ModalSettings } from '@skeletonlabs/skeleton';
-	import { getModalStore } from '@skeletonlabs/skeleton';
-	import PageHeading from '$lib/components/PageHeading.svelte';
-	import { Button, Heading, Input, Label, P, Span } from 'flowbite-svelte';
-	import { addToast, type ToastSettings } from '$lib/components/toasts';
-	let loading = false;
 
-	const modalStore = getModalStore();
+	let loading = false;
+	let showModal = false;
 
 	const unsubscribeSuccessfulToast: ToastSettings = {
 		timeout: 3000,
@@ -23,30 +24,27 @@
 
 	const unsubscribeFailedToast: ToastSettings = {
 		timeout: 5000,
-		message: 'Failed to unsubscribe from email alerts. Please try again.',
+		message: 'Failed to unsubscribe. Please try again.',
 		type: 'error'
 	};
 
-	const deleteAccountModal: ModalSettings = {
-		type: 'confirm',
-		title: '<h3 class="h3 text-primary-500">Delete Account</h3>',
-		buttonTextConfirm: 'Delete',
-		body: 'This action is permanent and cannot be undone. Are you sure you wish to proceed?',
-		response: async (r: boolean) => {
-			if (r) {
-				const response = await fetch('/api/delete-account', {
-					method: 'POST',
-					body: JSON.stringify({ userId: profile?.user_id })
-				});
-				if (response.status === 200) {
-					invalidateAll();
-				}
-			}
-		}
+	const deleteAccountFailed: ToastSettings = {
+		timeout: 5000,
+		message: 'Failed to delete account. Please try again.',
+		type: 'error'
 	};
 
-	function handleDeleteAccount() {
-		modalStore.trigger(deleteAccountModal);
+	async function handleDeleteAccount() {
+		const response = await fetch('/api/delete-account', {
+			method: 'POST',
+			body: JSON.stringify({ userId: profile?.user_id })
+		});
+		if (response.status === 200) {
+			invalidateAll();
+			goto('/login');
+		} else {
+			addToast(deleteAccountFailed);
+		}
 	}
 
 	async function handleUnsubscribe() {
@@ -132,7 +130,7 @@
 							Delete your account and all associated data. This action cannot be undone.
 						</P>
 						<Button
-							on:click={handleDeleteAccount}
+							on:click={() => (showModal = true)}
 							color="none"
 							class="max-w-[200px] border border-red-700 bg-red-300 font-semibold text-red-900 hover:bg-red-400 dark:bg-red-400 dark:text-red-950 dark:hover:bg-red-500"
 							disabled={loading}>Delete account</Button
@@ -143,3 +141,14 @@
 		</Card>
 	</div>
 </SectionContainer>
+
+<Modal bind:open={showModal} size="xs" autoclose>
+	<div class="text-center">
+		<ExclamationCircleOutline class="mx-auto mb-4 h-12 w-12 text-red-600 dark:text-red-400" />
+		<h3 class="mb-5 text-lg font-normal text-gray-600 dark:text-gray-200">
+			This action is permanent and cannot be undone. Are you sure you wish to proceed?
+		</h3>
+		<Button color="alternative">No, cancel</Button>
+		<Button color="red" class="ms-2" on:click={handleDeleteAccount}>Yes, delete account</Button>
+	</div>
+</Modal>

@@ -3,7 +3,7 @@ import type { Page } from 'puppeteer-core';
 import { readable } from 'svelte/store';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import UpdateLocale from 'dayjs/plugin/updateLocale';
-import type { ServerLoadEvent } from '@sveltejs/kit';
+import type { RequestEvent, ServerLoadEvent } from '@sveltejs/kit';
 import type { MountainSnowfallForecast, StackedChartData } from './supabase.types';
 
 dayjs.extend(relativeTime);
@@ -190,7 +190,7 @@ export function timeFromNow(date: string) {
 	return dayjs(date).fromNow();
 }
 
-export async function handleInvalidAuthToken(event: ServerLoadEvent) {
+export async function handleInvalidAuthToken(event: ServerLoadEvent | RequestEvent) {
 	const cookies = event.cookies.getAll();
 	cookies.forEach((cookie) => {
 		if (cookie.name.startsWith('sb-')) {

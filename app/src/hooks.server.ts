@@ -27,10 +27,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	 * you just call this `await getSession()`
 	 */
 	event.locals.getSession = async () => {
-		const {
+		let {
 			data: { session },
+			// eslint-disable-next-line prefer-const
 			error
 		} = await event.locals.supabase.auth.getSession();
+
 		if (error) {
 			console.error('Error getting session:', error.message);
 			const cookies = event.cookies.getAll();
@@ -39,6 +41,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 					event.cookies.delete(cookie.name, { path: '/' });
 				}
 			});
+
+			const { data: getUserData, error: getUserError } = await event.locals.supabase.auth.getUser();
+			if (getUserData.user == null || getUserError) {
+				session = null;
+			}
 		}
 		return session;
 	};
