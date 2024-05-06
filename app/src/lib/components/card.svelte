@@ -9,7 +9,7 @@
 <Card
 	size="none"
 	padding="none"
-	class="flex w-full flex-col divide-surface-200 rounded-lg border border-surface-200 bg-surface-50 text-surface-500 shadow-md dark:divide-surface-700 dark:border-surface-700 dark:bg-surface-950 dark:text-surface-400"
+	class="flex w-full flex-col divide-surface-200 rounded-lg border border-surface-200 bg-surface-50 text-surface-500 shadow-md dark:divide-surface-700 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-400"
 >
 	{#if showHeader}
 		<div
@@ -28,7 +28,7 @@
 	<slot name="body" />
 	{#if showFooter}
 		<div
-			class="rounded-b-lg border-t border-surface-200 bg-surface-50 p-5 dark:border-surface-700 dark:bg-surface-950"
+			class="rounded-b-lg border-t border-surface-200 bg-surface-50 p-5 dark:border-surface-700 dark:bg-surface-900"
 		>
 			<P class="mt-4 text-surface-500 dark:text-surface-400">
 				<slot name="footer" />
