@@ -27,10 +27,9 @@ Dev Preview: https://dev.powderhound.io
 
 ![Snowfall Alert Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/4781a9c1-b4c4-4bad-ae2e-c69642732588)
 
-
 ## Tech Stack
 
-SvelteKit, Go, Supabase, TypeScript, SkeletonUI, TailwindCSS, Vercel
+SvelteKit, Go, Supabase, Flowbite, TailwindCSS, Vercel
 
 ## How It Works
 
@@ -46,11 +45,11 @@ SvelteKit, Go, Supabase, TypeScript, SkeletonUI, TailwindCSS, Vercel
 
 This is pretty informal for now as I'm building this project out in my spare time. With that said, here's a list of things that I would like to include eventually:
 
-- More locations
+- Resort and backcountry locations across the rest of the western US
 - SMS OTP login
 - SMS alerts
 - Additional SSO providers
-- CDOT road conditions
+- Road conditions
 - PWA functionality and notifications
 - Resort live feeds (lift cams, snow stakes, etc.)
 - User-uploaded reports (think along the lines of AllTrails reviews - conditions reports, images, links to CAIC observations, etc)
