@@ -57,6 +57,22 @@
 		}
 	}
 
+	function handleModifyAlertModal() {
+		if (session) {
+			showModifyModal = true;
+		} else {
+			goto(`/login?redirect=${$page.url.pathname}`);
+		}
+	}
+
+	function handleAddAlertModal() {
+		if (session) {
+			showAddModal = true;
+		} else {
+			goto(`/login?redirect=${$page.url.pathname}`);
+		}
+	}
+
 	async function addAlert() {
 		if (session) {
 			const body = {
@@ -83,8 +99,6 @@
 			} else {
 				addToast(failureToast);
 			}
-		} else {
-			goto(`/login?redirect=${$page.url.pathname}`);
 		}
 	}
 </script>
@@ -94,7 +108,7 @@
 		color="light"
 		pill={true}
 		class="inline-flex gap-2 !p-2 md:!px-4 md:!py-2.5"
-		on:click={() => (showAddModal = true)}
+		on:click={handleAddAlertModal}
 	>
 		<BellSolid class="h-6 w-6" />
 		<p class="hidden whitespace-nowrap md:inline-block">Add Alert</p>
@@ -104,7 +118,7 @@
 	<Button
 		color="light"
 		pill={true}
-		on:click={() => (showModifyModal = true)}
+		on:click={handleModifyAlertModal}
 		class="inline-flex gap-2 !p-2 md:!px-4 md:!py-2.5"
 	>
 		<BellActiveAltSolid class="h-6 w-6 text-blue-500" />
