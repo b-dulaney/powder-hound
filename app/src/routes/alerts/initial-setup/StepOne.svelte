@@ -78,7 +78,13 @@
 		</div>
 
 		<ButtonGroup class="mx-auto mt-8 w-72 max-w-lg sm:w-full">
-			<Input bind:value={searchValue} on:input={openAll} type="search" placeholder="Search...">
+			<Input
+				class="dark:bg-surface-800"
+				bind:value={searchValue}
+				on:input={openAll}
+				type="search"
+				placeholder="Search..."
+			>
 				<CloseButton slot="right" on:click={handleClearSearch} />
 			</Input>
 		</ButtonGroup>
