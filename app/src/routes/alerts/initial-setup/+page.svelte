@@ -26,7 +26,6 @@
 	$: selectedMountains = mountainData?.filter((d) => selectedMountainIDs.includes(d.mountain_id));
 	$: {
 		if (selectedMountains) {
-			console.log(selectedMountains);
 			selectedMountains.forEach((m) => {
 				// If the mountain is not already in alertThresholds, add it
 				if (!alertThresholds.find((threshold) => threshold.mountain_id === m.mountain_id)) {
