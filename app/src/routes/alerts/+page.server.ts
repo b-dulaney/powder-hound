@@ -7,7 +7,7 @@ export const load: PageServerLoad = async (event) => {
 	const { supabase } = event.locals;
 	const session = await event.locals.getSession();
 	if (!session) {
-		redirect(301, '/login');
+		redirect(301, '/login?redirect=/alerts');
 	}
 
 	const { data: alertsData, error: alertsError } = await supabase
