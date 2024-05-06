@@ -8,7 +8,6 @@
 	$: path = $page.url.pathname;
 	$: pages = path.split('/');
 
-	$: console.log(pages);
 	function buildHref(index: number) {
 		return pages.slice(0, index + 1).join('/');
 	}
