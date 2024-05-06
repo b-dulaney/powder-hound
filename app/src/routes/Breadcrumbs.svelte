@@ -43,7 +43,7 @@
 						linkClass="ms-1 capitalize text-sm font-medium text-surface-700 hover:text-surface-900 md:ms-2 dark:text-surface-400 dark:hover:text-white"
 						homeClass="inline-flex items-center text-sm font-medium text-surface-700 hover:text-surface-900 dark:text-surface-400 dark:hover:text-white"
 						spanClass="ms-1 text-sm font-medium text-surface-500 md:ms-2 dark:text-surface-400"
-						href={buildHref(i)}>{page.replace('-', ' ')}</BreadcrumbItem
+						href={buildHref(i)}>{page.replaceAll('-', ' ')}</BreadcrumbItem
 					>
 				{/if}
 			{/each}
