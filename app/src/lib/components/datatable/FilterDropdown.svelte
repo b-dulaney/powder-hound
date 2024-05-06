@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { DataHandler } from '@vincjo/datatables/remote';
+	import { Select } from 'flowbite-svelte';
 	export let handler: DataHandler;
 	export let showClosed: boolean;
 
@@ -14,10 +15,15 @@
 	};
 </script>
 
-<aside class="flex place-items-center">
+<aside class="flex place-items-center pb-2 pt-6 text-surface-900 dark:text-surface-300">
 	Show
-	<select class="select ml-2" bind:value={showClosed} on:change={setFilter}>
+	<Select
+		class="ml-2 dark:bg-surface-800"
+		bind:value={showClosed}
+		on:change={setFilter}
+		placeholder=""
+	>
 		<option value={false}>Open</option>
 		<option value={true}>All</option>
-	</select>
+	</Select>
 </aside>

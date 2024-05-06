@@ -5,7 +5,7 @@
 	export let datetime: Date = new Date();
 	const time = datetime.getHours();
 	const isDaytime = ignoreTimeOfDay || (time >= 7 && time <= 17);
-	const textStyle = size === 'small' ? 'text-xl' : 'text-3xl';
+	const textStyle = size === 'small' ? 'text-xl' : 'text-4xl';
 
 	const weatherIcons: Record<string, string> = {
 		haze: 'fa-smog',
@@ -24,4 +24,5 @@
 	};
 </script>
 
-<i class="{textStyle} fa-solid {weatherIcons[weatherDesc]}"></i>
+<i class="{textStyle} fa-solid text-surface-600 dark:text-surface-100 {weatherIcons[weatherDesc]}"
+></i>

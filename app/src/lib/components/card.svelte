@@ -1,28 +1,38 @@
 <script lang="ts">
+	import { Heading, P, Card } from 'flowbite-svelte';
+
 	export let showFooter: boolean = false;
 	export let showSubtitle: boolean = false;
 	export let showHeader: boolean = true;
 </script>
 
-<div class="card w-full !rounded-lg border border-surface-500 !bg-surface-900 shadow-md">
+<Card
+	size="none"
+	padding="none"
+	class="flex w-full flex-col divide-surface-200 rounded-lg border border-surface-200 bg-surface-50 text-surface-500 shadow-md dark:divide-surface-700 dark:border-surface-700 dark:bg-surface-900 dark:text-surface-400"
+>
 	{#if showHeader}
-		<div class="rounded-t-lg border-b border-b-surface-500 bg-surface-800 p-5">
-			<h2 class="h3">
+		<div
+			class="rounded-t-lg border-b border-surface-200 bg-surface-50 p-5 dark:border-surface-700 dark:bg-surface-900"
+		>
+			<Heading tag="h5">
 				<slot name="header" />
-			</h2>
+			</Heading>
 			{#if showSubtitle}
-				<p class="text-surface-400">
+				<P class="text-surface-500">
 					<slot name="header-subtitle" />
-				</p>
+				</P>
 			{/if}
 		</div>
 	{/if}
 	<slot name="body" />
 	{#if showFooter}
-		<div class="rounded-b-lg border-t border-t-surface-500 bg-surface-900 p-5">
-			<p class="text-surface-300">
+		<div
+			class="rounded-b-lg border-t border-surface-200 bg-surface-50 p-5 dark:border-surface-700 dark:bg-surface-900"
+		>
+			<P class="mt-4 text-surface-500 dark:text-surface-400">
 				<slot name="footer" />
-			</p>
+			</P>
 		</div>
 	{/if}
-</div>
+</Card>

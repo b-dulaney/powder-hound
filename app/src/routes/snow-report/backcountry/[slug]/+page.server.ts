@@ -8,7 +8,8 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { constructSnowfallChartData } from '$lib/utils';
 
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load: PageServerLoad = async ({ params, locals, depends }) => {
+	depends('update:existingAlert');
 	const { getSession, supabase } = locals;
 	const session = await getSession();
 

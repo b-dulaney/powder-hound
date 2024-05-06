@@ -19,7 +19,7 @@
 	/>
 	<meta property="og:title" content="PowderHound | Sign Up" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://powderhound.io/signup" />
+	<meta property="og:url" content="https://powderhound.io/sign-up" />
 	<meta property="og:image" content="https://powderhound.io/og?title=Sign Up" />
 	<meta property="og:image:type" content="image/png" />
 	<meta property="og:image:width" content="1200" />
@@ -30,6 +30,6 @@
 	/>
 </svelte:head>
 
-<div class="my-8 flex h-full items-start justify-center px-4">
+<div class="flex min-h-[700px] grow flex-col items-center justify-center px-4 py-6 sm:py-10">
 	<Login action="signup" {supabase} {form} />
 </div>

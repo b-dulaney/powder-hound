@@ -1,52 +1,50 @@
 <script lang="ts">
-	import BreadcrumbHeader from '../../lib/components/BreadcrumbHeader.svelte';
-
-	import type { PageData } from './$types';
-	import { invalidateAll } from '$app/navigation';
-	import Card from '$lib/components/card.svelte';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import SectionContainer from '$lib/components/SectionContainer.svelte';
+	import Card from '$lib/components/card.svelte';
+	import type { PageData } from './$types';
+
+	import PageHeading from '$lib/components/PageHeading.svelte';
+	import { addToast, type ToastSettings } from '$lib/components/toasts';
+	import dayjs from 'dayjs';
+	import { Button, Heading, Input, Label, Modal, P, Span } from 'flowbite-svelte';
+	import ExclamationCircleOutline from 'flowbite-svelte-icons/ExclamationCircleOutline.svelte';
+
 	export let data: PageData;
 	const { profile } = data;
-	import dayjs from 'dayjs';
-	import type { ModalSettings, ToastSettings } from '@skeletonlabs/skeleton';
-	import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-	let loading = false;
 
-	const modalStore = getModalStore();
-	const toastStore = getToastStore();
+	let loading = false;
+	let showModal = false;
 
 	const unsubscribeSuccessfulToast: ToastSettings = {
 		timeout: 3000,
-		message: 'Successfully unsubscribed from email alerts',
-		background: 'variant-filled-secondary'
+		message: 'Successfully unsubscribed.',
+		type: 'success'
 	};
 
 	const unsubscribeFailedToast: ToastSettings = {
-		timeout: 3000,
-		message: 'There was an error unsubscribing from email alerts. Please try again.',
-		background: 'variant-filled-error'
+		timeout: 5000,
+		message: 'Failed to unsubscribe. Please try again.',
+		type: 'error'
 	};
 
-	const deleteAccountModal: ModalSettings = {
-		type: 'confirm',
-		title: '<h3 class="h3 text-primary-500">Delete Account</h3>',
-		buttonTextConfirm: 'Delete',
-		body: 'This action is permanent and cannot be undone. Are you sure you wish to proceed?',
-		response: async (r: boolean) => {
-			if (r) {
-				const response = await fetch('/api/delete-account', {
-					method: 'POST',
-					body: JSON.stringify({ userId: profile?.user_id })
-				});
-				if (response.status === 200) {
-					invalidateAll();
-				}
-			}
+	const deleteAccountFailed: ToastSettings = {
+		timeout: 5000,
+		message: 'Failed to delete account. Please try again.',
+		type: 'error'
+	};
+
+	async function handleDeleteAccount() {
+		const response = await fetch('/api/delete-account', {
+			method: 'POST',
+			body: JSON.stringify({ userId: profile?.user_id })
+		});
+		if (response.status === 200) {
+			invalidateAll();
+			goto('/login');
+		} else {
+			addToast(deleteAccountFailed);
 		}
-	};
-
-	function handleDeleteAccount() {
-		modalStore.trigger(deleteAccountModal);
 	}
 
 	async function handleUnsubscribe() {
@@ -59,9 +57,9 @@
 		const data = await response.json();
 		loading = false;
 		if (data?.success) {
-			toastStore.trigger(unsubscribeSuccessfulToast);
+			addToast(unsubscribeSuccessfulToast);
 		} else {
-			toastStore.trigger(unsubscribeFailedToast);
+			addToast(unsubscribeFailedToast);
 		}
 	}
 </script>
@@ -81,59 +79,62 @@
 	<meta property="og:image:height" content="630" />
 </svelte:head>
 
-<BreadcrumbHeader title="Settings" />
+<PageHeading title="Settings" />
 
 <SectionContainer id="settings">
 	<div class="flex w-full items-center justify-center">
 		<Card showHeader={false}>
 			<svelte:fragment slot="body">
 				<div class="flex w-full flex-col p-4 md:p-6">
-					<h2 class="h4">Profile Info</h2>
+					<Heading tag="h2" class="text-lg font-semibold sm:text-2xl ">Profile Info</Heading>
 					<hr class="mb-4 mt-1 w-full opacity-80" />
 					<div class="flex w-full flex-col gap-4 pb-8">
 						<input id="userId" name="userId" value={profile?.user_id} hidden aria-hidden readonly />
-						<label for="email" class="label max-w-sm">
-							<span>Email</span>
-							<input
+						<Label class="space-y-1">
+							<Span>Email</Span>
+							<Input
 								type="email"
 								id="email"
 								name="email"
-								class="input"
+								class="max-w-sm dark:bg-surface-800"
 								value={profile?.email}
 								readonly
 							/>
-						</label>
-						<label for="createdAt" class="label max-w-sm">
-							<span>Account created</span>
-							<input
+						</Label>
+						<Label class="space-y-1">
+							<Span>Account created</Span>
+							<Input
 								type="text"
 								id="createdAt"
 								name="createdAt"
-								class="input"
+								class="max-w-sm dark:bg-surface-800"
 								value={dayjs(profile?.created_at).format('MMMM D, YYYY')}
 								readonly
 							/>
-						</label>
+						</Label>
 					</div>
-					<h2 class="h4">Manage Data</h2>
+					<Heading tag="h2" class="text-lg font-semibold sm:text-2xl">Manage Data</Heading>
 					<hr class="mb-4 mt-1 w-full opacity-80" />
 					<div class="flex flex-col gap-2">
-						<p class="py-2 text-sm">
+						<P class="py-2 text-sm">
 							Unsubscribe from all PowderHound email alerts. You will still be able to receive email
 							login links.
-						</p>
-						<button
-							class="variant-filled-surface btn btn-sm w-[180px] !text-primary-400"
+						</P>
+						<Button
 							on:click={handleUnsubscribe}
-							disabled={loading}>Unsubscribe from alerts</button
+							color="dark"
+							class="max-w-[200px]"
+							disabled={loading}>Unsubscribe from alerts</Button
 						>
-						<p class="py-2 text-sm">
+						<P class="py-2 text-sm">
 							Delete your account and all associated data. This action cannot be undone.
-						</p>
-						<button
-							class="variant-ghost-primary btn btn-sm w-[150px]"
-							on:click={handleDeleteAccount}
-							disabled={loading}>Delete account</button
+						</P>
+						<Button
+							on:click={() => (showModal = true)}
+							color="red"
+							outline
+							class="max-w-[200px]"
+							disabled={loading}>Delete account</Button
 						>
 					</div>
 				</div>
@@ -141,3 +142,14 @@
 		</Card>
 	</div>
 </SectionContainer>
+
+<Modal title="Delete account" bind:open={showModal} size="sm" autoclose outsideclose>
+	<div class="text-center">
+		<ExclamationCircleOutline class="mx-auto mb-4 h-12 w-12 text-red-600 dark:text-red-500" />
+		<Heading tag="h3" class="mb-5 text-lg font-normal text-gray-600">
+			This action is permanent and cannot be undone. Are you sure you wish to proceed?
+		</Heading>
+		<Button color="alternative">No, cancel</Button>
+		<Button color="red" class="ms-2" on:click={handleDeleteAccount}>Yes, delete account</Button>
+	</div>
+</Modal>

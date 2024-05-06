@@ -1,7 +1,6 @@
 <script lang="ts">
 	import ServiceHealthCard from './service-health-card.svelte';
 
-	import { popup } from '@skeletonlabs/skeleton';
 	import dayjs from 'dayjs';
 	import type { PageData } from './$types';
 
@@ -22,7 +21,6 @@
 			<div class="grid grid-cols-20 overflow-x-auto">
 				{#each s.status as status}
 					<div
-						use:popup={{ event: 'hover', target: status.id.toString(), placement: 'top' }}
 						class={`h-3 w-3 rounded-sm sm:h-4 sm:w-4 md:h-8 md:w-8 [&>*]:pointer-events-none ${
 							status.success ? 'bg-green-500' : 'bg-red-500'
 						}`}

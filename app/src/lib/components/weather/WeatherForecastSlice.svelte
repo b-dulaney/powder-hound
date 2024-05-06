@@ -1,6 +1,7 @@
 <script lang="ts">
 	import WeatherIcon from '$lib/components/weather/WeatherIcon.svelte';
 	import { formatDate } from '$lib/utils';
+	import { P } from 'flowbite-svelte';
 	export let high_temp: number;
 	export let low_temp: number;
 	export let weatherDesc: string;
@@ -8,8 +9,10 @@
 </script>
 
 <div class="mx-auto flex min-w-[35px] flex-col items-center">
-	<p class="pl-1">{high_temp}&deg;</p>
-	<p class="pl-1">{low_temp}&deg;</p>
+	<P class="pl-1">{high_temp}&deg;</P>
+	<P class="pl-1">{low_temp}&deg;</P>
 	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== 'Today'} />
-	<p class="mt-2 text-xs text-surface-400 sm:text-sm">{formatDate(date, 'long')}</p>
+	<P class="mt-2 text-xs text-surface-500 dark:text-surface-300 sm:text-sm">
+		{formatDate(date, 'long')}
+	</P>
 </div>

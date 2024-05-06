@@ -5,8 +5,6 @@
 	//import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 	import { loadSlim } from 'tsparticles-slim'; // if you are going to use `loadSlim`, install the "tsparticles-slim" package too.
 	let ParticlesComponent;
-	export let height = 'h-full';
-	export let zIndex = '-z-50';
 
 	onMount(async () => {
 		const module = await import('svelte-particles');
@@ -28,7 +26,7 @@
 		},
 		particles: {
 			color: {
-				value: '#fff'
+				value: '#fefefe'
 			},
 			move: {
 				direction: 'bottom',
@@ -39,9 +37,9 @@
 			number: {
 				density: {
 					enable: true,
-					area: 900
+					area: 450
 				},
-				value: 100
+				value: 50
 			},
 			opacity: {
 				value: 0.6
@@ -85,7 +83,7 @@
 <svelte:component
 	this={ParticlesComponent}
 	id="tsparticles"
-	class="absolute w-full pr-5 {height} {zIndex}"
+	class="absolute top-0 -z-10 h-full w-full pr-5"
 	options={particlesConfig}
 	on:particlesLoaded={onParticlesLoaded}
 	{particlesInit}

@@ -3,13 +3,14 @@
 // for information about these interfaces
 import type { Database } from '$lib/supabase-generated.types';
 import { createServerClient } from '@supabase/ssr';
+import type { Session } from '@supabase/supabase-js';
 
 declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
 			supabase: ReturnType<typeof createServerClient<Database>>;
-			getSession(): Promise<any>;
+			getSession(): Promise<Session | null>;
 		}
 		// interface PageData {}
 		// interface Platform {}

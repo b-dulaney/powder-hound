@@ -43,21 +43,19 @@
 	/>
 </svelte:head>
 
-<div class="mx-auto w-full px-4 py-2 md:pb-4 lg:max-w-6xl lg:px-0 lg:pt-8">
-	<section id="header-section">
-		<SnowReportHeader
-			details={resortDetails}
-			snowReportHref="/snow-report/resorts"
-			isResort
-			{closed}
-		/>
-		<div class="py-2">
+<div class="mx-auto w-full py-2">
+	<section
+		id="header-section"
+		class="mx-auto flex w-full max-w-screen-xl justify-between md:items-center"
+	>
+		<SnowReportHeader details={resortDetails} isResort {closed} />
+		<div class="p-2 lg:py-6">
 			<AddRemoveAlertButton {alertData} {existingAlert} details={resortDetails} {session} />
 		</div>
 	</section>
 </div>
 
-<div class="mx-auto w-full max-w-6xl lg:pt-6">
+<div class="mx-auto w-full max-w-screen-xl py-2">
 	<section id="upcoming-snowfall">
 		<SnowForecastTabs
 			snowNext24H={resortDetails.snow_next_24h}
@@ -68,7 +66,7 @@
 			snowfallHistoricalChartData={null}
 		/>
 	</section>
-	<section id="mountain-and-weather-conditions">
+	<section id="mountain-and-weather-conditions" class="py-6 sm:pb-10">
 		<div class="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:px-0">
 			<div class="md:col-span-2">
 				<ResortConditionsCard {resortDetails} {closed} />

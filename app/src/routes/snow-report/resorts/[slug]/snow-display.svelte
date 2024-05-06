@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { P } from 'flowbite-svelte';
+
 	export let value: number;
 	export let closed: boolean = false;
 	export let type:
@@ -11,8 +13,8 @@
 </script>
 
 <div class="flex h-full flex-col justify-center p-2">
-	<p class="text-start text-surface-200">{type}</p>
-	<p class="text-start text-2xl font-bold">
+	<P class="text-start">{type}</P>
+	<P class="text-start text-2xl font-bold">
 		{closed ? '--' : `${value}"`}
-	</p>
+	</P>
 </div>

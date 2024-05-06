@@ -7,8 +7,10 @@ import { inject } from '@vercel/analytics';
 
 inject({ mode: dev ? 'development' : 'production' });
 
-export const load: LayoutLoad = async ({ fetch, data, depends }) => {
+export const load: LayoutLoad = async ({ fetch, data, depends, url }) => {
 	depends('supabase:auth');
+
+	const { pathname } = url;
 
 	const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
 		global: {
@@ -30,5 +32,5 @@ export const load: LayoutLoad = async ({ fetch, data, depends }) => {
 		data: { session }
 	} = await supabase.auth.getSession();
 
-	return { supabase, session };
+	return { supabase, session, pathname };
 };
