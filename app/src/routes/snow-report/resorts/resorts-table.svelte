@@ -6,15 +6,17 @@
 	import ThSort from '$lib/components/datatable/ThSort.svelte';
 	import type { ResortOverview, UserAlerts } from '$lib/supabase.types';
 	import { formatSnowfall } from '$lib/utils';
-	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
 	import { DataHandler, type State } from '@vincjo/datatables/remote';
-	import { selectedMountain } from '../stores';
 	import { reload } from './api';
 	import {
 		A,
 		Button,
 		Card,
+		Label,
+		Modal,
+		P,
+		Select,
 		Span,
 		Table,
 		TableBody,
@@ -33,7 +35,9 @@
 	// Component variables
 	const handler = new DataHandler<ResortOverview>(resortOverviews);
 	const rows = handler.getRows();
-	const modalStore = getModalStore();
+	let showModal = false;
+	let selectedMountain: ResortOverview | null;
+	let selectedThresholdInches = 1;
 
 	let showClosed = false;
 	const updateSuccessToast: ToastSettings = {
@@ -55,6 +59,7 @@
 	};
 
 	// Component state
+	$: alerts = alerts;
 	$: mappedAlerts = alerts.map((alert) => alert.mountain_id);
 
 	// Handlers and functions
@@ -92,36 +97,41 @@
 			if (isFavorite(mountain)) {
 				deleteAlert(mountain);
 			} else {
-				selectedMountain.set(mountain);
-
-				new Promise<boolean>((resolve) => {
-					const alertModal: ModalSettings = {
-						type: 'component',
-						title: 'Add Alert',
-						component: 'alertModal',
-						meta: {
-							user_id: session?.user.id,
-							email: session?.user.email
-						},
-						response: (r: any) => {
-							resolve(r);
-						}
-					};
-					modalStore.trigger(alertModal);
-				}).then(async (r: any) => {
-					if (r.success) {
-						mappedAlerts = [...mappedAlerts, mountain.mountain_id];
-						addToast(updateSuccessToast);
-						invalidate('update:alerts');
-					} else if (r.error) {
-						addToast(failureToast);
-					}
-				});
+				selectedMountain = mountain;
+				showModal = true;
 			}
 		} else {
 			goto(`/login?redirect=${$page.url.pathname}`);
 		}
 	};
+
+	async function handleSave() {
+		const body = {
+			mountain_id: selectedMountain?.mountain_id,
+			display_name: selectedMountain?.display_name,
+			threshold_inches: selectedThresholdInches,
+			user_id: session?.user.id,
+			email: session?.user.email,
+			paused: false
+		};
+		const response = await fetch(`/api/alerts`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(body)
+		});
+
+		if (response.ok) {
+			mappedAlerts = [...mappedAlerts, selectedMountain!.mountain_id];
+			selectedMountain = null;
+			selectedThresholdInches = 1;
+			addToast(updateSuccessToast);
+			invalidate('update:alerts');
+		} else {
+			addToast(failureToast);
+		}
+	}
 
 	const handleClickShowClosed = () => {
 		showClosed = !showClosed;
@@ -236,3 +246,35 @@
 		</TableBody>
 	</Table>
 </div>
+
+<Modal
+	bind:open={showModal}
+	size="xs"
+	title="Add alert"
+	autoclose
+	outsideclose
+	classHeader="text-surface-700 dark:text-white"
+>
+	<P>Select the snowfall threshold that you'll receive alerts for.</P>
+	<div class="flex items-center justify-between gap-2 py-6">
+		<P>{selectedMountain?.display_name}</P>
+		<Label class="inline-flex items-center gap-4">
+			<Span class="hidden font-medium sm:block">Snowfall</Span>
+			<Select
+				size="sm"
+				placeholder="Select a threshold"
+				class="w-24"
+				bind:value={selectedThresholdInches}
+			>
+				<option value={1}>1+ in</option>
+				<option value={3}>3+ in</option>
+				<option value={6}>6+ in</option>
+				<option value={12}>12+ in</option>
+			</Select>
+		</Label>
+	</div>
+	<div class="flex w-full justify-end">
+		<Button color="alternative">Cancel</Button>
+		<Button class="ms-2" on:click={handleSave}>Save</Button>
+	</div>
+</Modal>

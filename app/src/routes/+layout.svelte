@@ -2,10 +2,7 @@
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { navigating } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
-	import AlertModal from '$lib/components/alert-modal.svelte';
 	import ToastContainer from '$lib/components/toasts/ToastContainer.svelte';
-	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-	import { Modal, initializeStores, storePopup, type ModalComponent } from '@skeletonlabs/skeleton';
 	import type { AfterNavigate } from '@sveltejs/kit';
 	import { Progressbar } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
@@ -28,14 +25,6 @@
 		}
 	});
 
-	initializeStores();
-
-	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-
-	const modalRegiestry: Record<string, ModalComponent> = {
-		alertModal: { ref: AlertModal }
-	};
-
 	onMount(() => {
 		const {
 			data: { subscription }
@@ -56,8 +45,6 @@
 		};
 	});
 </script>
-
-<Modal components={modalRegiestry} />
 
 <!-- Loading indicator for navigation on all pages -->
 <div class="absolute top-0 z-50 mx-auto w-full">

@@ -7,11 +7,15 @@
 	import { addToast, type ToastSettings } from '$lib/components/toasts';
 	import type { BackcountryOverview, UserAlerts } from '$lib/supabase.types';
 	import { avalancheDangerRatingsMap, formatSnowfall } from '$lib/utils';
-	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
 	import { DataHandler, type State } from '@vincjo/datatables/remote';
 	import {
 		A,
+		Button,
+		Label,
+		Modal,
+		P,
+		Select,
 		Span,
 		Table,
 		TableBody,
@@ -20,8 +24,8 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { selectedMountain } from '../stores';
 	import { reload } from './api';
+	import type { ModalSettings } from '@skeletonlabs/skeleton';
 
 	// Props
 	export let session: Session | null;
@@ -31,7 +35,9 @@
 	// Component variables
 	const handler = new DataHandler<BackcountryOverview>(backcountryOverviews);
 	const rows = handler.getRows();
-	const modalStore = getModalStore();
+	let showModal = false;
+	let selectedMountain: BackcountryOverview | null;
+	let selectedThresholdInches = 1;
 
 	const updateSuccessToast: ToastSettings = {
 		type: 'success',
@@ -68,11 +74,44 @@
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json'
-			}
+			},
+			body: JSON.stringify({
+				mountain_id: mountain.mountain_id,
+				user_id: session?.user.id
+			})
 		});
 		if (response.ok) {
 			mappedAlerts = mappedAlerts.filter((id) => id !== mountain.mountain_id);
 			addToast(deleteSuccessToast);
+			invalidate('update:alerts');
+		} else {
+			addToast(failureToast);
+		}
+	}
+
+	async function handleSave() {
+		const body = {
+			mountain_id: selectedMountain?.mountain_id,
+			display_name: selectedMountain?.display_name,
+			threshold_inches: selectedThresholdInches,
+			user_id: session?.user.id,
+			email: session?.user.email,
+			paused: false
+		};
+		const response = await fetch(`/api/alerts`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(body)
+		});
+
+		if (response.ok) {
+			mappedAlerts = [...mappedAlerts, selectedMountain!.mountain_id];
+			selectedMountain = null;
+			selectedThresholdInches = 1;
+			addToast(updateSuccessToast);
+			invalidate('update:alerts');
 		} else {
 			addToast(failureToast);
 		}
@@ -83,31 +122,8 @@
 			if (isFavorite(mountain)) {
 				deleteAlert(mountain);
 			} else {
-				selectedMountain.set(mountain);
-
-				new Promise<boolean>((resolve) => {
-					const alertModal: ModalSettings = {
-						type: 'component',
-						title: 'Add Alert',
-						component: 'alertModal',
-						meta: {
-							user_id: session?.user.id,
-							email: session?.user.email
-						},
-						response: (r: any) => {
-							resolve(r);
-						}
-					};
-					modalStore.trigger(alertModal);
-				}).then(async (r: any) => {
-					if (r.success) {
-						mappedAlerts = [...mappedAlerts, mountain.mountain_id];
-						addToast(updateSuccessToast);
-						invalidate('update:alerts');
-					} else if (r.error) {
-						addToast(failureToast);
-					}
-				});
+				selectedMountain = mountain;
+				showModal = true;
 			}
 		} else {
 			goto(`/login?redirect=${$page.url.pathname}`);
@@ -214,3 +230,35 @@
 		</TableBody>
 	</Table>
 </div>
+
+<Modal
+	bind:open={showModal}
+	size="xs"
+	title="Add alert"
+	autoclose
+	outsideclose
+	classHeader="text-surface-700 dark:text-white"
+>
+	<P>Select the snowfall threshold that you'll receive alerts for.</P>
+	<div class="flex items-center justify-between gap-2 py-6">
+		<P>{selectedMountain?.display_name}</P>
+		<Label class="inline-flex items-center gap-4">
+			<Span class="hidden font-medium sm:block">Snowfall</Span>
+			<Select
+				size="sm"
+				placeholder="Select a threshold"
+				class="w-24"
+				bind:value={selectedThresholdInches}
+			>
+				<option value={1}>1+ in</option>
+				<option value={3}>3+ in</option>
+				<option value={6}>6+ in</option>
+				<option value={12}>12+ in</option>
+			</Select>
+		</Label>
+	</div>
+	<div class="flex w-full justify-end">
+		<Button color="alternative">Cancel</Button>
+		<Button class="ms-2" on:click={handleSave}>Save</Button>
+	</div>
+</Modal>
