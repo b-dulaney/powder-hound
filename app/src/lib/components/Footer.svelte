@@ -1,5 +1,5 @@
 <div class="w-full bg-surface-50 p-6 dark:bg-surface-900">
-	<div class="mx-auto max-w-screen-2xl">
+	<div class="mx-auto max-w-screen-xl">
 		<div class="md:flex md:justify-between">
 			<div class="mb-6 md:mb-0">
 				<a href="/" class="flex items-center">
@@ -39,9 +39,11 @@
 			</div>
 		</div>
 		<hr class="my-6 border-surface-200 dark:border-surface-700 sm:mx-auto lg:my-8" />
-		<span class="inline-flex items-center gap-2 py-2 text-surface-600 dark:text-surface-400">
+		<span
+			class="inline-flex items-center gap-2 py-2 text-sm text-surface-600 dark:text-surface-400"
+		>
 			<svg
-				class="h-6 w-6"
+				class="h-5 w-5"
 				aria-hidden="true"
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"

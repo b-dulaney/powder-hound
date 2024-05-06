@@ -6,7 +6,7 @@
 	export let closed: boolean;
 </script>
 
-<div class="mx-auto flex w-full max-w-screen-2xl flex-col p-2 md:gap-1 lg:py-6">
+<div class="mx-auto flex w-full max-w-screen-xl flex-col p-2 md:gap-1 lg:py-6">
 	<Heading
 		tag="h1"
 		class="text-2xl font-extrabold tracking-tight text-surface-900 dark:text-white sm:text-4xl"

@@ -33,6 +33,6 @@
 
 <PageHeading title="Resort Snow Report" />
 
-<section class="mx-auto w-full max-w-screen-2xl pb-10 sm:pb-16 md:px-4">
+<section class="mx-auto w-full max-w-screen-xl pb-10 sm:pb-16 md:px-4">
 	<ResortsTable {resortOverviews} {session} {alerts} />
 </section>

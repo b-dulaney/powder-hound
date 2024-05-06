@@ -54,7 +54,7 @@
 	</section>
 </div>
 
-<div class="mx-auto w-full max-w-screen-2xl p-2">
+<div class="mx-auto w-full max-w-screen-xl p-2">
 	<div class="flex w-full items-center justify-start">
 		<BackcountryWarningAlert
 			forecastUrl={backcountryDetails.forecast_url}
@@ -63,7 +63,7 @@
 	</div>
 </div>
 
-<div class="mx-auto w-full max-w-screen-2xl lg:pt-6">
+<div class="mx-auto w-full max-w-screen-xl lg:pt-6">
 	<section id="recent-and-upcoming-snowfall">
 		<SnowForecastTabs
 			snowNext24H={backcountryDetails.snow_next_24h}

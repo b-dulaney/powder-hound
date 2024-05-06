@@ -5,7 +5,7 @@
 	export let currentPath: string;
 
 	const baseClass =
-		'w-full inline-flex items-center rounded-t-xl justify-center px-4 py-2 group rounded-b-none';
+		'w-full flex items-center rounded-t-xl justify-center px-4 py-2 group rounded-b-none';
 	const activeClass =
 		'text-surface-900 border-surface-900 dark:text-surface-50 dark:border-surface-50 border-b-2';
 	const nonActiveClass =

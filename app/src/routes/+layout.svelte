@@ -82,10 +82,11 @@
 				out:fade={{ easing: cubicIn, duration: 200 }}
 			>
 				<slot />
-				<ToastContainer />
 			</div>
 		{/key}
 	</main>
-
-	<Footer />
 </div>
+<div class="mx-auto flex w-full items-center justify-center">
+	<ToastContainer />
+</div>
+<Footer />

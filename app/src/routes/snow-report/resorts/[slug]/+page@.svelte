@@ -52,7 +52,7 @@
 	</section>
 </div>
 
-<div class="mx-auto w-full max-w-screen-2xl">
+<div class="mx-auto w-full max-w-screen-xl">
 	<section id="upcoming-snowfall">
 		<SnowForecastTabs
 			snowNext24H={resortDetails.snow_next_24h}
