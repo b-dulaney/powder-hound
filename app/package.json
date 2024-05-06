@@ -8,9 +8,9 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write .",
-		"prepare": "husky"
+		"lint": "npx prettier --check . && npx eslint .",
+		"format": "npx prettier --write .",
+		"prepare": "npx husky"
 	},
 	"devDependencies": {
 		"@resvg/resvg-js": "^2.6.0",
