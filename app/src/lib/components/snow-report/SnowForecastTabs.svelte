@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { HourlySnowfall, StackedChartData } from '$lib/supabase.types';
-	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 	import HourlyAccumulationChart from '$lib/components/snow-report/HourlyAccumulationChart.svelte';
 	import SnowForecastChart from '$lib/components/snow-report/SnowForecastChart.svelte';
 	import { Tabs, TabItem, Span, P } from 'flowbite-svelte';

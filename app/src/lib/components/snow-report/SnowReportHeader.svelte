@@ -9,7 +9,7 @@
 <div class="mx-auto flex w-full max-w-screen-xl flex-col p-2 md:gap-1 lg:py-6">
 	<Heading
 		tag="h1"
-		class="text-2xl font-extrabold tracking-tight text-surface-900 dark:text-white sm:text-4xl"
+		class="max-w-lg text-2xl font-extrabold tracking-tight text-surface-900 dark:text-white sm:text-3xl"
 		>{details.display_name} Snow Report</Heading
 	>
 	<Span class="flex items-center">
@@ -20,9 +20,9 @@
 		<Span class="flex items-center">
 			<P class="mr-2 text-sm sm:text-base">Status:</P>
 			{#if closed}
-				<P class="text-sm font-semibold text-red-400 sm:text-base">Closed</P>
+				<P class="text-sm font-semibold text-red-600 dark:text-red-400 sm:text-base">Closed</P>
 			{:else}
-				<P class="text-sm font-semibold text-green-400 sm:text-base">Open</P>
+				<P class="text-sm font-semibold text-green-600 dark:text-green-400 sm:text-base">Open</P>
 			{/if}
 		</Span>
 	{/if}

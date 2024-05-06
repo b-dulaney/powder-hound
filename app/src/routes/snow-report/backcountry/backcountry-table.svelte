@@ -25,7 +25,6 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 	import { reload } from './api';
-	import type { ModalSettings } from '@skeletonlabs/skeleton';
 
 	// Props
 	export let session: Session | null;

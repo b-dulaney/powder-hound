@@ -45,16 +45,19 @@
 	<meta property="og:image:height" content="630" />
 </svelte:head>
 
-<div class="mx-auto w-full">
-	<section id="header-section">
+<div class="mx-auto w-full py-2">
+	<section
+		id="header-section"
+		class="mx-auto flex w-full max-w-screen-xl justify-between md:items-center"
+	>
 		<SnowReportHeader details={backcountryDetails} isResort={false} closed={false} />
-		<!-- <div class="py-2">
+		<div class="p-2 lg:py-6">
 			<AddRemoveAlertButton {alertData} {existingAlert} details={backcountryDetails} {session} />
-		</div> -->
+		</div>
 	</section>
 </div>
 
-<div class="mx-auto w-full max-w-screen-xl p-2">
+<div class="mx-auto w-full max-w-screen-xl py-2">
 	<div class="flex w-full items-center justify-start">
 		<BackcountryWarningAlert
 			forecastUrl={backcountryDetails.forecast_url}

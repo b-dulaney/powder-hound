@@ -6,7 +6,7 @@
 
 <Heading
 	tag="h1"
-	class="pt-4 text-center text-2xl font-bold tracking-tight text-surface-800 dark:text-white sm:py-8 sm:text-4xl sm:font-extrabold"
+	class="pt-4 text-center text-2xl font-bold tracking-tight text-surface-900 dark:text-white sm:py-8 sm:text-3xl sm:font-extrabold"
 >
 	{title}
 </Heading>

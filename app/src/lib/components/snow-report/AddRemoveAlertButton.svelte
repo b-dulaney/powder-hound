@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { BackcountryDetail, ResortDetail, UserAlerts } from '$lib/supabase.types';
-	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import type { Session } from '@supabase/supabase-js';
-	import { type ToastSettings, addToast } from '$lib/components/toasts';
-	import { selectedMountain } from '../../../routes/snow-report/stores';
+	import BellActiveAltSolid from 'flowbite-svelte-icons/BellActiveAltSolid.svelte';
+	import BellSolid from 'flowbite-svelte-icons/BellSolid.svelte';
+
+	import { addToast, type ToastSettings } from '$lib/components/toasts';
+	import { Button, Label, Modal, P, Select, Span } from 'flowbite-svelte';
 
 	// Props
 	export let existingAlert: boolean;
@@ -14,7 +16,9 @@
 	export let alertData: UserAlerts | undefined;
 
 	// Component variables
-	const modalStore = getModalStore();
+	let showAddModal = false;
+	let showModifyModal = false;
+	let selectedThresholdInches = 1;
 	const updateSuccessToast: ToastSettings = {
 		type: 'success',
 		message: 'Alert(s) updated successfully.',
@@ -46,6 +50,7 @@
 		});
 		if (response.ok) {
 			existingAlert = false;
+			invalidate('update:existingAlert');
 			addToast(deleteSuccessToast);
 		} else {
 			addToast(failureToast);
@@ -54,30 +59,30 @@
 
 	async function addAlert() {
 		if (session) {
-			selectedMountain.set(details);
-			new Promise<boolean>((resolve) => {
-				const alertModal: ModalSettings = {
-					type: 'component',
-					title: 'Add Alert',
-					component: 'alertModal',
-					meta: {
-						user_id: session?.user.id,
-						email: session?.user.email
-					},
-					response: (r: any) => {
-						resolve(r);
-					}
-				};
-				modalStore.trigger(alertModal);
-			}).then(async (r: any) => {
-				if (r.success) {
-					existingAlert = true;
-					alertData = r.alertData;
-					addToast(updateSuccessToast);
-				} else if (r.error) {
-					addToast(failureToast);
-				}
+			const body = {
+				mountain_id: details?.mountain_id,
+				display_name: details?.display_name,
+				threshold_inches: selectedThresholdInches,
+				user_id: session?.user.id,
+				email: session?.user.email,
+				paused: false
+			};
+			const response = await fetch(`/api/alerts`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
 			});
+
+			if (response.ok) {
+				selectedThresholdInches = 1;
+				existingAlert = true;
+				addToast(updateSuccessToast);
+				invalidate('update:existingAlert');
+			} else {
+				addToast(failureToast);
+			}
 		} else {
 			goto(`/login?redirect=${$page.url.pathname}`);
 		}
@@ -85,22 +90,92 @@
 </script>
 
 {#if existingAlert === false}
-	<button
-		type="button"
-		on:click={addAlert}
-		class="variant-ghost-secondary btn btn-sm md:btn-md w-32"
+	<Button
+		color="light"
+		pill={true}
+		class="inline-flex gap-2 !p-2 md:!px-4 md:!py-2.5"
+		on:click={() => (showAddModal = true)}
 	>
-		<span>Add alert</span>
-		<i class="fa fa-bell"></i>
-	</button>
+		<BellSolid class="h-6 w-6" />
+		<p class="hidden whitespace-nowrap md:inline-block">Add Alert</p>
+	</Button>
 {/if}
 {#if existingAlert === true}
-	<button
-		type="button"
-		on:click={deleteAlert}
-		class="variant-ghost-error btn btn-sm md:btn-md w-36"
+	<Button
+		color="light"
+		pill={true}
+		on:click={() => (showModifyModal = true)}
+		class="inline-flex gap-2 !p-2 md:!px-4 md:!py-2.5"
 	>
-		<span>Remove alert</span>
-		<i class="fa fa-bell"></i>
-	</button>
+		<BellActiveAltSolid class="h-6 w-6 text-blue-500" />
+		<p class="hidden whitespace-nowrap md:inline-block">Modify Alert</p>
+	</Button>
+{/if}
+
+<Modal
+	bind:open={showAddModal}
+	size="xs"
+	title="Add alert"
+	autoclose
+	outsideclose
+	classHeader="text-surface-700 dark:text-white"
+>
+	<P>Select the snowfall threshold that you'll receive alerts for.</P>
+	<div class="flex items-center justify-between gap-2 py-6">
+		<P>{details?.display_name}</P>
+		<Label class="inline-flex items-center gap-4">
+			<Span class="hidden font-medium sm:block">Snowfall</Span>
+			<Select
+				size="sm"
+				placeholder="Select a threshold"
+				class="w-24"
+				bind:value={selectedThresholdInches}
+			>
+				<option value={1}>1+ in</option>
+				<option value={3}>3+ in</option>
+				<option value={6}>6+ in</option>
+				<option value={12}>12+ in</option>
+			</Select>
+		</Label>
+	</div>
+	<div class="flex w-full justify-end">
+		<Button color="alternative">Cancel</Button>
+		<Button class="ms-2" on:click={addAlert}>Save</Button>
+	</div>
+</Modal>
+
+{#if alertData}
+	<Modal
+		bind:open={showModifyModal}
+		size="xs"
+		title="Modify alert"
+		autoclose
+		outsideclose
+		classHeader="text-surface-700 dark:text-white"
+	>
+		<div class="flex items-center justify-between gap-2 py-6">
+			<P>{details?.display_name}</P>
+			<Label class="inline-flex items-center gap-4">
+				<Span class="hidden font-medium sm:block">Snowfall</Span>
+				<Select
+					size="sm"
+					placeholder="Select a threshold"
+					class="w-24"
+					bind:value={alertData.threshold_inches}
+				>
+					<option value={1}>1+ in</option>
+					<option value={3}>3+ in</option>
+					<option value={6}>6+ in</option>
+					<option value={12}>12+ in</option>
+				</Select>
+			</Label>
+		</div>
+		<div class="flex w-full justify-between">
+			<Button color="red" outline on:click={deleteAlert}>Delete</Button>
+			<span>
+				<Button color="alternative">Cancel</Button>
+				<Button class="ms-2" on:click={addAlert}>Save</Button>
+			</span>
+		</div>
+	</Modal>
 {/if}
