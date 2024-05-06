@@ -44,7 +44,7 @@
 	<div class="mx-auto flex max-w-screen-xl items-center justify-center">
 		<div class="flex flex-col items-center space-y-6 px-4 lg:p-8">
 			<a
-				href="/"
+				href="https://github.com/b-dulaney/powder-hound?tab=readme-ov-file#roadmap"
 				class="hidden items-center justify-between rounded-full bg-surface-50 px-1 py-1 pr-4 text-sm hover:bg-surface-100 dark:bg-surface-700 dark:hover:bg-surface-600 lg:inline-flex"
 			>
 				<Span class="z-10 mr-3 rounded-full bg-primary-500 px-4 py-1.5 text-xs text-surface-50"
@@ -247,22 +247,22 @@
 			</div>
 			<div class="relative flex max-w-full items-center justify-center">
 				<img
-					src="src/public/avy-danger-low.png"
+					src="/src/public/avy-danger-low.png"
 					class="relative z-10 -mr-[120px] w-48"
 					alt="Avalanche danger low icon"
 				/>
 				<img
-					src="src/public/avy-danger-moderate.png"
+					src="/src/public/avy-danger-moderate.png"
 					class="relative z-20 -mr-[100px] w-48"
 					alt="Avalanche danger moderate icon"
 				/>
 				<img
-					src="src/public/avy-danger-considerable.png"
+					src="/src/public/avy-danger-considerable.png"
 					class="relative z-30 -mr-[100px] w-48"
 					alt="Avalanche danger considerable icon"
 				/>
 				<img
-					src="src/public/avy-danger-high.png"
+					src="/src/public/avy-danger-high.png"
 					class="relative z-40 mr-[20px] w-48"
 					alt="Avalanche danger high icon"
 				/>
