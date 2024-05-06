@@ -4,7 +4,7 @@
 	import SearchOutline from 'flowbite-svelte-icons/SearchOutline.svelte';
 	export let handler: DataHandler;
 	let value: string;
-	let timeout: any;
+	let timeout: NodeJS.Timeout;
 
 	const search = () => {
 		handler.search(value);
