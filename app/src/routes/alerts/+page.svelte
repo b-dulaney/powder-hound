@@ -6,7 +6,7 @@
 	import { type ToastSettings } from '$lib/components/toasts';
 	import { addToast } from '$lib/components/toasts/toastStore';
 	import type { UserAlerts } from '$lib/supabase.types';
-	import { Alert, Button, Dropdown, DropdownItem, P, Select } from 'flowbite-svelte';
+	import { Alert, Button, Dropdown, DropdownItem, Modal, P, Select } from 'flowbite-svelte';
 	import CirclePlusOutline from 'flowbite-svelte-icons/CirclePlusOutline.svelte';
 	import DotsVerticalOutline from 'flowbite-svelte-icons/DotsVerticalOutline.svelte';
 	import InfoCircleSolid from 'flowbite-svelte-icons/InfoCircleSolid.svelte';
@@ -23,6 +23,7 @@
 
 	// Page variables
 	let alerts: UserAlerts[] = [];
+	let showModal = false;
 
 	const updateSuccessToast: ToastSettings = {
 		type: 'success',
@@ -38,7 +39,7 @@
 
 	const deleteSuccessToast: ToastSettings = {
 		type: 'delete',
-		message: 'Alert deleted successfully.',
+		message: 'Alert(s) deleted successfully.',
 		timeout: 3000
 	};
 
@@ -310,11 +311,7 @@
 					Resume All
 				</Button>
 			{/if}
-			<Button
-				on:click={() => modalStore.trigger(deleteAllModal)}
-				color="red"
-				class="bg-red-600/90 dark:bg-red-600/40"
-			>
+			<Button on:click={() => (showModal = true)} color="red">
 				<TrashBinSolid class="mr-1 h-5 w-5 " />
 				Delete All
 			</Button>
@@ -350,3 +347,14 @@
 		</div>
 	{/if}
 </SectionContainer>
+
+<Modal title="Delete all alerts" bind:open={showModal} size="sm" autoclose outsideclose>
+	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-200">
+		If you want a break from our emails, you can always pause your alerts and resume them at a later
+		date. Are you sure you want to delete all of your alerts?
+	</p>
+	<div class="flex w-full justify-end pt-4">
+		<Button color="alternative">No, cancel</Button>
+		<Button color="red" class="ms-2" on:click={handleDeleteAll}>Yes, delete alerts</Button>
+	</div>
+</Modal>

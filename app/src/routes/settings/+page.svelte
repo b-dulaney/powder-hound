@@ -86,7 +86,7 @@
 		<Card showHeader={false}>
 			<svelte:fragment slot="body">
 				<div class="flex w-full flex-col p-4 md:p-6">
-					<Heading tag="h2" class="text-lg font-semibold sm:text-2xl">Profile Info</Heading>
+					<Heading tag="h2" class="text-lg font-semibold sm:text-2xl ">Profile Info</Heading>
 					<hr class="mb-4 mt-1 w-full opacity-80" />
 					<div class="flex w-full flex-col gap-4 pb-8">
 						<input id="userId" name="userId" value={profile?.user_id} hidden aria-hidden readonly />
@@ -123,7 +123,7 @@
 						<Button
 							on:click={handleUnsubscribe}
 							color="dark"
-							class="max-w-[200px] font-semibold"
+							class="max-w-[200px]"
 							disabled={loading}>Unsubscribe from alerts</Button
 						>
 						<P class="py-2 text-sm">
@@ -131,8 +131,9 @@
 						</P>
 						<Button
 							on:click={() => (showModal = true)}
-							color="none"
-							class="max-w-[200px] border border-red-700 bg-red-300 font-semibold text-red-900 hover:bg-red-400 dark:bg-red-400 dark:text-red-950 dark:hover:bg-red-500"
+							color="red"
+							outline
+							class="max-w-[200px]"
 							disabled={loading}>Delete account</Button
 						>
 					</div>
@@ -142,12 +143,12 @@
 	</div>
 </SectionContainer>
 
-<Modal bind:open={showModal} size="xs" autoclose>
+<Modal title="Delete account" bind:open={showModal} size="sm" autoclose outsideclose>
 	<div class="text-center">
-		<ExclamationCircleOutline class="mx-auto mb-4 h-12 w-12 text-red-600 dark:text-red-400" />
-		<h3 class="mb-5 text-lg font-normal text-gray-600 dark:text-gray-200">
+		<ExclamationCircleOutline class="mx-auto mb-4 h-12 w-12 text-red-600 dark:text-red-500" />
+		<Heading tag="h3" class="mb-5 text-lg font-normal text-gray-600">
 			This action is permanent and cannot be undone. Are you sure you wish to proceed?
-		</h3>
+		</Heading>
 		<Button color="alternative">No, cancel</Button>
 		<Button color="red" class="ms-2" on:click={handleDeleteAccount}>Yes, delete account</Button>
 	</div>

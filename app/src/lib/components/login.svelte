@@ -51,7 +51,7 @@
 
 <div class="flex flex-col items-center gap-8">
 	{#if !form?.success && !form?.error}
-		<Card>
+		<Card class="dark:bg-surface-900">
 			<form
 				method="POST"
 				class="flex flex-col space-y-6"
