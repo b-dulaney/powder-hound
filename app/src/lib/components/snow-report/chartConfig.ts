@@ -95,7 +95,10 @@ export function getForecastChartConfig(
 		},
 		legend: {
 			show: true,
-			position: 'bottom'
+			position: 'bottom',
+			onItemClick: {
+				toggleDataSeries: false
+			}
 		},
 		dataLabels: {
 			enabled: false
@@ -144,6 +147,10 @@ export function getForecastChartConfig(
 		},
 		grid: {
 			show: true
+		},
+		states: {
+			hover: { filter: { type: 'none ' } },
+			active: { filter: { type: 'none ' } }
 		}
 	};
 }
