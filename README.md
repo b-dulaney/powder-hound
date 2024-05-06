@@ -23,12 +23,12 @@ Dev Preview: https://dev.powderhound.io
 - Avalanche info for backcountry locations
 - Email alerts for snowfall thresholds at your favorite locations
 
-![A-Basin Snow Report Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/36e01461-2c40-41e1-a957-7810ecd706ca)
+![A-Basin Snow Report Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/3221fc9b-6a45-4757-9689-5e3396d06a21)
 
-![Snowfall Alert Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/4781a9c1-b4c4-4bad-ae2e-c69642732588)
+
+![Snowfall Alert Screenshot](https://github.com/b-dulaney/powder-hound/assets/52844767/065dcacf-bdb5-4046-b597-fdee3e9d7a41)
 
 ## Tech Stack
-
 SvelteKit, Go, Supabase, Flowbite, TailwindCSS, Vercel
 
 ## How It Works
