@@ -1,10 +1,9 @@
-import type { ToastSettings } from '@skeletonlabs/skeleton';
 import dayjs from 'dayjs';
 import type { Page } from 'puppeteer-core';
 import { readable } from 'svelte/store';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import UpdateLocale from 'dayjs/plugin/updateLocale';
-import type { ServerLoadEvent } from '@sveltejs/kit';
+import type { RequestEvent, ServerLoadEvent } from '@sveltejs/kit';
 import type { MountainSnowfallForecast, StackedChartData } from './supabase.types';
 
 dayjs.extend(relativeTime);
@@ -187,35 +186,11 @@ export function tooManyRequestsTimer(timeRemaining: number) {
 	});
 }
 
-export const addAlertSuccessfulToast: ToastSettings = {
-	timeout: 2000,
-	message: 'Alert added successfully.',
-	background: 'variant-filled-secondary'
-};
-
-export const addAlertFailedToast: ToastSettings = {
-	timeout: 3000,
-	message: 'Failed to add alert. Please try again.',
-	background: 'variant-filled-error'
-};
-
-export const deleteAlertSuccessfulToast: ToastSettings = {
-	timeout: 2000,
-	message: 'Alert deleted successfully.',
-	background: 'variant-filled-tertiary'
-};
-
-export const deleteAlertFailedToast: ToastSettings = {
-	timeout: 3000,
-	message: 'Failed to delete alert. Please try again.',
-	background: 'variant-filled-error'
-};
-
 export function timeFromNow(date: string) {
 	return dayjs(date).fromNow();
 }
 
-export async function handleInvalidAuthToken(event: ServerLoadEvent) {
+export async function handleInvalidAuthToken(event: ServerLoadEvent | RequestEvent) {
 	const cookies = event.cookies.getAll();
 	cookies.forEach((cookie) => {
 		if (cookie.name.startsWith('sb-')) {
@@ -236,17 +211,7 @@ export function constructSnowfallChartData(
 			day: forecast.day,
 			daytimeSnowfall: forecast.daytime_snowfall,
 			nighttimeSnowfall: forecast.nighttime_snowfall,
-			time: 'daytime',
-			keys: [forecast.day, 'daytime_snowfall'],
-			values: [0, forecast.daytime_snowfall]
-		});
-		stackedChartData.push({
-			day: forecast.day,
-			daytimeSnowfall: forecast.daytime_snowfall,
-			nighttimeSnowfall: forecast.nighttime_snowfall,
-			time: 'nighttime',
-			keys: [forecast.day, 'nighttime_snowfall'],
-			values: [0, forecast.nighttime_snowfall]
+			values: [forecast.daytime_snowfall, forecast.nighttime_snowfall]
 		});
 	});
 	return stackedChartData;

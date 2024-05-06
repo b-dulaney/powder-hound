@@ -1,5 +1,5 @@
-import { redirect } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
+import { handleInvalidAuthToken } from '$lib/utils';
 
 export const POST = async (event: RequestEvent) => {
 	const { supabase } = event.locals;
@@ -8,6 +8,7 @@ export const POST = async (event: RequestEvent) => {
 
 	const { error } = await supabase.auth.admin.deleteUser(userId);
 	if (error) {
+		console.error('/api/delete-account', error);
 		return new Response(
 			JSON.stringify({
 				success: false,
@@ -16,5 +17,7 @@ export const POST = async (event: RequestEvent) => {
 		);
 	}
 
-	redirect(301, '/auth/logout');
+	handleInvalidAuthToken(event);
+
+	return new Response(JSON.stringify({ success: true }));
 };

@@ -2,6 +2,7 @@
 	import Card from '$lib/components/card.svelte';
 	import type { ResortDetail } from '$lib/supabase.types';
 	import { timeFromNow } from '$lib/utils';
+	import { P } from 'flowbite-svelte';
 	import OpenArc from './open-arc.svelte';
 	import SnowDisplay from './snow-display.svelte';
 	export let resortDetails: ResortDetail;
@@ -38,11 +39,11 @@
 				{/if}
 				{#if resortDetails?.snow_type}
 					<div class="flex h-full flex-col items-start p-2 odd:col-span-2">
-						<div class="text-start text-surface-200">
-							<p>Snowpack</p>
-							<p class="text-start text-2xl font-bold">
+						<div class="text-start">
+							<P>Snowpack</P>
+							<P class="text-start text-2xl font-bold">
 								{closed ? '--' : resortDetails.snow_type}
-							</p>
+							</P>
 						</div>
 					</div>
 				{/if}

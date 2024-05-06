@@ -7,7 +7,7 @@ export const GET = async (event) => {
 
 	const { error } = await supabase.auth.signOut();
 	if (error) {
-		console.error(error);
+		console.error('/auth/logout', error);
 	}
 	redirect(301, '/login');
 };

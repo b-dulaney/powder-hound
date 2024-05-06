@@ -36,7 +36,7 @@ export async function GET() {
                     <priority>0.6</priority>
                 </url>
                 <url>
-                    <loc>https://powderhound.io/signup</loc>
+                    <loc>https://powderhound.io/sign-up</loc>
                     <lastmod>2023-02-09</lastmod>
                     <changefreq>monthly</changefreq>
                     <priority>0.5</priority>

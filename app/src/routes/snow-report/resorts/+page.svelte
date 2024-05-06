@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { Heading } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import ResortsTable from './resorts-table.svelte';
+	import PageHeading from '$lib/components/PageHeading.svelte';
 	export let data: PageData;
 	const { resortOverviews } = data;
 	$: alerts = data.alerts ?? [];
@@ -29,6 +31,8 @@
 	/>
 </svelte:head>
 
-<section class="mx-auto w-full pb-8 md:px-4 lg:max-w-6xl">
+<PageHeading title="Resort Snow Report" />
+
+<section class="mx-auto w-full max-w-screen-xl pb-10 sm:pb-16 md:px-4">
 	<ResortsTable {resortOverviews} {session} {alerts} />
 </section>

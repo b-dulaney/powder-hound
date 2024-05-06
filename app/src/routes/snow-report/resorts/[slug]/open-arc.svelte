@@ -7,15 +7,15 @@
 	export let type: 'Lifts' | 'Runs';
 
 	const pctOpen = (open / total) * 100;
-	let arcGradient = ['rgba(var(--color-primary-500) / 1)', 'rgba(var(--color-secondary-500) / 1)'];
+	let arcGradient = ['#d4d4d4', '#a8a29e'];
 	if (pctOpen <= 33) {
-		arcGradient = ['rgba(var(--color-primary-600) / 1)', 'rgba(var(--color-primary-500) / 1)'];
+		arcGradient = ['#f87171', '#fb923c'];
 	}
 	if (pctOpen >= 33 && pctOpen <= 66) {
-		arcGradient = ['rgba(var(--color-warning-600) / 1)', 'rgba(var(--color-warning-500) / 1)'];
+		arcGradient = ['#fb923c', '#fde047'];
 	}
 	if (pctOpen >= 66 && pctOpen <= 75) {
-		arcGradient = ['rgba(var(--color-warning-500) / 1)', '#0a7854'];
+		arcGradient = ['#fde047', '#0a7854'];
 	}
 	if (pctOpen >= 75) {
 		arcGradient = ['#0a7854', '#0FBA81'];
@@ -36,13 +36,13 @@
 								innerRadius={45}
 								cornerRadius={5}
 								fill={url}
-								track={{ class: 'fill-surface-600' }}
+								track={{ class: 'fill-surface-200 dark:fill-surface-600' }}
 							>
 								<Text
 									value={`${open} / ${total}`}
 									textAnchor="middle"
 									verticalAnchor="middle"
-									class="fill-surface-100"
+									class="fill-surface-600 dark:fill-surface-300"
 								/>
 							</Arc>
 						</LinearGradient>
@@ -51,7 +51,10 @@
 			</Svg>
 		</Chart>
 	</div>
-	<a class="anchor !text-surface-50 xl:text-lg" href={url} target="_blank" rel="noopener"
-		>{type} Open <span class="text-2xl">&rsaquo;</span></a
+	<a
+		class="anchor !text-surface-900 dark:!text-surface-50 xl:text-lg"
+		href={url}
+		target="_blank"
+		rel="noopener">{type} Open <span class="text-2xl">&rsaquo;</span></a
 	>
 </div>

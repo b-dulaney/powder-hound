@@ -1,48 +1,52 @@
 <script lang="ts">
-	import {
-		getModalStore,
-		getToastStore,
-		popup,
-		type ModalSettings,
-		type ToastSettings
-	} from '@skeletonlabs/skeleton';
-	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
-	import type { UserAlerts } from '$lib/supabase.types';
-	import Card from '$lib/components/card.svelte';
-	import BreadcrumbHeader from '$lib/components/BreadcrumbHeader.svelte';
+	import PageHeading from '$lib/components/PageHeading.svelte';
 	import SectionContainer from '$lib/components/SectionContainer.svelte';
+	import Card from '$lib/components/card.svelte';
+	import { type ToastSettings } from '$lib/components/toasts';
+	import { addToast } from '$lib/components/toasts/toastStore';
+	import type { UserAlerts } from '$lib/supabase.types';
+	import { Alert, Button, Dropdown, DropdownItem, Modal, P, Select } from 'flowbite-svelte';
+	import CirclePlusOutline from 'flowbite-svelte-icons/CirclePlusOutline.svelte';
+	import DotsVerticalOutline from 'flowbite-svelte-icons/DotsVerticalOutline.svelte';
+	import InfoCircleSolid from 'flowbite-svelte-icons/InfoCircleSolid.svelte';
+	import PauseSolid from 'flowbite-svelte-icons/PauseSolid.svelte';
+	import PlaySolid from 'flowbite-svelte-icons/PlaySolid.svelte';
+	import TrashBinSolid from 'flowbite-svelte-icons/TrashBinSolid.svelte';
+	import { flip } from 'svelte/animate';
+	import { cubicIn, cubicOut } from 'svelte/easing';
+	import { fade, fly } from 'svelte/transition';
+	import type { PageData } from './$types';
 
-	const toastStore = getToastStore();
-	const modalStore = getModalStore();
-	const updateSuccessfulToast: ToastSettings = {
-		timeout: 3000,
-		message: 'Alerts updated successfully',
-		background: 'variant-filled-secondary'
-	};
-
-	const updateFailedToast: ToastSettings = {
-		timeout: 3000,
-		message: 'Failed to update alerts. Please try again.',
-		background: 'variant-filled-error'
-	};
-
-	const deleteAllModal: ModalSettings = {
-		type: 'confirm',
-		title: '<h3 class="h3 text-primary-500">Delete All Alerts</h3>',
-		buttonTextConfirm: 'Delete Alerts',
-		body: 'If you want a break from our emails, you can pause your alerts instead. Are you sure you want to delete all of your alerts?',
-		response: async (r: boolean) => {
-			if (r) {
-				await handleDeleteAll();
-			}
-		}
-	};
-
+	// Props
 	export let data: PageData;
+
+	// Page variables
 	let alerts: UserAlerts[] = [];
+	let showModal = false;
+
+	const updateSuccessToast: ToastSettings = {
+		type: 'success',
+		message: 'Alert(s) updated successfully.',
+		timeout: 3000
+	};
+
+	const failureToast: ToastSettings = {
+		type: 'error',
+		message: 'Action failed. Please try again.',
+		timeout: 5000
+	};
+
+	const deleteSuccessToast: ToastSettings = {
+		type: 'delete',
+		message: 'Alert(s) deleted successfully.',
+		timeout: 3000
+	};
+
+	// Page state
 	$: alerts = data.alerts;
 
+	// Handlers and functions
 	async function onThresholdChange(e: Event, id: number) {
 		const { value } = e.target as HTMLSelectElement;
 		const alertToUpdate = alerts?.find((a) => a.id === id);
@@ -58,9 +62,9 @@
 		});
 
 		if (response.ok) {
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(updateSuccessToast);
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -78,9 +82,9 @@
 
 		if (response.ok) {
 			alerts = newAlerts;
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(deleteSuccessToast);
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -98,10 +102,10 @@
 		});
 
 		if (response.ok) {
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(updateSuccessToast);
 			alerts = [...alerts];
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -118,10 +122,10 @@
 		});
 
 		if (response.ok) {
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(updateSuccessToast);
 			alerts = [...pausedAlerts];
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -138,10 +142,10 @@
 		});
 
 		if (response.ok) {
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(updateSuccessToast);
 			alerts = [...resumedAlerts];
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 
@@ -166,9 +170,9 @@
 
 		if (failedRequests.length === 0) {
 			alerts = [];
-			toastStore.trigger(updateSuccessfulToast);
+			addToast(deleteSuccessToast);
 		} else {
-			toastStore.trigger(updateFailedToast);
+			addToast(failureToast);
 		}
 	}
 </script>
@@ -191,31 +195,40 @@
 	/>
 </svelte:head>
 
-<BreadcrumbHeader title="Alerts" />
+<PageHeading title="Alerts" />
 
 <SectionContainer id="alerts">
-	{#if alerts.length}
-		<div class="flex max-h-full w-full justify-center">
-			<Card showHeader={false}>
-				<svelte:fragment slot="body">
-					<div class="flex w-full flex-col p-4 md:p-6">
-						{#each alerts as { id, display_name, threshold_inches, paused }}
+	<div class="mx-auto flex w-full flex-col items-center justify-center gap-2">
+		{#each alerts as { id, display_name, threshold_inches, paused } (id)}
+			<div
+				out:fly={{ duration: 300, x: 500, easing: cubicOut }}
+				animate:flip={{ delay: 50, duration: 300 }}
+				class="w-full max-w-3xl"
+			>
+				<Card showHeader={false}>
+					<svelte:fragment slot="body">
+						<div class="flex w-full flex-col p-4">
 							<div
-								class="flex w-full items-center justify-between gap-4 border-b border-b-surface-600 py-4 first:pt-0 last:border-b-0"
+								class="grid w-full grid-cols-2 items-center gap-4 border-b border-b-surface-600 py-4 first:pt-0 last:border-b-0 last:pb-0"
 							>
 								{#if paused}
-									<p class="grow text-surface-400 md:text-lg">
-										<i class="fa fa-pause pl-1"></i>
+									<P
+										class="inline-flex items-center text-surface-500 dark:text-surface-500 md:text-lg"
+									>
+										<PauseSolid class="mr-2 h-5 w-5" />
 										{display_name}
-									</p>
+									</P>
 								{:else}
-									<p class="grow md:text-lg">
+									<P class="dark:text-surface-200 md:text-lg">
 										{display_name}
-									</p>
+									</P>
 								{/if}
-								<div class="flex md:w-1/4 md:shrink md:justify-end lg:w-1/6">
-									<select
-										class="select py-1 text-center"
+
+								<div class="flex items-center justify-end gap-4">
+									<Select
+										size="sm"
+										placeholder=""
+										class="w-24"
 										on:change={(e) => onThresholdChange(e, id)}
 										value={threshold_inches}
 									>
@@ -223,126 +236,125 @@
 										<option value={3}>3+ in</option>
 										<option value={6}>6+ in</option>
 										<option value={12}>12+ in</option>
-									</select>
-								</div>
+									</Select>
 
-								<div class="flex shrink justify-end md:hidden">
-									<button
-										class="btn btn-icon !bg-transparent"
-										aria-label="Alert Options"
-										use:popup={{
-											event: 'click',
-											target: `alertMenuDropdown-${id}`,
-											placement: 'bottom',
-											closeQuery: '.listbox-item, .btn-icon'
-										}}><i class="fa fa-ellipsis-v" /></button
-									>
-								</div>
-								<span class="pr-4" aria-hidden data-popup="alertMenuDropdown-{id}">
-									<div class="w-30 btn-group-vertical z-50 bg-surface-600 shadow-lg">
+									<DotsVerticalOutline
+										id={`alert-${id}`}
+										class="dots-menu cursor-pointer dark:text-white md:hidden"
+									/>
+									{#key paused}
+										<Dropdown triggeredBy={`#alert-${id}`}>
+											{#if paused}
+												<DropdownItem
+													on:click={() => handlePause(id)}
+													class="inline-flex items-center"
+												>
+													<PlaySolid class="mr-2 h-5 w-5" />
+													Resume
+												</DropdownItem>
+											{:else}
+												<DropdownItem
+													on:click={() => handlePause(id)}
+													class="inline-flex items-center"
+												>
+													<PauseSolid class="mr-2 h-5 w-5" />
+													Pause
+												</DropdownItem>
+											{/if}
+											<DropdownItem
+												on:click={() => handleDelete(id)}
+												class="inline-flex items-center"
+											>
+												<TrashBinSolid class="mr-2 h-5 w-5" />
+												Delete
+											</DropdownItem>
+										</Dropdown>
+									{/key}
+
+									<div class="hidden justify-end gap-6 md:flex">
 										{#if paused}
-											<button class="listbox-item z-50" on:click={() => handlePause(id)}>
-												<span>Resume</span>
-												<i class="fa fa-play" />
-											</button>
+											<Button size="sm" color="light" on:click={() => handlePause(id)}>
+												<PlaySolid class="mr-2 h-5 w-5" />
+												Resume
+											</Button>
 										{:else}
-											<button class="listbox-item z-50" on:click={() => handlePause(id)}>
-												<span>Pause</span>
-												<i class="fa fa-pause" />
-											</button>
+											<Button size="sm" color="light" on:click={() => handlePause(id)}>
+												<PauseSolid class="mr-1 h-5 w-5 " />
+												Pause
+											</Button>
 										{/if}
-										<button class="listbox-item z-50" on:click={() => handleDelete(id)}>
-											<span>Delete</span>
-											<i class="fa fa-trash" />
-										</button>
+										<Button size="sm" outline color="red" on:click={() => handleDelete(id)}>
+											<TrashBinSolid class="mr-1 h-5 w-5 " />
+											Delete
+										</Button>
 									</div>
-								</span>
-								<div class="hidden justify-end gap-4 md:flex md:shrink">
-									{#if paused}
-										<button
-											class="variant-outline-surface btn btn-sm"
-											on:click={() => handlePause(id)}
-										>
-											<span>Resume</span>
-											<i
-												class="fa fa-play
-												"
-											/>
-										</button>
-									{:else}
-										<button
-											class="variant-outline-surface btn btn-sm"
-											on:click={() => handlePause(id)}
-										>
-											<span>Pause</span>
-											<i class="fa fa-pause" />
-										</button>
-									{/if}
-								</div>
-								<div class="hidden justify-end gap-4 md:flex md:shrink">
-									<button
-										class="variant-ghost-primary btn btn-sm"
-										on:click={() => handleDelete(id)}
-									>
-										<span>Delete</span>
-										<i class="fa fa-solid fa-trash" />
-									</button>
 								</div>
 							</div>
-						{/each}
-					</div>
-				</svelte:fragment>
-			</Card>
-		</div>
+						</div>
+					</svelte:fragment>
+				</Card>
+			</div>
+		{/each}
+	</div>
 
-		<div class="flex w-full justify-center gap-2 px-2 pt-8">
+	{#if alerts.length}
+		<div class="mx-auto flex w-full max-w-3xl justify-end gap-2 px-2 py-6 sm:py-10">
 			{#if !alerts?.every((a) => a.paused)}
-				<button
-					type="button"
-					on:click={handlePauseAll}
-					class="variant-outline-surface btn btn-sm w-32 md:btn-md"
-				>
-					<span>Pause all</span>
-					<i class="fa fa-pause"></i>
-				</button>
+				<Button on:click={handlePauseAll} color="light">
+					<PauseSolid class="mr-1 h-5 w-5 text-surface-600 dark:text-white" />
+					Pause All
+				</Button>
 			{/if}
 			{#if alerts?.every((a) => a.paused)}
-				<button
-					type="button"
-					on:click={handleResumeAll}
-					class="variant-outline-surface btn btn-sm w-32"
-				>
-					<span>Resume all</span>
-					<i class="fa fa-play"></i>
-				</button>
+				<Button on:click={handleResumeAll} color="light">
+					<PlaySolid class="mr-2 h-5 w-5" />
+					Resume All
+				</Button>
 			{/if}
-			<button
-				type="button"
-				on:click={() => modalStore.trigger(deleteAllModal)}
-				class="variant-ghost-primary btn btn-sm w-32 md:btn-md"
-			>
-				<span>Delete all</span>
-				<i class="fa fa-trash"></i>
-			</button>
+			<Button on:click={() => (showModal = true)} color="red">
+				<TrashBinSolid class="mr-1 h-5 w-5 " />
+				Delete All
+			</Button>
 		</div>
-	{:else}
-		<div class="flex w-full flex-col items-center justify-center gap-8 px-2 pt-8">
-			<div class="alert variant-ghost-surface max-w-sm p-4 md:max-w-lg">
-				<span>
-					<i class="fa fa-info-circle mx-1"></i>
-					You don't have any alerts set up yet. You can add some here or from the
-					<a class="anchor" href="/snow-report" data-sveltekit-preload-data>Snow Report</a> page for
-					your favorite mountains.
-				</span>
-			</div>
-			<button
-				type="button"
-				on:click={() => goto('/alerts/initial-setup')}
-				class="variant-ghost-secondary btn btn-md w-32"
-			>
-				<span>Add alerts</span>
-				<i class="fa fa-bell"></i>
-			</button>
+	{/if}
+
+	{#if !alerts.length}
+		<div class="mx-auto" in:fade={{ duration: 300, easing: cubicIn }}>
+			<Alert color="blue" class="border border-blue-500 dark:border-0 dark:bg-slate-800">
+				<div class="flex items-center gap-3">
+					<InfoCircleSolid slot="icon" class="h-5 w-5" />
+					<strong class="md:text-lg">No alerts found.</strong>
+				</div>
+				<p class="mb-4 mt-2 max-w-xl md:text-base">
+					You can create some here, or you can add them by selecting a location from one of the Snow
+					Report pages.
+				</p>
+				<div class="flex gap-2">
+					<Button
+						color="blue"
+						class="px-4 py-2 text-sm md:text-base"
+						on:click={() => goto('/alerts/initial-setup')}
+						><CirclePlusOutline class="me-2 h-5 w-5" />Add alerts</Button
+					>
+					<Button
+						color="blue"
+						class="px-4 py-2 text-sm md:text-base"
+						outline
+						href="/snow-report/resorts">Go to Snow Report</Button
+					>
+				</div>
+			</Alert>
 		</div>
 	{/if}
 </SectionContainer>
+
+<Modal title="Delete all alerts" bind:open={showModal} size="sm" autoclose outsideclose>
+	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-200">
+		If you want a break from our emails, you can always pause your alerts and resume them at a later
+		date. Are you sure you want to delete all of your alerts?
+	</p>
+	<div class="flex w-full justify-end pt-4">
+		<Button color="alternative">No, cancel</Button>
+		<Button color="red" class="ms-2" on:click={handleDeleteAll}>Yes, delete alerts</Button>
+	</div>
+</Modal>

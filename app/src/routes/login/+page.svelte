@@ -1,13 +1,13 @@
 <script lang="ts">
-	import Login from '$lib/components/login.svelte';
-	import type { PageData } from '../$types';
-	import type { ActionData } from './$types';
 	import { page } from '$app/stores';
+	import Login from '$lib/components/login.svelte';
+	import type { PageData } from './$types';
+	import type { ActionData } from './$types';
 	export let form: ActionData;
 	export let data: PageData;
 	const { supabase } = data;
 
-	const redirectUrl = $page.url.searchParams.get('redirect');
+	const redirectUrl = $page.url.searchParams.get('redirect') ?? '';
 </script>
 
 <svelte:head>
@@ -32,6 +32,6 @@
 	/>
 </svelte:head>
 
-<div class="my-10 flex h-full items-start justify-center px-4">
+<div class="flex min-h-[700px] grow flex-col items-center px-4 py-6 sm:justify-center sm:py-10">
 	<Login action="login" {supabase} {form} {redirectUrl} />
 </div>

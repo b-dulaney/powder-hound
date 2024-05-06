@@ -45,28 +45,28 @@
 	<meta property="og:image:height" content="630" />
 </svelte:head>
 
-<div class="mx-auto w-full px-4 py-2 md:pb-4 lg:max-w-5xl lg:px-0 lg:pt-8">
-	<section id="header-section">
-		<SnowReportHeader
-			details={backcountryDetails}
-			isResort={false}
-			closed={false}
-			snowReportHref="/snow-report/backcountry"
-		/>
-		<div class="py-2">
+<div class="mx-auto w-full py-2">
+	<section
+		id="header-section"
+		class="mx-auto flex w-full max-w-screen-xl justify-between md:items-center"
+	>
+		<SnowReportHeader details={backcountryDetails} isResort={false} closed={false} />
+		<div class="p-2 lg:py-6">
 			<AddRemoveAlertButton {alertData} {existingAlert} details={backcountryDetails} {session} />
 		</div>
 	</section>
 </div>
 
-<div class="mx-auto max-w-5xl px-4 py-2 lg:px-0">
-	<BackcountryWarningAlert
-		forecastUrl={backcountryDetails.forecast_url}
-		displayName={backcountryDetails.display_name}
-	/>
+<div class="mx-auto w-full max-w-screen-xl py-2">
+	<div class="flex w-full items-center justify-start">
+		<BackcountryWarningAlert
+			forecastUrl={backcountryDetails.forecast_url}
+			displayName={backcountryDetails.display_name}
+		/>
+	</div>
 </div>
 
-<div class="mx-auto w-full max-w-5xl lg:pt-6">
+<div class="mx-auto w-full max-w-screen-xl lg:pt-6">
 	<section id="recent-and-upcoming-snowfall">
 		<SnowForecastTabs
 			snowNext24H={backcountryDetails.snow_next_24h}
@@ -78,7 +78,7 @@
 		/>
 	</section>
 
-	<section id="avalanche-and-weather-conditions">
+	<section id="avalanche-and-weather-conditions" class="py-6 sm:pb-10">
 		<div class="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:px-0">
 			<div class="md:col-span-2">
 				<AvalancheDangerCard {backcountryDetails} />
