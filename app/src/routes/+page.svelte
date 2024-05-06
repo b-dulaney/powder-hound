@@ -11,6 +11,11 @@
 	import ReceiptSolid from 'flowbite-svelte-icons/ReceiptSolid.svelte';
 	import UsersGroupSolid from 'flowbite-svelte-icons/UsersGroupSolid.svelte';
 	import LogoIcon from '../public/logo-icon.png';
+	import AvyDangerLow from '../public/avy-danger-low.png';
+	import AvyDangerModerate from '../public/avy-danger-moderate.png';
+	import AvyDangerConsiderable from '../public/avy-danger-considerable.png';
+	import AvyDangerHigh from '../public/avy-danger-high.png';
+
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
@@ -247,22 +252,22 @@
 			</div>
 			<div class="relative flex max-w-full items-center justify-center">
 				<img
-					src="/src/public/avy-danger-low.png"
+					src={AvyDangerLow}
 					class="relative z-10 -mr-[120px] w-48"
 					alt="Avalanche danger low icon"
 				/>
 				<img
-					src="/src/public/avy-danger-moderate.png"
+					src={AvyDangerModerate}
 					class="relative z-20 -mr-[100px] w-48"
 					alt="Avalanche danger moderate icon"
 				/>
 				<img
-					src="/src/public/avy-danger-considerable.png"
+					src={AvyDangerConsiderable}
 					class="relative z-30 -mr-[100px] w-48"
 					alt="Avalanche danger considerable icon"
 				/>
 				<img
-					src="/src/public/avy-danger-high.png"
+					src={AvyDangerHigh}
 					class="relative z-40 mr-[20px] w-48"
 					alt="Avalanche danger high icon"
 				/>
