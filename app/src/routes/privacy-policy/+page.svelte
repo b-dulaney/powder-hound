@@ -1,6 +1,8 @@
 <script lang="ts">
+	import PageHeading from '$lib/components/PageHeading.svelte';
 	import SectionContainer from '$lib/components/SectionContainer.svelte';
 	import Card from '$lib/components/card.svelte';
+	import { A, Heading, Li, P, Span } from 'flowbite-svelte';
 </script>
 
 <svelte:head>
@@ -19,6 +21,8 @@
 	<meta property="og:description" content="View PowderHound's privacy policy" />
 </svelte:head>
 
+<PageHeading title="Privacy Policy" />
+
 <div class="flex w-full items-center justify-center">
 	<enhanced:img src="../../public/logo.png" alt="Powder Hound Logo" class="h-36 w-36" />
 </div>
@@ -28,7 +32,7 @@
 		<svelte:fragment slot="header-subtitle">Updated January 25th, 2024</svelte:fragment>
 		<svelte:fragment slot="body">
 			<div class="flex flex-col gap-6 p-4 md:p-6">
-				<p>
+				<p class="text-surface-700 dark:text-surface-400">
 					PowderHound respects your privacy. This Privacy Policy explains how we collect, use, and
 					share information about you when you use our app. By using PowderHound, you agree to the
 					terms outlined in this Privacy Policy as well as the terms outlined in our Terms of Use.
@@ -40,18 +44,18 @@
 				</p>
 				<section id="information-collection" class="flex flex-col gap-4">
 					<div class="flex flex-col">
-						<h2 class="h4">Account Information</h2>
+						<Heading tag="h2" class="text-xl">Account Information</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						When you create an account on PowderHound, we collect and store your email address. This
 						information is used to enable personalized features such as snowfall alerts.
 					</p>
 					<div class="flex flex-col">
-						<h2 class="h4">Cookies</h2>
+						<Heading tag="h2" class="text-xl">Cookies</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						PowderHound uses cookies to enhance user experience and authenticate requests. Cookies
 						are small pieces of data stored on your device that help us identify and authenticate
 						you. By using cookies, we can provide a more personalized and seamless experience for
@@ -59,53 +63,57 @@
 						preferences, and authentication tokens.
 					</p>
 					<div class="flex flex-col">
-						<h2 class="h4">Vercel Analytics</h2>
+						<Heading tag="h2" class="text-xl">Vercel Analytics</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						PowderHound utilizes Vercel Analytics, a service that only stores anonymized data and
 						does not use cookies. Vercel Analytics helps us understand how users interact with the
 						app, allowing us to improve its performance and user experience. The data collected by
 						Vercel Analytics is aggregated and does not include personally identifiable information.
 					</p>
 					<div class="flex flex-col">
-						<h2 class="h4">How We Use Your Information</h2>
+						<Heading tag="h2" class="text-xl">How We Use Your Information</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
 					<ul>
-						<li class="list-item pb-2">
-							<span class="font-semibold">Account Management</span> - Your email address is used for
-							account identification and management purposes. This includes account recovery and communication
-							related to your account.
+						<li class="pb-2">
+							<p class="text-surface-700 dark:text-surface-400">
+								<Span class="font-semibold">Account Management</Span> - Your email address is used for
+								account identification and management purposes. This includes account recovery and communication
+								related to your account.
+							</p>
 						</li>
-						<li class="list-item">
-							<span class="font-semibold">Snowfall Alerts </span> - If you enable snowfall alerts, your
-							email address will be used to send you notifications about snowfall based on your preferences.
+						<li>
+							<p class="text-surface-700 dark:text-surface-400">
+								<Span class="font-semibold">Snowfall Alerts</Span> - If you enable snowfall alerts, your
+								email address will be used to send you notifications about snowfall based on your preferences.
+							</p>
 						</li>
 					</ul>
 					<div class="flex flex-col">
-						<h2 class="h4">Data Retention</h2>
+						<Heading tag="h2" class="text-xl">Data Retention</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						We retain your account information as long as your account is active. If you choose to
 						delete your account, your email address will be permanently removed from our system.
 					</p>
 				</section>
 				<section id="third-party-information" class="flex flex-col gap-4">
 					<div class="flex flex-col">
-						<h2 class="h4">Third-Party Services</h2>
+						<Heading tag="h2" class="text-xl">Third-Party Services</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						PowderHound may use third-party services for email delivery and notification purposes.
 						These services are selected based on their commitment to privacy and security.
 					</p>
 					<div class="flex flex-col">
-						<h2 class="h4">Links to other Sites</h2>
+						<Heading tag="h2" class="text-xl">Links to other Sites</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						PowderHound may contain links to websites that we do not control. When you click on a
 						third-party link, you will be sent to that third-party's website. We strongly recommend
 						that you read the Privacy Policies of any website you visit. We have no control over,
@@ -115,47 +123,46 @@
 				</section>
 				<section id="final-notices" class="flex flex-col gap-4">
 					<div class="flex flex-col">
-						<h2 class="h4">Security</h2>
+						<Heading tag="h2" class="text-xl">Security</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						We take reasonable measures to protect the security of your information. However, please
 						be aware that no method of transmission over the internet or electronic storage is
 						entirely secure.
 					</p>
 					<div class="flex flex-col">
-						<h2 class="h4">Your Choices</h2>
+						<Heading tag="h2" class="text-xl">Your Choices</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						You have the right to access, update, or delete your account information. You can make
 						these changes within the app's settings or by contacting us directly.
 					</p>
 					<div class="flex flex-col">
-						<h2 class="h4">Open Source Nature</h2>
+						<Heading tag="h2" class="text-xl">Open Source Nature</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						As an open source app under the MIT license, the source code of PowderHound is publicly
 						available. Users are encouraged to review the code and contribute to the improvement of
 						the app's privacy and security features.
 					</p>
 					<div class="flex flex-col">
-						<h2 class="h4">Changes to this Privacy Policy</h2>
+						<Heading tag="h2" class="text-xl">Changes to this Privacy Policy</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
+					<p class="text-surface-700 dark:text-surface-400">
 						We may update this Privacy Policy from time to time. Any changes will be effective upon
 						posting the updated policy on our website.
 					</p>
 					<div class="flex flex-col">
-						<h2 class="h4">Contact Us</h2>
+						<Heading tag="h2" class="text-xl">Contact Us</Heading>
 						<hr class="mt-1 w-full opacity-80" />
 					</div>
-					<p>
-						If you have any questions or concerns about this Privacy Policy, please contact us at <a
-							class="anchor"
-							href="mailto:contact@powderhound.io">contact@powderhound.io</a
+					<p class="text-surface-700 dark:text-surface-400">
+						If you have any questions or concerns about this Privacy Policy, please contact us at <A
+							href="mailto:contact@powderhound.io">contact@powderhound.io</A
 						>
 					</p>
 				</section>
