@@ -200,7 +200,7 @@ export function getAccumulationChartConfig(
 			show: true,
 			strokeDashArray: 4,
 			padding: {
-				left: -10,
+				left: 0,
 				right: 2
 			}
 		},
@@ -237,7 +237,7 @@ export function getAccumulationChartConfig(
 			max: yDomain,
 			labels: {
 				show: true,
-				offsetX: -16,
+				offsetX: -10,
 				style: {
 					fontFamily: 'Inter, sans-serif',
 					cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
