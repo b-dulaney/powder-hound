@@ -134,12 +134,14 @@
 	<header class="flex justify-between px-2">
 		<Search {handler} />
 	</header>
-	<Table>
+	<Table
+		divClass="relative overflow-x-hidden sm:overflow-x-auto border dark:border-surface-700 rounded-lg"
+	>
 		<caption class="sr-only"
 			>Snow and weather conditions for CO backcountry areas. Column headers are sortable. Switch
 			between categories with the tabs above.</caption
 		>
-		<TableHead class="dark:bg-surface-900">
+		<TableHead class="dark:bg-surface-800">
 			<ThSort {handler} orderBy="display_name"><Span class="font-bold">Location</Span></ThSort>
 			<ThSort {handler} orderBy="overall_danger_level" center>
 				<Span class="font-bold lg:before:content-['Avalanche_']">Danger</Span>
@@ -160,7 +162,7 @@
 		</TableHead>
 		<TableBody>
 			{#if !$rows.length}
-				<TableBodyRow class="w-full text-center dark:bg-surface-800">
+				<TableBodyRow class="w-full text-center dark:border-surface-700 dark:bg-surface-900">
 					<TableBodyCell class="w-full" colspan="7">
 						<div class="flex w-full flex-col items-center justify-center gap-4">
 							<p class="text-base">No results found</p>
@@ -169,15 +171,19 @@
 				</TableBodyRow>
 			{/if}
 			{#each $rows as row}
-				<TableBodyRow
-					class="border-b dark:border-b-surface-800 dark:odd:bg-surface-950 dark:even:bg-surface-900"
-				>
-					<TableBodyCell class="px-1 py-4 sm:px-3">
-						<A
-							class="dark:text-primary-300 sm:pl-2 xl:text-lg"
+				<TableBodyRow class="border-b dark:border-surface-700 dark:bg-surface-900">
+					<TableBodyCell class="p-0">
+						<a
+							class="flex flex-col gap-1 px-1 py-4 dark:text-primary-300 sm:px-3"
 							href="/snow-report/backcountry/{row.slug}"
-							data-sveltekit-preload-data="hover">{row.display_name}</A
-						>
+							data-sveltekit-preload-data="hover"
+							><span class="text-primary-700 dark:text-primary-300 xl:text-lg"
+								>{row.display_name}</span
+							>
+							<p class="text-xs text-surface-600 dark:text-surface-500">
+								{row.region}
+							</p>
+						</a>
 					</TableBodyCell>
 					<TableBodyCell class="px-3 py-4 text-center font-semibold sm:font-bold">
 						<div class="flex items-center justify-center">
@@ -261,3 +267,13 @@
 		<Button class="ms-2" on:click={handleSave}>Save</Button>
 	</div>
 </Modal>
+
+<style>
+	a:hover span {
+		text-decoration: underline;
+	}
+	a:hover p {
+		display: inline-block;
+		text-decoration: none;
+	}
+</style>
