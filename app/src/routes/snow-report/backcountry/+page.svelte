@@ -11,7 +11,6 @@
 
 <svelte:head>
 	<title>PowderHound | Backcountry Snow Reports and Avalanche Forecasts</title>
-	<meta name="theme-color" content="#D4163C" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta property="og:site_name" content="PowderHound" />
 	<meta

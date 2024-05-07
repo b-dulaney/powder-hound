@@ -13,7 +13,6 @@
 <svelte:head>
 	<title>PowderHound | Login</title>
 	<meta property="og:site_name" content="PowderHound" />
-	<meta name="theme-color" content="#D4163C" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta
 		name="description"
