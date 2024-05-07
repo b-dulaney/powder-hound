@@ -32,7 +32,7 @@
 </script>
 
 <Navbar let:NavContainer fluid class="bg-surface-50">
-	<NavContainer class="max-w-screen-2xl">
+	<NavContainer class="max-w-screen-xl">
 		<div class="flex items-center gap-2">
 			<SidebarNav {session} {logout} />
 			<NavBrand href="/">

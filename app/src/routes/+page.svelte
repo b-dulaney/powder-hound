@@ -113,7 +113,7 @@
 		</FeatureItem>
 		<FeatureItem pClass="text-surface-500 dark:text-surface-400 max-w-md">
 			<svelte:fragment slot="icon"
-				><SkiLiftSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
+				><SkiLiftSolid class="h-6 w-6 text-primary-600 dark:text-primary-300" /></svelte:fragment
 			>
 			<svelte:fragment slot="h3">Resort Data</svelte:fragment>
 			<svelte:fragment slot="paragraph"
@@ -123,7 +123,7 @@
 		</FeatureItem>
 		<FeatureItem pClass="text-surface-500 dark:text-surface-400 max-w-md">
 			<svelte:fragment slot="icon"
-				><PineTreeSolid class="text-primary-600 dark:text-primary-300" /></svelte:fragment
+				><PineTreeSolid class="h-6 w-6 text-primary-600 dark:text-primary-300" /></svelte:fragment
 			>
 			<svelte:fragment slot="h3">Backcountry Zones</svelte:fragment>
 			<svelte:fragment slot="paragraph"
