@@ -237,7 +237,7 @@ export function getAccumulationChartConfig(
 			max: yDomain,
 			labels: {
 				show: true,
-				offsetX: -20,
+				offsetX: -16,
 				style: {
 					fontFamily: 'Inter, sans-serif',
 					cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
