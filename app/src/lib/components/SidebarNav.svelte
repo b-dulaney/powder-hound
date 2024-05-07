@@ -96,12 +96,12 @@
 				</SidebarItem>
 				<SidebarItem label="Resorts" href="/snow-report/resorts">
 					<svelte:fragment slot="icon">
-						<SkiLiftSolid />
+						<SkiLiftSolid class="h-6 w-6" />
 					</svelte:fragment>
 				</SidebarItem>
 				<SidebarItem label="Backcountry" href="/snow-report/backcountry">
 					<svelte:fragment slot="icon">
-						<PineTreeSolid />
+						<PineTreeSolid class="h-6 w-6" />
 					</svelte:fragment>
 				</SidebarItem>
 				<SidebarItem label="Alerts" href="/alerts">

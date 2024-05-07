@@ -26,7 +26,7 @@
 			aria-label="Navigation breadcrumbs"
 			solid
 			class="rounded-none border-0 border-surface-300 bg-surface-50 dark:border-surface-700 dark:bg-surface-900"
-			olClass="inline-flex items-center space-x-1 mx-auto w-full max-w-screen-2xl"
+			olClass="inline-flex items-center space-x-1 mx-auto w-full max-w-screen-xl"
 		>
 			{#each pages as page, i (page)}
 				{#if !page}
@@ -57,7 +57,7 @@
 		in:fly={{ easing: cubicOut, y: -20, duration: 300, delay: 400 }}
 		out:fade={{ easing: cubicIn, duration: 300 }}
 	>
-		<div class="mx-auto inline-flex w-full max-w-screen-2xl justify-start">
+		<div class="mx-auto inline-flex w-full max-w-screen-xl justify-start">
 			<NavTabs currentPath={$page.url.pathname} />
 		</div>
 	</div>
