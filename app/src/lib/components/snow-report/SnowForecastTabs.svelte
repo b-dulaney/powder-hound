@@ -65,7 +65,9 @@
 			</div>
 		</svelte:fragment>
 		{#if snowNext24H > 0}
-			<HourlyAccumulationChart {hourlySnowfall} {snowNext24H} />
+			<div class="w-full px-3">
+				<HourlyAccumulationChart {hourlySnowfall} {snowNext24H} />
+			</div>
 		{:else}
 			<div class="flex h-[300px] flex-col items-center justify-center">
 				<P class="md:text-xl">No snowfall predicted 🔮</P>
