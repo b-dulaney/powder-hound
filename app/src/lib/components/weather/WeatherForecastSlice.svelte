@@ -8,9 +8,9 @@
 	export let date: string;
 </script>
 
-<div class="mx-auto flex min-w-[35px] flex-col items-center">
-	<P class="pl-1">{high_temp}&deg;</P>
-	<P class="pl-1">{low_temp}&deg;</P>
+<div class="flex w-full flex-col items-center justify-center">
+	<P class="ml-1">{high_temp}&deg;</P>
+	<P class="ml-1">{low_temp}&deg;</P>
 	<WeatherIcon size="small" {weatherDesc} ignoreTimeOfDay={date !== 'Today'} />
 	<P class="mt-2 text-xs text-surface-500 dark:text-surface-300 sm:text-sm">
 		{formatDate(date, 'long')}
