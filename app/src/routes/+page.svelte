@@ -253,22 +253,22 @@
 			<div class="relative flex max-w-full items-center justify-center">
 				<img
 					src={AvyDangerLow}
-					class="relative z-10 -mr-[120px] w-48"
+					class="relative z-10 -mr-[120px] w-40 sm:w-48"
 					alt="Avalanche danger low icon"
 				/>
 				<img
 					src={AvyDangerModerate}
-					class="relative z-20 -mr-[100px] w-48"
+					class="relative z-20 -mr-[100px] w-40 sm:w-48"
 					alt="Avalanche danger moderate icon"
 				/>
 				<img
 					src={AvyDangerConsiderable}
-					class="relative z-30 -mr-[100px] w-48"
+					class="relative z-30 -mr-[100px] w-40 sm:w-48"
 					alt="Avalanche danger considerable icon"
 				/>
 				<img
 					src={AvyDangerHigh}
-					class="relative z-40 mr-[20px] w-48"
+					class="relative z-40 mr-[20px] w-40 sm:w-48"
 					alt="Avalanche danger high icon"
 				/>
 			</div>
