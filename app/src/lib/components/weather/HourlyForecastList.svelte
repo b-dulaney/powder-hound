@@ -10,7 +10,7 @@
 	{#each details.hourly_forecast as { datetime, temp, weather_desc, snowfall, wind_deg_speed }, i (i)}
 		<li class="!rounded-md">
 			<div class="grid w-full grid-cols-6 items-center gap-3 py-2">
-				<P class="text-xs text-surface-400 sm:text-sm">
+				<P class="text-xs text-surface-500 lg:text-sm">
 					{new Date(datetime).toLocaleTimeString('en-US', {
 						hour: 'numeric',
 						hour12: true,
@@ -19,17 +19,17 @@
 				</P>
 				<WeatherIcon datetime={new Date(datetime)} weatherDesc={weather_desc} size="small" />
 				{#if snowfall > 0}
-					<P class="text-sm font-semibold">{snowfall}"</P>
+					<P class="text-xs font-semibold lg:text-sm">{snowfall}"</P>
 				{:else}
-					<P class="text-start text-sm">--</P>
+					<P class="text-start text-xs lg:text-sm">--</P>
 				{/if}
-				<P class="text-sm">{temp}&deg;</P>
+				<P class="text-xs lg:text-sm">{temp}&deg;</P>
 				<Span class="col-span-2">
 					<div class="flex justify-evenly">
-						<P class="text-xs sm:text-sm">
+						<P class="text-xs lg:text-sm">
 							{convertWindSpeed(wind_deg_speed)}
 						</P>
-						<P class="text-xs sm:text-sm">
+						<P class="text-xs lg:text-sm">
 							<i
 								class="fa-solid fa-location-arrow text-primary-500"
 								style="transform: rotate({parseInt(wind_deg_speed.split('/')[0], 10) + 140}deg);"
