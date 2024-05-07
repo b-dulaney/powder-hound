@@ -145,31 +145,33 @@
 		<Search {handler} />
 		<FilterDropdown bind:showClosed {handler} />
 	</header>
-	<Table>
+	<Table
+		divClass="relative overflow-x-hidden sm:overflow-x-auto border dark:border-surface-700 rounded-lg"
+	>
 		<caption class="sr-only"
 			>Snow and weather conditions for CO ski resorts. Column headers are sortable. Switch between
 			categories with the tabs above.</caption
 		>
-		<TableHead class="dark:bg-surface-900">
-			<ThSort {handler} orderBy="display_name">Location</ThSort>
+		<TableHead class="dark:bg-surface-800">
+			<ThSort {handler} orderBy="display_name"><Span class="font-bold">Location</Span></ThSort>
 			<ThSort {handler} orderBy="base_depth" center
-				><span class="sm:after:content-['_Depth']">Base</span></ThSort
+				><Span class="font-bold sm:after:content-['_Depth']">Base</Span></ThSort
 			>
 			<ThSort {handler} orderBy="runs_open" classes="hidden lg:px-3 py-4 lg:table-cell" center
-				>Runs Open</ThSort
+				><Span class="font-bold">Runs Open</Span></ThSort
 			>
 			<ThSort {handler} orderBy="snow_past_24h" center
-				><span class="sm:before:content-['Last_']">24h</span></ThSort
+				><Span class="font-bold sm:before:content-['Last_']">24h</Span></ThSort
 			>
 			<ThSort {handler} orderBy="snow_next_24h" classes="hidden md:px-3 py-4 md:table-cell" center
-				>Next 24h</ThSort
+				><Span class="font-bold">Next 24h</Span></ThSort
 			>
 			<ThSort {handler} orderBy="snow_next_72h" classes="hidden md:px-3 py-4 md:table-cell" center
-				>Next 72h</ThSort
+				><Span class="font-bold">Next 72h</Span></ThSort
 			>
 			<TableHeadCell aria-hidden></TableHeadCell>
 		</TableHead>
-		<TableBody>
+		<TableBody tableBodyClass="dark:border-surface-700">
 			{#if !$rows.length}
 				<TableBodyRow class="w-full text-center dark:bg-surface-900">
 					<TableBodyCell class="w-full" colspan="7">
@@ -185,20 +187,24 @@
 				</TableBodyRow>
 			{/if}
 			{#each $rows as row}
-				<TableBodyRow
-					class="border-b dark:border-b-surface-800 dark:odd:bg-surface-950 dark:even:bg-surface-900"
-				>
-					<TableBodyCell class="px-3 py-4"
-						><A
-							class="dark:text-primary-300 md:pl-2 xl:text-lg"
+				<TableBodyRow class="dark:border-surface-700 dark:bg-surface-900">
+					<TableBodyCell class="p-0">
+						<a
+							class="flex flex-col gap-1 px-3 py-4 dark:text-primary-300"
 							href="/snow-report/resorts/{row.slug}"
-							data-sveltekit-preload-data="hover">{row.display_name}</A
-						></TableBodyCell
-					>
+							data-sveltekit-preload-data="hover"
+							><span class="text-primary-700 dark:text-primary-300 xl:text-lg"
+								>{row.display_name}</span
+							>
+							<p class="text-xs text-surface-700 dark:text-surface-500">
+								{row.region}
+							</p>
+						</a>
+					</TableBodyCell>
 					<TableBodyCell class="px-3 py-4 text-center font-bold"
 						>{row.closed ? '--' : formatSnowfall(row.base_depth)}</TableBodyCell
 					>
-					<TableBodyCell class="hidden px-3 py-4 text-center font-bold lg:block">
+					<TableBodyCell class="hidden px-3 py-4 text-center font-bold lg:table-cell">
 						{#if row.closed}
 							<Span>Resort Closed</Span>
 						{:else}
@@ -278,3 +284,13 @@
 		<Button class="ms-2" on:click={handleSave}>Save</Button>
 	</div>
 </Modal>
+
+<style>
+	a:hover span {
+		text-decoration: underline;
+	}
+	a:hover p {
+		display: inline-block;
+		text-decoration: none;
+	}
+</style>
