@@ -1,5 +1,5 @@
 <picture>
-  <img alt="PowderHound Logo" src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/logo-256px.png" width="150px">
+  <img alt="PowderHound Logo" src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/logo-256px.png?" width="150px">
 </picture>
 
 # PowderHound
