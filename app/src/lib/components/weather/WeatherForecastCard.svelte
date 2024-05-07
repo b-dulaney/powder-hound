@@ -34,7 +34,7 @@
 					<WeatherIcon weatherDesc={details.current_weather} size="large" />
 				</div>
 			</div>
-			<div class="mx-auto grid w-full grid-cols-5 items-center divide-x">
+			<div class="mx-auto grid w-full grid-cols-5 items-center divide-x dark:divide-surface-700">
 				{#each details.temperature_range as { date, low_temp, high_temp, snowfall }, i (i)}
 					<WeatherForecastSlice
 						{high_temp}
