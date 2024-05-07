@@ -5,7 +5,7 @@
 <div class="card-container">
 	<div class="logo-container">
 		<img
-			src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/logo-256px.png"
+			src="https://powderhound-static-images.s3.us-east-2.amazonaws.com/logo-256px.png?"
 			alt="Powder Hound Logo"
 			class="logo"
 		/>
@@ -36,7 +36,7 @@
 	}
 	.card-container {
 		@apply flex h-[622px] w-full flex-col items-start justify-center gap-2 p-8 px-16;
-		background-color: #15171f;
+		background-color: #18181b;
 	}
 	.app-description {
 		@apply h-20 max-w-5xl text-4xl;
@@ -60,23 +60,13 @@
 
 	.bottom-trim {
 		@apply flex h-2 w-full;
-		background-color: #d4163c;
+		background-color: #9b59bd;
 	}
 
 	.app-title {
 		@apply text-6xl;
-		color: #dfe0e2;
+		color: #ffffff;
 		font-family: 'Open Sans Bold';
 		font-weight: 800;
-	}
-
-	.gradient-heading {
-		@apply text-6xl;
-		color: #d4163c;
-		font-family: 'Open Sans Bold';
-		font-weight: 800;
-		color: transparent;
-		background-clip: text;
-		background-image: linear-gradient(to bottom right, #e15c77, #d4163c);
 	}
 </style>
