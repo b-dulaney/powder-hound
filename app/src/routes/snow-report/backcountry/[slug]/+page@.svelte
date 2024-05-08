@@ -3,17 +3,16 @@
 	import type { Session } from '@supabase/supabase-js';
 	import type { PageData } from './$types';
 
-	import AddRemoveAlertButton from '$lib/components/snow-report/AddRemoveAlertButton.svelte';
-	import HourlyWeatherCard from '$lib/components/weather/HourlyWeatherCard.svelte';
-	import SnowReportHeader from '$lib/components/snow-report/SnowReportHeader.svelte';
-	import WeatherForecastCard from '$lib/components/weather/WeatherForecastCard.svelte';
 	import SnowForecastTabs from '$lib/components/snow-report/SnowForecastTabs.svelte';
+	import SnowReportHeader from '$lib/components/snow-report/SnowReportHeader.svelte';
+	import HourlyWeatherCard from '$lib/components/weather/HourlyWeatherCard.svelte';
+	import WeatherForecastCard from '$lib/components/weather/WeatherForecastCard.svelte';
 	import AvalancheDangerCard from './AvalancheDangerCard.svelte';
 	import BackcountryWarningAlert from './BackcountryWarningAlert.svelte';
 	export let data: PageData;
 
 	const { backcountryDetails, snowfallChartForecastData, snowfallChartHistoricalData } = data;
-	$: session = data.session as Session | undefined;
+	$: session = data.session as Session | null;
 	$: existingAlert = data.existingAlert;
 	$: alertData = data.alertData;
 </script>
@@ -45,19 +44,20 @@
 </svelte:head>
 
 <div class="mx-auto w-full py-2">
-	<section
-		id="header-section"
-		class="mx-auto flex w-full max-w-screen-xl justify-between md:items-center"
-	>
-		<SnowReportHeader details={backcountryDetails} isResort={false} closed={false} />
-		<div class="p-2 lg:py-6">
-			<AddRemoveAlertButton {alertData} {existingAlert} details={backcountryDetails} {session} />
-		</div>
+	<section id="header-section">
+		<SnowReportHeader
+			{existingAlert}
+			details={backcountryDetails}
+			isResort={false}
+			closed={false}
+			{session}
+			{alertData}
+		/>
 	</section>
 </div>
 
-<div class="mx-auto w-full max-w-screen-xl py-2">
-	<div class="flex w-full items-center justify-start">
+<div class="py mx-auto w-full max-w-screen-xl pb-2">
+	<div class="flex items-center justify-start">
 		<BackcountryWarningAlert
 			forecastUrl={backcountryDetails.forecast_url}
 			displayName={backcountryDetails.display_name}
@@ -65,7 +65,7 @@
 	</div>
 </div>
 
-<div class="mx-auto w-full max-w-screen-xl lg:pt-6">
+<div class="mx-auto w-full max-w-screen-xl py-2">
 	<section id="recent-and-upcoming-snowfall">
 		<SnowForecastTabs
 			snowNext24H={backcountryDetails.snow_next_24h}

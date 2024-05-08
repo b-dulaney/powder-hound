@@ -104,6 +104,7 @@ export type Database = MergeDeep<
 						snow_past_48h: number;
 						snow_next_24h: number;
 						snow_next_72h: number;
+						state: string;
 						region: string;
 					};
 				};
@@ -119,6 +120,7 @@ export type Database = MergeDeep<
 						snow_next_72h: number;
 						snow_past_24h: number;
 						snow_past_7d: number;
+						state: string;
 						region: string;
 						overall_danger_level: number;
 					};
@@ -133,6 +135,7 @@ export type Database = MergeDeep<
 						snow_next_24h: number;
 						snow_next_72h: number;
 						mountain_id: number;
+						state: string;
 						region: string;
 						slug: string;
 						hourly_forecast: HourlyWeatherData[];
@@ -158,6 +161,7 @@ export type Database = MergeDeep<
 						snow_next_24h: number;
 						snow_next_72h: number;
 						mountain_id: number;
+						state: string;
 						region: string;
 						slug: string;
 						base_depth: number;

@@ -7,6 +7,7 @@ import type { PostgrestError } from '@supabase/supabase-js';
 export const load: PageServerLoad = async (event) => {
 	const { depends } = event;
 	depends('update:alerts');
+	depends('update:existingAlert');
 	const session = await event.locals.getSession();
 	const { supabase } = event.locals;
 	const { fetch } = event;
