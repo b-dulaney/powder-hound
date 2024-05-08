@@ -37,7 +37,7 @@
 <th
 	on:click={update}
 	class:active={$sorted?.orderBy === orderBy}
-	class={`cursor-pointer select-none px-6 py-3 ${classes}`}
+	class={`cursor-pointer select-none px-2 py-3 sm:px-6 ${classes}`}
 >
 	<div class="flex h-full w-full items-center justify-start" class:center>
 		<slot />

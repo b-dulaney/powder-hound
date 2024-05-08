@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { goto, invalidate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import AddAlertButton from '$lib/components/AddAlertButton.svelte';
+	import EditAlertButton from '$lib/components/EditAlertButton.svelte';
 	import FilterDropdown from '$lib/components/datatable/FilterDropdown.svelte';
 	import Search from '$lib/components/datatable/Search.svelte';
 	import ThSort from '$lib/components/datatable/ThSort.svelte';
@@ -8,15 +8,8 @@
 	import { formatSnowfall } from '$lib/utils';
 	import type { Session } from '@supabase/supabase-js';
 	import { DataHandler, type State } from '@vincjo/datatables/remote';
-	import { reload } from './api';
 	import {
-		A,
 		Button,
-		Card,
-		Label,
-		Modal,
-		P,
-		Select,
 		Span,
 		Table,
 		TableBody,
@@ -25,7 +18,7 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { addToast, type ToastSettings } from '$lib/components/toasts';
+	import { reload } from './api';
 
 	// Props
 	export let session: Session | null;
@@ -35,28 +28,8 @@
 	// Component variables
 	const handler = new DataHandler<ResortOverview>(resortOverviews);
 	const rows = handler.getRows();
-	let showModal = false;
-	let selectedMountain: ResortOverview | null;
-	let selectedThresholdInches = 1;
 
 	let showClosed = false;
-	const updateSuccessToast: ToastSettings = {
-		type: 'success',
-		message: 'Alert(s) updated successfully.',
-		timeout: 3000
-	};
-
-	const failureToast: ToastSettings = {
-		type: 'error',
-		message: 'Action failed. Please try again.',
-		timeout: 5000
-	};
-
-	const deleteSuccessToast: ToastSettings = {
-		type: 'delete',
-		message: 'Alert deleted successfully.',
-		timeout: 3000
-	};
 
 	// Component state
 	$: alerts = alerts;
@@ -68,70 +41,6 @@
 	handler.onChange((state: State) => reload(state));
 
 	$: isFavorite = (mountain: ResortOverview) => mappedAlerts.includes(mountain.mountain_id);
-
-	async function deleteAlert(mountain: ResortOverview) {
-		const alertId = alerts.find((a) => a.mountain_id === mountain.mountain_id)?.id;
-		if (!alertId) return;
-
-		const response = await fetch(`/api/alerts/${alertId}`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				mountain_id: mountain.mountain_id,
-				user_id: session?.user.id
-			})
-		});
-		if (response.ok) {
-			mappedAlerts = mappedAlerts.filter((id) => id !== mountain.mountain_id);
-			addToast(deleteSuccessToast);
-			invalidate('update:alerts');
-		} else {
-			addToast(failureToast);
-		}
-	}
-
-	const handleAlertClick = (mountain: ResortOverview) => {
-		if (session) {
-			if (isFavorite(mountain)) {
-				deleteAlert(mountain);
-			} else {
-				selectedMountain = mountain;
-				showModal = true;
-			}
-		} else {
-			goto(`/login?redirect=${$page.url.pathname}`);
-		}
-	};
-
-	async function handleSave() {
-		const body = {
-			mountain_id: selectedMountain?.mountain_id,
-			display_name: selectedMountain?.display_name,
-			threshold_inches: selectedThresholdInches,
-			user_id: session?.user.id,
-			email: session?.user.email,
-			paused: false
-		};
-		const response = await fetch(`/api/alerts`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(body)
-		});
-
-		if (response.ok) {
-			mappedAlerts = [...mappedAlerts, selectedMountain!.mountain_id];
-			selectedMountain = null;
-			selectedThresholdInches = 1;
-			addToast(updateSuccessToast);
-			invalidate('update:alerts');
-		} else {
-			addToast(failureToast);
-		}
-	}
 
 	const handleClickShowClosed = () => {
 		showClosed = !showClosed;
@@ -197,7 +106,7 @@
 								>{row.display_name}</span
 							>
 							<p class="text-xs text-surface-700 dark:text-surface-500">
-								{row.region}
+								{row.state} | {row.region}
 							</p>
 						</a>
 					</TableBodyCell>
@@ -224,27 +133,20 @@
 					<TableBodyCell class="hidden py-4 text-center font-bold md:table-cell md:px-3"
 						>{formatSnowfall(row.snow_next_72h)}</TableBodyCell
 					>
-					<TableBodyCell class="!px-0 py-4 font-bold sm:text-center">
+					<TableBodyCell class="!px-0 py-4 text-center font-bold md:px-3">
 						{#if isFavorite(row)}
-							<button
-								type="button"
-								title="Remove alert"
-								aria-label="Remove alert"
-								class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0 hover:scale-125"
-								on:click={() => handleAlertClick(row)}
-							>
-								<i class="fa-solid fa-bell text-yellow-400"></i>
-							</button>
+							<EditAlertButton
+								size="sm"
+								{session}
+								alertData={alerts?.find((alert) => alert.mountain_id === row.mountain_id)}
+							/>
 						{:else}
-							<button
-								type="button"
-								title="Add alert"
-								aria-label="Add alert"
-								class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0 hover:scale-125"
-								on:click={() => handleAlertClick(row)}
-							>
-								<i class="fa-regular fa-bell"></i>
-							</button>
+							<AddAlertButton
+								size="sm"
+								{session}
+								mountainID={row.mountain_id}
+								displayName={row.display_name}
+							/>
 						{/if}
 					</TableBodyCell>
 				</TableBodyRow>
@@ -252,38 +154,6 @@
 		</TableBody>
 	</Table>
 </div>
-
-<Modal
-	bind:open={showModal}
-	size="xs"
-	title="Add alert"
-	autoclose
-	outsideclose
-	classHeader="text-surface-700 dark:text-white"
->
-	<P>Select the snowfall threshold that you'll receive alerts for.</P>
-	<div class="flex items-center justify-between gap-2 py-6">
-		<P>{selectedMountain?.display_name}</P>
-		<Label class="inline-flex items-center gap-4">
-			<Span class="hidden font-medium sm:block">Snowfall</Span>
-			<Select
-				size="sm"
-				placeholder="Select a threshold"
-				class="w-24"
-				bind:value={selectedThresholdInches}
-			>
-				<option value={1}>1+ in</option>
-				<option value={3}>3+ in</option>
-				<option value={6}>6+ in</option>
-				<option value={12}>12+ in</option>
-			</Select>
-		</Label>
-	</div>
-	<div class="flex w-full justify-end">
-		<Button color="alternative">Cancel</Button>
-		<Button class="ms-2" on:click={handleSave}>Save</Button>
-	</div>
-</Modal>
 
 <style>
 	a:hover span {

@@ -1,21 +1,14 @@
 <script lang="ts">
-	import { goto, invalidate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import AddAlertButton from '$lib/components/AddAlertButton.svelte';
+	import EditAlertButton from '$lib/components/EditAlertButton.svelte';
 	import AvalancheDangerIcon from '$lib/components/avalanche-danger-icon.svelte';
 	import Search from '$lib/components/datatable/Search.svelte';
 	import ThSort from '$lib/components/datatable/ThSort.svelte';
-	import { addToast, type ToastSettings } from '$lib/components/toasts';
 	import type { BackcountryOverview, UserAlerts } from '$lib/supabase.types';
 	import { avalancheDangerRatingsMap, formatSnowfall } from '$lib/utils';
 	import type { Session } from '@supabase/supabase-js';
 	import { DataHandler, type State } from '@vincjo/datatables/remote';
 	import {
-		A,
-		Button,
-		Label,
-		Modal,
-		P,
-		Select,
 		Span,
 		Table,
 		TableBody,
@@ -34,27 +27,6 @@
 	// Component variables
 	const handler = new DataHandler<BackcountryOverview>(backcountryOverviews);
 	const rows = handler.getRows();
-	let showModal = false;
-	let selectedMountain: BackcountryOverview | null;
-	let selectedThresholdInches = 1;
-
-	const updateSuccessToast: ToastSettings = {
-		type: 'success',
-		message: 'Alert(s) updated successfully.',
-		timeout: 3000
-	};
-
-	const failureToast: ToastSettings = {
-		type: 'error',
-		message: 'Action failed. Please try again.',
-		timeout: 5000
-	};
-
-	const deleteSuccessToast: ToastSettings = {
-		type: 'delete',
-		message: 'Alert deleted successfully.',
-		timeout: 3000
-	};
 
 	// Component state
 	$: mappedAlerts = alerts.map((alert) => alert.mountain_id);
@@ -64,70 +36,6 @@
 	handler.sortAsc('display_name');
 
 	$: isFavorite = (mountain: BackcountryOverview) => mappedAlerts.includes(mountain.mountain_id);
-
-	async function deleteAlert(mountain: BackcountryOverview) {
-		const alertId = alerts.find((a) => a.mountain_id === mountain.mountain_id)?.id;
-		if (!alertId) return;
-
-		const response = await fetch(`/api/alerts/${alertId}`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				mountain_id: mountain.mountain_id,
-				user_id: session?.user.id
-			})
-		});
-		if (response.ok) {
-			mappedAlerts = mappedAlerts.filter((id) => id !== mountain.mountain_id);
-			addToast(deleteSuccessToast);
-			invalidate('update:alerts');
-		} else {
-			addToast(failureToast);
-		}
-	}
-
-	async function handleSave() {
-		const body = {
-			mountain_id: selectedMountain?.mountain_id,
-			display_name: selectedMountain?.display_name,
-			threshold_inches: selectedThresholdInches,
-			user_id: session?.user.id,
-			email: session?.user.email,
-			paused: false
-		};
-		const response = await fetch(`/api/alerts`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(body)
-		});
-
-		if (response.ok) {
-			mappedAlerts = [...mappedAlerts, selectedMountain!.mountain_id];
-			selectedMountain = null;
-			selectedThresholdInches = 1;
-			addToast(updateSuccessToast);
-			invalidate('update:alerts');
-		} else {
-			addToast(failureToast);
-		}
-	}
-
-	const handleAlertClick = (mountain: BackcountryOverview) => {
-		if (session) {
-			if (isFavorite(mountain)) {
-				deleteAlert(mountain);
-			} else {
-				selectedMountain = mountain;
-				showModal = true;
-			}
-		} else {
-			goto(`/login?redirect=${$page.url.pathname}`);
-		}
-	};
 </script>
 
 <div class="space-y-4">
@@ -174,19 +82,19 @@
 				<TableBodyRow class="border-b dark:border-surface-700 dark:bg-surface-900">
 					<TableBodyCell class="p-0">
 						<a
-							class="flex flex-col gap-1 px-1 py-4 dark:text-primary-300 sm:px-3"
+							class="flex flex-col gap-1 px-2 py-4 dark:text-primary-300 sm:px-3"
 							href="/snow-report/backcountry/{row.slug}"
 							data-sveltekit-preload-data="hover"
 							><span class="text-primary-700 dark:text-primary-300 xl:text-lg"
 								>{row.display_name}</span
 							>
 							<p class="text-xs text-surface-600 dark:text-surface-500">
-								{row.region}
+								{row.state} | {row.region}
 							</p>
 						</a>
 					</TableBodyCell>
-					<TableBodyCell class="px-3 py-4 text-center font-semibold sm:font-bold">
-						<div class="flex items-center justify-center">
+					<TableBodyCell class="p-0 text-center font-semibold sm:px-3 sm:font-bold">
+						<div class="inline-flex items-center justify-center px-1 py-4">
 							<span class="sm:p-2"
 								><AvalancheDangerIcon dangerLevel={row.overall_danger_level} size="40px" /></span
 							>
@@ -209,25 +117,18 @@
 					>
 					<TableBodyCell class="px-0 py-4 sm:text-center md:px-3">
 						{#if isFavorite(row)}
-							<button
-								type="button"
-								title="Remove alert"
-								aria-label="Remove alert"
-								class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0 hover:scale-125"
-								on:click={() => handleAlertClick(row)}
-							>
-								<i class="fa-solid fa-bell text-yellow-500"></i>
-							</button>
+							<EditAlertButton
+								size="sm"
+								{session}
+								alertData={alerts?.find((alert) => alert.mountain_id === row.mountain_id)}
+							/>
 						{:else}
-							<button
-								type="button"
-								title="Add alert"
-								aria-label="Add alert"
-								class="btn btn-icon-sm w-[20px] space-x-0 px-0 py-0 hover:scale-125"
-								on:click={() => handleAlertClick(row)}
-							>
-								<i class="fa-regular fa-bell"></i>
-							</button>
+							<AddAlertButton
+								size="sm"
+								{session}
+								mountainID={row.mountain_id}
+								displayName={row.display_name}
+							/>
 						{/if}
 					</TableBodyCell>
 				</TableBodyRow>
@@ -235,38 +136,6 @@
 		</TableBody>
 	</Table>
 </div>
-
-<Modal
-	bind:open={showModal}
-	size="xs"
-	title="Add alert"
-	autoclose
-	outsideclose
-	classHeader="text-surface-700 dark:text-white"
->
-	<P>Select the snowfall threshold that you'll receive alerts for.</P>
-	<div class="flex items-center justify-between gap-2 py-6">
-		<P>{selectedMountain?.display_name}</P>
-		<Label class="inline-flex items-center gap-4">
-			<Span class="hidden font-medium sm:block">Snowfall</Span>
-			<Select
-				size="sm"
-				placeholder="Select a threshold"
-				class="w-24"
-				bind:value={selectedThresholdInches}
-			>
-				<option value={1}>1+ in</option>
-				<option value={3}>3+ in</option>
-				<option value={6}>6+ in</option>
-				<option value={12}>12+ in</option>
-			</Select>
-		</Label>
-	</div>
-	<div class="flex w-full justify-end">
-		<Button color="alternative">Cancel</Button>
-		<Button class="ms-2" on:click={handleSave}>Save</Button>
-	</div>
-</Modal>
 
 <style>
 	a:hover span {

@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import AddRemoveAlertButton from '$lib/components/snow-report/AddRemoveAlertButton.svelte';
-	import HourlyWeatherCard from '$lib/components/weather/HourlyWeatherCard.svelte';
-	import SnowReportHeader from '$lib/components/snow-report/SnowReportHeader.svelte';
 	import SnowForecastTabs from '$lib/components/snow-report/SnowForecastTabs.svelte';
-	import type { Session } from '@supabase/supabase-js';
+	import SnowReportHeader from '$lib/components/snow-report/SnowReportHeader.svelte';
+	import HourlyWeatherCard from '$lib/components/weather/HourlyWeatherCard.svelte';
 	import WeatherForecastCard from '$lib/components/weather/WeatherForecastCard.svelte';
+	import type { Session } from '@supabase/supabase-js';
 	import type { PageData } from './$types';
 	import ResortConditionsCard from './ResortConditionsCard.svelte';
 	export let data: PageData;
 
 	const { resortDetails, snowfallChartData, closed } = data;
-	$: session = data.session as Session | undefined;
+	$: session = data.session as Session | null;
 	$: existingAlert = data.existingAlert;
 	$: alertData = data.alertData;
 </script>
@@ -42,19 +41,20 @@
 	/>
 </svelte:head>
 
-<div class="mx-auto w-full py-2">
-	<section
-		id="header-section"
-		class="mx-auto flex w-full max-w-screen-xl justify-between md:items-center"
-	>
-		<SnowReportHeader details={resortDetails} isResort {closed} />
-		<div class="p-2 lg:py-6">
-			<AddRemoveAlertButton {alertData} {existingAlert} details={resortDetails} {session} />
-		</div>
+<div class="mx-auto w-full pb-2 lg:pb-0">
+	<section id="header-section">
+		<SnowReportHeader
+			{existingAlert}
+			details={resortDetails}
+			isResort
+			{closed}
+			{session}
+			{alertData}
+		/>
 	</section>
 </div>
 
-<div class="mx-auto w-full max-w-screen-xl py-2">
+<div class="mx-auto w-full max-w-screen-xl">
 	<section id="upcoming-snowfall">
 		<SnowForecastTabs
 			snowNext24H={resortDetails.snow_next_24h}

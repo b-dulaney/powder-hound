@@ -88,6 +88,17 @@ export const weatherConditionsMap: Record<string, string> = {
 	rainsnow: 'Rain/Snow Mix'
 };
 
+export const stateCodeMap: Record<string, string> = {
+	CO: 'Colorado',
+	UT: 'Utah',
+	CA: 'California',
+	NM: 'New Mexico',
+	AZ: 'Arizona',
+	WA: 'Washington',
+	OR: 'Oregon',
+	ID: 'Idaho'
+};
+
 export const formatDate = (date: string, format: 'short' | 'long') => {
 	if (format === 'short') {
 		return dayjs(date).format('M/D');
