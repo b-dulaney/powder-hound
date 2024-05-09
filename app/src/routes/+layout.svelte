@@ -60,7 +60,7 @@
 		/>
 	{/if}
 </div>
-<div class="flex min-h-[80dvh] flex-col">
+<div class="flex min-h-[80svh] flex-col">
 	<Header {supabase} {session} />
 	<main class="flex grow flex-col">
 		{#key data.pathname}
