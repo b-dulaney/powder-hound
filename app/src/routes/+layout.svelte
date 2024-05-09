@@ -62,7 +62,7 @@
 </div>
 <div class="flex min-h-[80svh] flex-col">
 	<Header {supabase} {session} />
-	<main class="flex grow flex-col">
+	<main class="flex flex-col">
 		{#key data.pathname}
 			<div
 				in:fade={{ easing: cubicOut, duration: 200, delay: 300 }}
