@@ -52,7 +52,7 @@
 				</div>
 			{:else}
 				<div class="flex h-[300px] flex-col items-center justify-center">
-					<p class="md:text-xl">No snowfall recorded 🌵</p>
+					<P class="md:text-xl">No snowfall recorded 🌵</P>
 				</div>
 			{/if}
 		</TabItem>
