@@ -83,7 +83,7 @@ async function scrapeAvalancheForecast(mountain: MountainCoordinates): Promise<A
 	const belowTreeLineDayTwo = await getTreeLineData(page, BELOW_TREE_LINE_DAY_TWO_SELECTOR);
 
 	const dangerDayOne: AvalancheDangerLevel = {
-		date: dayOne ?? dayjs('dddd, MMM D'),
+		date: dayOne,
 		above_treeline: {
 			level: aboveTreeLineDayOne.level as AvalancheRating['level'],
 			rating: aboveTreeLineDayOne.rating as AvalancheRating['rating']
@@ -99,7 +99,7 @@ async function scrapeAvalancheForecast(mountain: MountainCoordinates): Promise<A
 	};
 
 	const dangerDayTwo: AvalancheDangerLevel = {
-		date: dayTwo ?? dayjs('dddd, MMM D'),
+		date: dayTwo,
 		above_treeline: {
 			level: aboveTreeLineDayTwo.level as AvalancheRating['level'],
 			rating: aboveTreeLineDayTwo.rating as AvalancheRating['rating']

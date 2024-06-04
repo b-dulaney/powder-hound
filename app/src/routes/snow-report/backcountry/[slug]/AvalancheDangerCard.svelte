@@ -2,6 +2,7 @@
 	import AvalancheDangerIcon from '$lib/components/avalanche-danger-icon.svelte';
 	import Card from '$lib/components/card.svelte';
 	import type { BackcountryDetail } from '$lib/supabase.types';
+	import dayjs from 'dayjs';
 	import { AccordionItem, Accordion, P, Span, A } from 'flowbite-svelte';
 	export let backcountryDetails: BackcountryDetail;
 </script>
@@ -11,9 +12,9 @@
 	<svelte:fragment slot="footer">Issued on: {backcountryDetails.issue_date}</svelte:fragment>
 	<svelte:fragment slot="body">
 		<div class="grid grid-cols-1 gap-6 p-4 lg:grid-cols-2">
-			{#each backcountryDetails.danger_levels as { date, above_treeline, near_treeline, below_treeline }}
+			{#each backcountryDetails.danger_levels as { date, above_treeline, near_treeline, below_treeline }, i}
 				<div id="avy-forecast-container" class="w-full">
-					<P class="py-2">{date}</P>
+					<P class="py-2">{date ?? dayjs().add(i, 'days').format('dddd, MMM D')}</P>
 					<div class="flex w-full flex-col">
 						<div
 							class="flex w-full items-center justify-between rounded-sm border-b border-b-surface-300 bg-surface-100 p-2 dark:border-b-surface-700 dark:bg-surface-900"

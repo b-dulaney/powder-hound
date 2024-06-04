@@ -1,7 +1,6 @@
 import type { PostgrestError } from '@supabase/supabase-js';
 import type { Database as DatabaseGenerated } from './supabase-generated.types';
 import type { MergeDeep } from 'type-fest';
-import type dayjs from 'dayjs';
 
 export type TemperatureRange = {
 	date: string;
@@ -77,7 +76,7 @@ export type AvalancheRating = {
 };
 
 export type AvalancheDangerLevel = {
-	date: string | dayjs.Dayjs;
+	date: string | null;
 	above_treeline: AvalancheRating;
 	near_treeline: AvalancheRating;
 	below_treeline: AvalancheRating;
