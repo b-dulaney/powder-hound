@@ -14,7 +14,7 @@
 		<div class="grid grid-cols-1 gap-6 p-4 lg:grid-cols-2">
 			{#each backcountryDetails.danger_levels as { date, above_treeline, near_treeline, below_treeline }}
 				<div id="avy-forecast-container" class="w-full">
-					<P class="py-2">{date ?? dayjs('dddd, MMM D')}</P>
+					<P class="py-2">{date ?? dayjs().format('dddd, MMM D')}</P>
 					<div class="flex w-full flex-col">
 						<div
 							class="flex w-full items-center justify-between rounded-sm border-b border-b-surface-300 bg-surface-100 p-2 dark:border-b-surface-700 dark:bg-surface-900"
