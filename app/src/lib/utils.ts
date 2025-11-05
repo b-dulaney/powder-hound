@@ -85,7 +85,8 @@ export const weatherConditionsMap: Record<string, string> = {
 	rainshwr: 'Rain Showers',
 	snowshwr: 'Snow Showers',
 	frzrain: 'Freezing Rain',
-	rainsnow: 'Rain/Snow Mix'
+	rainsnow: 'Rain/Snow Mix',
+	ice: 'Ice'
 };
 
 export const stateCodeMap: Record<string, string> = {

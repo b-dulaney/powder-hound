@@ -50,7 +50,7 @@ function parseForecastData(data: string, mountainID: number): CaicData[] {
 
     // Determine the start and end of daylight saving time for the year of the date
     const startDst = new Date(`03/14/${dateObj.getFullYear()} 02:00`);
-    const endDst = new Date(`11/07/${dateObj.getFullYear()} 02:00`);
+    const endDst = new Date(`11/02/${dateObj.getFullYear()} 02:00`);
 
     // Adjust the start and end dates based on the day of the week
     startDst.setDate(14 - startDst.getDay());
