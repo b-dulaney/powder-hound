@@ -15,5 +15,11 @@
         }
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/avalanche-forecast-scheduler",
+      "schedule": "0 * * * *"
+    }
   ]
 }
