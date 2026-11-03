@@ -9,12 +9,56 @@ interface MountainRow {
 
 const API_URL =
   "https://looper.avalanche.state.co.us/weather/ptfcst/wrfhr/current";
-const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+/**
+ * Keys allowed to call this function, and the key used for its own DB writes.
+ * The runtime injects SUPABASE_SECRET_KEYS (JSON: key name -> sb_secret_ value); only those are
+ * accepted, so legacy service_role JWTs are rejected even while still injected.
+ * Exception: on the local stack (SUPABASE_URL is the internal kong gateway) the legacy key is also
+ * accepted, because seed.sql stores a locally-signed service_role JWT in Vault.
+ */
+function parseSecretKeys(): Record<string, string> {
+  const raw = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (!raw) return {};
+  try {
+    return JSON.parse(raw) as Record<string, string>;
+  } catch {
+    console.error("SUPABASE_SECRET_KEYS is not valid JSON");
+    return {};
+  }
+}
+
+const SECRET_KEY_DICT = parseSecretKeys();
+const IS_LOCAL_STACK = (Deno.env.get("SUPABASE_URL") ?? "").startsWith("http://kong:");
+const LEGACY_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+
+const ALLOWED_KEYS = [
+  ...Object.values(SECRET_KEY_DICT),
+  ...(IS_LOCAL_STACK && LEGACY_KEY ? [LEGACY_KEY] : []),
+].filter((k) => typeof k === "string" && k.length > 0);
+
+const DB_KEY = SECRET_KEY_DICT["default"] ?? Object.values(SECRET_KEY_DICT)[0] ?? LEGACY_KEY;
 
 const supabase = createClient<Database>(
   Deno.env.get("SUPABASE_URL") ?? "",
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+  DB_KEY,
 );
+
+function timingSafeEqual(a: string, b: string): boolean {
+  const ab = new TextEncoder().encode(a);
+  const bb = new TextEncoder().encode(b);
+  if (ab.length !== bb.length) return false;
+  let diff = 0;
+  for (let i = 0; i < ab.length; i++) diff |= ab[i] ^ bb[i];
+  return diff === 0;
+}
+
+/** Caller must present a project secret key, preferably in the `apikey` header. */
+function isAuthorized(req: Request): boolean {
+  const presented = req.headers.get("apikey") ??
+    req.headers.get("Authorization")?.replace(/^Bearer\s+/i, "") ?? "";
+  return presented.length > 0 &&
+    ALLOWED_KEYS.some((key) => timingSafeEqual(presented, key));
+}
 
 function parseForecastData(data: string, mountainID: number): CaicData[] {
   const parsedForecastData: CaicData[] = [];
@@ -150,8 +194,7 @@ async function updatePointForecastData(
 
 /** Deno request handler */
 Deno.serve(async (req) => {
-  const authHeader = req.headers.get("Authorization")!;
-  if (authHeader !== `Bearer ${SERVICE_KEY}`) {
+  if (!isAuthorized(req)) {
     return new Response(
       JSON.stringify({ message: "Unauthorized" }),
       { status: 401, headers: { "Content-Type": "application/json" } },

@@ -440,6 +440,8 @@ enabled = true
 # and column/key alignment. Set to "null" to emit raw, unformatted SQL.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
 
+# Authorizes callers itself (project secret key in the `apikey` header); the gateway's JWT check
+# doesn't authenticate API keys, so it's disabled. Deploy with: supabase functions deploy caic-data-cron
 [functions.caic-data-cron]
-verify_jwt = true
+verify_jwt = false
 import_map = "./functions/import_map.json"
