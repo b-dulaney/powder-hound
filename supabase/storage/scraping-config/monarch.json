@@ -1,0 +1,23 @@
+{
+  "id": 8,
+  "name": "Monarch",
+  "closingDate": null,
+  "separateURLs": false,
+  "conditionsURL": "https://skimonarch.com/conditions/",
+  "terrainURL": null,
+  "conditions": {
+    "conditionsSelector": "div.vc_row:nth-child(5)",
+    "baseDepthSelector": ".accumulation__table > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(5)",
+    "snowpackSelector": "",
+    "seasonTotalSelector": ".accumulation__table > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(6)",
+    "snow24Selector": ".accumulation__table > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2)",
+    "snow48Selector": ".accumulation__table > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(3)",
+    "snow7DaySelector": ".accumulation__table > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(4)"
+  },
+  "terrain": {
+    "terrainSelector": "div.vc_row:nth-child(5)",
+    "runsOpenSelector": "div.open-count-item:nth-child(2)",
+    "liftsOpenSelector": "div.open-count-item:nth-child(1)",
+    "liftDetailSelector": ""
+  }
+}

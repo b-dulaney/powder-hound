@@ -1,0 +1,23 @@
+{
+  "id": 18,
+  "name": "Telluride",
+  "closingDate": null,
+  "separateURLs": false,
+  "conditionsURL": "https://tellurideskiresort.com/snow-report/",
+  "terrainURL": "",
+  "conditions": {
+    "conditionsSelector": "#tsr-report-app-tab-tabs",
+    "baseDepthSelector": "div.tsr-report-snow-depth:nth-child(1) > p:nth-child(1)",
+    "snowpackSelector": ".tsr-report-snow-condition > span:nth-child(3)",
+    "seasonTotalSelector": "div.tsr-report-snow-depth:nth-child(2) > p:nth-child(1)",
+    "snow24Selector": ".tsr-report-app-snow-totals-total > p:nth-child(2) > span:nth-child(2) > strong:nth-child(1)",
+    "snow48Selector": ".tsr-report-app-snow-totals-total > p:nth-child(3) > span:nth-child(2) > strong:nth-child(1)",
+    "snow7DaySelector": ".tsr-report-app-snow-totals-total > p:nth-child(4) > span:nth-child(2) > strong:nth-child(1)"
+  },
+  "terrain": {
+    "terrainSelector": "#tsr-report-app-tab-buttons",
+    "runsOpenSelector": ".tsr-report-trail-bg > div:nth-child(1) > span:nth-child(2)",
+    "liftsOpenSelector": ".tsr-report-lifts-bg > div:nth-child(1) > span:nth-child(2)",
+    "liftDetailSelector": ""
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": 9,
+  "name": "Loveland",
+  "closingDate": null,
+  "separateURLs": false,
+  "conditionsURL": "https://skiloveland.com/snow-report/",
+  "terrainURL": null,
+  "conditions": {
+    "conditionsSelector": "#wrap_all",
+    "baseDepthSelector": ".mid-mtn-total",
+    "snowpackSelector": "",
+    "seasonTotalSelector": "td.column-4",
+    "snow24Selector": "td.column-2",
+    "snow48Selector": "td.column-3",
+    "snow7DaySelector": ""
+  },
+  "terrain": {
+    "terrainSelector": ".report-full",
+    "runsOpenSelector": ".trails-total",
+    "liftsOpenSelector": ".lifts-total",
+    "liftDetailSelector": ""
+  }
+}

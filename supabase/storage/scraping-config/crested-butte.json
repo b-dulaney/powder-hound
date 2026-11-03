@@ -1,0 +1,23 @@
+{
+  "id": 19,
+  "name": "Crested Butte",
+  "closingDate": null,
+  "separateURLs": true,
+  "conditionsURL": "https://www.skicb.com/the-mountain/mountain-conditions/weather-report.aspx",
+  "terrainURL": "https://www.skicb.com/the-mountain/mountain-conditions/lift-and-terrain-status.aspx",
+  "conditions": {
+    "conditionsSelector": ".snow_report__metrics",
+    "baseDepthSelector": "li.snow_report__metrics__metric:nth-child(5) > div:nth-child(1) > h5:nth-child(1)",
+    "snowpackSelector": ".snow_report__metrics__title",
+    "seasonTotalSelector": "li.snow_report__metrics__metric:nth-child(6) > div:nth-child(1) > h5:nth-child(1)",
+    "snow24Selector": "li.snow_report__metrics__metric:nth-child(2) > div:nth-child(1) > h5:nth-child(1)",
+    "snow48Selector": "li.snow_report__metrics__metric:nth-child(3) > div:nth-child(1) > h5:nth-child(1)",
+    "snow7DaySelector": "li.snow_report__metrics__metric:nth-child(4) > div:nth-child(1) > h5:nth-child(1)"
+  },
+  "terrain": {
+    "terrainSelector": ".terrain_summary",
+    "runsOpenSelector": "div.terrain_summary__tab_main:nth-child(2) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
+    "liftsOpenSelector": "div.terrain_summary__tab_main:nth-child(1) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
+    "liftDetailSelector": ""
+  }
+}
