@@ -82,6 +82,8 @@ export type AvalancheDangerLevel = {
 	below_treeline: AvalancheRating;
 };
 
+export type ResortOperatingStatus = DatabaseGenerated['public']['Enums']['resort_operating_status'];
+
 export type Database = MergeDeep<
 	DatabaseGenerated,
 	{
@@ -94,6 +96,9 @@ export type Database = MergeDeep<
 						slug: string;
 						closing_date: string | null;
 						closed: boolean;
+						status: ResortOperatingStatus;
+						expected_open_date: string | null;
+						expected_close_date: string | null;
 						base_depth: number;
 						runs_open: number;
 						total_runs: number;
@@ -153,6 +158,10 @@ export type Database = MergeDeep<
 				resort_detail: {
 					Row: {
 						closing_date: string | null;
+						closed: boolean;
+						status: ResortOperatingStatus;
+						expected_open_date: string | null;
+						expected_close_date: string | null;
 						current_temp: number;
 						current_weather: string;
 						display_name: string;
