@@ -6,7 +6,6 @@ import {
 import { constructSnowfallChartData } from '$lib/utils';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import dayjs from 'dayjs';
 
 export const load: PageServerLoad = async ({ params, locals, depends }) => {
 	depends('update:existingAlert');
@@ -26,9 +25,7 @@ export const load: PageServerLoad = async ({ params, locals, depends }) => {
 		.eq('slug', params.slug)
 		.returns<MountainSnowfallForecast[]>();
 
-	const isResortClosed = resortDetails?.closing_date
-		? dayjs().isAfter(dayjs(resortDetails.closing_date))
-		: false;
+	const isResortClosed = resortDetails?.closed ?? false;
 
 	const snowfallChartData = snowfallForecast ? constructSnowfallChartData(snowfallForecast) : [];
 

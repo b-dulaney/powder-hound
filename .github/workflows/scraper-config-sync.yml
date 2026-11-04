@@ -1,0 +1,53 @@
+# Uploads scraper configs changed on master to production Storage (bucket scraping-config),
+# so merging a scraper-fix PR is what deploys it. The dev Supabase branch picks up config
+# changes merged into `dev` through Supabase Branching instead.
+#
+# Secrets: SUPABASE_URL, SUPABASE_SECRET_KEY (production).
+name: Sync scraper configs
+
+on:
+  push:
+    branches: [master]
+    paths: ['supabase/storage/scraping-config/*.json']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scraper-config-sync
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Upload changed configs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SECRET_KEY" ]; then echo "::error::Supabase secrets are not set"; exit 1; fi
+          echo "::add-mask::$SUPABASE_SECRET_KEY"
+          cd supabase/storage/scraping-config
+          # Manual runs upload everything; pushes upload only what changed.
+          if [ "$EVENT" = "workflow_dispatch" ] || ! git cat-file -e "$BEFORE" 2>/dev/null; then
+            files=$(ls *.json)
+          else
+            files=$(git diff --name-only --diff-filter=AM "$BEFORE" HEAD -- . | xargs -r -n1 basename)
+          fi
+          for f in $files; do
+            jq -e . "$f" > /dev/null || { echo "::error::$f is not valid JSON"; exit 1; }
+            echo "Uploading $f"
+            curl -sS --fail-with-body -X POST "${SUPABASE_URL%/}/storage/v1/object/scraping-config/$f" \
+              -H "apikey: $SUPABASE_SECRET_KEY" -H "Authorization: Bearer $SUPABASE_SECRET_KEY" \
+              -H "x-upsert: true" -H "Cache-Control: max-age=60" -H "Content-Type: application/json" \
+              --data-binary "@$f"
+            echo
+          done
