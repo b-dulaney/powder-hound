@@ -1,0 +1,93 @@
+# Applies a resort-status proposal when the repo owner comments /approve on the issue the
+# scraper monitor (powder-hound-go) opened. The proposal is the JSON in the issue body's
+# `<!-- powderhound-proposal {...} -->` comment; it's written with set_resort_status as source
+# 'approved'. A status set by hand (source 'manual') is never overwritten.
+#
+# Secrets: SUPABASE_URL / SUPABASE_SECRET_KEY (production) and
+#          SUPABASE_DEV_URL / SUPABASE_DEV_SECRET_KEY (the persistent dev branch).
+name: Approve resort status
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+
+concurrency:
+  group: resort-status-${{ github.event.issue.number }}
+
+jobs:
+  apply:
+    # Only the repo owner, only on resort-status issues the owner's token opened, never on PRs.
+    if: >-
+      github.event.issue.pull_request == null &&
+      contains(github.event.issue.labels.*.name, 'resort-status') &&
+      github.event.issue.state == 'open' &&
+      github.event.comment.author_association == 'OWNER' &&
+      github.event.issue.user.login == github.repository_owner &&
+      startsWith(github.event.comment.body, '/approve')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read proposal
+        id: proposal
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          set -euo pipefail
+          json=$(printf '%s' "$ISSUE_BODY" | sed -n 's/.*<!-- powderhound-proposal \(.*\) -->.*/\1/p' | head -n1)
+          if [ -z "$json" ]; then echo "::error::No proposal block in the issue body"; exit 1; fi
+          printf '%s' "$json" | jq -e '
+            (.env == "prod" or .env == "dev") and
+            (.mountain_id | type == "number" and . == floor and . > 0) and
+            (.status == "open" or .status == "closed" or .status == "unknown") and
+            (.evidence | type == "string") and
+            ([.expected_open_date, .expected_close_date] | all(. == "" or test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")))
+          ' > /dev/null || { echo "::error::Proposal failed validation"; exit 1; }
+          printf '%s' "$json" > proposal.json
+          echo "env=$(jq -r .env proposal.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Apply status
+        id: apply
+        env:
+          TARGET_ENV: ${{ steps.proposal.outputs.env }}
+          PROD_URL: ${{ secrets.SUPABASE_URL }}
+          PROD_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          DEV_URL: ${{ secrets.SUPABASE_DEV_URL }}
+          DEV_KEY: ${{ secrets.SUPABASE_DEV_SECRET_KEY }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          set -euo pipefail
+          if [ "$TARGET_ENV" = "prod" ]; then url="$PROD_URL"; key="$PROD_KEY"; else url="$DEV_URL"; key="$DEV_KEY"; fi
+          if [ -z "$url" ] || [ -z "$key" ]; then echo "::error::Supabase secrets for $TARGET_ENV are not set"; exit 1; fi
+          echo "::add-mask::$key"
+          body=$(jq -c --arg issue "$ISSUE_URL" '{
+            p_mountain_id: .mountain_id,
+            p_status: .status,
+            p_source: "approved",
+            p_evidence: (.evidence + " (approved in " + $issue + ")"),
+            p_expected_open_date: (if .expected_open_date == "" then null else .expected_open_date end),
+            p_expected_close_date: (if .expected_close_date == "" then null else .expected_close_date end)
+          }' proposal.json)
+          response=$(curl -sS --fail-with-body -X POST "${url%/}/rest/v1/rpc/set_resort_status" \
+            -H "apikey: $key" -H "Authorization: Bearer $key" \
+            -H "Content-Type: application/json" -d "$body")
+          echo "changed=$response" >> "$GITHUB_OUTPUT"
+
+      - name: Report and close
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+          CHANGED: ${{ steps.apply.outputs.changed }}
+          TARGET_ENV: ${{ steps.proposal.outputs.env }}
+        run: |
+          set -euo pipefail
+          status=$(jq -r .status proposal.json)
+          if [ "$CHANGED" = "true" ]; then
+            msg="Applied: status set to \`$status\` on $TARGET_ENV."
+          else
+            msg="No change on $TARGET_ENV: the status was already \`$status\`, or it was set by hand (manual statuses are never overwritten)."
+          fi
+          gh issue comment "$ISSUE" --body "$msg"
+          gh issue close "$ISSUE" --reason completed
