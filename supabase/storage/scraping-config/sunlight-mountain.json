@@ -1,0 +1,23 @@
+{
+  "id": 7,
+  "name": "Sunlight Mountain",
+  "closingDate": null,
+  "separateURLs": false,
+  "conditionsURL": "https://sunlightmtn.com/explore/mountain-status/",
+  "terrainURL": null,
+  "conditions": {
+    "conditionsSelector": ".elementor-element-d6cb185",
+    "baseDepthSelector": ".elementor-element-57fe5f4 > div:nth-child(1) > div:nth-child(2) > p:nth-child(2)",
+    "snowpackSelector": ".elementor-element-0c67437 > div:nth-child(1) > div:nth-child(2) > p:nth-child(2)",
+    "seasonTotalSelector": ".elementor-element-9ac2bc6 > div:nth-child(1) > div:nth-child(2) > p:nth-child(2)",
+    "snow24Selector": ".elementor-element-3e4a10c > div:nth-child(1) > div:nth-child(2) > p:nth-child(2)",
+    "snow48Selector": ".elementor-element-84ed0fc > div:nth-child(1) > div:nth-child(2) > p:nth-child(2)",
+    "snow7DaySelector": ""
+  },
+  "terrain": {
+    "terrainSelector": ".elementor-element-d6cb185",
+    "runsOpenSelector": ".elementor-element-2b8d9e0 > div:nth-child(1) > div:nth-child(2) > p:nth-child(2)",
+    "liftsOpenSelector": ".elementor-element-a80e4d4 > div:nth-child(1) > div:nth-child(2) > p:nth-child(2)",
+    "liftDetailSelector": ""
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": 1,
+  "name": "Steamboat",
+  "closingDate": null,
+  "separateURLs": false,
+  "conditionsURL": "https://www.steamboat.com/the-mountain/mountain-report",
+  "terrainURL": null,
+  "conditions": {
+    "conditionsSelector": ".WeatherWidget_currentComponent__hXZNL > div:nth-child(2) > div:nth-child(1)",
+    "baseDepthSelector": "div.LabelUnitToggle_labelUnitToggle__hOrp5:nth-child(1) > div:nth-child(1) > h2:nth-child(1)",
+    "snowpackSelector": ".WeatherCard_list__FfTEF ul > li:nth-child(1) > p:nth-child(1) > span:nth-child(1) > strong:nth-child(1)",
+    "seasonTotalSelector": ".WeatherCard_list__FfTEF ul > li:nth-child(2) > p:nth-child(1) > span:nth-child(1) > strong:nth-child(1)",
+    "snow24Selector": ".WeatherCard_list__FfTEF ul > li:nth-child(3) > p:nth-child(1) > span:nth-child(1) > strong:nth-child(1)",
+    "snow48Selector": ".WeatherCard_list__FfTEF ul > li:nth-child(4) > p:nth-child(1) > span:nth-child(1) > strong:nth-child(1)",
+    "snow7DaySelector": ""
+  },
+  "terrain": {
+    "terrainSelector": ".StatsWidget_statsList__e9aIo",
+    "runsOpenSelector": ".StatsWidget_statsList__e9aIo > li.StatsWidget_statItem__yJzYz:nth-child(1) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
+    "liftsOpenSelector": ".StatsWidget_statsList__e9aIo > li.StatsWidget_statItem__yJzYz:nth-child(2) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
+    "liftDetailSelector": "Lift_inner__I42dG"
+  }
+}

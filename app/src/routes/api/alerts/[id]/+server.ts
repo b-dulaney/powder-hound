@@ -1,22 +1,21 @@
 import type { RequestEvent } from './$types';
 import type { UserAlerts } from '$lib/supabase.types';
 
-export const PUT = async (event: RequestEvent) => {
-	const { supabase, getSession } = event.locals;
-	const session = getSession();
+const unauthorized = () =>
+	new Response(JSON.stringify({ status: 401, success: false, body: 'Unauthorized' }), {
+		status: 401
+	});
 
-	if (!session) {
-		return new Response(
-			JSON.stringify({
-				status: 401,
-				success: false,
-				body: 'Unauthorized'
-			})
-		);
-	}
+const serverError = (message: string) =>
+	new Response(JSON.stringify({ status: 500, success: false, body: message }), { status: 500 });
+
+export const PUT = async (event: RequestEvent) => {
+	const { supabase, getUser } = event.locals;
+	const user = await getUser();
+	if (!user) return unauthorized();
 
 	const data = (await event.request.json()) as UserAlerts;
-	const { id, threshold_inches, paused } = data;
+	const { threshold_inches, paused } = data;
 
 	const { data: userAlerts, error } = await supabase
 		.from('user_alerts')
@@ -25,56 +24,33 @@ export const PUT = async (event: RequestEvent) => {
 			paused: paused,
 			updated_at: new Date().toISOString()
 		})
-		.eq('id', id)
+		.eq('id', Number(event.params.id))
+		.eq('user_id', user.id)
 		.returns<UserAlerts[]>()
 		.select();
 
-	if (error) {
-		return new Response(
-			JSON.stringify({
-				status: 500,
-				success: false,
-				body: error.message
-			})
-		);
-	}
+	if (error) return serverError(error.message);
 
 	return new Response(JSON.stringify({ status: 200, success: true, body: userAlerts }));
 };
 
 export const DELETE = async (event: RequestEvent) => {
-	const { supabase, getSession } = event.locals;
-	const session = getSession();
-
-	if (!session) {
-		return new Response(
-			JSON.stringify({
-				status: 401,
-				success: false,
-				body: 'Unauthorized'
-			})
-		);
-	}
-
-	const alertId = event.params.id;
+	const { supabase, getUser } = event.locals;
+	const user = await getUser();
+	if (!user) return unauthorized();
 
 	const { data, error } = await supabase
 		.from('user_alerts')
 		.delete()
-		.eq('id', alertId)
+		.eq('id', Number(event.params.id))
+		.eq('user_id', user.id)
 		.returns<UserAlerts[]>()
 		.select()
 		.single();
 
 	if (error) {
 		console.error(error);
-		return new Response(
-			JSON.stringify({
-				status: 500,
-				success: false,
-				body: error.message
-			})
-		);
+		return serverError(error.message);
 	}
 
 	return new Response(JSON.stringify({ status: 200, success: true, body: data }));
