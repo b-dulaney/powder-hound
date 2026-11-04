@@ -26,10 +26,22 @@ jobs:
       github.event.issue.state == 'open' &&
       github.event.comment.author_association == 'OWNER' &&
       github.event.issue.user.login == github.repository_owner &&
-      startsWith(github.event.comment.body, '/approve')
+      contains(github.event.comment.body, '/approve')
     runs-on: ubuntu-latest
     steps:
+      # The job filter can't trim whitespace, so it only checks the comment mentions /approve;
+      # this step requires it to be the comment's first word (leading spaces/newlines allowed).
+      - name: Check command
+        id: command
+        env:
+          COMMENT: ${{ github.event.comment.body }}
+        run: |
+          set -euo pipefail
+          first=$(printf '%s' "$COMMENT" | tr -s '[:space:]' ' ' | sed 's/^ //' | cut -d' ' -f1)
+          if [ "$first" = "/approve" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "Comment doesn't start with /approve; nothing to do."; fi
+
       - name: Read proposal
+        if: steps.command.outputs.ok == 'true'
         id: proposal
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
@@ -48,6 +60,7 @@ jobs:
           echo "env=$(jq -r .env proposal.json)" >> "$GITHUB_OUTPUT"
 
       - name: Apply status
+        if: steps.command.outputs.ok == 'true'
         id: apply
         env:
           TARGET_ENV: ${{ steps.proposal.outputs.env }}
@@ -75,6 +88,7 @@ jobs:
           echo "changed=$response" >> "$GITHUB_OUTPUT"
 
       - name: Report and close
+        if: steps.command.outputs.ok == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
