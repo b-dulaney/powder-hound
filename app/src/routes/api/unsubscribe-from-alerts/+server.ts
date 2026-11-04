@@ -1,23 +1,18 @@
 import type { RequestEvent } from '@sveltejs/kit';
 
 export const POST = async (event: RequestEvent) => {
-	const { supabase } = event.locals;
-	const data = await event.request.json();
-	const { userId } = data as { userId: string };
+	const { supabase, getUser } = event.locals;
 
-	const { error } = await supabase.from('user_alerts').delete().eq('user_id', userId).select();
-	if (error) {
-		return new Response(
-			JSON.stringify({
-				success: false,
-				body: error.message
-			})
-		);
+	// Only the signed-in user's own alerts; any userId in the body is ignored.
+	const user = await getUser();
+	if (!user) {
+		return new Response(JSON.stringify({ success: false, body: 'Unauthorized' }), { status: 401 });
 	}
 
-	return new Response(
-		JSON.stringify({
-			success: true
-		})
-	);
+	const { error } = await supabase.from('user_alerts').delete().eq('user_id', user.id).select();
+	if (error) {
+		return new Response(JSON.stringify({ success: false, body: error.message }), { status: 500 });
+	}
+
+	return new Response(JSON.stringify({ success: true }));
 };

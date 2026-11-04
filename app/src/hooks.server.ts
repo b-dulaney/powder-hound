@@ -1,13 +1,14 @@
-import { PUBLIC_SUPABASE_URL } from '$env/static/public';
-import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
+import { PUBLIC_SUPABASE_PUBLISHABLE_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 import { createServerClient } from '@supabase/ssr';
 import type { Handle } from '@sveltejs/kit';
 import type { Database } from '$lib/supabase-generated.types.ts';
 
 export const handle: Handle = async ({ event, resolve }) => {
+	// Per-request client acting as the signed-in user (or anon). Uses the publishable key so RLS
+	// applies; privileged operations go through $lib/server/supabase-admin instead.
 	event.locals.supabase = createServerClient<Database>(
 		PUBLIC_SUPABASE_URL,
-		SUPABASE_SERVICE_ROLE_KEY,
+		PUBLIC_SUPABASE_PUBLISHABLE_KEY,
 		{
 			cookies: {
 				get: (key) => event.cookies.get(key),
@@ -48,6 +49,18 @@ export const handle: Handle = async ({ event, resolve }) => {
 			}
 		}
 		return session;
+	};
+
+	/**
+	 * Returns the authenticated user, verified with the Auth server. Use this (not getSession) for
+	 * authorization decisions: getSession only decodes the cookie, which the client controls.
+	 */
+	event.locals.getUser = async () => {
+		const {
+			data: { user },
+			error
+		} = await event.locals.supabase.auth.getUser();
+		return error ? null : user;
 	};
 
 	return resolve(event, {

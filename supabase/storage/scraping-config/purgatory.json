@@ -1,0 +1,23 @@
+{
+  "id": 16,
+  "name": "Purgatory",
+  "closingDate": null,
+  "separateURLs": false,
+  "conditionsURL": "https://www.purgatory.ski/mountain/weather-conditions-webcams/",
+  "terrainURL": "",
+  "conditions": {
+    "conditionsSelector": "div.m-snow-totals-table:nth-child(8)",
+    "baseDepthSelector": "div.m-snow-totals-table:nth-child(8) > div:nth-child(4) > div:nth-child(1)",
+    "snowpackSelector": "",
+    "seasonTotalSelector": "div.m-snow-totals-table:nth-child(8) > div:nth-child(5) > div:nth-child(1)",
+    "snow24Selector": "div.m-snow-totals-table:nth-child(8) > div:nth-child(1) > div:nth-child(1)",
+    "snow48Selector": "div.m-snow-totals-table:nth-child(8) > div:nth-child(2) > div:nth-child(1)",
+    "snow7DaySelector": ""
+  },
+  "terrain": {
+    "terrainSelector": ".m-weather-header-charts",
+    "runsOpenSelector": ".m-weather-header-charts > div:nth-child(1) > div:nth-child(1) > svg:nth-child(1) > g:nth-child(4) > text:nth-child(1) > tspan:nth-child(1)",
+    "liftsOpenSelector": ".m-weather-header-charts > div:nth-child(2) > div:nth-child(1) > svg:nth-child(1) > g:nth-child(4) > text:nth-child(1) > tspan:nth-child(1)",
+    "liftDetailSelector": ""
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": 5,
+  "name": "A-Basin",
+  "closingDate": null,
+  "separateURLs": false,
+  "conditionsURL": "https://www.arapahoebasin.com/snow-report/",
+  "terrainURL": null,
+  "conditions": {
+    "conditionsSelector": ".snow-stats",
+    "baseDepthSelector": "div.numbers-box:nth-child(2) > div:nth-child(1) > h5:nth-child(1)",
+    "snowpackSelector": "",
+    "seasonTotalSelector": "",
+    "snow24Selector": "div.numbers-box:nth-child(1) > div:nth-child(1) > h5:nth-child(1)",
+    "snow48Selector": "div.value-box:nth-child(2) > h5:nth-child(1)",
+    "snow7DaySelector": ""
+  },
+  "terrain": {
+    "terrainSelector": ".terrain-summary",
+    "runsOpenSelector": "div.summary-box:nth-child(1) > h5:nth-child(1)",
+    "liftsOpenSelector": "div.summary-box:nth-child(2) > h5:nth-child(1)",
+    "liftDetailSelector": ""
+  }
+}

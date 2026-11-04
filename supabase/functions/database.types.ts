@@ -1,6 +1,6 @@
-import type { PostgrestError } from "@supabase/supabase-js";
-import type { Database as DatabaseGenerated } from "./supabase-generated.types";
-import type { MergeDeep } from "type-fest";
+import type { PostgrestError } from "https://esm.sh/@supabase/supabase-js@2.38.5";
+import type { Database as DatabaseGenerated } from "./database-generated.types.ts";
+import type { MergeDeep } from "npm:type-fest@4.26.1";
 
 export type TemperatureRange = {
   date: string;
