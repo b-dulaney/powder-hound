@@ -13,6 +13,7 @@ export type Database = {
 					overall_danger_level: number | null;
 					updated_at: string;
 				};
+				ComputedFields: never;
 				Insert: {
 					avalanche_summary?: string | null;
 					danger_levels?: Json[] | null;
@@ -87,6 +88,7 @@ export type Database = {
 					wind_deg_speed: string;
 					wind_gust: number;
 				};
+				ComputedFields: never;
 				Insert: {
 					cei?: number | null;
 					cnpcp_in?: number | null;
@@ -123,11 +125,35 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			debug_logs: {
+				Row: {
+					created_at: string;
+					id: number;
+					level: string;
+					message: string;
+					meta: Json | null;
+				};
+				ComputedFields: never;
+				Insert: {
+					created_at?: string;
+					id?: number;
+					level: string;
+					message: string;
+					meta?: Json | null;
+				};
+				Update: {
+					created_at?: string;
+					id?: number;
+					level?: string;
+					message?: string;
+					meta?: Json | null;
+				};
+				Relationships: [];
+			};
 			mountains: {
 				Row: {
 					caic_code: string;
 					display_name: string;
-					state: string;
 					lat: number;
 					location_type: string;
 					lon: number;
@@ -136,11 +162,12 @@ export type Database = {
 					pass: string | null;
 					region: string;
 					slug: string;
+					state: string | null;
 				};
+				ComputedFields: never;
 				Insert: {
 					caic_code: string;
 					display_name: string;
-					state: string;
 					lat: number;
 					location_type: string;
 					lon: number;
@@ -149,11 +176,11 @@ export type Database = {
 					pass?: string | null;
 					region: string;
 					slug: string;
+					state?: string | null;
 				};
 				Update: {
 					caic_code?: string;
 					display_name?: string;
-					state: string;
 					lat?: number;
 					location_type?: string;
 					lon?: number;
@@ -162,6 +189,7 @@ export type Database = {
 					pass?: string | null;
 					region?: string;
 					slug?: string;
+					state?: string | null;
 				};
 				Relationships: [];
 			};
@@ -171,6 +199,7 @@ export type Database = {
 					email: string;
 					user_id: string;
 				};
+				ComputedFields: never;
 				Insert: {
 					created_at?: string;
 					email: string;
@@ -181,21 +210,15 @@ export type Database = {
 					email?: string;
 					user_id?: string;
 				};
-				Relationships: [
-					{
-						foreignKeyName: 'profile_user_id_fkey';
-						columns: ['user_id'];
-						isOneToOne: true;
-						referencedRelation: 'users';
-						referencedColumns: ['id'];
-					}
-				];
+				Relationships: [];
 			};
 			resort_conditions: {
 				Row: {
 					base_depth: number | null;
 					closing_date: string | null;
 					display_name: string | null;
+					expected_close_date: string | null;
+					expected_open_date: string | null;
 					lifts_open: number | null;
 					lifts_url: string | null;
 					mountain_id: number;
@@ -207,15 +230,22 @@ export type Database = {
 					snow_stake_url: string | null;
 					snow_total: number | null;
 					snow_type: string | null;
+					status: Database['public']['Enums']['resort_operating_status'];
+					status_changed_at: string | null;
+					status_evidence: string | null;
+					status_source: string;
 					total_lifts: number | null;
 					total_runs: number | null;
 					trails_url: string | null;
 					updated_at: string | null;
 				};
+				ComputedFields: never;
 				Insert: {
 					base_depth?: number | null;
 					closing_date?: string | null;
 					display_name?: string | null;
+					expected_close_date?: string | null;
+					expected_open_date?: string | null;
 					lifts_open?: number | null;
 					lifts_url?: string | null;
 					mountain_id: number;
@@ -227,6 +257,10 @@ export type Database = {
 					snow_stake_url?: string | null;
 					snow_total?: number | null;
 					snow_type?: string | null;
+					status?: Database['public']['Enums']['resort_operating_status'];
+					status_changed_at?: string | null;
+					status_evidence?: string | null;
+					status_source?: string;
 					total_lifts?: number | null;
 					total_runs?: number | null;
 					trails_url?: string | null;
@@ -236,6 +270,8 @@ export type Database = {
 					base_depth?: number | null;
 					closing_date?: string | null;
 					display_name?: string | null;
+					expected_close_date?: string | null;
+					expected_open_date?: string | null;
 					lifts_open?: number | null;
 					lifts_url?: string | null;
 					mountain_id?: number;
@@ -247,6 +283,10 @@ export type Database = {
 					snow_stake_url?: string | null;
 					snow_total?: number | null;
 					snow_type?: string | null;
+					status?: Database['public']['Enums']['resort_operating_status'];
+					status_changed_at?: string | null;
+					status_evidence?: string | null;
+					status_source?: string;
 					total_lifts?: number | null;
 					total_runs?: number | null;
 					trails_url?: string | null;
@@ -333,6 +373,7 @@ export type Database = {
 					mountain_id: number;
 					resort_snow_24h: number | null;
 				};
+				ComputedFields: never;
 				Insert: {
 					caic_snow_24h?: number | null;
 					created_at?: string;
@@ -385,6 +426,45 @@ export type Database = {
 					}
 				];
 			};
+			resort_status_history: {
+				Row: {
+					changed_at: string;
+					evidence: string | null;
+					id: number;
+					mountain_id: number;
+					new_status: Database['public']['Enums']['resort_operating_status'];
+					old_status: Database['public']['Enums']['resort_operating_status'] | null;
+					source: string;
+				};
+				ComputedFields: never;
+				Insert: {
+					changed_at?: string;
+					evidence?: string | null;
+					id?: never;
+					mountain_id: number;
+					new_status: Database['public']['Enums']['resort_operating_status'];
+					old_status?: Database['public']['Enums']['resort_operating_status'] | null;
+					source: string;
+				};
+				Update: {
+					changed_at?: string;
+					evidence?: string | null;
+					id?: never;
+					mountain_id?: number;
+					new_status?: Database['public']['Enums']['resort_operating_status'];
+					old_status?: Database['public']['Enums']['resort_operating_status'] | null;
+					source?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'resort_status_history_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: false;
+						referencedRelation: 'resort_conditions';
+						referencedColumns: ['mountain_id'];
+					}
+				];
+			};
 			scraping_status: {
 				Row: {
 					display_name: string;
@@ -393,6 +473,7 @@ export type Database = {
 					success: boolean;
 					time: string;
 				};
+				ComputedFields: never;
 				Insert: {
 					display_name: string;
 					error?: string | null;
@@ -415,6 +496,7 @@ export type Database = {
 					stale_snow_past_24h: number | null;
 					stale_snow_past_48h: number | null;
 				};
+				ComputedFields: never;
 				Insert: {
 					mountain_id: number;
 					stale_snow_past_24h?: number | null;
@@ -475,6 +557,7 @@ export type Database = {
 					updated_at: string;
 					user_id: string;
 				};
+				ComputedFields: never;
 				Insert: {
 					created_at?: string;
 					display_name?: string | null;
@@ -588,6 +671,7 @@ export type Database = {
 					snow_past_48h: number | null;
 					updated_at: string | null;
 				};
+				ComputedFields: never;
 				Relationships: [];
 			};
 			backcountry_detail: {
@@ -595,7 +679,6 @@ export type Database = {
 					avalanche_summary: string | null;
 					current_temp: number | null;
 					current_weather: string | null;
-					state: string | null;
 					daily_weather_conditions: Json | null;
 					danger_levels: Json[] | null;
 					display_name: string | null;
@@ -612,16 +695,15 @@ export type Database = {
 					snow_next_24h: number | null;
 					snow_next_72h: number | null;
 					snow_past_7d: number | null;
+					state: string | null;
 					temperature_range: Json | null;
 					upcoming_snowfall_totals: Json | null;
 				};
+				ComputedFields: never;
 				Relationships: [];
 			};
 			backcountry_overview: {
 				Row: {
-					current_temp: number | null;
-					current_weather: string | null;
-					state: string | null;
 					display_name: string | null;
 					location_type: string | null;
 					mountain_id: number | null;
@@ -633,7 +715,9 @@ export type Database = {
 					snow_past_24h: number | null;
 					snow_past_48h: number | null;
 					snow_past_7d: number | null;
+					state: string | null;
 				};
+				ComputedFields: never;
 				Relationships: [];
 			};
 			mountain_snowfall_forecast: {
@@ -645,6 +729,7 @@ export type Database = {
 					prev_night_snowfall: number | null;
 					slug: string | null;
 				};
+				ComputedFields: never;
 				Relationships: [];
 			};
 			mountain_snowfall_historical: {
@@ -656,16 +741,20 @@ export type Database = {
 					prev_night_snowfall: number | null;
 					slug: string | null;
 				};
+				ComputedFields: never;
 				Relationships: [];
 			};
 			resort_detail: {
 				Row: {
 					base_depth: number | null;
+					closed: boolean | null;
 					closing_date: string | null;
 					current_temp: number | null;
 					current_weather: string | null;
 					daily_weather_conditions: Json | null;
 					display_name: string | null;
+					expected_close_date: string | null;
+					expected_open_date: string | null;
 					hourly_forecast: Json | null;
 					lifts_open: number | null;
 					lifts_url: string | null;
@@ -673,7 +762,6 @@ export type Database = {
 					mountain_id: number | null;
 					next_24h_hourly_snowfall: Json | null;
 					previous_snowfall_totals: Json | null;
-					state: string | null;
 					region: string | null;
 					runs_open: number | null;
 					slug: string | null;
@@ -685,6 +773,8 @@ export type Database = {
 					snow_stake_url: string | null;
 					snow_total: number | null;
 					snow_type: string | null;
+					state: string | null;
+					status: Database['public']['Enums']['resort_operating_status'] | null;
 					temperature_range: Json | null;
 					total_lifts: number | null;
 					total_runs: number | null;
@@ -692,6 +782,7 @@ export type Database = {
 					upcoming_snowfall_totals: Json | null;
 					updated_at: string | null;
 				};
+				ComputedFields: never;
 				Relationships: [];
 			};
 			resort_overview: {
@@ -700,19 +791,23 @@ export type Database = {
 					closed: boolean | null;
 					closing_date: string | null;
 					display_name: string | null;
+					expected_close_date: string | null;
+					expected_open_date: string | null;
 					lifts_open: number | null;
 					mountain_id: number | null;
 					region: string | null;
 					runs_open: number | null;
-					state: string | null;
 					slug: string | null;
 					snow_next_24h: number | null;
 					snow_next_72h: number | null;
 					snow_past_24h: number | null;
 					snow_past_48h: number | null;
+					state: string | null;
+					status: Database['public']['Enums']['resort_operating_status'] | null;
 					total_lifts: number | null;
 					total_runs: number | null;
 				};
+				ComputedFields: never;
 				Relationships: [];
 			};
 			web_scraper_overview: {
@@ -728,71 +823,29 @@ export type Database = {
 					recent_scraping_status: Json | null;
 					success_percentage_24h: number | null;
 				};
+				ComputedFields: never;
 				Relationships: [];
 			};
 		};
 		Functions: {
-			check_user_alerts: {
-				Args: Record<PropertyKey, never>;
-				Returns: undefined;
-			};
-			count_errors_by_day: {
-				Args: Record<PropertyKey, never>;
-				Returns: Json[];
-			};
-			get_24_hour_snowfall_for_mountain: {
-				Args: {
-					id: number;
-				};
-				Returns: number;
-			};
+			count_errors_by_day: { Args: Record<PropertyKey, never>; Returns: Json[] };
+			get_24_hour_snowfall_for_mountain: { Args: { id: number }; Returns: number };
 			get_24h_alert_data: {
 				Args: Record<PropertyKey, never>;
 				Returns: {
-					user_id: string;
+					display_name: string;
 					email: string;
 					mountain_id: number;
-					display_name: string;
-					threshold_inches: number;
 					snow_next_24h: number;
+					threshold_inches: number;
 					updated_at: string;
+					user_id: string;
 				}[];
 			};
-			get_72_hour_snowfall_for_mountain: {
-				Args: {
-					id: number;
-				};
-				Returns: number;
-			};
-			get_all_weather: {
-				Args: Record<PropertyKey, never>;
-				Returns: Json;
-			};
-			get_current_temperature_for_mountain: {
-				Args: {
-					id: number;
-				};
-				Returns: number;
-			};
-			get_current_weather_desc: {
-				Args: {
-					id: number;
-				};
-				Returns: string;
-			};
-			get_daily_weather: {
-				Args: {
-					lat: number;
-					lon: number;
-				};
-				Returns: Json;
-			};
-			get_daily_weather_conditions: {
-				Args: {
-					mountain_id: number;
-				};
-				Returns: Json;
-			};
+			get_72_hour_snowfall_for_mountain: { Args: { id: number }; Returns: number };
+			get_current_temperature_for_mountain: { Args: { id: number }; Returns: number };
+			get_current_weather_desc: { Args: { id: number }; Returns: string };
+			get_daily_weather_conditions: { Args: { mountain_id: number }; Returns: Json };
 			get_display_name_with_highest_failure_count: {
 				Args: Record<PropertyKey, never>;
 				Returns: Json;
@@ -801,148 +854,53 @@ export type Database = {
 				Args: Record<PropertyKey, never>;
 				Returns: Json;
 			};
-			get_hourly_weather_data: {
-				Args: {
-					id: number;
-				};
-				Returns: Json;
-			};
-			get_most_recent_timestamp: {
-				Args: {
-					mountain_id: number;
-				};
-				Returns: string;
-			};
-			get_next_24h_hourly_snowfall: {
-				Args: {
-					id: number;
-				};
-				Returns: Json;
-			};
+			get_hourly_weather_data: { Args: { id: number }; Returns: Json };
+			get_most_recent_timestamp: { Args: { mountain_id: number }; Returns: string };
+			get_next_24h_hourly_snowfall: { Args: { id: number }; Returns: Json };
 			get_overnight_alert_data: {
 				Args: Record<PropertyKey, never>;
 				Returns: {
-					user_id: string;
+					display_name: string;
 					email: string;
 					mountain_id: number;
-					display_name: string;
-					threshold_inches: number;
 					snow_past_24h: number;
-					updated_at: string;
 					snow_past_48h: number;
 					stale_snow_past_24h: number;
 					stale_snow_past_48h: number;
+					threshold_inches: number;
+					updated_at: string;
+					user_id: string;
 				}[];
 			};
-			get_past_24_hour_snowfall_for_mountain: {
+			get_past_24_hour_snowfall_for_mountain: { Args: { id: number }; Returns: number };
+			get_past_48_hour_snowfall_for_mountain: { Args: { id: number }; Returns: number };
+			get_past_7_days_snowfall_for_mountain: { Args: { id: number }; Returns: number };
+			get_previous_snowfall_total: { Args: { mountain_id: number }; Returns: Json };
+			get_recent_scraping_status: { Args: Record<PropertyKey, never>; Returns: Json };
+			get_success_percentage: { Args: Record<PropertyKey, never>; Returns: number };
+			get_success_percentage_24h: { Args: Record<PropertyKey, never>; Returns: number };
+			get_temperature_range: { Args: { id: number }; Returns: Json };
+			get_upcoming_snowfall_total: { Args: { mountain_id: number }; Returns: Json };
+			group_24h_forecast_alert_data: { Args: Record<PropertyKey, never>; Returns: Json };
+			group_overnight_snowfall_alert_data: { Args: Record<PropertyKey, never>; Returns: Json };
+			is_resort_closed: { Args: { resort_id: number }; Returns: boolean };
+			set_resort_status: {
 				Args: {
-					id: number;
-				};
-				Returns: number;
-			};
-			get_past_48_hour_snowfall_for_mountain: {
-				Args: {
-					id: number;
-				};
-				Returns: number;
-			};
-			get_past_7_days_snowfall_for_mountain: {
-				Args: {
-					id: number;
-				};
-				Returns: number;
-			};
-			get_previous_snowfall_total: {
-				Args: {
-					mountain_id: number;
-				};
-				Returns: Json;
-			};
-			get_recent_scraping_status: {
-				Args: Record<PropertyKey, never>;
-				Returns: Json;
-			};
-			get_season_snowfall_for_mountain: {
-				Args: {
-					id: number;
-				};
-				Returns: number;
-			};
-			get_success_percentage: {
-				Args: Record<PropertyKey, never>;
-				Returns: number;
-			};
-			get_success_percentage_24h: {
-				Args: Record<PropertyKey, never>;
-				Returns: number;
-			};
-			get_temperature_range: {
-				Args: {
-					id: number;
-				};
-				Returns: Json;
-			};
-			get_upcoming_snowfall_total: {
-				Args: {
-					mountain_id: number;
-				};
-				Returns: Json;
-			};
-			get_worst_scraping_job_overall: {
-				Args: Record<PropertyKey, never>;
-				Returns: string;
-			};
-			group_24h_forecast_alert_data: {
-				Args: Record<PropertyKey, never>;
-				Returns: Json;
-			};
-			group_overnight_snowfall_alert_data: {
-				Args: Record<PropertyKey, never>;
-				Returns: Json;
-			};
-			is_resort_closed: {
-				Args: {
-					resort_id: number;
+					p_evidence?: string;
+					p_expected_close_date?: string;
+					p_expected_open_date?: string;
+					p_mountain_id: number;
+					p_source: string;
+					p_status: Database['public']['Enums']['resort_operating_status'];
 				};
 				Returns: boolean;
 			};
-			process_avalanche_forecast: {
-				Args: Record<PropertyKey, never>;
-				Returns: undefined;
-			};
-			process_resort_web_elements: {
-				Args: Record<PropertyKey, never>;
-				Returns: undefined;
-			};
-			process_resort_web_elements_am: {
-				Args: Record<PropertyKey, never>;
-				Returns: undefined;
-			};
-			send_forecast_alert_emails: {
-				Args: Record<PropertyKey, never>;
-				Returns: undefined;
-			};
-			send_overnight_alert_emails: {
-				Args: Record<PropertyKey, never>;
-				Returns: undefined;
-			};
-			send_post_request: {
-				Args: {
-					mountain_name_param: string;
-				};
-				Returns: undefined;
-			};
-			update_resort_snowfall_historical: {
-				Args: Record<PropertyKey, never>;
-				Returns: undefined;
-			};
-			update_stale_snowfall_values: {
-				Args: Record<PropertyKey, never>;
-				Returns: undefined;
-			};
+			update_resort_snowfall_historical: { Args: Record<PropertyKey, never>; Returns: undefined };
+			update_stale_snowfall_values: { Args: Record<PropertyKey, never>; Returns: undefined };
 		};
 		Enums: {
 			alert_type: 'forecast' | 'overnight';
+			resort_operating_status: 'open' | 'closed' | 'unknown';
 		};
 		CompositeTypes: {
 			[_ in never]: never;
@@ -950,25 +908,29 @@ export type Database = {
 	};
 };
 
-type PublicSchema = Database[Extract<keyof Database, 'public'>];
+type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>;
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, 'public'>];
 
 export type Tables<
-	PublicTableNameOrOptions extends
-		| keyof (PublicSchema['Tables'] & PublicSchema['Views'])
-		| { schema: keyof Database },
-	TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-		? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-				Database[PublicTableNameOrOptions['schema']]['Views'])
+	DefaultSchemaTableNameOrOptions extends
+		| keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
+		| { schema: keyof DatabaseWithoutInternals },
+	TableName extends DefaultSchemaTableNameOrOptions extends {
+		schema: keyof DatabaseWithoutInternals;
+	}
+		? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+				DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
 		: never = never
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-	? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-			Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+	? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+			DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
 			Row: infer R;
 		}
 		? R
 		: never
-	: PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views'])
-		? (PublicSchema['Tables'] & PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+	: DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
+		? (DefaultSchema['Tables'] & DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
 				Row: infer R;
 			}
 			? R
@@ -976,18 +938,22 @@ export type Tables<
 		: never;
 
 export type TablesInsert<
-	PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
-	TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-		? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+	DefaultSchemaTableNameOrOptions extends
+		| keyof DefaultSchema['Tables']
+		| { schema: keyof DatabaseWithoutInternals },
+	TableName extends DefaultSchemaTableNameOrOptions extends {
+		schema: keyof DatabaseWithoutInternals;
+	}
+		? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
 		: never = never
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-	? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+	? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
 			Insert: infer I;
 		}
 		? I
 		: never
-	: PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-		? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+	: DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+		? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
 				Insert: infer I;
 			}
 			? I
@@ -995,18 +961,22 @@ export type TablesInsert<
 		: never;
 
 export type TablesUpdate<
-	PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
-	TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-		? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+	DefaultSchemaTableNameOrOptions extends
+		| keyof DefaultSchema['Tables']
+		| { schema: keyof DatabaseWithoutInternals },
+	TableName extends DefaultSchemaTableNameOrOptions extends {
+		schema: keyof DatabaseWithoutInternals;
+	}
+		? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
 		: never = never
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-	? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+	? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
 			Update: infer U;
 		}
 		? U
 		: never
-	: PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-		? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+	: DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+		? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
 				Update: infer U;
 			}
 			? U
@@ -1014,12 +984,40 @@ export type TablesUpdate<
 		: never;
 
 export type Enums<
-	PublicEnumNameOrOptions extends keyof PublicSchema['Enums'] | { schema: keyof Database },
-	EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-		? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+	DefaultSchemaEnumNameOrOptions extends
+		| keyof DefaultSchema['Enums']
+		| { schema: keyof DatabaseWithoutInternals },
+	EnumName extends DefaultSchemaEnumNameOrOptions extends {
+		schema: keyof DatabaseWithoutInternals;
+	}
+		? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
 		: never = never
-> = PublicEnumNameOrOptions extends { schema: keyof Database }
-	? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-	: PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-		? PublicSchema['Enums'][PublicEnumNameOrOptions]
+> = DefaultSchemaEnumNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+	? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
+	: DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
+		? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
 		: never;
+
+export type CompositeTypes<
+	PublicCompositeTypeNameOrOptions extends
+		| keyof DefaultSchema['CompositeTypes']
+		| { schema: keyof DatabaseWithoutInternals },
+	CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+		schema: keyof DatabaseWithoutInternals;
+	}
+		? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+		: never = never
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+	? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+	: PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
+		? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+		: never;
+
+export const Constants = {
+	public: {
+		Enums: {
+			alert_type: ['forecast', 'overnight'],
+			resort_operating_status: ['open', 'closed', 'unknown']
+		}
+	}
+} as const;
