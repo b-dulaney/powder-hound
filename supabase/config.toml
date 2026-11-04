@@ -445,3 +445,13 @@ enabled = true
 [functions.caic-data-cron]
 verify_jwt = false
 import_map = "./functions/import_map.json"
+
+# Persistent Supabase branch backing dev.powderhound.io (git branch `dev`).
+# Settings here override the defaults above on that branch only. Pause when idle:
+#   supabase --experimental branches pause dev   (unpause dev to resume)
+[remotes.dev]
+project_id = "ubdkgzytbwdkdrnbsnne"
+
+[remotes.dev.auth]
+site_url = "https://dev.powderhound.io"
+additional_redirect_urls = ["https://dev.powderhound.io/**"]
