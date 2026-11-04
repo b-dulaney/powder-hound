@@ -6,18 +6,19 @@
   "conditionsURL": "https://www.arapahoebasin.com/snow-report/",
   "terrainURL": null,
   "conditions": {
-    "conditionsSelector": ".snow-stats",
-    "baseDepthSelector": "div.numbers-box:nth-child(2) > div:nth-child(1) > h5:nth-child(1)",
+    "conditionsSelector": "#weather-and-conditions",
+    "waitForSelector": "#weather-and-conditions [class*=\"SnowfallBannerWidget_forecastItem\"]",
+    "baseDepthSelector": "[class*=\"WeatherWidget_currentComponent\"] [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"]) h2[class*=\"LabelUnitToggle_label\"]",
     "snowpackSelector": "",
-    "seasonTotalSelector": "",
-    "snow24Selector": "div.numbers-box:nth-child(1) > div:nth-child(1) > h5:nth-child(1)",
-    "snow48Selector": "div.value-box:nth-child(2) > h5:nth-child(1)",
+    "seasonTotalSelector": "[class*=\"SnowfallBannerWidget_snowfallSeasonTotal\"]",
+    "snow24Selector": "[class*=\"SnowfallBannerWidget_forecastItem\"]:nth-child(1) [class*=\"SnowfallBannerWidget_snowfallDepth\"]",
+    "snow48Selector": "[class*=\"SnowfallBannerWidget_forecastItem\"]:nth-child(3) [class*=\"SnowfallBannerWidget_snowfallDepth\"]",
     "snow7DaySelector": ""
   },
   "terrain": {
-    "terrainSelector": ".terrain-summary",
-    "runsOpenSelector": "div.summary-box:nth-child(1) > h5:nth-child(1)",
-    "liftsOpenSelector": "div.summary-box:nth-child(2) > h5:nth-child(1)",
+    "terrainSelector": "#weather-and-conditions [class*=\"StatsWidget_statsList\"]",
+    "runsOpenSelector": "li:nth-child(1) [class*=\"StatsWidget_statistic\"]",
+    "liftsOpenSelector": "li:nth-child(2) [class*=\"StatsWidget_statistic\"]",
     "liftDetailSelector": ""
   }
 }

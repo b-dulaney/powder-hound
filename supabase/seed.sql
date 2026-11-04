@@ -1,4 +1,5 @@
--- Local development seed. Runs on `supabase db reset` / `supabase start` (and on new preview branches).
+-- Development seed. Runs on `supabase db reset` / `supabase start`, and once when a Supabase
+-- branch is created. Must stay safe on hosted branches (see the Vault block below).
 -- Contains reference data only; no user data.
 
 -- Reference data: mountains (resorts + backcountry zones), exported from production 2026-11-03.
@@ -36,18 +37,24 @@ insert into public.mountains (mountain_id, display_name, lat, lon, region, caic_
   (32, 'Farwell Mountain', 40.8324, -106.853, 'Steamboat', 'FARWELL', 9333, 'backcountry', 'farwell-mountain', null, 'CO')
 on conflict (mountain_id) do nothing;
 
--- Vault secrets used by private.invoke_edge_function. Only created when missing, so hosted
--- environments that already have real values are never overwritten.
--- Local values: the API gateway as seen from the db container, and a service_role JWT signed
--- with the local stack's JWT secret (no key is committed to the repo).
+-- Vault secrets used by private.invoke_edge_function, for the LOCAL stack only.
+-- Values: the API gateway as seen from the db container, and a service_role JWT signed with the
+-- local stack's JWT secret (no key is committed to the repo).
+-- Hosted databases (prod and Supabase branches) don't expose app.settings.jwt_secret, so this
+-- block is skipped there; set a branch's project_url / service_role_key in its SQL editor.
+-- Only created when missing, so existing values are never overwritten.
 do $$
 begin
+  if current_setting('app.settings.jwt_secret', true) is null then
+    raise notice 'Not the local stack; skipping local Vault secrets';
+    return;
+  end if;
+
   if not exists (select 1 from vault.secrets where name = 'project_url') then
     perform vault.create_secret('http://kong:8000', 'project_url');
   end if;
 
-  if not exists (select 1 from vault.secrets where name = 'service_role_key')
-     and current_setting('app.settings.jwt_secret', true) is not null then
+  if not exists (select 1 from vault.secrets where name = 'service_role_key') then
     perform vault.create_secret(
       -- Compact JSON literal so the token is byte-identical to the local stack's SERVICE_ROLE_KEY.
       extensions.sign(
