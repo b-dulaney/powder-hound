@@ -1,7 +1,6 @@
 {
   "id": 7,
   "name": "Sunlight Mountain",
-  "closingDate": null,
   "separateURLs": false,
   "conditionsURL": "https://sunlightmtn.com/explore/mountain-status/",
   "terrainURL": null,

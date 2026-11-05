@@ -1,7 +1,6 @@
 {
   "id": 16,
   "name": "Purgatory",
-  "closingDate": null,
   "separateURLs": false,
   "conditionsURL": "https://www.purgatory.ski/mountain/weather-conditions-webcams/",
   "terrainURL": "",

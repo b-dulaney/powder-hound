@@ -1,7 +1,6 @@
 {
   "id": 9,
   "name": "Loveland",
-  "closingDate": null,
   "separateURLs": false,
   "conditionsURL": "https://skiloveland.com/snow-report/",
   "terrainURL": null,

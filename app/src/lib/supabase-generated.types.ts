@@ -215,7 +215,6 @@ export type Database = {
 			resort_conditions: {
 				Row: {
 					base_depth: number | null;
-					closing_date: string | null;
 					display_name: string | null;
 					expected_close_date: string | null;
 					expected_open_date: string | null;
@@ -242,7 +241,6 @@ export type Database = {
 				ComputedFields: never;
 				Insert: {
 					base_depth?: number | null;
-					closing_date?: string | null;
 					display_name?: string | null;
 					expected_close_date?: string | null;
 					expected_open_date?: string | null;
@@ -268,7 +266,6 @@ export type Database = {
 				};
 				Update: {
 					base_depth?: number | null;
-					closing_date?: string | null;
 					display_name?: string | null;
 					expected_close_date?: string | null;
 					expected_open_date?: string | null;
@@ -748,7 +745,6 @@ export type Database = {
 				Row: {
 					base_depth: number | null;
 					closed: boolean | null;
-					closing_date: string | null;
 					current_temp: number | null;
 					current_weather: string | null;
 					daily_weather_conditions: Json | null;
@@ -789,7 +785,6 @@ export type Database = {
 				Row: {
 					base_depth: number | null;
 					closed: boolean | null;
-					closing_date: string | null;
 					display_name: string | null;
 					expected_close_date: string | null;
 					expected_open_date: string | null;
