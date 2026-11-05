@@ -20,6 +20,8 @@
     "runsOpenSelector": ".pgri-groom__meta > span:nth-child(1)",
     "liftsOpenSelector": ".pgri-clist--lifts",
     "liftStatusSelector": ".pgri-clist--lifts .pgri-clist__pill:not(.pgri-clist__pill--closed)",
-    "runStatusSelector": ".pgri-groom__status:not(.pgri-groom__status--closed):not(.pgri-groom__status--none)"
+    "runStatusSelector": ".pgri-groom__status:not(.pgri-groom__status--closed):not(.pgri-groom__status--none)",
+    "liftRowSelector": ".pgri-clist--lifts .pgri-clist__pill",
+    "runRowSelector": ".pgri-groom__run"
   }
 }
