@@ -1,7 +1,6 @@
 {
   "id": 5,
   "name": "A-Basin",
-  "closingDate": null,
   "separateURLs": false,
   "conditionsURL": "https://www.arapahoebasin.com/snow-report/",
   "terrainURL": null,

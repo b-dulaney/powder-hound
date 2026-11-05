@@ -1,7 +1,6 @@
 {
   "id": 13,
   "name": "Vail",
-  "closingDate": null,
   "separateURLs": true,
   "conditionsURL": "https://www.vail.com/the-mountain/mountain-conditions/snow-and-weather-report.aspx",
   "terrainURL": "https://www.vail.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx",

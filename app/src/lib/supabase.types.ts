@@ -94,7 +94,6 @@ export type Database = MergeDeep<
 						mountain_id: number;
 						display_name: string;
 						slug: string;
-						closing_date: string | null;
 						closed: boolean;
 						status: ResortOperatingStatus;
 						expected_open_date: string | null;
@@ -157,7 +156,6 @@ export type Database = MergeDeep<
 				};
 				resort_detail: {
 					Row: {
-						closing_date: string | null;
 						closed: boolean;
 						status: ResortOperatingStatus;
 						expected_open_date: string | null;

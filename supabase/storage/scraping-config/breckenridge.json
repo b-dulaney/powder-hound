@@ -1,7 +1,6 @@
 {
   "id": 11,
   "name": "Breckenridge",
-  "closingDate": null,
   "separateURLs": true,
   "conditionsURL": "https://www.breckenridge.com/the-mountain/mountain-conditions/snow-and-weather-report.aspx",
   "terrainURL": "https://www.breckenridge.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx",

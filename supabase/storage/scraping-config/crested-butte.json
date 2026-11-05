@@ -1,7 +1,6 @@
 {
   "id": 19,
   "name": "Crested Butte",
-  "closingDate": null,
   "separateURLs": true,
   "conditionsURL": "https://www.skicb.com/the-mountain/mountain-conditions/weather-report.aspx",
   "terrainURL": "https://www.skicb.com/the-mountain/mountain-conditions/lift-and-terrain-status.aspx",

@@ -1,7 +1,6 @@
 {
   "id": 6,
   "name": "Eldora",
-  "closingDate": null,
   "separateURLs": true,
   "conditionsURL": "https://www.eldora.com/the-mountain/conditions-weather/current-conditions-forecast",
   "terrainURL": "https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine",
