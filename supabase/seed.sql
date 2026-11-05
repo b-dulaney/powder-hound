@@ -38,7 +38,7 @@ insert into public.mountains (mountain_id, display_name, lat, lon, region, caic_
 on conflict (mountain_id) do nothing;
 
 -- Reference data: resort_conditions columns maintained by hand (totals and links), exported from
--- production 2026-11-05. Scraped values and status are left to the scraper and the monitor.
+-- production 2026-11-05 (Monarch's total_lifts corrected to the 9 its site lists). Scraped values and status are left to the scraper and the monitor.
 -- Fills gaps only, so it can also be re-run on an existing branch:
 --   supabase db query --linked --project-ref <ref> -f supabase/seed.sql
 insert into public.resort_conditions (mountain_id, display_name, total_lifts, total_runs, snow_stake_url, lifts_url, trails_url) values
@@ -49,7 +49,7 @@ insert into public.resort_conditions (mountain_id, display_name, total_lifts, to
   (5, 'A-Basin', 9, 144, null, 'https://www.arapahoebasin.com/snow-report/#terrainAndLiftStatus', 'https://www.arapahoebasin.com/snow-report/#terrainAndLiftStatus'),
   (6, 'Eldora', 10, 62, null, 'https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine', 'https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine'),
   (7, 'Sunlight Mountain', 3, 77, null, 'https://sunlightmtn.com/the-mountain/snow-weather-report', 'https://sunlightmtn.com/the-mountain/snow-weather-report'),
-  (8, 'Monarch', 7, 67, null, 'https://skimonarch.com/conditions/', 'https://skimonarch.com/conditions/'),
+  (8, 'Monarch', 9, 67, null, 'https://skimonarch.com/conditions/', 'https://skimonarch.com/conditions/'),
   (9, 'Loveland', 10, 94, null, 'https://skiloveland.com/trail-lift-report/', 'https://skiloveland.com/trail-lift-report/'),
   (10, 'Beaver Creek', 26, 176, null, 'https://www.beavercreek.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx', 'https://www.beavercreek.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx'),
   (11, 'Breckenridge', 35, 192, null, 'https://www.breckenridge.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx', 'https://www.breckenridge.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx'),
