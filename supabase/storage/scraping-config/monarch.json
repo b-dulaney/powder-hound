@@ -5,7 +5,7 @@
   "conditionsURL": "https://skimonarch.com/conditions/",
   "terrainURL": null,
   "conditions": {
-    "conditionsSelector": "div.vc_row:nth-child(5)",
+    "conditionsSelector": "div.vc_row:has(.accumulation__table)",
     "baseDepthSelector": ".accumulation__table > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(5)",
     "snowpackSelector": "",
     "seasonTotalSelector": ".accumulation__table > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(6)",
@@ -14,7 +14,7 @@
     "snow7DaySelector": ".accumulation__table > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(4)"
   },
   "terrain": {
-    "terrainSelector": "div.vc_row:nth-child(5)",
+    "terrainSelector": "div.vc_row:has(.accumulation__table)",
     "runsOpenSelector": "div.open-count-item:nth-child(2)",
     "liftsOpenSelector": "div.open-count-item:nth-child(1)",
     "liftDetailSelector": ""

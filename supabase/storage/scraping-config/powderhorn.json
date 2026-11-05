@@ -2,24 +2,24 @@
   "id": 27,
   "name": "Powderhorn",
   "separateURLs": false,
-  "conditionsURL": "https://powderhorn.com/explore/conditions/mountain-report.html",
+  "conditionsURL": "https://www.powderhorn.com/conditions/",
   "terrainURL": "",
   "clickSelector": "",
   "conditions": {
-    "conditionsSelector": "#section-id-1671662993146 > div:nth-child(1)",
-    "baseDepthSelector": "#sppb-addon-1569088575114 > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)",
+    "conditionsSelector": "div.wp-block-columns:has(> .wp-block-column > p.pgri-stat-n)",
+    "baseDepthSelector": ".wp-block-column:nth-child(4) > p.pgri-stat-n",
     "snowpackSelector": "",
-    "seasonTotalSelector": "#sppb-addon-1671662993154 > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)",
-    "snow24Selector": "#sppb-addon-1569089277864 > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)",
-    "snow48Selector": "#sppb-addon-1569088575109 > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)",
-    "snow7DaySelector": ""
+    "seasonTotalSelector": ".wp-block-column:nth-child(5) > p.pgri-stat-n",
+    "snow24Selector": ".wp-block-column:nth-child(1) > p.pgri-stat-n",
+    "snow48Selector": ".wp-block-column:nth-child(2) > p.pgri-stat-n",
+    "snow7DaySelector": ".wp-block-column:nth-child(3) > p.pgri-stat-n"
   },
   "terrain": {
     "countLifts": true,
-    "terrainSelector": "#section-id-8d4c1922-b864-4140-a354-a101f849cddd",
-    "runsOpenSelector": "#column-id-5914a33f-3981-4491-b6ba-9ee60845bf1a",
-    "liftsOpenSelector": "#column-id-8e050e32-11a7-4c79-935c-ec1e595b8017",
-    "liftStatusSelector": "div.bg-grey:nth-child(2) > h3:nth-child(1) > span:nth-child(1)",
-    "runStatusSelector": "i.groomed > span.fa.fa-circle-o, i.groomed > span.fa.fa-check-square-o"
+    "terrainSelector": ".pgri-clist--lifts",
+    "runsOpenSelector": ".pgri-groom__meta > span:nth-child(1)",
+    "liftsOpenSelector": ".pgri-clist--lifts",
+    "liftStatusSelector": ".pgri-clist--lifts .pgri-clist__pill:not(.pgri-clist__pill--closed)",
+    "runStatusSelector": ".pgri-groom__status:not(.pgri-groom__status--closed):not(.pgri-groom__status--none)"
   }
 }

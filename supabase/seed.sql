@@ -37,6 +37,38 @@ insert into public.mountains (mountain_id, display_name, lat, lon, region, caic_
   (32, 'Farwell Mountain', 40.8324, -106.853, 'Steamboat', 'FARWELL', 9333, 'backcountry', 'farwell-mountain', null, 'CO')
 on conflict (mountain_id) do nothing;
 
+-- Reference data: resort_conditions columns maintained by hand (totals and links), exported from
+-- production 2026-11-05 (Monarch's total_lifts corrected to the 9 its site lists). Scraped values and status are left to the scraper and the monitor.
+-- Fills gaps only, so it can also be re-run on an existing branch:
+--   supabase db query --linked --project-ref <ref> -f supabase/seed.sql
+insert into public.resort_conditions (mountain_id, display_name, total_lifts, total_runs, snow_stake_url, lifts_url, trails_url) values
+  (1, 'Steamboat', 23, 184, 'https://www.youtube.com/watch?v=MrWQ6Qyehrg', 'https://www.steamboat.com/the-mountain/mountain-report#lift-and-trail-status', 'https://www.steamboat.com/the-mountain/mountain-report#lift-and-trail-status'),
+  (2, 'Aspen Snowmass', 20, 98, null, 'https://www.aspensnowmass.com/four-mountains/snowmass/lift-status', 'https://www.aspensnowmass.com/four-mountains/snowmass/snow-and-grooming-report'),
+  (3, 'Winter Park', 24, 171, 'https://www.youtube.com/watch?v=_wOIgFEMypY', 'https://www.winterparkresort.com/the-mountain/mountain-report#lift-and-trail-status', 'https://www.winterparkresort.com/the-mountain/mountain-report#lift-and-trail-status'),
+  (4, 'Copper Mountain', 23, 159, null, 'https://www.coppercolorado.com/the-mountain/trail-lift-info/winter-trail-report', 'https://www.coppercolorado.com/the-mountain/trail-lift-info/winter-trail-report'),
+  (5, 'A-Basin', 9, 144, null, 'https://www.arapahoebasin.com/snow-report/#terrainAndLiftStatus', 'https://www.arapahoebasin.com/snow-report/#terrainAndLiftStatus'),
+  (6, 'Eldora', 10, 62, null, 'https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine', 'https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine'),
+  (7, 'Sunlight Mountain', 3, 77, null, 'https://sunlightmtn.com/the-mountain/snow-weather-report', 'https://sunlightmtn.com/the-mountain/snow-weather-report'),
+  (8, 'Monarch', 9, 67, null, 'https://skimonarch.com/conditions/', 'https://skimonarch.com/conditions/'),
+  (9, 'Loveland', 10, 94, null, 'https://skiloveland.com/trail-lift-report/', 'https://skiloveland.com/trail-lift-report/'),
+  (10, 'Beaver Creek', 26, 176, null, 'https://www.beavercreek.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx', 'https://www.beavercreek.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx'),
+  (11, 'Breckenridge', 35, 192, null, 'https://www.breckenridge.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx', 'https://www.breckenridge.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx'),
+  (12, 'Keystone', 21, 143, null, 'https://www.keystoneresort.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx', 'https://www.keystoneresort.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx'),
+  (13, 'Vail', 33, 278, null, 'https://www.vail.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx', 'https://www.vail.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx'),
+  (14, 'Aspen Highlands', 5, 118, null, 'https://www.aspensnowmass.com/four-mountains/aspen-highlands/lift-status', 'https://www.aspensnowmass.com/four-mountains/aspen-highlands/snow-and-grooming-report'),
+  (15, 'Aspen Mountain', 9, 104, null, 'https://www.aspensnowmass.com/four-mountains/aspen-mountain/lift-status', 'https://www.aspensnowmass.com/four-mountains/aspen-mountain/snow-and-grooming-report'),
+  (16, 'Purgatory', 11, 107, 'https://www.youtube.com/watch?v=l8gwM2H_DgU', 'https://www.purgatory.ski/mountain/weather-conditions-webcams/snow-weather/', 'https://www.purgatory.ski/mountain/weather-conditions-webcams/snow-weather/'),
+  (18, 'Telluride', 17, 147, null, 'https://tellurideskiresort.com/snow-report/', 'https://tellurideskiresort.com/snow-report/'),
+  (19, 'Crested Butte', 15, 165, null, 'https://www.skicb.com/the-mountain/mountain-conditions/lift-and-terrain-status.aspx', 'https://www.skicb.com/the-mountain/mountain-conditions/lift-and-terrain-status.aspx'),
+  (27, 'Powderhorn', 5, 57, null, 'https://www.powderhorn.com/explore/conditions/weather-report.html', 'https://www.powderhorn.com/explore/conditions/weather-report.html')
+on conflict (mountain_id) do update set
+  display_name = coalesce(resort_conditions.display_name, excluded.display_name),
+  total_lifts = coalesce(resort_conditions.total_lifts, excluded.total_lifts),
+  total_runs = coalesce(resort_conditions.total_runs, excluded.total_runs),
+  snow_stake_url = coalesce(resort_conditions.snow_stake_url, excluded.snow_stake_url),
+  lifts_url = coalesce(resort_conditions.lifts_url, excluded.lifts_url),
+  trails_url = coalesce(resort_conditions.trails_url, excluded.trails_url);
+
 -- Vault secrets used by private.invoke_edge_function, for the LOCAL stack only.
 -- Values: the API gateway as seen from the db container, and a service_role JWT signed with the
 -- local stack's JWT secret (no key is committed to the repo).
