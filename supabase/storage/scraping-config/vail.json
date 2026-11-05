@@ -22,6 +22,8 @@
     "liftStatusSelector": "div.liftStatus__lifts__row--icon.icon-status-open",
     "runClickInteraction": true,
     "runClickSelector": "div.trailStatus__statusPanel.togglePanel:not(.no_results) > a:nth-child(1)",
-    "runStatusSelector": "div.trailStatus__trails__row--icon.icon-status-open"
+    "runStatusSelector": "div.trailStatus__trails__row--icon.icon-status-open",
+    "liftTotalSelector": ".terrain_summary__tab_main[data-terrain-status-id=\"lifts\"] .terrain_summary__tab_main__text",
+    "runTotalSelector": ".terrain_summary__tab_main[data-terrain-status-id=\"runs\"] .terrain_summary__tab_main__text"
   }
 }
