@@ -1,7 +1,6 @@
 {
   "id": 1,
   "name": "Steamboat",
-  "closingDate": null,
   "separateURLs": false,
   "conditionsURL": "https://www.steamboat.com/the-mountain/mountain-report",
   "terrainURL": null,

@@ -1,7 +1,6 @@
 {
   "id": 8,
   "name": "Monarch",
-  "closingDate": null,
   "separateURLs": false,
   "conditionsURL": "https://skimonarch.com/conditions/",
   "terrainURL": null,

@@ -1,7 +1,6 @@
 {
   "id": 10,
   "name": "Beaver Creek",
-  "closingDate": null,
   "separateURLs": true,
   "conditionsURL": "https://www.beavercreek.com/the-mountain/mountain-conditions/snow-and-weather-report.aspx",
   "terrainURL": "https://www.beavercreek.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx",
