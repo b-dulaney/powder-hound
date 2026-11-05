@@ -17,6 +17,8 @@
     "terrainSelector": ".terrain_summary",
     "runsOpenSelector": "div.terrain_summary__tab_main:nth-child(1) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
     "liftsOpenSelector": "div.terrain_summary__tab_main:nth-child(2) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
-    "liftDetailSelector": ""
+    "liftDetailSelector": "",
+    "liftTotalSelector": ".terrain_summary__tab_main[data-terrain-status-id=\"lifts\"] .terrain_summary__tab_main__text",
+    "runTotalSelector": ".terrain_summary__tab_main[data-terrain-status-id=\"runs\"] .terrain_summary__tab_main__text"
   }
 }
