@@ -1,23 +1,23 @@
 {
+  "conditions": {
+    "baseDepthSelector": "[class*=\"WeatherWidget_currentComponent\"] > div:nth-child(2) [class*=\"WeatherCard_iconStatToggle\"] h2[class*=\"LabelUnitToggle_label\"]",
+    "conditionsSelector": "#weather-and-conditions",
+    "seasonTotalSelector": "[class*=\"WeatherWidget_currentComponent\"] > div:nth-child(2) [class*=\"WeatherCard_list\"] li:nth-child(2) strong",
+    "snow24Selector": "[class*=\"WeatherWidget_currentComponent\"] > div:nth-child(2) [class*=\"WeatherCard_list\"] li:nth-child(3) strong",
+    "snow48Selector": "[class*=\"WeatherWidget_currentComponent\"] > div:nth-child(2) [class*=\"WeatherCard_list\"] li:nth-child(3) strong",
+    "snow7DaySelector": "[class*=\"WeatherWidget_currentComponent\"] > div:nth-child(2) [class*=\"WeatherCard_list\"] li:nth-child(4) strong",
+    "snowpackSelector": "",
+    "waitForSelector": "#weather-and-conditions [class*=\"WeatherWidget_currentComponent\"] h2[class*=\"LabelUnitToggle_label\"]"
+  },
+  "conditionsURL": "https://www.arapahoebasin.com/snow-report/",
   "id": 5,
   "name": "A-Basin",
   "separateURLs": false,
-  "conditionsURL": "https://www.arapahoebasin.com/snow-report/",
-  "terrainURL": null,
-  "conditions": {
-    "conditionsSelector": "#weather-and-conditions",
-    "waitForSelector": "#weather-and-conditions [class*=\"SnowfallBannerWidget_forecastItem\"]",
-    "baseDepthSelector": "[class*=\"WeatherWidget_currentComponent\"] [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"]) h2[class*=\"LabelUnitToggle_label\"]",
-    "snowpackSelector": "",
-    "seasonTotalSelector": "[class*=\"SnowfallBannerWidget_snowfallSeasonTotal\"]",
-    "snow24Selector": "[class*=\"SnowfallBannerWidget_forecastItem\"]:nth-child(1) [class*=\"SnowfallBannerWidget_snowfallDepth\"]",
-    "snow48Selector": "[class*=\"SnowfallBannerWidget_forecastItem\"]:nth-child(3) [class*=\"SnowfallBannerWidget_snowfallDepth\"]",
-    "snow7DaySelector": ""
-  },
   "terrain": {
-    "terrainSelector": "#weather-and-conditions [class*=\"StatsWidget_statsList\"]",
-    "runsOpenSelector": "li:nth-child(1) [class*=\"StatsWidget_statistic\"]",
-    "liftsOpenSelector": "li:nth-child(2) [class*=\"StatsWidget_statistic\"]",
-    "liftDetailSelector": ""
-  }
+    "liftDetailSelector": "",
+    "liftsOpenSelector": "li:nth-child(2) [class*=\"StatsWidget_statBig\"]",
+    "runsOpenSelector": "li:nth-child(1) [class*=\"StatsWidget_statBig\"]",
+    "terrainSelector": "#weather-and-conditions [class*=\"StatsWidget_statsList\"]"
+  },
+  "terrainURL": null
 }
