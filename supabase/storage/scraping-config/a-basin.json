@@ -5,14 +5,14 @@
   "conditionsURL": "https://www.arapahoebasin.com/snow-report/",
   "terrainURL": null,
   "conditions": {
-    "conditionsSelector": "#weather-and-conditions",
-    "waitForSelector": "#weather-and-conditions [class*=\"SnowfallBannerWidget_forecastItem\"]",
-    "baseDepthSelector": "[class*=\"WeatherWidget_currentComponent\"] [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"]) h2[class*=\"LabelUnitToggle_label\"]",
-    "snowpackSelector": "",
-    "seasonTotalSelector": "[class*=\"SnowfallBannerWidget_snowfallSeasonTotal\"]",
-    "snow24Selector": "[class*=\"SnowfallBannerWidget_forecastItem\"]:nth-child(1) [class*=\"SnowfallBannerWidget_snowfallDepth\"]",
-    "snow48Selector": "[class*=\"SnowfallBannerWidget_forecastItem\"]:nth-child(3) [class*=\"SnowfallBannerWidget_snowfallDepth\"]",
-    "snow7DaySelector": ""
+    "conditionsSelector": "body:has(#weather-and-conditions)",
+    "waitForSelector": "#weather-and-conditions [class*=\"WeatherWidget_currentComponent\"] h2[class*=\"LabelUnitToggle_label\"]",
+    "baseDepthSelector": "#weather-and-conditions [class*=\"WeatherWidget_currentComponent\"] [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"]) h2[class*=\"LabelUnitToggle_label\"]",
+    "snowpackSelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(1) strong",
+    "seasonTotalSelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(2) strong",
+    "snow24Selector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(3) strong",
+    "snow48Selector": "li#snow .conditions li:nth-child(2)",
+    "snow7DaySelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(4) strong"
   },
   "terrain": {
     "terrainSelector": "#weather-and-conditions [class*=\"StatsWidget_statsList\"]",
