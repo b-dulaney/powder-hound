@@ -19,13 +19,16 @@ concurrency:
 
 jobs:
   apply:
-    # Only the repo owner, only on resort-status issues the owner's token opened, never on PRs.
+    # Only the repo owner, only on resort-status issues the monitor opened (as its GitHub App bot,
+    # named by the MONITOR_BOT_LOGIN repo variable, e.g. "powderhound-bot[bot]", or with the
+    # owner's token before the app), never on PRs.
     if: >-
       github.event.issue.pull_request == null &&
       contains(github.event.issue.labels.*.name, 'resort-status') &&
       github.event.issue.state == 'open' &&
       github.event.comment.author_association == 'OWNER' &&
-      github.event.issue.user.login == github.repository_owner &&
+      (github.event.issue.user.login == github.repository_owner ||
+        (vars.MONITOR_BOT_LOGIN != '' && github.event.issue.user.login == vars.MONITOR_BOT_LOGIN)) &&
       contains(github.event.comment.body, '/approve')
     runs-on: ubuntu-latest
     steps:
