@@ -1,23 +1,24 @@
 {
+  "clickSelector": ".styles__StyledDorToggle-sc-xn976m-0",
+  "conditions": {
+    "baseDepthSelector": "li[class*=\"styles__ReportDataItem-\"]:nth-child(1) [class*=\"styles__ItemValue\"]",
+    "conditionsSelector": "#main-content [class*=\"styles__StyledDorSnowReport\"]",
+    "seasonTotalSelector": "li[class*=\"styles__ReportDataItem-\"]:nth-child(5) [class*=\"styles__ItemValue\"]",
+    "snow24Selector": "li[class*=\"styles__ReportDataItem-\"]:nth-child(3) [class*=\"styles__ItemValue\"]",
+    "snow48Selector": "li[class*=\"styles__ReportDataItem-\"]:nth-child(3) [class*=\"styles__ItemValue\"]",
+    "snow7DaySelector": "",
+    "snowpackSelector": "",
+    "waitForSelector": "#main-content [class*=\"styles__StyledDorSnowReport\"] [class*=\"styles__ItemValue\"]"
+  },
+  "conditionsURL": "https://www.coppercolorado.com/the-mountain/conditions-weather/snow-report",
   "id": 4,
   "name": "Copper Mountain",
   "separateURLs": false,
-  "conditionsURL": "https://www.coppercolorado.com/the-mountain/conditions-weather/snow-report",
-  "terrainURL": null,
-  "clickSelector": ".styles__StyledDorToggle-sc-xn976m-0",
-  "conditions": {
-    "conditionsSelector": ".gxUVIf",
-    "baseDepthSelector": "li.eiyyYQ:nth-child(1) > div:nth-child(1) > p:nth-child(2)",
-    "snowpackSelector": "",
-    "seasonTotalSelector": "li.styles__ReportDataItem-sc-1kqptpn-9:nth-child(5) > div:nth-child(1) > p:nth-child(2)",
-    "snow24Selector": "li.eiyyYQ:nth-child(3) > div:nth-child(1) > p:nth-child(2)",
-    "snow48Selector": "li.eiyyYQ:nth-child(3) > div:nth-child(1) > p:nth-child(2)",
-    "snow7DaySelector": ""
-  },
   "terrain": {
-    "terrainSelector": "div.styles__StyledDorMeasurements-sc-14hw9i4-0:nth-child(1)",
-    "runsOpenSelector": "div.styles__StyledDorMeasurements-sc-14hw9i4-0:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)",
-    "liftsOpenSelector": "div.styles__StyledDorMeasurements-sc-14hw9i4-0:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)",
-    "liftDetailSelector": ""
-  }
+    "liftDetailSelector": "",
+    "liftsOpenSelector": "[class*=\"styles__StyledDorMeasurementItem\"]:nth-child(2) [class*=\"styles__TextPrimary\"]",
+    "runsOpenSelector": "[class*=\"styles__StyledDorMeasurementItem\"]:nth-child(1) [class*=\"styles__TextPrimary\"]",
+    "terrainSelector": "#main-content [class*=\"styles__StyledDorMeasurements-\"]"
+  },
+  "terrainURL": null
 }
