@@ -1,23 +1,24 @@
 {
+  "clickSelector": "#open-dor-information-drawer",
+  "conditions": {
+    "baseDepthSelector": "ul[class*=\"ReportDataItems\"] > li:nth-child(1) p[class*=\"ItemValue\"]",
+    "conditionsSelector": "#main-content [class*=\"StyledDorSnowReport\"]",
+    "seasonTotalSelector": "ul[class*=\"ReportDataItems\"] > li:nth-child(6) p[class*=\"ItemValue\"]",
+    "snow24Selector": "ul[class*=\"ReportDataItems\"] > li:nth-child(3) p[class*=\"ItemValue\"]",
+    "snow48Selector": "ul[class*=\"ReportDataItems\"] > li:nth-child(4) p[class*=\"ItemValue\"]",
+    "snow7DaySelector": "ul[class*=\"ReportDataItems\"] > li:nth-child(5) p[class*=\"ItemValue\"]",
+    "snowpackSelector": "",
+    "waitForSelector": "#main-content [class*=\"StyledDorSnowReport\"] ul[class*=\"ReportDataItems\"] > li:nth-child(1) p[class*=\"ItemValue\"]"
+  },
+  "conditionsURL": "https://www.eldora.com/the-mountain/conditions-weather/current-conditions-forecast",
   "id": 6,
   "name": "Eldora",
-  "separateURLs": true,
-  "conditionsURL": "https://www.eldora.com/the-mountain/conditions-weather/current-conditions-forecast",
-  "terrainURL": "https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine",
-  "clickSelector": ".styles__StyledDorToggle-sc-xn976m-0",
-  "conditions": {
-    "conditionsSelector": "ul.styles__ReportDataItems-sc-1kqptpn-8:nth-child(2)",
-    "baseDepthSelector": "li.inMLLw:nth-child(1) > div:nth-child(1) > p:nth-child(2)",
-    "snowpackSelector": "",
-    "seasonTotalSelector": "li.styles__ReportDataItem-sc-1kqptpn-9:nth-child(6) > div:nth-child(1) > p:nth-child(2)",
-    "snow24Selector": "li.inMLLw:nth-child(3) > div:nth-child(1) > p:nth-child(2)",
-    "snow48Selector": "li.inMLLw:nth-child(4) > div:nth-child(1) > p:nth-child(2)",
-    "snow7DaySelector": "li.inMLLw:nth-child(5) > div:nth-child(1) > p:nth-child(2)"
-  },
+  "separateURLs": false,
   "terrain": {
-    "terrainSelector": ".styles__StyledDorMeasurements-sc-14hw9i4-0",
-    "runsOpenSelector": "div.styles__StyledDorMeasurementItem-sc-efp7vw-0:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)",
-    "liftsOpenSelector": "div.styles__StyledDorMeasurementItem-sc-efp7vw-0:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)",
-    "liftDetailSelector": ""
-  }
+    "liftDetailSelector": "",
+    "liftsOpenSelector": "[class*=\"StyledDorMeasurementItem\"]:nth-child(1) [class*=\"TextPrimary\"]",
+    "runsOpenSelector": "[class*=\"StyledDorMeasurementItem\"]:nth-child(2) [class*=\"TextPrimary\"]",
+    "terrainSelector": "#dor-drawer [class*=\"StyledDorMeasurements\"]"
+  },
+  "terrainURL": "https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine"
 }
