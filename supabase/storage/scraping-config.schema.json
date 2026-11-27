@@ -47,8 +47,8 @@
           "maxLength": 40
         },
         "source": {
-          "description": "How a frame is captured. image: HTTP GET of a still that the provider refreshes. hls: one frame from an HLS (.m3u8) stream via ffmpeg. youtube: url is a camstreamer embed (which redirects to the current YouTube live video) or a YouTube video URL; the frame is that video's live thumbnail.",
-          "enum": ["image", "hls", "youtube"]
+          "description": "How a frame is captured. image: HTTP GET of a still that the provider refreshes. youtube: url is a camstreamer embed (which redirects to the current YouTube live video) or a YouTube video URL; the frame is that video's live thumbnail.",
+          "enum": ["image", "youtube"]
         },
         "url": {
           "description": "Where the frame comes from, per source.",
