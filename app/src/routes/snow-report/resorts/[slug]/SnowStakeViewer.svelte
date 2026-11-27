@@ -209,7 +209,7 @@
 				{/if}
 				{#if cam.unofficial}
 					<li>
-						{resortName} says this stake isn't its official snowfall measurement; see Mountain Conditions
+						{resortName} doesn't use this stake as its official snowfall measurement. See Mountain Conditions
 						for reported totals.
 					</li>
 				{/if}
