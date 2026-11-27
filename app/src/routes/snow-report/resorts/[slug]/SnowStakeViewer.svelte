@@ -213,7 +213,7 @@
 						for reported totals.
 					</li>
 				{/if}
-				<li>Captured hourly. Times are Mountain Time.</li>
+				<li>Captured hourly for the last {SNOW_STAKE_WINDOW_HOURS} hours.</li>
 			</ul>
 			<a
 				href={cam.pageUrl}
