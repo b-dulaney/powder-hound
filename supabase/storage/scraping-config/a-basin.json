@@ -1,23 +1,23 @@
 {
+  "conditions": {
+    "baseDepthSelector": "#weather-and-conditions [class*=\"WeatherWidget_currentComponent\"] [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"]) h2[class*=\"LabelUnitToggle_label\"]",
+    "conditionsSelector": "body:has(#weather-and-conditions)",
+    "seasonTotalSelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(2) strong",
+    "snow24Selector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(3) strong",
+    "snow48Selector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(3) strong",
+    "snow7DaySelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(4) strong",
+    "snowpackSelector": "",
+    "waitForSelector": "#weather-and-conditions [class*=\"WeatherWidget_currentComponent\"] h2[class*=\"LabelUnitToggle_label\"]"
+  },
+  "conditionsURL": "https://www.arapahoebasin.com/snow-report/",
   "id": 5,
   "name": "A-Basin",
   "separateURLs": false,
-  "conditionsURL": "https://www.arapahoebasin.com/snow-report/",
-  "terrainURL": null,
-  "conditions": {
-    "conditionsSelector": "body:has(#weather-and-conditions)",
-    "waitForSelector": "#weather-and-conditions [class*=\"WeatherWidget_currentComponent\"] h2[class*=\"LabelUnitToggle_label\"]",
-    "baseDepthSelector": "#weather-and-conditions [class*=\"WeatherWidget_currentComponent\"] [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"]) h2[class*=\"LabelUnitToggle_label\"]",
-    "snowpackSelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(1) strong",
-    "seasonTotalSelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(2) strong",
-    "snow24Selector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(3) strong",
-    "snow48Selector": "li#snow .conditions li:nth-child(2)",
-    "snow7DaySelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(4) strong"
-  },
   "terrain": {
-    "terrainSelector": "#weather-and-conditions [class*=\"StatsWidget_statsList\"]",
-    "runsOpenSelector": "li:nth-child(1) [class*=\"StatsWidget_statistic\"]",
+    "liftDetailSelector": "",
     "liftsOpenSelector": "li:nth-child(2) [class*=\"StatsWidget_statistic\"]",
-    "liftDetailSelector": ""
-  }
+    "runsOpenSelector": "li:nth-child(1) [class*=\"StatsWidget_statistic\"]",
+    "terrainSelector": "#weather-and-conditions [class*=\"StatsWidget_statsList\"]"
+  },
+  "terrainURL": null
 }
