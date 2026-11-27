@@ -1,6 +1,11 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
+	// Allows to automatically instantiate createClient with right options
+	// instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+	__InternalSupabase: {
+		PostgrestVersion: '14.18';
+	};
 	public: {
 		Tables: {
 			avalanche_forecasts: {
@@ -13,7 +18,6 @@ export type Database = {
 					overall_danger_level: number | null;
 					updated_at: string;
 				};
-				ComputedFields: never;
 				Insert: {
 					avalanche_summary?: string | null;
 					danger_levels?: Json[] | null;
@@ -88,7 +92,6 @@ export type Database = {
 					wind_deg_speed: string;
 					wind_gust: number;
 				};
-				ComputedFields: never;
 				Insert: {
 					cei?: number | null;
 					cnpcp_in?: number | null;
@@ -133,7 +136,6 @@ export type Database = {
 					message: string;
 					meta: Json | null;
 				};
-				ComputedFields: never;
 				Insert: {
 					created_at?: string;
 					id?: number;
@@ -147,6 +149,30 @@ export type Database = {
 					level?: string;
 					message?: string;
 					meta?: Json | null;
+				};
+				Relationships: [];
+			};
+			job_heartbeats: {
+				Row: {
+					job: string;
+					last_error: string | null;
+					last_error_at: string | null;
+					last_success_at: string | null;
+					max_age: string | null;
+				};
+				Insert: {
+					job: string;
+					last_error?: string | null;
+					last_error_at?: string | null;
+					last_success_at?: string | null;
+					max_age?: string | null;
+				};
+				Update: {
+					job?: string;
+					last_error?: string | null;
+					last_error_at?: string | null;
+					last_success_at?: string | null;
+					max_age?: string | null;
 				};
 				Relationships: [];
 			};
@@ -164,7 +190,6 @@ export type Database = {
 					slug: string;
 					state: string | null;
 				};
-				ComputedFields: never;
 				Insert: {
 					caic_code: string;
 					display_name: string;
@@ -199,7 +224,6 @@ export type Database = {
 					email: string;
 					user_id: string;
 				};
-				ComputedFields: never;
 				Insert: {
 					created_at?: string;
 					email: string;
@@ -211,6 +235,157 @@ export type Database = {
 					user_id?: string;
 				};
 				Relationships: [];
+			};
+			resort_cam_images: {
+				Row: {
+					cam_id: number;
+					captured_at: string;
+					height: number;
+					id: number;
+					path: string;
+					sha256: string;
+					source_updated_at: string | null;
+					thumb_path: string;
+					width: number;
+				};
+				Insert: {
+					cam_id: number;
+					captured_at: string;
+					height: number;
+					id?: never;
+					path: string;
+					sha256: string;
+					source_updated_at?: string | null;
+					thumb_path: string;
+					width: number;
+				};
+				Update: {
+					cam_id?: number;
+					captured_at?: string;
+					height?: number;
+					id?: never;
+					path?: string;
+					sha256?: string;
+					source_updated_at?: string | null;
+					thumb_path?: string;
+					width?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'resort_cam_images_cam_id_fkey';
+						columns: ['cam_id'];
+						isOneToOne: false;
+						referencedRelation: 'resort_cams';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			resort_cam_status: {
+				Row: {
+					cam_id: number;
+					last_error: string | null;
+					last_error_at: string | null;
+					last_success_at: string | null;
+				};
+				Insert: {
+					cam_id: number;
+					last_error?: string | null;
+					last_error_at?: string | null;
+					last_success_at?: string | null;
+				};
+				Update: {
+					cam_id?: number;
+					last_error?: string | null;
+					last_error_at?: string | null;
+					last_success_at?: string | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'resort_cam_status_cam_id_fkey';
+						columns: ['cam_id'];
+						isOneToOne: true;
+						referencedRelation: 'resort_cams';
+						referencedColumns: ['id'];
+					}
+				];
+			};
+			resort_cams: {
+				Row: {
+					active: boolean;
+					cleared_at: string | null;
+					id: number;
+					key: string;
+					kind: string;
+					label: string;
+					mountain_id: number;
+					page_url: string;
+					sort_order: number;
+					unofficial: boolean;
+					updated_at: string;
+				};
+				Insert: {
+					active?: boolean;
+					cleared_at?: string | null;
+					id?: never;
+					key: string;
+					kind: string;
+					label: string;
+					mountain_id: number;
+					page_url: string;
+					sort_order?: number;
+					unofficial?: boolean;
+					updated_at?: string;
+				};
+				Update: {
+					active?: boolean;
+					cleared_at?: string | null;
+					id?: never;
+					key?: string;
+					kind?: string;
+					label?: string;
+					mountain_id?: number;
+					page_url?: string;
+					sort_order?: number;
+					unofficial?: boolean;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'resort_cams_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: false;
+						referencedRelation: 'backcountry_detail';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_cams_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: false;
+						referencedRelation: 'backcountry_overview';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_cams_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: false;
+						referencedRelation: 'mountains';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_cams_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: false;
+						referencedRelation: 'resort_detail';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_cams_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: false;
+						referencedRelation: 'resort_overview';
+						referencedColumns: ['mountain_id'];
+					}
+				];
 			};
 			resort_conditions: {
 				Row: {
@@ -238,7 +413,6 @@ export type Database = {
 					trails_url: string | null;
 					updated_at: string | null;
 				};
-				ComputedFields: never;
 				Insert: {
 					base_depth?: number | null;
 					display_name?: string | null;
@@ -370,7 +544,6 @@ export type Database = {
 					mountain_id: number;
 					resort_snow_24h: number | null;
 				};
-				ComputedFields: never;
 				Insert: {
 					caic_snow_24h?: number | null;
 					created_at?: string;
@@ -433,7 +606,6 @@ export type Database = {
 					old_status: Database['public']['Enums']['resort_operating_status'] | null;
 					source: string;
 				};
-				ComputedFields: never;
 				Insert: {
 					changed_at?: string;
 					evidence?: string | null;
@@ -462,6 +634,60 @@ export type Database = {
 					}
 				];
 			};
+			resort_status_reads: {
+				Row: {
+					mountain_id: number;
+					page_fingerprint: string;
+					read_at: string;
+				};
+				Insert: {
+					mountain_id: number;
+					page_fingerprint: string;
+					read_at?: string;
+				};
+				Update: {
+					mountain_id?: number;
+					page_fingerprint?: string;
+					read_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'resort_status_reads_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'backcountry_detail';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_status_reads_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'backcountry_overview';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_status_reads_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'mountains';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_status_reads_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'resort_detail';
+						referencedColumns: ['mountain_id'];
+					},
+					{
+						foreignKeyName: 'resort_status_reads_mountain_id_fkey';
+						columns: ['mountain_id'];
+						isOneToOne: true;
+						referencedRelation: 'resort_overview';
+						referencedColumns: ['mountain_id'];
+					}
+				];
+			};
 			scraping_status: {
 				Row: {
 					display_name: string;
@@ -470,7 +696,6 @@ export type Database = {
 					success: boolean;
 					time: string;
 				};
-				ComputedFields: never;
 				Insert: {
 					display_name: string;
 					error?: string | null;
@@ -493,7 +718,6 @@ export type Database = {
 					stale_snow_past_24h: number | null;
 					stale_snow_past_48h: number | null;
 				};
-				ComputedFields: never;
 				Insert: {
 					mountain_id: number;
 					stale_snow_past_24h?: number | null;
@@ -554,7 +778,6 @@ export type Database = {
 					updated_at: string;
 					user_id: string;
 				};
-				ComputedFields: never;
 				Insert: {
 					created_at?: string;
 					display_name?: string | null;
@@ -668,7 +891,6 @@ export type Database = {
 					snow_past_48h: number | null;
 					updated_at: string | null;
 				};
-				ComputedFields: never;
 				Relationships: [];
 			};
 			backcountry_detail: {
@@ -696,7 +918,6 @@ export type Database = {
 					temperature_range: Json | null;
 					upcoming_snowfall_totals: Json | null;
 				};
-				ComputedFields: never;
 				Relationships: [];
 			};
 			backcountry_overview: {
@@ -714,7 +935,6 @@ export type Database = {
 					snow_past_7d: number | null;
 					state: string | null;
 				};
-				ComputedFields: never;
 				Relationships: [];
 			};
 			mountain_snowfall_forecast: {
@@ -726,7 +946,6 @@ export type Database = {
 					prev_night_snowfall: number | null;
 					slug: string | null;
 				};
-				ComputedFields: never;
 				Relationships: [];
 			};
 			mountain_snowfall_historical: {
@@ -738,7 +957,6 @@ export type Database = {
 					prev_night_snowfall: number | null;
 					slug: string | null;
 				};
-				ComputedFields: never;
 				Relationships: [];
 			};
 			resort_detail: {
@@ -778,7 +996,6 @@ export type Database = {
 					upcoming_snowfall_totals: Json | null;
 					updated_at: string | null;
 				};
-				ComputedFields: never;
 				Relationships: [];
 			};
 			resort_overview: {
@@ -802,7 +1019,6 @@ export type Database = {
 					total_lifts: number | null;
 					total_runs: number | null;
 				};
-				ComputedFields: never;
 				Relationships: [];
 			};
 			web_scraper_overview: {
@@ -818,15 +1034,17 @@ export type Database = {
 					recent_scraping_status: Json | null;
 					success_percentage_24h: number | null;
 				};
-				ComputedFields: never;
 				Relationships: [];
 			};
 		};
 		Functions: {
-			count_errors_by_day: { Args: Record<PropertyKey, never>; Returns: Json[] };
-			get_24_hour_snowfall_for_mountain: { Args: { id: number }; Returns: number };
+			count_errors_by_day: { Args: never; Returns: Json[] };
+			get_24_hour_snowfall_for_mountain: {
+				Args: { id: number };
+				Returns: number;
+			};
 			get_24h_alert_data: {
-				Args: Record<PropertyKey, never>;
+				Args: never;
 				Returns: {
 					display_name: string;
 					email: string;
@@ -837,23 +1055,35 @@ export type Database = {
 					user_id: string;
 				}[];
 			};
-			get_72_hour_snowfall_for_mountain: { Args: { id: number }; Returns: number };
-			get_current_temperature_for_mountain: { Args: { id: number }; Returns: number };
+			get_72_hour_snowfall_for_mountain: {
+				Args: { id: number };
+				Returns: number;
+			};
+			get_current_temperature_for_mountain: {
+				Args: { id: number };
+				Returns: number;
+			};
 			get_current_weather_desc: { Args: { id: number }; Returns: string };
-			get_daily_weather_conditions: { Args: { mountain_id: number }; Returns: Json };
+			get_daily_weather_conditions: {
+				Args: { mountain_id: number };
+				Returns: Json;
+			};
 			get_display_name_with_highest_failure_count: {
-				Args: Record<PropertyKey, never>;
+				Args: never;
 				Returns: Json;
 			};
 			get_display_name_with_highest_failure_count_last_24h: {
-				Args: Record<PropertyKey, never>;
+				Args: never;
 				Returns: Json;
 			};
 			get_hourly_weather_data: { Args: { id: number }; Returns: Json };
-			get_most_recent_timestamp: { Args: { mountain_id: number }; Returns: string };
+			get_most_recent_timestamp: {
+				Args: { mountain_id: number };
+				Returns: string;
+			};
 			get_next_24h_hourly_snowfall: { Args: { id: number }; Returns: Json };
 			get_overnight_alert_data: {
-				Args: Record<PropertyKey, never>;
+				Args: never;
 				Returns: {
 					display_name: string;
 					email: string;
@@ -867,18 +1097,41 @@ export type Database = {
 					user_id: string;
 				}[];
 			};
-			get_past_24_hour_snowfall_for_mountain: { Args: { id: number }; Returns: number };
-			get_past_48_hour_snowfall_for_mountain: { Args: { id: number }; Returns: number };
-			get_past_7_days_snowfall_for_mountain: { Args: { id: number }; Returns: number };
-			get_previous_snowfall_total: { Args: { mountain_id: number }; Returns: Json };
-			get_recent_scraping_status: { Args: Record<PropertyKey, never>; Returns: Json };
-			get_success_percentage: { Args: Record<PropertyKey, never>; Returns: number };
-			get_success_percentage_24h: { Args: Record<PropertyKey, never>; Returns: number };
+			get_past_24_hour_snowfall_for_mountain: {
+				Args: { id: number };
+				Returns: number;
+			};
+			get_past_48_hour_snowfall_for_mountain: {
+				Args: { id: number };
+				Returns: number;
+			};
+			get_past_7_days_snowfall_for_mountain: {
+				Args: { id: number };
+				Returns: number;
+			};
+			get_previous_snowfall_total: {
+				Args: { mountain_id: number };
+				Returns: Json;
+			};
+			get_recent_scraping_status: { Args: never; Returns: Json };
+			get_success_percentage: { Args: never; Returns: number };
+			get_success_percentage_24h: { Args: never; Returns: number };
 			get_temperature_range: { Args: { id: number }; Returns: Json };
-			get_upcoming_snowfall_total: { Args: { mountain_id: number }; Returns: Json };
-			group_24h_forecast_alert_data: { Args: Record<PropertyKey, never>; Returns: Json };
-			group_overnight_snowfall_alert_data: { Args: Record<PropertyKey, never>; Returns: Json };
+			get_upcoming_snowfall_total: {
+				Args: { mountain_id: number };
+				Returns: Json;
+			};
+			group_24h_forecast_alert_data: { Args: never; Returns: Json };
+			group_overnight_snowfall_alert_data: { Args: never; Returns: Json };
 			is_resort_closed: { Args: { resort_id: number }; Returns: boolean };
+			record_cam_capture: {
+				Args: { p_cam_id: number; p_error?: string };
+				Returns: undefined;
+			};
+			record_job_run: {
+				Args: { p_error?: string; p_job: string };
+				Returns: undefined;
+			};
 			set_resort_status: {
 				Args: {
 					p_evidence?: string;
@@ -890,8 +1143,30 @@ export type Database = {
 				};
 				Returns: boolean;
 			};
-			update_resort_snowfall_historical: { Args: Record<PropertyKey, never>; Returns: undefined };
-			update_stale_snowfall_values: { Args: Record<PropertyKey, never>; Returns: undefined };
+			sync_resort_cams: {
+				Args: { p_cams: Json; p_mountain_id: number };
+				Returns: {
+					active: boolean;
+					cleared_at: string | null;
+					id: number;
+					key: string;
+					kind: string;
+					label: string;
+					mountain_id: number;
+					page_url: string;
+					sort_order: number;
+					unofficial: boolean;
+					updated_at: string;
+				}[];
+				SetofOptions: {
+					from: '*';
+					to: 'resort_cams';
+					isOneToOne: false;
+					isSetofReturn: true;
+				};
+			};
+			update_resort_snowfall_historical: { Args: never; Returns: undefined };
+			update_stale_snowfall_values: { Args: never; Returns: undefined };
 		};
 		Enums: {
 			alert_type: 'forecast' | 'overnight';
@@ -917,7 +1192,9 @@ export type Tables<
 		? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
 				DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
 		: never = never
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+> = DefaultSchemaTableNameOrOptions extends {
+	schema: keyof DatabaseWithoutInternals;
+}
 	? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
 			DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
 			Row: infer R;
@@ -941,7 +1218,9 @@ export type TablesInsert<
 	}
 		? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
 		: never = never
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+> = DefaultSchemaTableNameOrOptions extends {
+	schema: keyof DatabaseWithoutInternals;
+}
 	? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
 			Insert: infer I;
 		}
@@ -964,7 +1243,9 @@ export type TablesUpdate<
 	}
 		? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
 		: never = never
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+> = DefaultSchemaTableNameOrOptions extends {
+	schema: keyof DatabaseWithoutInternals;
+}
 	? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
 			Update: infer U;
 		}
@@ -987,7 +1268,9 @@ export type Enums<
 	}
 		? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
 		: never = never
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+> = DefaultSchemaEnumNameOrOptions extends {
+	schema: keyof DatabaseWithoutInternals;
+}
 	? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
 	: DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
 		? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
@@ -1002,7 +1285,9 @@ export type CompositeTypes<
 	}
 		? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
 		: never = never
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof DatabaseWithoutInternals }
+> = PublicCompositeTypeNameOrOptions extends {
+	schema: keyof DatabaseWithoutInternals;
+}
 	? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
 	: PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
 		? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
