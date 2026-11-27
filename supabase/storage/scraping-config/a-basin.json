@@ -19,5 +19,15 @@
     "runsOpenSelector": "li:nth-child(1) [class*=\"StatsWidget_statistic\"]",
     "terrainSelector": "#weather-and-conditions [class*=\"StatsWidget_statsList\"]"
   },
-  "terrainURL": null
+  "terrainURL": null,
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Snow Stake",
+      "source": "hls",
+      "url": "https://watch.hdrelay.io/live/cam_arapahoe_basin_snow_stake_camera_1790623452872/index.m3u8",
+      "pageURL": "https://www.arapahoebasin.com/mountain-cams/"
+    }
+  ]
 }

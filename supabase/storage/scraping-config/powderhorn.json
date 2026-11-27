@@ -23,5 +23,15 @@
     "runStatusSelector": ".pgri-groom__status:not(.pgri-groom__status--closed):not(.pgri-groom__status--none)",
     "liftRowSelector": ".pgri-clist--lifts .pgri-clist__pill",
     "runRowSelector": ".pgri-groom__run"
-  }
+  },
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Snow Stake",
+      "source": "image",
+      "url": "https://b16.hdrelay.com/camera/635ff973ec60cc4e98eca6ec/snapshot",
+      "pageURL": "https://www.powderhorn.com/webcams/"
+    }
+  ]
 }

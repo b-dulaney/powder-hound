@@ -20,5 +20,16 @@
     "liftDetailSelector": "",
     "liftTotalSelector": ".terrain_summary__tab_main[data-terrain-status-id=\"lifts\"] .terrain_summary__tab_main__text",
     "runTotalSelector": ".terrain_summary__tab_main[data-terrain-status-id=\"runs\"] .terrain_summary__tab_main__text"
-  }
+  },
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Snow Stake",
+      "source": "image",
+      "url": "https://live9.brownrice.com/cam-images/crestedbuttesnowstake.jpg",
+      "pageURL": "https://www.skicb.com/the-mountain/mountain-conditions/mountain-cams.aspx",
+      "clearedAt": "05:45"
+    }
+  ]
 }

@@ -18,5 +18,15 @@
     "runsOpenSelector": "div.open-count-item:nth-child(2)",
     "liftsOpenSelector": "div.open-count-item:nth-child(1)",
     "liftDetailSelector": ""
-  }
+  },
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Snow Stake",
+      "source": "image",
+      "url": "https://webcam.io/webcams/z7Arw9/latest.jpg",
+      "pageURL": "https://skimonarch.com/conditions/cams/"
+    }
+  ]
 }

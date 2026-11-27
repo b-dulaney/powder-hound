@@ -20,5 +20,15 @@
     "runsOpenSelector": "[class*=\"styles__StyledDorMeasurementItem\"]:nth-child(1) [class*=\"styles__TextPrimary\"]",
     "terrainSelector": "#main-content [class*=\"styles__StyledDorMeasurements-\"]"
   },
-  "terrainURL": null
+  "terrainURL": null,
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Snow Stake",
+      "source": "image",
+      "url": "https://img.hdrelay.com/frames/fb469125-f1f3-459f-aeb4-98cb674e395f/default/last.jpg",
+      "pageURL": "https://www.coppercolorado.com/the-mountain/webcams/"
+    }
+  ]
 }

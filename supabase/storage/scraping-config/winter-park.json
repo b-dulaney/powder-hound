@@ -18,5 +18,16 @@
     "runsOpenSelector": ".StatsWidget_statsList__e9aIo > li.StatsWidget_statItem__yJzYz:nth-child(1) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
     "liftsOpenSelector": ".StatsWidget_statsList__e9aIo > li.StatsWidget_statItem__yJzYz:nth-child(2) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
     "liftDetailSelector": ".StatsWidget_statsList__e9aIo"
-  }
+  },
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Snow Stake",
+      "source": "youtube",
+      "url": "https://camstreamer.com/embed/mXhcYGDptt4PPiSEJVwxPNmUZjj1CNAjSkrBdj3s",
+      "pageURL": "https://www.winterparkresort.com/the-mountain/mountain-cams",
+      "clearedAt": "12:00"
+    }
+  ]
 }
