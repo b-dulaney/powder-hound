@@ -1,0 +1,25 @@
+# Checks scraper configs against supabase/storage/scraping-config.schema.json on PRs that touch
+# them, including the monitor's config-fix PRs, before a merge to master uploads them to Storage.
+name: Validate scraper configs
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/storage/scraping-config/*.json'
+      - 'supabase/storage/scraping-config.schema.json'
+      - '.github/scripts/validate_scraping_configs.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'jsonschema[format-nongpl]==4.23.0'
+      - run: python .github/scripts/validate_scraping_configs.py

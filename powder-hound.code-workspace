@@ -16,6 +16,12 @@
       "app/": true,
       "supabase/": true
     },
-    "deno.enablePaths": ["./supabase"]
+    "deno.enablePaths": ["./supabase"],
+    "json.schemas": [
+      {
+        "fileMatch": ["**/supabase/storage/scraping-config/*.json"],
+        "url": "./supabase/storage/scraping-config.schema.json"
+      }
+    ]
   }
 }

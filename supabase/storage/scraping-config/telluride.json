@@ -18,5 +18,15 @@
     "runsOpenSelector": ".tsr-report-trail-bg > div:nth-child(1) > span:nth-child(2)",
     "liftsOpenSelector": ".tsr-report-lifts-bg > div:nth-child(1) > span:nth-child(2)",
     "liftDetailSelector": ""
-  }
+  },
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Pow Cam",
+      "source": "image",
+      "url": "https://g1.ipcamlive.com/player/snapshot.php?alias=powcam",
+      "pageURL": "https://tellurideskiresort.com/webcams/"
+    }
+  ]
 }

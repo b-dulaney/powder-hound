@@ -18,5 +18,25 @@
     "runsOpenSelector": ".StatsWidget_statsList__e9aIo > li.StatsWidget_statItem__yJzYz:nth-child(1) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
     "liftsOpenSelector": ".StatsWidget_statsList__e9aIo > li.StatsWidget_statItem__yJzYz:nth-child(2) > div:nth-child(2) > div:nth-child(1) > span:nth-child(1)",
     "liftDetailSelector": "Lift_inner__I42dG"
-  }
+  },
+  "cams": [
+    {
+      "key": "mid-mountain",
+      "kind": "snow-stake",
+      "label": "Mid-Mountain Snow Stake",
+      "source": "youtube",
+      "url": "https://camstreamer.com/embed/z932LD9n3WiXzRkMqsmNmjyU8MqiNZgl4pcTe5dD",
+      "pageURL": "https://www.steamboat.com/the-mountain/live-cams",
+      "clearedAt": "05:00"
+    },
+    {
+      "key": "champagne-powder",
+      "kind": "snow-stake",
+      "label": "Champagne Powder Cam",
+      "source": "youtube",
+      "url": "https://camstreamer.com/embed/djHMkYYjhzVkbTdofykvdne8xIbhJkDrv8w1RDil",
+      "pageURL": "https://www.steamboat.com/the-mountain/live-cams",
+      "clearedAt": "16:00"
+    }
+  ]
 }
