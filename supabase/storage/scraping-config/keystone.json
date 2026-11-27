@@ -20,5 +20,15 @@
     "liftDetailSelector": "",
     "liftTotalSelector": ".terrain_summary__tab_main[data-terrain-status-id=\"lifts\"] .terrain_summary__tab_main__text",
     "runTotalSelector": ".terrain_summary__tab_main[data-terrain-status-id=\"runs\"] .terrain_summary__tab_main__text"
-  }
+  },
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "North Peak Snow Stake",
+      "source": "image",
+      "url": "https://cache.snow.com/Mtncams/KeySnowStake.jpg",
+      "pageURL": "https://www.keystoneresort.com/the-mountain/mountain-conditions/mountain-cams.aspx"
+    }
+  ]
 }

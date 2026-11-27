@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://powderhound.io/schemas/scraping-config.schema.json",
+  "title": "PowderHound resort scraping config",
+  "description": "One file per resort in supabase/storage/scraping-config/, read at runtime by powder-hound-go from the scraping-config Storage bucket. The scraper sections stay loose because they follow the Go ScrapingConfig struct; cams is strict.",
+  "type": "object",
+  "required": ["id", "name", "conditionsURL", "conditions", "terrain"],
+  "properties": {
+    "id": {
+      "description": "mountains.mountain_id of the resort.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "separateURLs": { "type": "boolean" },
+    "clickSelector": { "type": "string" },
+    "conditionsURL": { "type": "string", "format": "uri" },
+    "terrainURL": { "type": ["string", "null"] },
+    "conditions": { "type": "object" },
+    "terrain": { "type": "object" },
+    "cams": {
+      "description": "Cams captured on a schedule by powder-hound-go and shown on the resort page. Removing an entry stops capture; already stored images expire on the normal retention schedule.",
+      "type": "array",
+      "items": { "$ref": "#/definitions/cam" }
+    }
+  },
+  "definitions": {
+    "cam": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "kind", "label", "source", "url", "pageURL"],
+      "properties": {
+        "key": {
+          "description": "Stable id, unique within the resort. Used in storage paths and the database, so don't rename it once images exist.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "maxLength": 40
+        },
+        "kind": {
+          "description": "What the cam shows. Only snow stakes for now.",
+          "enum": ["snow-stake"]
+        },
+        "label": {
+          "description": "Short name shown in the UI, e.g. \"Snow Stake\" or \"Summit Snow Stake\".",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "source": {
+          "description": "How a frame is captured. image: HTTP GET of a still that the provider refreshes. youtube: url is a camstreamer embed (which redirects to the current YouTube live video) or a YouTube video URL; the frame is that video's live thumbnail.",
+          "enum": ["image", "youtube"]
+        },
+        "url": {
+          "description": "Where the frame comes from, per source.",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "pageURL": {
+          "description": "The resort's own page for this cam, linked from the UI for attribution and the live view.",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "clearedAt": {
+          "description": "Local time (America/Denver, 24h HH:MM) the stake is usually cleared, when the resort states it. Leave it out when unknown.",
+          "type": "string",
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "unofficial": {
+          "description": "True when the resort says this stake isn't its official snowfall measurement.",
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

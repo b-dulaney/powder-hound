@@ -3,6 +3,7 @@ import {
 	type ResortDetail,
 	type UserAlerts
 } from '$lib/supabase.types';
+import { loadSnowStakeCams } from '$lib/server/snow-stakes';
 import { constructSnowfallChartData } from '$lib/utils';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -33,6 +34,8 @@ export const load: PageServerLoad = async ({ params, locals, depends }) => {
 		error(404, 'Location not found');
 	}
 
+	const snowStakeCams = await loadSnowStakeCams(supabase, resortDetails.mountain_id);
+
 	if (session) {
 		const { data: alertsData } = await supabase
 			.from('user_alerts')
@@ -47,6 +50,7 @@ export const load: PageServerLoad = async ({ params, locals, depends }) => {
 			resortDetails,
 			snowfallChartData,
 			closed: isResortClosed,
+			snowStakeCams,
 			alertData: existingAlert,
 			existingAlert: !!existingAlert,
 			session
@@ -56,6 +60,7 @@ export const load: PageServerLoad = async ({ params, locals, depends }) => {
 			resortDetails,
 			snowfallChartData,
 			closed: isResortClosed,
+			snowStakeCams,
 			existingAlert: false
 		};
 	}

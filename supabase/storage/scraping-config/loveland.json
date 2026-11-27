@@ -18,5 +18,16 @@
     "runsOpenSelector": ".trails-total",
     "liftsOpenSelector": ".lifts-total",
     "liftDetailSelector": ""
-  }
+  },
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Mid-Mountain Snow Stake",
+      "source": "image",
+      "url": "https://cams.skiloveland.com/snowcam/snowcam.jpg",
+      "pageURL": "https://skiloveland.com/snow-report/",
+      "unofficial": true
+    }
+  ]
 }

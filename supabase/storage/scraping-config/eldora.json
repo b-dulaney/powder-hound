@@ -20,5 +20,16 @@
     "runsOpenSelector": "[class*=\"StyledDorMeasurementItem\"]:nth-child(2) [class*=\"TextPrimary\"]",
     "terrainSelector": "#dor-drawer [class*=\"StyledDorMeasurements\"]"
   },
-  "terrainURL": "https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine"
+  "terrainURL": "https://www.eldora.com/the-mountain/lift-trail-report/snow-grooming-alpine",
+  "cams": [
+    {
+      "key": "snow-stake",
+      "kind": "snow-stake",
+      "label": "Snow Stake",
+      "source": "image",
+      "url": "https://watch.hdrelay.io/api/public/poster/cam_eldora___snow_stake_1792456287972",
+      "pageURL": "https://www.eldora.com/the-mountain/current-conditions/webcams/",
+      "clearedAt": "16:30"
+    }
+  ]
 }
