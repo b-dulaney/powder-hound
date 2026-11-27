@@ -7,9 +7,13 @@
 	import type { Session } from '@supabase/supabase-js';
 	import type { PageData } from './$types';
 	import ResortConditionsCard from './ResortConditionsCard.svelte';
+	import SnowStakeCard from './SnowStakeCard.svelte';
 	export let data: PageData;
 
-	const { resortDetails, snowfallChartData, closed } = data;
+	const { resortDetails, snowfallChartData, closed, snowStakeCams } = data;
+	// Closed resorts aren't captured, so only show the card while it still has recent frames.
+	const showSnowStakes =
+		snowStakeCams.length > 0 && (!closed || snowStakeCams.some((cam) => cam.frames.length > 0));
 	$: session = data.session as Session | null;
 	$: existingAlert = data.existingAlert;
 	$: alertData = data.alertData;
@@ -70,6 +74,11 @@
 			<div class="md:col-span-2">
 				<ResortConditionsCard {resortDetails} {closed} />
 			</div>
+			{#if showSnowStakes}
+				<section id="snow-stake" class="md:col-span-2" aria-label="Snow stake cam">
+					<SnowStakeCard cams={snowStakeCams} resortName={resortDetails.display_name} />
+				</section>
+			{/if}
 			<WeatherForecastCard details={resortDetails} />
 
 			<div class="hidden md:block">
