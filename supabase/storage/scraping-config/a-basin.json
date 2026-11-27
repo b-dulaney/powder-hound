@@ -4,7 +4,7 @@
     "conditionsSelector": "body:has(#weather-and-conditions)",
     "seasonTotalSelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(2) strong",
     "snow24Selector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(3) strong",
-    "snow48Selector": "#weather-and-conditions [class*=\"SnowfallBannerWidget_snowfallBannerForecast\"] > [class*=\"SnowfallBannerWidget_forecastItem\"]:nth-child(3) [class*=\"SnowfallBannerWidget_snowfallDepth\"]",
+    "snow48Selector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(3) strong",
     "snow7DaySelector": "#weather-and-conditions [class*=\"WeatherCard_card\"]:has(> [class*=\"WeatherCard_iconStatToggle\"]:not([class*=\"WeatherCard_hasIcon\"])) [class*=\"WeatherCard_list\"] li:nth-child(4) strong",
     "snowpackSelector": "",
     "waitForSelector": "#weather-and-conditions [class*=\"WeatherWidget_currentComponent\"] h2[class*=\"LabelUnitToggle_label\"]"
